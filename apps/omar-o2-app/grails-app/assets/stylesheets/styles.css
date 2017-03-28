@@ -1,0 +1,895 @@
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('webjars/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.eot');
+    src: url('webjars/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('webjars/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.woff') format('woff'), url('webjars/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('webjars/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.navbar {
+    min-height: 28px !important;
+}
+
+.navbar-fixed-top {
+    height: 20px;
+}
+
+.navbar-fixed-bottom {
+    height: 20px;
+}
+
+.navbar-brand {
+    padding-top: 15px
+}
+
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.nav-title-left {
+  margin-left: 10px;
+}
+
+.jumbotron {
+    position: relative;
+    background: #000 url("aerial_rs.jpg") center center;
+    width: 100%;
+    background-size: contain;
+    overflow: hidden;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.jumbotron h1 {
+    padding-bottom: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+
+.jumbotron h2 {
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+
+.well-home {
+  cursor: pointer;
+}
+
+.image-id-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.tooltip {
+    z-index: 2000;
+}
+
+.searchForm {
+    padding-top: 10px;
+}
+
+.searchForm .input-group-btn .glyphicon {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.imageMapNav {
+  margin-top: -15px;
+  margin-bottom: 8px;
+}
+.imageMapTools {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding-top: 10px;
+  overflow-y: auto;
+}
+
+.imageMapTools > .panel-info {
+  margin-bottom: 4px;
+}
+
+.imageMapTools .panel-body {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.imageMapTools .band-selection-panel {
+  padding-bottom: 10px;
+}
+
+.imageMapTools ul {
+  padding-left: 0px;
+  margin-bottom: 2px;
+}
+.imageMapTools .list-group-item {
+  padding: 7px 7px;
+}
+.imageMapTools > .panel-info .selectize-input {
+  margin-top: 5px;
+}
+
+.imageMapTools label {
+  margin-bottom: 0px;
+  margin-left: 5px;
+}
+
+.imageMapTools .measure-output {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.imageMapTools .brightness-slider {
+  margin-top: 30px;
+}
+
+.imageMapTools .pqe-warning {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.imageMapBorder {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+@media screen and (max-height: 599px) {
+    #map {
+        height: 57vh;
+    }
+    #list {
+        height: 37vh;
+    }
+    #mapOrtho {
+        height: 68vh;
+    }
+    .imageMap {
+        height: 62vh;
+    }
+    .imageMapTools {
+      height: 62vh;
+    }
+}
+
+@media screen and (min-height: 600px) AND (max-height: 699px) {
+    #map {
+        height: 64vh;
+    }
+    #list {
+        height: 46vh;
+    }
+    #mapOrtho {
+        height: 73vh;
+    }
+    .imageMap {
+        height: 68vh;
+    }
+    .imageMapTools {
+      height: 68vh;
+    }
+}
+
+@media screen and (min-height: 700px) AND (max-height: 799px) {
+    #map {
+        height: 69vh;
+    }
+    #list {
+        height: 54vh;
+    }
+    #mapOrtho {
+        height: 77vh;
+    }
+    .imageMap {
+        height: 71vh;
+    }
+    .imageMapTools {
+      height: 71vh;
+    }
+}
+
+@media screen and (min-height: 800px) AND (max-height: 899px) {
+    #map {
+        height: 73vh;
+    }
+    #list {
+        height: 59vh;
+    }
+    #mapOrtho {
+        height: 80vh;
+    }
+    .imageMap {
+        height: 76vh;
+    }
+    .imageMapTools {
+      height: 76vh;
+    }
+}
+
+@media screen and (min-height: 900px) AND (max-height: 999px) {
+    #map {
+        height: 76vh;
+    }
+    #list {
+        height: 64vh;
+    }
+    #mapOrtho {
+        height: 82vh;
+    }
+    .imageMap {
+        height: 78vh;
+    }
+    .imageMapTools {
+      height: 78vh;
+    }
+}
+
+@media screen and (min-height: 1000px) AND (max-height: 1099px) {
+    #map {
+        height: 78vh;
+    }
+    #list {
+        height: 68vh;
+    }
+    #mapOrtho {
+        height: 83vh;
+    }
+    .imageMap {
+        height: 80vh;
+    }
+    .imageMapTools {
+      height: 80vh;
+    }
+}
+
+@media screen and (min-height: 1100px) AND (max-height: 1199px) {
+    #map {
+        height: 80vh;
+    }
+    #list {
+        height: 70vh;
+    }
+    #mapOrtho {
+        height: 85vh;
+    }
+    .imageMap {
+        height: 82vh;
+    }
+    .imageMapTools {
+      height: 82vh;
+    }
+}
+
+@media screen and (min-height: 1200px) {
+    #map {
+        height: 82vh;
+    }
+    #list {
+        height: 73vh;
+    }
+    #mapOrtho {
+        height: 86vh;
+    }
+    .imageMap {
+        height: 81vh;
+    }
+    .imageMapTools {
+      height: 81vh;
+    }
+}
+
+#list {
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-top: -15px;
+}
+
+#list .media {
+    margin-bottom: -20px;
+    margin-top: -5px;
+}
+
+#list .panel {
+    margin-bottom: 5px;
+}
+
+#list a:hover {
+    text-decoration: none;
+}
+
+#list .fa:hover {
+    font-size: 0.9em;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+}
+
+.ranges hr {
+    margin-top: 0px;
+    margin-bottom: 11px;
+}
+
+#modal-image-space a {
+    text-decoration: none;
+}
+
+#modal-image-space-body.modal-body {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#modal-image-space-footer.modal-footer {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.imageMap {
+    width: 100%;
+}
+
+.list-card-modal-header-links{
+    position: relative;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.list-card-image-modal-links {
+    float: left;
+}
+
+.list-card-modal-close{
+    float: right;
+}
+
+#mapOrtho {
+    width: 100%;
+}
+
+
+/* class for #mouseCoords*/
+
+.map-cord-div {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 1;
+    font-size: .7em;
+    color: #fff;
+    background-color: rgba(0, 60, 136, 0.5);
+    transform: translate(-50%);
+    padding: 2px 10px;
+    border: none;
+    border-radius: 2px;
+    text-align: center;
+    margin: 1px;
+}
+
+.imageShareButton {
+    right: 3.0em;
+}
+
+.mapDownloadButton {
+    right: 1.0em;
+}
+
+.imageLinkBtns {
+    position: absolute;
+    z-index: 1;
+    bottom: 5px;
+    margin-right: 10px;
+}
+
+.imageLinkBtns i {
+    background-color: rgba(0, 60, 136, 0.5);
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.imageLinkBtns a {
+    text-decoration: none;
+}
+
+.shareModalHighlightCopyTxt {
+    display: none;
+}
+
+.dont-break-out {
+    /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+
+/*!
+ * Styles for wfs-partial
+ */
+
+.the-table {
+    white-space: nowrap;
+    max-width: none;
+    min-width: 100% width: auto;
+}
+
+.the-container {
+    overflow: auto;
+    height: 250px;
+}
+
+
+/*!
+ * Styles the autocomplete dropdown
+ */
+
+.autocomplete-suggestions {
+    border: 1px solid #999;
+    background: #2b3e50;
+    overflow: auto;
+}
+
+.autocomplete-suggestion {
+    padding: 2px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.autocomplete-selected {
+    background: #4e5d6c;
+}
+
+.autocomplete-suggestions strong {
+    font-weight: normal;
+    color: #5bc0de;
+}
+
+.autocomplete-group {
+    padding: 2px 5px;
+}
+
+.autocomplete-group strong {
+    display: block;
+    border-bottom: 1px solid #000;
+}
+
+
+/*!
+ * Yamm!3 - Yet another megamenu for Bootstrap 3
+ * http://geedmo.github.com/yamm3
+ *
+ * @geedmo - Licensed under the MIT license
+ */
+
+.yamm .nav, .yamm .collapse, .yamm .dropup, .yamm .dropdown {
+    position: static;
+}
+
+.yamm .container {
+    position: relative;
+}
+
+.yamm .dropdown-menu {
+    left: auto;
+}
+
+.yamm .yamm-content {
+    padding: 20px 30px;
+}
+
+.yamm .dropdown.yamm-fw .dropdown-menu {
+    left: 0;
+    right: 0;
+}
+
+.nav-download .dropdown-menu a {
+    text-align: center;
+}
+
+.nav-download .dropdown-menu {
+    min-width: 112px;
+}
+
+/*.navbar-default .navbar-nav > .nav-download{
+  border-left: 1px solid #CCC;
+}*/
+
+.rotate-north {
+    top: 65px;
+    left: .5em;
+    right: auto;
+}
+
+.ol-touch .rotate-north {
+    top: 80px;
+}
+
+.rotate-up {
+    top: 95px;
+    left: .5em;
+}
+
+.ol-touch .rotate-up {
+    top: 120px;
+}
+
+.top-logo {
+    margin-left: 70px;
+}
+
+.corner-ribbon {
+    width: 175px;
+    position: absolute;
+    top: 25px;
+    left: -50px;
+    text-align: center;
+    line-height: 40px;
+    letter-spacing: 1px;
+    font-weight: bolder;
+    color: #3B5957;
+    background-color: #f8901b;
+    text-shadow: 0px 1px 0px rgba(245, 251, 247, 0.5);
+    font-size: 24px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+}
+
+.corner-ribbon.sticky {
+    position: fixed;
+}
+
+.corner-ribbon.shadow {
+    /*box-shadow: 0 0 3px rgba(0,0,0,.3);*/
+}
+
+.corner-ribbon.top-left {
+    top: 20px;
+    left: -80px;
+    margin-left: 32px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    z-index: 99999;
+}
+
+.shadow {
+    -webkit-box-shadow: 14px 18px 36px -13px rgba(0, 0, 0, 0.76);
+    -moz-box-shadow: 14px 18px 36px -13px rgba(0, 0, 0, 0.76);
+    box-shadow: 14px 18px 36px -13px rgba(0, 0, 0, 0.76);
+}
+
+#imageMap:-moz-full-screen {
+    height: 100%;
+}
+
+#imageMap:-webkit-full-screen {
+    height: 100%;
+}
+
+#imageMap:-ms-fullscreen {
+    height: 100%;
+}
+
+#imageMap:fullscreen {
+    height: 100%;
+}
+
+.slick-prev:before, .slick-next:before {
+    color: black !important;
+}
+
+#grayImageItem, #redImageItem, #greenImageItem, #blueImageItem {
+    /*display: inline-block;
+    vertical-align: middle;*/
+    width: 60px;
+    /*float: right;*/
+}
+
+#gray-image-space-bands, #rgb-image-space-bands {
+    display: none;
+}
+
+#image-space-bands{
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
+
+.image-bands {
+    width: 100%;
+}
+
+.image-bands label{
+    font-size: .8em;
+}
+
+ .image-band-div {
+   width: 100px;
+   margin-bottom: 20px;
+   /*margin-top: 10px;
+   height: 50px;*/
+ }
+
+/*.ui-select-container{
+    width: 90px;
+    height: 10px;
+}*/
+
+#image-space-bands{
+    position: relative;
+    top: 20px;
+}
+
+/*#image-space-bands .ui-select-container .selectize-input{
+    width: 50px;
+}*/
+
+/*.ui-select-container span{
+    font-size: .8em;
+    font-weight: bold;
+}*/
+
+.ui-select-container .selectize-input{
+    padding: 4px 4px;
+}
+
+.ui-select-container .selectize-input:after{
+      font-size: .1em;
+}
+
+#mapOrtho:-moz-full-screen {
+    height: 100%;
+}
+
+#mapOrtho:-webkit-full-screen {
+    height: 100%;
+}
+
+#mapOrtho:-ms-fullscreen {
+    height: 100%;
+}
+
+#mapOrtho:fullscreen {
+    height: 100%;
+}
+
+.ol-viewport {
+    border-radius: 10px;
+}
+
+.ol-rotate, .ol-rotate.ol-hidden {
+    left: .5em;
+    opacity: 1;
+    right: auto;
+    top: 65px;
+    visibility: visible;
+}
+
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 8px 4px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.8));
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 275px;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.truncate {
+    width: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*.navbar-nav>li>.dropdown-menu {
+  margin-top: 20px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.navbar-default .navbar-nav>li>a {
+  width: 200px;
+  font-weight: bold;
+}*/
+
+/*.mega-dropdown {
+  position: static !important;
+  width: 100%;
+}*/
+
+.mega-dropdown-menu {
+  padding: 20px 0px;
+  /*width: 100%;*/
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.mega-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0;
+}
+
+.mega-dropdown-menu > li > ul > li {
+  list-style: none;
+}
+
+.mega-dropdown-menu > li > ul > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #999;
+  white-space: normal;
+}
+
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+  color: #444;
+  background-color: #f5f5f5;
+}
+
+.mega-dropdown-menu .dropdown-header {
+  color: #428bca;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.mega-dropdown-menu form {
+  margin: 3px 20px;
+}
+
+.mega-dropdown-menu .form-group {
+  margin-bottom: 3px;
+}
+
+.mega-dropdown-menu hr {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.mega-dropdown-menu .label {
+  display: block;
+  margin-top: 5px;
+}
+
+.filter-row {
+  margin-bottom: 10px;
+}
+
+.filter-row .name {
+  min-width: 65px;
+  text-align: left;
+}
+
+.filter-row .spatial-name {
+  min-width: 100px;
+  text-align: left;
+}
+
+.filter-row .range-name {
+  min-width: 100px;
+  text-align: left;
+}
+
+.tooltip-inner {
+    min-width: 100px;
+    max-width: 100%;
+}
+
+#brightness-section,
+#contrast-section,
+#imgBrightnessSlider,
+#imgContrastSlider,
+#brightnes-contrast-reset{
+  width: 100%;
+}
+
+#imgBrightnessSlider .slider-selection,
+#imgContrastSlider .slider-selection {
+	background: #BABABA;
+}
+
+#imgBrightnessVal,
+#imgContrastVal {
+  font-size: .8em;
+  text-align: center
+}
+
+#brightnes-contrast-reset .btn{
+  float: right;
+  width: 50px;
+  height: 30px;
+  padding: 5px 5px;
+  line-height: 0px;
+}
+
+.slider.slider-horizontal .slider-track {
+  height: 5px;
+}
+
+.slider-handle {
+  width: 15px;
+  height: 15px;
+}
+
+#imgLinkButtons {
+    padding: 8px 12px;
+    float: left;
+    font-size: 1.5em;
+}
+
+#imgLinkButtons .tooltip-inner {
+    min-width: 100px;
+    max-width: 200px;
+}
+
+#imgLinkButtons.modal-footer {
+    border-top: none;
+}
+
+#imgLinkButtons a {
+    margin-right: 5px;
+}
+
+#imgLinkButtons a:visited,
+#imgLinkButtons a:hover,
+#imgLinkButtons a:active {
+    text-decoration: none;
+}
+
+
+/* needed for ui-select multiple */
+.ui-select-bootstrap .ui-select-choices-row > a {
+    background-color: white;
+}
+
+.ui-select-search.input-xs.ng-pristine.ng-valid.ng-touched,
+.ui-select-search.input-xs.ng-pristine.ng-untouched.ng-valid,
+.ui-select-search.input-xs.ng-untouched.ng-valid.ng-dirty.ng-valid-parse,
+.ui-select-search.input-xs.ng-valid.ng-dirty.ng-touched,
+.ui-select-search.input-xs.ng-valid.ng-dirty.ng-valid-parse.ng-touched {
+    width: auto !important;
+}

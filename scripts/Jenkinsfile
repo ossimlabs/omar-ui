@@ -1,5 +1,5 @@
 //==================================================================================================
-// This is the Jenkins pipeline script for building the OMAR O2 application (formally omar-app).
+// This is the Jenkins pipeline script for building the OMAR O2 application (formerly omar-app).
 // Environment varialbes that MUST be passed in by Jenkins:
 //    OSSIM_GIT_BRANCH: The tag of the branch to be built. Typically dev or master.
 //

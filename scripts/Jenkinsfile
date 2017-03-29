@@ -1,6 +1,6 @@
 //==================================================================================================
-// This is the Jenkins pipeline script for building the OMAR O2 application (formerly omar-app).
-// Environment varialbes that MUST be passed in by Jenkins:
+// This is the Jenkins pipeline script for building the OMAR UI application (formerly omar-app).
+// Environment variables that MUST be passed in by Jenkins:
 //    OSSIM_GIT_BRANCH: The tag of the branch to be built. Typically dev or master.
 //
 // Environment varaibles that MUST be set in the Jenkins global environment (manage jenkins -> configure system -> environment varaibles)
@@ -13,7 +13,7 @@
 // TODO: get to run on any node
 node("master"){
     def workspaceDir = pwd()
-    def appName = "omar-o2"
+    def appName = "omar-ui"
     def omarCommonProjName = "omar-common"
     env.OMAR_COMMON_PROPERTIES="${workspaceDir}/${omarCommonProjName}/omar-common-properties.gradle"
 
@@ -33,23 +33,34 @@ node("master"){
     }
 
     try {
+      stage ("Publish Plugin Artifactory")
+      {
+
+          withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                            credentialsId: 'artifactoryCredentials',
+                            usernameVariable: 'ARTIFACTORY_USER',
+                            passwordVariable: 'ARTIFACTORY_PASSWORD']])
+            {
+                sh """
+                pushd ${workspaceDir}/${appName}/plugins/${appName}-plugin
+                ./gradlew artifactoryPublish
+                popd
+                """
+            }
+      }
       stage ("Publish App Artifactory")
       {
-        sh """
-        pushd ${workspaceDir}/${appName}/apps/${appName}-app
-        ./gradlew artifactoryPublish
-        popd
-        """
-      }
-
-      stage ("Publish Docker App")
-      {
-        // Run all tasks on the app. This includes pushing to OpenShift and S3.
-        sh """
-        pushd ${workspaceDir}/${appName}/apps/${appName}-app
-        ./gradlew ${GRADLE_TASK}
-        popd
-        """
+          withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                            credentialsId: 'artifactoryCredentials',
+                            usernameVariable: 'ARTIFACTORY_USER',
+                            passwordVariable: 'ARTIFACTORY_PASSWORD']])
+            {
+              sh """
+              pushd ${workspaceDir}/${appName}/apps/${appName}-app
+              ./gradlew artifactoryPublish
+              popd
+              """
+            }
       }
     }
     catch(e){

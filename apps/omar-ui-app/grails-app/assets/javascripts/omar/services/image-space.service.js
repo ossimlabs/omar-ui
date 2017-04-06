@@ -278,7 +278,7 @@
 
               stateService.navStateUpdate({
                 titleLeft: imageIdText + " <br> " + acquisitionDateText,
-                userGuideUrl: "user-guide/image-space/"
+                userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
               });
             });
 

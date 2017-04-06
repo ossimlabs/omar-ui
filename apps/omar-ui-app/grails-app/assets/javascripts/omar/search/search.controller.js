@@ -14,7 +14,7 @@
     // set header title
     stateService.navStateUpdate({
         titleLeft: "<h3>Search</h3>",
-        userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
+        userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#search"
     });
 
     var vm = this;

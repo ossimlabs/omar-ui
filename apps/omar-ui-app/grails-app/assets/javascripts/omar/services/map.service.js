@@ -228,11 +228,19 @@ function mapService(stateService, wfsService) {
       overlayGroup.getLayers().push(overlayMapLayer);
     }
 
-    // Map over each map item in the baseMaps array
-    AppO2.APP_CONFIG.openlayers.baseMaps.map(addBaseMapLayers);
+    if(AppO2.APP_CONFIG.openlayers.baseMaps != null)
+    {
+      // Map over each map item in the baseMaps array
+      AppO2.APP_CONFIG.openlayers.baseMaps.map(addBaseMapLayers);
+      console.log("AppO2.APP_CONFIG.openlayers.baseMaps is null");
+    }
+    if(AppO2.APP_CONFIG.openlayers.overlayLayers != null)
+    {
+      // Map over each layer item in the overlayLayers array
+      AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
+      console.log("AppO2.APP_CONFIG.openlayers.overlayLayers is null");
 
-    // Map over each layer item in the overlayLayers array
-    AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
+    }
     overlayGroup.getLayers().push(footPrints);
 
     map = new ol.Map({

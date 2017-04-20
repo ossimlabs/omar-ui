@@ -178,19 +178,6 @@ omar:
           format: "image/jpeg"
         options:
           visible: true
-    overlayLayers:
-      -
-        layerType: "tilewms"
-        title: "DGI"
-        url: "https://dev.o2.ossimc2s.com/geoscript-app/evwhs/wms"
-        params:
-          filter: ""
-          version: "1.3.0"
-          layers: ""
-          styles: ""
-          format: "image/png"
-        options:
-          visible: true
   app:
     wfs:
       baseUrl: http://localhost:8081/wfs?

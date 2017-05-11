@@ -193,8 +193,7 @@ omar:
           visible: true
   app:
     wfs:
-      #baseUrl: http://localhost:8081/wfs?
-      baseUrl: https://omar-dev.ossim.io/omar-wfs/wfs?
+      baseUrl: http://localhost:8081/wfs?
       enabled: true
       proxy: /proxy/index?url=
     wms:

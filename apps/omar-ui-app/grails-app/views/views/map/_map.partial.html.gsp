@@ -657,7 +657,7 @@
               </a>
               <ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('CSV')">CSV</a></li>
-                <li ng-show="{{wfsOutputDownload.isaAppEnabled}}"><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToISA()">3ISA</a></li>
+                <li ng-show="{{wfsOutputDownload.isaAppEnabled}}"><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToISA()">3DISA</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML2')">GML2</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML3')">GML3</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML32')">GML32</a></li>

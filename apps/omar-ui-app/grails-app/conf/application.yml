@@ -224,6 +224,9 @@ omar:
     apiApp:
       baseUrl: http://localhost:8081/api
       enabled: true
+    isaApp:
+      baseUrl: http://localhost/isa
+      enabled: false
     tlvApp:
       baseUrl: http://localhost/tlv
       enabled: true

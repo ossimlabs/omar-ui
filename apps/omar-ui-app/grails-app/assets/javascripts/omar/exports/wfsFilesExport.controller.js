@@ -28,6 +28,31 @@
       };
 
       $scope.$on( 'attrObj.updated', function( event, response ) { vm.attrFilter = response; } );
+
+      // Shows/Hides the ISA button based on parameters passed down from application.yml
+      vm.isaAppEnabled = AppO2.APP_CONFIG.params.isaApp.enabled;
+
+      vm.goToISA = function() {
+        var isaBaseUrl = AppO2.APP_CONFIG.params.isaApp.baseUrl;
+        var filter = wfsService.spatialObj.filter;
+        if (filter == '') { toastr.error( "A spatial filter needs to be enabled." ); }
+        else {
+            var pointLatLon;
+            mapService.mapPointLatLon();
+            if ( mapService.pointLatLon ) {
+              pointLatLon = mapService.pointLatLon;
+            } else {
+              var center = mapService.getCenter();
+              pointLatLon = center.slice().reverse().join( ',' );
+            }
+
+            var bbox = mapService.calculateExtent().join( ',' );
+            if ( vm.attrFilter ) { filter += " AND " + vm.attrFilter; }
+            var isaURL = isaBaseUrl + '/?bbox=' + bbox + '&filter=' + encodeURIComponent( filter ) + '&location=' + pointLatLon + '&maxResults=100';
+            $window.open( isaURL, '_blank' );
+        }
+      };
+
       vm.goToTLV = function() {
         var tlvBaseUrl = AppO2.APP_CONFIG.params.tlvApp.baseUrl;
         var filter = wfsService.spatialObj.filter;

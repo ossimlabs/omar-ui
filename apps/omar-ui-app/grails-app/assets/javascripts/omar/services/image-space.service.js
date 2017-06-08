@@ -231,7 +231,7 @@
               tileY = -tileCoord[2] - 1;
 
               return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ +
-                '&x=' + tileX + '&y=' + tileY + '&format=' + format +
+                '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + format +
                 '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp +
                 '&histCenterTile=' + histCenterTile + '&brightness=' + brightness + '&contrast=' + contrast +
                 '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode;
@@ -338,7 +338,7 @@
               url: AppO2.APP_CONFIG.params.imageSpace.baseUrl + '/getTile',
               filename: filename,
               entry: entry,
-              format: 'jpeg',
+              outputFormat: 'jpeg',
               size: [imgWidth, imgHeight],
               crossOrigin: crossOrigin,
               numOfBands: numOfBands,

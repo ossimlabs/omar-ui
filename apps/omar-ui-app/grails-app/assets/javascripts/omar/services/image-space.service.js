@@ -355,7 +355,7 @@
               url: AppO2.APP_CONFIG.params.imageSpace.baseUrl + '/getTileOverlay',
               filename: filename,
               entry: entry,
-              format: 'png',
+              outputFormat: 'png',
               size: [imgWidth, imgHeight],
               crossOrigin: crossOrigin
             });

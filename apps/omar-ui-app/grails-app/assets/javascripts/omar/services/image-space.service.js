@@ -350,7 +350,7 @@
               histOp: histOp,
               histCenterTile: histCenterTile,
               resamplerFilter: resamplerFilter,
-              sharpenMode: sharpenMode
+              sharpenMode: sharpenMode,
               transparent: transparent
             });
 

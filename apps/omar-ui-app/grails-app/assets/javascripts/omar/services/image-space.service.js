@@ -161,7 +161,7 @@
 
           filename = options.filename;
           entry = options.entry;
-          format = options.format;
+          outputFormat = options.outputFormat;
 
           var imageWidth = size[0];
           var imageHeight = size[1];
@@ -231,7 +231,7 @@
               tileY = -tileCoord[2] - 1;
 
               return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ +
-                '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + format +
+                '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat +
                 '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp +
                 '&histCenterTile=' + histCenterTile + '&brightness=' + brightness + '&contrast=' + contrast +
                 '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode;

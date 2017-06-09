@@ -38,7 +38,8 @@
           brightness,
           contrast,
           urlString,
-          imgID;
+          imgID,
+          transparent;
 
       // Measurement variables
 
@@ -161,7 +162,7 @@
 
           filename = options.filename;
           entry = options.entry;
-          format = options.format;
+          outputFormat = options.outputFormat;
 
           var imageWidth = size[0];
           var imageHeight = size[1];
@@ -231,10 +232,10 @@
               tileY = -tileCoord[2] - 1;
 
               return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ +
-                '&x=' + tileX + '&y=' + tileY + '&format=' + format +
+                '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat +
                 '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp +
                 '&histCenterTile=' + histCenterTile + '&brightness=' + brightness + '&contrast=' + contrast +
-                '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode;
+                '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent='+transparent;
               }
           }
 
@@ -295,6 +296,7 @@
             contrast = params.contrast || 1;
             resamplerFilter = params.resamplerFilter || "bilinear";
             sharpenMode = params.sharpenMode || "none";
+            transparent = params.transparent || "true";
 
             // Make AJAX call here to getAngles with filename & entry as args
             // to get the upAngle and northAngle values
@@ -338,7 +340,7 @@
               url: AppO2.APP_CONFIG.params.imageSpace.baseUrl + '/getTile',
               filename: filename,
               entry: entry,
-              format: 'jpeg',
+              outputFormat: 'jpeg',
               size: [imgWidth, imgHeight],
               crossOrigin: crossOrigin,
               numOfBands: numOfBands,
@@ -348,14 +350,15 @@
               histOp: histOp,
               histCenterTile: histCenterTile,
               resamplerFilter: resamplerFilter,
-              sharpenMode: sharpenMode
+              sharpenMode: sharpenMode,
+              transparent: transparent
             });
 
             source2 = new ImageSpace({
               url: AppO2.APP_CONFIG.params.imageSpace.baseUrl + '/getTileOverlay',
               filename: filename,
               entry: entry,
-              format: 'png',
+              outputFormat: 'png',
               size: [imgWidth, imgHeight],
               crossOrigin: crossOrigin
             });
@@ -442,7 +445,7 @@
                   '&numOfBands=' + numOfBands + '&imageId=' + imgID +
                   '&brightness=' + brightness + '&contrast=' + contrast +
                   '&histOp=' + histOp + '&histCenterTile=' + histCenterTile +
-                  '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode;
+                  '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent=' + transparent;
 
               return urlString;
             };

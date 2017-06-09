@@ -31,7 +31,7 @@
         vm.thumbFilename = 'filename='; // Parameter provided by image.properties.filename
         vm.thumbEntry = '&entry='; // Parameter provided by image.properties.entry_id
         vm.thumbSize = '&size=100';
-        vm.thumbFormat = '&format=jpeg';
+        vm.thumbFormat = '&outputFormat=jpeg';
 
         vm.getImageSpaceUrl = function(image) {
             var defaults = imageSpaceDefaults;

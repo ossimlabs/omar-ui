@@ -303,7 +303,8 @@
     $scope.draType = {};
     $scope.draTypes = [
         { 'name': 'None', 'value': 'none' },
-        { 'name': 'Auto', 'value': 'auto-minmax' },
+        { 'name': 'Auto Min max', 'value': 'auto-minmax' },
+        { 'name': 'Auto Percentile', 'value': 'auto-percentile' },
         { 'name': '1 STD', 'value': 'std-stretch-1' },
         { 'name': '2 STD', 'value': 'std-stretch-2' },
         { 'name': '3 STD', 'value': 'std-stretch-3' }

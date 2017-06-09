@@ -1,5 +1,5 @@
-#server:
-#  contextPath: /o2-omar
+server:
+  contextPath: /omar-ui
 ---
 hibernate:
     cache:
@@ -133,47 +133,29 @@ omar:
   openlayers:
     baseMaps:
       -
-        layerType: "tile"
-        title: "Open Street Map"
-        url: "http://vmap0.tiles.osgeo.org/wms/vmap0"
+        layerType: "tilewms"
+        title: "BMNG Local"
+        url: "http://localhost/tilecache/tilecache.py"
         params:
-          layers: "basic,coastline_01,coastline_02,priroad,secroad,rail,ferry,tunnel,bridge,trail,CAUSE,clabel,statelabel,ctylabel"
+          layers: "omar"
           format: "image/jpeg"
         options:
           visible: true
-      -
-        layerType: "tile"
-        title: "Natural Earth"
-        url: "http://demo.boundlessgeo.com/geoserver/wms"
-        params:
-          layers: "ne:NE1_HR_LC_SR_W_DR"
-          format: "image/jpeg"
-        options:
-          visible: false
-      -
-        layerType: "tile"
-        title: "Blue Marble"
-        url: "http://demo.opengeo.org/geoserver/wms"
-        params:
-          layers: "nasa:bluemarble"
-          format: "image/jpeg"
-        options:
-          visible: false
   app:
     wfs:
-      baseUrl: http://localhost:80/o2-wfs/wfs?
+      baseUrl: http://localhost:80/omar-wfs/wfs?
       enabled: true
       proxy: /proxy/index?url=
     wms:
-      baseUrl: http://localhost:80/o2-wms/wms?
+      baseUrl: http://localhost:80/omar-wms/wms?
       enabled: true
     imageSpace:
-      baseUrl: http://localhost:80/o2-wms/imageSpace
+      baseUrl: http://localhost:80/omar-wms/imageSpace
       enabled: true
     thumbnails:
-      baseUrl: http://localhost:80/o2-wms/imageSpace/getThumbnail
+      baseUrl: http://localhost:80/omar-wms/imageSpace/getThumbnail
     footprints:
-      baseUrl: http://localhost:80/o2-wms/footprints/getFootprints
+      baseUrl: http://localhost:80/omar-wms/footprints/getFootprints
     stagerApp:
       baseUrl: http://localhost:8081
     downloadApp:

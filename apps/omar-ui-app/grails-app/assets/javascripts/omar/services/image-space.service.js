@@ -38,7 +38,8 @@
           brightness,
           contrast,
           urlString,
-          imgID;
+          imgID,
+          transparent;
 
       // Measurement variables
 
@@ -234,7 +235,7 @@
                 '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat +
                 '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp +
                 '&histCenterTile=' + histCenterTile + '&brightness=' + brightness + '&contrast=' + contrast +
-                '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode;
+                '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent='+transparent;
               }
           }
 
@@ -295,6 +296,7 @@
             contrast = params.contrast || 1;
             resamplerFilter = params.resamplerFilter || "bilinear";
             sharpenMode = params.sharpenMode || "none";
+            transparent = params.transparent || "true";
 
             // Make AJAX call here to getAngles with filename & entry as args
             // to get the upAngle and northAngle values
@@ -349,6 +351,7 @@
               histCenterTile: histCenterTile,
               resamplerFilter: resamplerFilter,
               sharpenMode: sharpenMode
+              transparent: transparent
             });
 
             source2 = new ImageSpace({
@@ -442,7 +445,7 @@
                   '&numOfBands=' + numOfBands + '&imageId=' + imgID +
                   '&brightness=' + brightness + '&contrast=' + contrast +
                   '&histOp=' + histOp + '&histCenterTile=' + histCenterTile +
-                  '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode;
+                  '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent=' + transparent;
 
               return urlString;
             };

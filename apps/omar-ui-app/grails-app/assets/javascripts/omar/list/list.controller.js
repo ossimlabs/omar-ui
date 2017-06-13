@@ -30,7 +30,7 @@
         vm.thumbPath = AppO2.APP_CONFIG.params.thumbnails.baseUrl;
         vm.thumbFilename = 'filename='; // Parameter provided by image.properties.filename
         vm.thumbEntry = '&entry='; // Parameter provided by image.properties.entry_id
-        vm.thumbSize = '&size=100';
+        vm.thumbSize = '&thumbnailResolution=100';
         vm.thumbFormat = '&outputFormat=jpeg';
 
         vm.getImageSpaceUrl = function(image) {

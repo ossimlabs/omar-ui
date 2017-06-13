@@ -28,11 +28,10 @@
 
         //vm.thumbPath = '/o2/imageSpace/getThumbnail?';
         vm.thumbPath = AppO2.APP_CONFIG.params.thumbnails.baseUrl;
-        vm.thumbFilename = 'images[0].file='; // Parameter provided by image.properties.filename
-        vm.thumbEntry = '&images[0].entry='; // Parameter provided by image.properties.entry_id
+        vm.thumbFilename = '&filename='; // Parameter provided by image.properties.filename
+        vm.thumbEntry = '&entry='; // Parameter provided by image.properties.entry_id
         vm.thumbSize = '&thumbnailResolution=100';
         vm.thumbFormat = '&outputFormat=jpeg';
-        vm.outputRadiometry = '&outputRadiometry=ossim_uint8'
         vm.getImageSpaceUrl = function(image) {
             var defaults = imageSpaceDefaults;
             var properties = image.properties;

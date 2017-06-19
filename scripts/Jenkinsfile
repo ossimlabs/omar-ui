@@ -16,13 +16,22 @@ node("master"){
     def appName = "omar-ui"
     def omarCommonProjName = "omar-common"
     env.OMAR_COMMON_PROPERTIES="${workspaceDir}/${omarCommonProjName}/omar-common-properties.gradle"
-
+    env.O2_DEV_HOME = pwd()
     stage("Checkout"){
         dir("ossim-ci") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/ossim-ci.git"
         }
         dir(appName) {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/${appName}.git"
+        }
+        dir("omar-core") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-core.git"
+        }
+        dir("omar-hibernate-spatial") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-hibernate-spatial.git"
+        }
+        dir("omar-openlayers") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-openlayers.git"
         }
 
         dir(omarCommonProjName) {

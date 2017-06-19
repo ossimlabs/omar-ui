@@ -11,12 +11,13 @@
 //==================================================================================================
 
 // TODO: get to run on any node
-node("master"){
+node(""){
     def workspaceDir = pwd()
     def appName = "omar-ui"
     def omarCommonProjName = "omar-common"
     env.OMAR_COMMON_PROPERTIES="${workspaceDir}/${omarCommonProjName}/omar-common-properties.gradle"
     env.O2_DEV_HOME = pwd()
+
     stage("Checkout"){
         dir("ossim-ci") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/ossim-ci.git"

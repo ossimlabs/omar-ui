@@ -52,9 +52,8 @@ node(""){
             {
 
                     sh """
-                    source ${env.HOME}/.sdkman/bin/sdkman-init.sh
                     pushd ${workspaceDir}/${appName}
-                    gradle ${appName}-app:artifactoryPublish
+                    ./gradlew ${appName}-app:artifactoryPublish
                     """
             }
       }
@@ -67,9 +66,8 @@ node(""){
         {
             // Run all tasks on the app. This includes pushing to OpenShift and S3.
             sh """
-            source ${env.HOME}/.sdkman/bin/sdkman-init.sh
             pushd ${workspaceDir}/${appName}
-            gradle :${appName}-app:${GRADLE_TASK}
+            ./gradlew :${appName}-app:${GRADLE_TASK}
             popd
             """
         }

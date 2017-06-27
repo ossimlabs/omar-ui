@@ -20,7 +20,7 @@ Ref: [omar-base](../../../omar-base/docs/install-guide/omar-base/)
 `http://artifacts.radiantbluecloud.com/artifactory/webapp/#/artifacts/browse/tree/General/omar-local/io/ossim/omar/apps/omar-ui-app`
 
 ## Configuration
-You can insert additional [Common Config Settings](../../../omar-common/docs/install-guide/omar-common#common-config-settings).
+You can insert additional [Common Config Settings](../../../omar-common/docs/install-guide/omar-common/#common-config-settings).
 
 ```
 omar:

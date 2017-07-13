@@ -10,25 +10,20 @@
 
       this.getAvroMetadata = function() {
 
-        console.log('Firing getAvroMetadata from the service...');
-
         var avroMetadataUrl = AppO2.APP_CONFIG.params.avroMetadataApp.baseUrl;
-        console.log('avroMetadataUrl: ', avroMetadataUrl);
 
         $http({
           method: 'GET',
-          //url: avroMetadataUrl
-          url: 'https://jsonplaceholder.typicode.com/posts/1'
+          url: avroMetadataUrl + '04APR16CS0207001_110646_SM0262R_29N081W_001X___SHH_0101_OBS_IMAG'
         }).then(function(response){
           var data;
           data = response.data;
-          console.log(data)
 
           // $timeout needed: http://stackoverflow.com/a/18996042
           $timeout( function ()
           {
               $rootScope.$broadcast('avroMetadata: updated', data);
-              console.log( 'data object...', data );
+              //console.log( 'data object...', data );
               avroData = data;
           } );
         })

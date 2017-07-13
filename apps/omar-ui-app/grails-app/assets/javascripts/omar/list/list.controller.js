@@ -384,10 +384,20 @@
         }
 
         $scope.$on('avroMetadata: updated', function(event, data) {
+
             // Update the Avro metadata tab
             $scope.$apply(function() {
+
                 vm.avroMetaData = data;
-                console.log('Data (title): ', vm.avroMetaData.title);
+
+                var firstMessageString = data.avroMetadata;
+                //console.log('firstMessageString', firstMessageString);
+                var secondMessageString = JSON.parse(firstMessageString);
+                //console.log('secondMessageString', secondMessageString);
+                var avroObj = JSON.parse(secondMessageString.Message);
+                console.log('avroObj', avroObj);
+                vm.avroMetadata = avroObj;
+
             });
 
         });

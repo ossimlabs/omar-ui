@@ -165,8 +165,8 @@ omar:
       baseUrl: http://localhost:8081/imageSpace/getThumbnail
     footprints:
       baseUrl: http://localhost:8081/footprints/getFootprints
-    avroMetdataApp:
-      baseUrl: http://localhost:9999/some/cool/endpoint
+    avroMetadataApp:
+      baseUrl: https://omar-dev.ossim.io/omar-avro-metadata/avroMetadata/get/
     stagerApp:
       baseUrl: http://localhost:8081
     downloadApp:

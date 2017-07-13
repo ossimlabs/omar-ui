@@ -1,5 +1,7 @@
 <div class="modal-header" id="modal-image-space">
   <div class="row">
+
+    <div class="col-sm-4">
     <div class="list-card-modal-header-links">
       <div class="text-primary list-card-image-modal-links" style="margin-top:.2em;">
         <a href="{{vm.o2baseUrlModal}}/#/mapImage?filename={{vm.selectedImage.properties.filename}}&entry_id={{vm.selectedImage.properties.entry_id}}&width={{vm.selectedImage.properties.width}}&height={{vm.selectedImage.properties.height}}&bands={{vm.imageSpaceDefaults.bands}}&numOfBands={{vm.selectedImage.properties.number_of_bands}}&imageId={{vm.selectedImage.properties.id}}&brightness={{vm.imageSpaceDefaults.brightness}}&contrast={{vm.imageSpaceDefaults.contrast}}&histOp={{vm.imageSpaceDefaults.histOp}}&histCenterTile={{vm.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{vm.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{vm.imageSpaceDefaults.sharpenMode}}" target="_blank">
@@ -45,6 +47,13 @@
            uib-tooltip="JPIP ortho"></i>
         </a>
       </div>
+
+    </div>
+    </div>
+    <div class="col-sm-4 text-center">
+      <h3 class="list-card-modal-header-title">Metadata</h3>
+    </div>
+    <div class="col-sm-4">
       <div class="list-card-modal-close">
         <i class="fa fa-close fa-2x" ng-click="$close()" style="cursor: pointer;" tooltip-placement="bottom" uib-tooltip="Close image view"></i>
       </div>
@@ -61,7 +70,7 @@
     </div>
     <div class="row">
       <uib-tabset>
-        <uib-tab heading="Metadata">
+        <uib-tab heading="Image">
           <div class="col-md-6">
             <h4>Source</h4>
             <div class="panel panel-primary">
@@ -149,6 +158,11 @@
                 </li>
               </ul>
             </div>
+            <h4>Acquisition Date:&nbsp;&nbsp;<span class="text-success">
+              <span ng-show="!vm.selectedImage.properties.acquisition_date">Unknown</span>
+              {{vm.selectedImage.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
+              <span ng-show="vm.selectedImage.properties.acquisition_date">z</span>
+            </h4>
           </div>
           <div class="col-md-6">
             <h4>Metrics</h4>
@@ -250,8 +264,30 @@
                 </li>
               </ul>
             </div>
+            <h4>Ingest Date:&nbsp;&nbsp;<span class="text-success">
+              <span ng-show="!vm.selectedImage.properties.ingest_date">Unknown</span>
+              {{vm.selectedImage.properties.ingest_date| date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
+              <span ng-show="vm.selectedImage.properties.ingest_date">z</span>
+            </h4>
           </div>
         </uib-tab>
+
+        <uib-tab heading="Avro" ng-click="vm.loadAvroMetadata()">
+          <div class="col-sm-12">
+            <br>
+            <p>Title: {{vm.avroMetaData.title}}</p>
+          </div>
+          <div class="col-sm-12">
+            <p>Message body: {{vm.avroMetaData.body}}</p>
+          </div>
+          <div class="col-md-6">
+            <p></p>
+          </div>
+          <div class="col-md-6">
+            <p></p>
+          </div>
+        </uib-tab>
+
         <uib-tab ng-show="vm.beLookupEnabled" heading="BE" ng-click="vm.loadBeData()">
           <div>
             <br>
@@ -277,24 +313,10 @@
             </table>
           </div>
         </uib-tab>
+
       </uib-tabset>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <h4>Acquisition Date:&nbsp;&nbsp;<span class="text-success">
-          <span ng-show="!vm.selectedImage.properties.acquisition_date">Unknown</span>
-          {{vm.selectedImage.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
-          <span ng-show="vm.selectedImage.properties.acquisition_date">z</span>
-        </h4>
-      </div>
-      <div class="col-md-6">
-        <h4>Ingest Date:&nbsp;&nbsp;<span class="text-success">
-          <span ng-show="!vm.selectedImage.properties.ingest_date">Unknown</span>
-          {{vm.selectedImage.properties.ingest_date| date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
-          <span ng-show="vm.selectedImage.properties.ingest_date">z</span>
-        </h4>
-      </div>
-    </div>
+
   </div>
 </div>
 <div class="modal-footer" id="modal-image-space-footer">

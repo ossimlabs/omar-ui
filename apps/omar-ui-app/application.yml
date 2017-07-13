@@ -132,30 +132,41 @@ grails:
 omar:
   openlayers:
     baseMaps:
-      -
-        layerType: "tilewms"
-        title: "BMNG Local"
-        url: "http://localhost/tilecache/tilecache.py"
-        params:
-          layers: "omar"
-          format: "image/jpeg"
-        options:
-          visible: true
+        -
+          layerType: "tilewms"
+          title: "OSM Basic"
+          url: "https://omar-rel.ossim.io/service-proxy/wmsProxy"
+          params:
+            layers: "o2-basemap-basic"
+            format: "image/jpeg"
+          options:
+            visible: false
+        -
+          layerType: "tilewms"
+          title: "OSM Bright"
+          url: "https://omar-rel.ossim.io/service-proxy/wmsProxy"
+          params:
+            layers: "o2-basemap-bright"
+            format: "image/jpeg"
+          options:
+            visible: true
   app:
     wfs:
-      baseUrl: http://localhost:80/omar-wfs/wfs?
+      baseUrl: http://localhost:8081/wfs?
       enabled: true
       proxy: /proxy/index?url=
     wms:
-      baseUrl: http://localhost:80/omar-wms/wms?
+      baseUrl: http://localhost:8081/wms?
       enabled: true
     imageSpace:
-      baseUrl: http://localhost:80/omar-wms/imageSpace
+      baseUrl: http://localhost:8081/imageSpace
       enabled: true
     thumbnails:
-      baseUrl: http://localhost:80/omar-wms/imageSpace/getThumbnail
+      baseUrl: http://localhost:8081/imageSpace/getThumbnail
     footprints:
-      baseUrl: http://localhost:80/omar-wms/footprints/getFootprints
+      baseUrl: http://localhost:8081/footprints/getFootprints
+    avroMetdataApp:
+      baseUrl: http://localhost:9999/some/cool/endpoint
     stagerApp:
       baseUrl: http://localhost:8081
     downloadApp:
@@ -213,3 +224,12 @@ spring:
       enabled: false
     discovery:
       enabled: false
+
+---
+grails:
+    cors:
+        enabled: true
+
+---
+# grails:
+#   serverURL: http://localhost:8888/omar-ui

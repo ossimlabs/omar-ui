@@ -351,6 +351,11 @@ body {
     float: right;
 }
 
+.avro-metadata-url {
+  word-wrap: break-word;
+  font-size: 10px;
+}
+
 #mapOrtho {
     width: 100%;
 }

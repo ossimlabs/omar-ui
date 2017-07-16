@@ -383,7 +383,6 @@
         // in the associated Avro metadata information
         vm.loadAvroMetadata = function loadAvroMetadata(imageId) {
 
-
           // Checks to see if there is a valid imageId to pass in
           // otherwise we don't need to send the request to the
           // avroMetadataService.
@@ -413,7 +412,7 @@
                   vm.avroMetadata = data;
 
               });
-                
+
             }
 
         });

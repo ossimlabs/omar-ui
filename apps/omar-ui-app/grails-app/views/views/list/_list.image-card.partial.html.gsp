@@ -1,5 +1,6 @@
 <div class="modal-header" id="modal-image-space">
   <div class="row">
+    <div class="col-sm-4">
     <div class="list-card-modal-header-links">
       <div class="text-primary list-card-image-modal-links" style="margin-top:.2em;">
         <a href="{{vm.o2baseUrlModal}}/#/mapImage?filename={{vm.selectedImage.properties.filename}}&entry_id={{vm.selectedImage.properties.entry_id}}&width={{vm.selectedImage.properties.width}}&height={{vm.selectedImage.properties.height}}&bands={{vm.imageSpaceDefaults.bands}}&numOfBands={{vm.selectedImage.properties.number_of_bands}}&imageId={{vm.selectedImage.properties.id}}&brightness={{vm.imageSpaceDefaults.brightness}}&contrast={{vm.imageSpaceDefaults.contrast}}&histOp={{vm.imageSpaceDefaults.histOp}}&histCenterTile={{vm.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{vm.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{vm.imageSpaceDefaults.sharpenMode}}" target="_blank">
@@ -45,6 +46,12 @@
            uib-tooltip="JPIP ortho"></i>
         </a>
       </div>
+    </div>
+    </div>
+    <div class="col-sm-4 text-center">
+      <h3 class="list-card-modal-header-title">Metadata</h3>
+    </div>
+    <div class="col-sm-4">
       <div class="list-card-modal-close">
         <i class="fa fa-close fa-2x" ng-click="$close()" style="cursor: pointer;" tooltip-placement="bottom" uib-tooltip="Close image view"></i>
       </div>
@@ -61,8 +68,14 @@
     </div>
     <div class="row">
       <uib-tabset>
-        <uib-tab heading="Metadata">
+        <uib-tab heading="Image">
+          <br>
           <div class="col-md-6">
+            <p>Acquisition Date:&nbsp;&nbsp;<span class="text-success">
+              <span ng-show="!vm.selectedImage.properties.acquisition_date">Unknown</span>
+              {{vm.selectedImage.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
+              <span ng-show="vm.selectedImage.properties.acquisition_date">z</span>
+            </p>
             <h4>Source</h4>
             <div class="panel panel-primary">
               <ul>
@@ -151,6 +164,11 @@
             </div>
           </div>
           <div class="col-md-6">
+            <p>Ingest Date:&nbsp;&nbsp;<span class="text-success">
+              <span ng-show="!vm.selectedImage.properties.ingest_date">Unknown</span>
+              {{vm.selectedImage.properties.ingest_date| date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
+              <span ng-show="vm.selectedImage.properties.ingest_date">z</span>
+            </p>
             <h4>Metrics</h4>
             <div class="panel panel-primary">
               <ul>
@@ -252,6 +270,89 @@
             </div>
           </div>
         </uib-tab>
+        <uib-tab heading="Avro" ng-click="vm.loadAvroMetadata(vm.selectedImage.properties.title)">
+          <br>
+          <div ng-show="vm.showAvroMetadata">
+            <div class="col-md-6">
+              <div class="panel panel-primary small">
+                <ul>
+                  <li>Abstract: <span class="text-success">{{vm.avroMetadata.abstract}}</span></li>
+                  <li>Actual Bit Count Per Pixel: <span class="text-success">{{vm.avroMetadata.actualBitCountPerPixel}}</span></li>
+                  <li>Area Target Id: <span class="text-success">{{vm.avroMetadata.areaTargetId}}</span></li>
+                  <li>BE Number: <span class="text-success">{{vm.avroMetadata.bENumber}}</span></li>
+                  <li>Band Count Quantity: <span class="text-success">{{vm.avroMetadata.bandCountQuantity}}</span></li>
+                  <li>Bounding Polygon Type Code: <span class="text-success">{{vm.avroMetadata.boundingPolygonTypeCode}}</span></li>
+                  <li>Centroid Coordinates: <span class="text-success">{{vm.avroMetadata.centroidCoordinates}}</span></li>
+                  <li>Circular Error: <span class="text-success">{{vm.avroMetadata.circularError}}</span></li>
+                  <li>Cloud Cover Percentage: <span class="text-success">{{vm.avroMetadata.cloudCoverPercentage}}</span></li>
+                  <li>Collection Mode Code: <span class="text-success">{{vm.avroMetadata.collectionModeCode}}</span></li>
+                  <li>Country Code: <span class="text-success">{{vm.avroMetadata.countryCode}}</span></li>
+                  <li>EDH DataSet: <span class="text-success">{{vm.avroMetadata.eDHDataSet}}</span></li>
+                  <li>File Format Name: <span class="text-success">{{vm.avroMetadata.fileFormatName}}</span></li>
+                  <li>File Name: <span class="text-success">{{vm.avroMetadata.fileName}}</span></li>
+                  <li>Footprint Coordinates: <span class="text-success">{{vm.avroMetadata.footprintCoordinates}}</span></li>
+                  <li>Footprint Geometry: <span class="text-success">{{vm.avroMetadata.footprintGeometry}}</span></li>
+                  <li>ICEDH Authorization Reference: <span class="text-success">{{vm.avroMetadata.iCEDHAuthorizationReference}}</span></li>
+                  <li>ICEDH Classification: <span class="text-success">{{vm.avroMetadata.iCEDHClassification}}</span></li>
+                  <li>ICEDH Classification Reason: <span class="text-success">{{vm.avroMetadata.iCEDHClassificationReason}}</span></li>
+                  <li>ICEDH Classified By: <span class="text-success">{{vm.avroMetadata.iCEDHClassifiedBy}}</span></li>
+                  <li>ICEDH DES Version: <span class="text-success">{{vm.avroMetadata.iCEDHDESVersion}}</span></li>
+                  <li>ICEDH Data Item Create Date Time: <span class="text-success">{{vm.avroMetadata.iCEDHDataItemCreateDateTime}}</span></li>
+                  <li>ICEDH Declass Exceptions: <span class="text-success">{{vm.avroMetadata.iCEDHDeclassExceptions}}</span></li>
+                  <li>ICEDH DerivedFrom: <span class="text-success">{{vm.avroMetadata.iCEDHDerivedFrom}}</span></li>
+                  <li>ICEDH Dissemination Controls: <span class="text-success">{{vm.avroMetadata.iCEDHDisseminationControls}}</span></li>
+                  <li>ICEDH Identifier: <span class="text-success">{{vm.avroMetadata.iCEDHIdentifier}}</span></li>
+                  <li>ICEDHLAC: <span class="text-success">{{vm.avroMetadata.iCEDHLAC}}</span></li>
+                  <li>iCEDHMAF: <span class="text-success">{{vm.avroMetadata.iCEDHMAF}}</span></li>
+                  <li>ICEDH Owner Producer: <span class="text-success">{{vm.avroMetadata.iCEDHOwnerProducer}}</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="panel panel-primary small">
+                <ul>
+                  <li>ICEDH Releasable To: <span class="text-success">{{vm.avroMetadata.iCEDHReleasableTo}}</span></li>
+                  <li>ICEDH Responsible Entity Country: <span class="text-success">{{vm.avroMetadata.iCEDHResponsibleEntityCountry}}</span></li>
+                  <li>ICEDH Responsible Entity Organization: <span class="text-success">{{vm.avroMetadata.iCEDHResponsibleEntityOrganization}}</span></li>
+                  <li>ICEDH Responsible Entity Suborganization: <span class="text-success">{{vm.avroMetadata.iCEDHResponsibleEntitySuborganization}}</span></li>
+                  <li>ICEDH  Sci Controls: <span class="text-success">{{vm.avroMetadata.iCEDHSciControls}}</span></li>
+                  <li>Image Polarization: <span class="text-success">{{vm.avroMetadata.imagePolarization}}</span></li>
+                  <li>Image Representation: <span class="text-success">{{vm.avroMetadata.imageRepresentation}}</span></li>
+                  <li>Image Type Code: <span class="text-success">{{vm.avroMetadata.imageTypeCode}}</span></li>
+                  <li>JPEG Reduced Resolution: <span class="text-success">{{vm.avroMetadata.jpegReducedResolution}}</span></li>
+                  <li>LIMDISCODE: <span class="text-success">{{vm.avroMetadata.lIMDISCODE}}</span></li>
+                  <li>MBR East: <span class="text-success">{{vm.avroMetadata.mBREAST}}</span></li>
+                  <li>MBR North: <span class="text-success">{{vm.avroMetadata.mBRNORTH}}</span></li>
+                  <li>MBR South: <span class="text-success">{{vm.avroMetadata.mBRSOUTH}}</span></li>
+                  <li>MBR West: <span class="text-success">{{vm.avroMetadata.mBRWEST}}</span></li>
+                  <li>Mission ID: <span class="text-success">{{vm.avroMetadata.missionID}}</span></li>
+                  <li>Observation Date Time: <span class="text-success">{{vm.avroMetadata.observationDateTime}}</span></li>
+                  <li>Origination Station Id: <span class="text-success">{{vm.avroMetadata.originationStationId}}</span></li>
+                  <li>Platform Name: <span class="text-success">{{vm.avroMetadata.platformName}}</span></li>
+                  <li>Product Creation Date: <span class="text-success">{{vm.avroMetadata.productCreationDate}}</span></li>
+                  <li>Reference Image Type Text: <span class="text-success">{{vm.avroMetadata.referenceImageTypeText}}</span></li>
+                  <li>Replay Designator: <span class="text-success">{{vm.avroMetadata.replayDesignator}}</span></li>
+                  <li>Resource Category Name: <span class="text-success">{{vm.avroMetadata.resourceCategoryName}}</span></li>
+                  <li>Sensor Name: <span class="text-success">{{vm.avroMetadata.sensorName}}</span></li>
+                  <li>Size Quantity: <span class="text-success">{{vm.avroMetadata.sizeQuantity}}</span></li>
+                  <li>Target Alternate ID: <span class="text-success">{{vm.avroMetadata.targetAlternateID}}</span></li>
+                  <li>Title Text: <span class="text-success">{{vm.avroMetadata.titleText}}</span></li>
+                  <li>Type Text: <span class="text-success">{{vm.avroMetadata.typeText}}</span></li>
+                  <li>X Axis Dimension: <span class="text-success">{{vm.avroMetadata.xAxisDimension}}</span></li>
+                  <li>Y Axis Dimension: <span class="text-success">{{vm.avroMetadata.yAxisDimension}}</span></li>
+              </ul>
+              </div>
+            </div>
+            <div class="col-md-12" >
+              URL: <span class="text-success avro-metadata-url">{{vm.avroMetadata.uRL}}</span>
+            </div>
+          </div>
+          <div class="col-md-12" ng-show="!vm.showAvroMetadata">
+            <div class="alert alert-warning">
+              <p>Could not find Avro metadata for the selected image.</p>
+            </div>
+          </div>
+        </uib-tab>
         <uib-tab ng-show="vm.beLookupEnabled" heading="BE" ng-click="vm.loadBeData()">
           <div>
             <br>
@@ -279,22 +380,7 @@
         </uib-tab>
       </uib-tabset>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <h4>Acquisition Date:&nbsp;&nbsp;<span class="text-success">
-          <span ng-show="!vm.selectedImage.properties.acquisition_date">Unknown</span>
-          {{vm.selectedImage.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
-          <span ng-show="vm.selectedImage.properties.acquisition_date">z</span>
-        </h4>
-      </div>
-      <div class="col-md-6">
-        <h4>Ingest Date:&nbsp;&nbsp;<span class="text-success">
-          <span ng-show="!vm.selectedImage.properties.ingest_date">Unknown</span>
-          {{vm.selectedImage.properties.ingest_date| date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
-          <span ng-show="vm.selectedImage.properties.ingest_date">z</span>
-        </h4>
-      </div>
-    </div>
+
   </div>
 </div>
 <div class="modal-footer" id="modal-image-space-footer">

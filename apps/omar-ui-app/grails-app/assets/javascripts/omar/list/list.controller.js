@@ -265,7 +265,7 @@
             var modalInstance = $uibModal.open({
                 size: 'lg',
                 templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-card.partial.html',
-                controller: ['shareService', 'downloadService', '$uibModalInstance', 'beNumberService', '$scope', 'imageObj', 'imageSpaceDefaults', ImageModalController],
+                controller: ['shareService', 'downloadService', '$uibModalInstance', 'beNumberService', 'avroMetadataService', '$scope', 'imageObj', 'imageSpaceDefaults', ImageModalController],
                 controllerAs: 'vm',
                 resolve: {
                     imageObj: function() {
@@ -311,10 +311,11 @@
     }
 
     // Handles the selected image modal obj
-    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, $scope, imageObj, imageSpaceDefaults) {
+    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults) {
 
         var vm = this;
         vm.beData = [];
+        vm.avroMetaData;
 
         vm.selectedImage = imageObj;
         //used in the modal _list.image-card.partial.html.gsp
@@ -374,6 +375,47 @@
                 'sharpenMode=' + defaults.sharpenMode + '&' +
                 'width=' + properties.width;
         }
+
+        // Used to show/hide the 'Image not found message'
+        vm.showAvroMetadata = true;
+
+        // Executes a query to the omar-avro-metadata service to pull
+        // in the associated Avro metadata information
+        vm.loadAvroMetadata = function loadAvroMetadata(imageId) {
+
+          // Checks to see if there is a valid imageId to pass in
+          // otherwise we don't need to send the request to the
+          // avroMetadataService.
+          if(imageId === undefined || imageId === ''){
+
+            vm.showAvroMetadata = false;
+            return;
+
+          }
+
+          avroMetadataService.getAvroMetadata(imageId);
+
+        }
+
+        // Updates the data in the Metadata modal after a
+        // a user clicks on the Avro tab
+        $scope.$on('avroMetadata: updated', function(event, data) {
+
+            // If there isn't any data show the 'not found message'
+            if (!data){
+              vm.showAvroMetadata = false;
+            } else {
+
+              // Bind the image metadata to the UI
+              $scope.$apply(function() {
+
+                  vm.avroMetadata = data;
+
+              });
+
+            }
+
+        });
 
         vm.loadBeData = function loadBeData(geom) {
             vm.beData = beNumberService.getBeData(new ol.geom.MultiPolygon(imageObj.geometry.coordinates));

@@ -376,29 +376,45 @@
                 'width=' + properties.width;
         }
 
-        vm.loadAvroMetadata = function loadAvroMetadata() {
+        // Used to show/hide the 'Image not found message'
+        vm.showAvroMetadata = true;
 
-          //console.log('Loading metadata...');
-          avroMetadataService.getAvroMetadata();
+        // Executes a query to the omar-avro-metadata service to pull
+        // in the associated Avro metadata information
+        vm.loadAvroMetadata = function loadAvroMetadata(imageId) {
+
+
+          // Checks to see if there is a valid imageId to pass in
+          // otherwise we don't need to send the request to the
+          // avroMetadataService.
+          if(imageId === undefined || imageId === ''){
+
+            vm.showAvroMetadata = false;
+            return;
+
+          }
+
+          avroMetadataService.getAvroMetadata(imageId);
 
         }
 
+        // Updates the data in the Metadata modal after a
+        // a user clicks on the Avro tab
         $scope.$on('avroMetadata: updated', function(event, data) {
 
-            // Update the Avro metadata tab
-            $scope.$apply(function() {
+            // If there isn't any data show the 'not found message'
+            if (!data){
+              vm.showAvroMetadata = false;
+            } else {
 
-                vm.avroMetaData = data;
+              // Bind the image metadata to the UI
+              $scope.$apply(function() {
 
-                var firstMessageString = data.avroMetadata;
-                //console.log('firstMessageString', firstMessageString);
-                var secondMessageString = JSON.parse(firstMessageString);
-                //console.log('secondMessageString', secondMessageString);
-                var avroObj = JSON.parse(secondMessageString.Message);
-                console.log('avroObj', avroObj);
-                vm.avroMetadata = avroObj;
+                  vm.avroMetadata = data;
 
-            });
+              });
+                
+            }
 
         });
 

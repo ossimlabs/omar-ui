@@ -232,13 +232,13 @@ function mapService(stateService, wfsService) {
     {
       // Map over each map item in the baseMaps array
       AppO2.APP_CONFIG.openlayers.baseMaps.map(addBaseMapLayers);
-      console.log("AppO2.APP_CONFIG.openlayers.baseMaps is null");
+      //console.log("AppO2.APP_CONFIG.openlayers.baseMaps is null");
     }
     if(AppO2.APP_CONFIG.openlayers.overlayLayers != null)
     {
       // Map over each layer item in the overlayLayers array
       AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
-      console.log("AppO2.APP_CONFIG.openlayers.overlayLayers is null");
+      //console.log("AppO2.APP_CONFIG.openlayers.overlayLayers is null");
 
     }
     overlayGroup.getLayers().push(footPrints);

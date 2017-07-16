@@ -4,31 +4,57 @@
     .module('omarApp')
     .service('avroMetadataService', ['$rootScope', '$http', '$timeout', avroMetadataService]);
 
-    function avroMetadataService($rootScope, $http, $timeout) {
+    function avroMetadataService($rootScope, $http, $timeout, $scope) {
 
       var avroData;
 
-      this.getAvroMetadata = function() {
+      this.getAvroMetadata = function(imageId) {
+
+        //console.log('imageId: ', imageId);
 
         var avroMetadataUrl = AppO2.APP_CONFIG.params.avroMetadataApp.baseUrl;
 
         $http({
           method: 'GET',
-          url: avroMetadataUrl + '04APR16CS0207001_110646_SM0262R_29N081W_001X___SHH_0101_OBS_IMAG'
-        }).then(function(response){
+          url: avroMetadataUrl + imageId,
+
+        }).then(function success (response){
+
           var data;
-          data = response.data;
+          var avroObj;
+          data = response.data.data;
+
+          // If there was no image found we will return false for the avroObj,
+          // and send the response back to the list controller so that the
+          // could not be found can be displayed
+          if(data === 'AvroMetadata for imageId ' + imageId + ' not found') {
+
+            avroObj = false;
+
+          } else {
+
+            // Send the found avro data back as the  avroObj to the
+            // controller so that it can be displayed
+            var firstMessageString = data.avroMetadata;
+            var secondMessageString = JSON.parse(firstMessageString);
+            avroObj = JSON.parse(secondMessageString.Message);
+
+          }
 
           // $timeout needed: http://stackoverflow.com/a/18996042
-          $timeout( function ()
-          {
-              $rootScope.$broadcast('avroMetadata: updated', data);
-              //console.log( 'data object...', data );
-              avroData = data;
-          } );
-        })
+          $timeout(function() {
 
-        // TODO: Need to catch errors here...
+              $rootScope.$broadcast('avroMetadata: updated', avroObj);
+              avroData = avroObj;
+
+          });
+
+
+        }, function error (response){
+
+          console.log('Error accessing data!', response);
+
+        });
 
         return avroData;
 

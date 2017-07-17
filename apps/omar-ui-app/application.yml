@@ -204,7 +204,6 @@ omar:
       icons:
         greenMarker: assets/search_marker_green.png
       listRefreshButtonVisible: true
-      # listRefreshButtonVisible: true
 #      placemarks:
 #        tableName: omar:cities
 #        columnName: CITY_NAME

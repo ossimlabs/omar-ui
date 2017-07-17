@@ -215,6 +215,8 @@ omar:
 #        styles: 'bySensorType'
 #        styles: 'byMissionType'
         format: 'image/gif'
+    avroMetadataApp:
+      baseUrl: http://localhost:8081/omar-avro-metadata/avroMetadata/get/
     mensaApp:
       baseUrl: http://localhost:8081/mensa
     stagerApp:
@@ -252,6 +254,7 @@ omar:
       #beLookupEnabled: true
       icons:
         greenMarker: assets/search_marker_green.png
+      listRefreshButtonVisible: true
       #placemarks:
         #tableName: omar:be_number
         #columnName: be

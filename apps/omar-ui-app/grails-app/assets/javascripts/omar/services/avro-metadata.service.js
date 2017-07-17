@@ -10,13 +10,11 @@
 
       this.getAvroMetadata = function(imageId) {
 
-        //console.log('imageId: ', imageId);
-
         var avroMetadataUrl = AppO2.APP_CONFIG.params.avroMetadataApp.baseUrl;
 
         $http({
           method: 'GET',
-          url: avroMetadataUrl + imageId,
+          url: avroMetadataUrl + encodeURIComponent(imageId),
 
         }).then(function success (response){
 

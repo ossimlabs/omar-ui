@@ -270,7 +270,7 @@
             </div>
           </div>
         </uib-tab>
-        <uib-tab heading="Avro" ng-click="vm.loadAvroMetadata(vm.selectedImage.properties.title)">
+        <uib-tab heading="Avro" ng-click="vm.loadAvroMetadata()">
           <br>
           <div ng-show="vm.showAvroMetadata">
             <div class="col-md-6">

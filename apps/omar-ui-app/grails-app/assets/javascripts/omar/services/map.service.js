@@ -102,8 +102,8 @@ function mapService(stateService, wfsService) {
       extent: [-180, -90, 180, 90],
       projection: 'EPSG:4326',
       zoom: 12,
-      minZoom: 1,
-      //maxZoom: 18
+      minZoom: 2,
+      maxZoom: 20
     });
 
     var version="1.1.1";

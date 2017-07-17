@@ -26,7 +26,6 @@
           vm.pageLimit = AppO2.APP_CONFIG.params.misc.pageLimit;
         }
 
-        //vm.thumbPath = '/o2/imageSpace/getThumbnail?';
         vm.thumbPath = AppO2.APP_CONFIG.params.thumbnails.baseUrl;
         vm.thumbFilename = '&filename='; // Parameter provided by image.properties.filename
         vm.thumbEntry = '&entry='; // Parameter provided by image.properties.entry_id
@@ -63,66 +62,20 @@
             };
 
             switch (imageType) {
-                // case "adrg":
-                //     border["border-color"] = "#326F6F"; // atoll
-                //     break;
-                // case "aaigrid":
-                //     border["border-color"] = "pink";
-                //     break;
-                // case "cadrg":
-                //     border["border-color"] = "#00FFFF"; // cyan
-                //     border["border-width"] = "2px"; // makes it look the same size as others
-                //     break;
-                // case "ccf":
-                //     border["border-color"] = "#8064FF"; // light slate blue
-                //     break;
-                // case "cib":
-                //     border["border-color"] = "#008080"; // teal
-                //     border["border-width"] = "2px"; // makes it look the same size as others
-                //     break;
-                // case "doqq":
-                //     border["border-color"] = "purple";
-                //     break;
-                // case "dted":
-                //     border["border-color"] = "#00FF00"; // green
-                //     break;
-                // case "imagine_hfa":
-                //     border["border-color"] = "lightGrey";
-                //     //border["border-width"] = "1.5px"; // makes it look the same size as others
-                //     break;
-                // case "jpeg":
-                //     border["border-color"] = "#FFFF00"; // yellow
-                //     break;
-                // case "jpeg2000":
-                //     border["border-color"] = "#FFC800"; // orange
-                //     break;
-                // case "landsat7":
-                //     border["border-color"] = "#FF00FF"; // pink
-                //     break;
-                // case "mrsid":
-                //     border["border-color"] = "#00BC00"; // light green
-                //     break;
-                // case "nitf":
-                //     border["border-color"] = "#0000FF"; // blue
-                //     break;
-                // case "tiff":
-                //     border["border-color"] = "#FF0000"; // red
-                //     break;
-                // case "mpeg":
-                //     border["border-color"] = "#A4FEFF"; // red
-                //     break;
-                // case "unspecified":
-                //     border["border-color"] = "white";
-                //     //border["border-width"] = "1.5px"; // makes it look the same size as others
-                //     break;
                 default:
                     border["border-color"] = "white";
-                    //border["border-width"] = "2px"; // makes it look the same size as others
 
             }
 
             return border;
         };
+
+        vm.listRefreshButtonVisible = AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
+        vm.refreshList = function(){
+
+          wfsService.executeWfsQuery();
+
+        }
 
         // Shows/Hides the KML SuperOverlay button based on parameters passed down
         // from application.yml
@@ -139,7 +92,6 @@
         }
 
         vm.o2baseUrl = AppO2.APP_CONFIG.serverURL + '/omar';
-        //vm.o2contextPath = AppO2.APP_CONTEXTPATH;
 
         var imageSpaceDefaults = {
               bands: 'default',
@@ -376,24 +328,58 @@
                 'width=' + properties.width;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Used to show/hide the 'Image not found message'
         vm.showAvroMetadata = true;
 
         // Executes a query to the omar-avro-metadata service to pull
         // in the associated Avro metadata information
-        vm.loadAvroMetadata = function loadAvroMetadata(imageId) {
+        vm.loadAvroMetadata = function loadAvroMetadata() {
+
+          //console.log('imageObj', imageObj);
 
           // Checks to see if there is a valid imageId to pass in
-          // otherwise we don't need to send the request to the
-          // avroMetadataService.
-          if(imageId === undefined || imageId === ''){
+          // otherwise we need to use the image's filename
+          if(imageObj.properties.title === undefined || imageObj.properties.title === '') {
 
-            vm.showAvroMetadata = false;
-            return;
+            // If there isn't a filename we just return and show the image can not be
+            // found message
+            if(imageObj.properties.filename === undefined || imageObj.properties.filename === '') {
+
+              // Shows the 'Could not find Avro metadata for the selected image.' message
+              vm.showAvroMetadata = false;
+              return;
+
+            }
+
+            var fileFullPath = imageObj.properties.filename;
+            // Split at the dot so that we can start getting to only the filename
+            var fileFullPathSplit = fileFullPath.split(".")[0];
+            // Remove the slashes, and the filepath
+            var fileName = fileFullPathSplit.replace(/^.*[\\\/]/, '');
+
+            avroMetadataService.getAvroMetadata(fileName);
+
+          } else {
+
+            avroMetadataService.getAvroMetadata(imageObj.properties.title);
 
           }
-
-          avroMetadataService.getAvroMetadata(imageId);
 
         }
 
@@ -403,7 +389,9 @@
 
             // If there isn't any data show the 'not found message'
             if (!data){
+
               vm.showAvroMetadata = false;
+
             } else {
 
               // Bind the image metadata to the UI

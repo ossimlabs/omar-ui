@@ -281,6 +281,14 @@ body {
     }
 }
 
+.navbar-sort-refresh {
+  padding-left: 5px;
+}
+
+.button-sort-refresh {
+  margin-top: 4px;
+}
+
 #list {
     overflow-y: auto;
     padding-right: 5px;

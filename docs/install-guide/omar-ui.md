@@ -97,6 +97,7 @@ omar:
     misc:
       icons:
         green-marker: search_marker_green.png
+      listRefreshButtonVisible: true
     totalPaginationCount: 1000
     pageLimit: 10
 
@@ -136,10 +137,10 @@ classificationBanner:
  * **enabled** Allows one to specify if the service is enabled.
 * **omar.app.misc** Base settings for the O2 UI general configuration
  * **beLookupEnabled** Enable BE number lookups in the search field.
+ * **listRefreshButtonVisible** Display or hide the refresh button in the Sort menu.
  * **placemarks** The placemarks uses the WFS query engine to query placemark locations based on BE numbers.  the table name is the namespace and table name where the be's are stored and is a WFS tableId entry.  The other columns specified is the be name "be" and the spatial column name "location".  Note, "location" and "be" are arbitrary and should match the column names in the BE table you have imported.  
  * **totalPaginationCount** is used to limit the number of items to paginate through.  
- * **pageLimit** is used to identify the number of items to show per page. 
+ * **pageLimit** is used to identify the number of items to show per page.
 * **classificationBanner**
  * **backgroundColor** Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.  For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
  * **classificationType** This is the string displayed in the banners.  So setting to "My Secret Stuff" would print that string at the top and bottom of every page with a background color identified by the **backgroundColor** field
-

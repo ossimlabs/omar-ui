@@ -153,9 +153,9 @@ omar:
       baseUrl: http://localhost:80/omar-wms/imageSpace
       enabled: true
     thumbnails:
-      baseUrl: http://localhost:80/omar-wms/imageSpace/getThumbnail
+      baseUrl: http://localhost:80/omar-oms/imageSpace/getThumbnail
     footprints:
-      baseUrl: http://localhost:80/omar-wms/footprints/getFootprints
+      baseUrl: http://localhost:80/omar-geoscript/footprints/getFootprints
     stagerApp:
       baseUrl: http://localhost:8081
     downloadApp:

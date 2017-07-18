@@ -675,8 +675,8 @@
                 <span class="fa fa-refresh"></span>
             </button>
           </form>
-          <p class="navbar-text pull-right">&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="label label-primary">{{list.wfsFeatures}}</span>
+          <p class="navbar-text pull-right navbar-sort-list-number">
+          <span class="label label-primary">{{list.wfsFeatures}}</span>
           </p>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

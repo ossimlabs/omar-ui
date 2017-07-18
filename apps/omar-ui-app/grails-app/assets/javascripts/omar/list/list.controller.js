@@ -328,22 +328,6 @@
                 'width=' + properties.width;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // Used to show/hide the 'Image not found message'
         vm.showAvroMetadata = true;
 
@@ -352,6 +336,8 @@
         vm.loadAvroMetadata = function loadAvroMetadata() {
 
           //console.log('imageObj', imageObj);
+          console.log('title: ', imageObj.properties.title);
+          console.log('title from vm', vm.selectedImage.properties.title);
 
           // Checks to see if there is a valid imageId to pass in
           // otherwise we need to use the image's filename

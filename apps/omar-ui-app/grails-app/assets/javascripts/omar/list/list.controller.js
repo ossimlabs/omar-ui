@@ -71,9 +71,11 @@
         };
 
         vm.listRefreshButtonVisible = AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
+        vm.refreshSpin = false;
         vm.refreshList = function(){
 
           wfsService.executeWfsQuery();
+          vm.refreshSpin = true;
 
         }
 
@@ -194,8 +196,11 @@
 
             // Update the DOM (card list) with the data
             $scope.$apply(function() {
+
                 vm.wfsData = data;
                 $("#list").animate({ scrollTop: 0 }, "fast");
+                vm.refreshSpin = false;
+                
             });
 
         });

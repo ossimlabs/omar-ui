@@ -672,7 +672,7 @@
               ng-click="list.refreshList()"
               tooltip-placement="bottom"
               uib-tooltip="Refresh the image list data">
-                <span class="fa fa-refresh"></span>
+                <span class="fa fa-refresh" ng-class="{'fa-spin fa-pulse': list.refreshSpin}"></span>
             </button>
           </form>
           <p class="navbar-text pull-right navbar-sort-list-number">

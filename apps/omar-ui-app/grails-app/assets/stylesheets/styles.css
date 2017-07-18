@@ -281,6 +281,14 @@ body {
     }
 }
 
+.navbar-sort-refresh {
+  padding-left: 5px;
+}
+
+.button-sort-refresh {
+  margin-top: 4px;
+}
+
 #list {
     overflow-y: auto;
     padding-right: 5px;
@@ -331,11 +339,16 @@ body {
     width: 100%;
 }
 
-.list-card-modal-header-links{
+.list-card-modal-header-links {
     position: relative;
     width: 100%;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.list-card-modal-header-title {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .list-card-image-modal-links {
@@ -344,6 +357,11 @@ body {
 
 .list-card-modal-close{
     float: right;
+}
+
+.avro-metadata-url {
+  word-wrap: break-word;
+  font-size: 10px;
 }
 
 #mapOrtho {

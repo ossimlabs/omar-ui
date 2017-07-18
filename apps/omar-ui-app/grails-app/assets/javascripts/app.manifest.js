@@ -48,6 +48,7 @@
 //= require omar/services/share.service.js
 //= require omar/services/download.service.js
 //= require omar/services/coordinate-conversion-service.js
+//= require omar/services/avro-metadata.service.js
 
 // <--Nav-->
 //= require omar/nav/nav.controller.js

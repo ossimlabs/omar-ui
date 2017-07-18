@@ -132,30 +132,49 @@ grails:
 omar:
   openlayers:
     baseMaps:
-      -
-        layerType: "tilewms"
-        title: "BMNG Local"
-        url: "http://localhost/tilecache/tilecache.py"
-        params:
-          layers: "omar"
-          format: "image/jpeg"
-        options:
-          visible: true
+        -
+          layerType: "tilewms"
+          title: "OSM Basic"
+          url: "https://omar-rel.ossim.io/service-proxy/wmsProxy"
+          params:
+            layers: "o2-basemap-basic"
+            format: "image/jpeg"
+          options:
+            visible: false
+        -
+          layerType: "tilewms"
+          title: "OSM Bright"
+          url: "https://omar-rel.ossim.io/service-proxy/wmsProxy"
+          params:
+            layers: "o2-basemap-bright"
+            format: "image/jpeg"
+          options:
+            visible: true
   app:
     wfs:
-      baseUrl: http://localhost:80/omar-wfs/wfs?
+      #baseUrl: http://localhost:8081/wfs?
+      baseUrl: https://omar-dev.ossim.io/omar-wfs/wfs?
       enabled: true
       proxy: /proxy/index?url=
     wms:
-      baseUrl: http://localhost:80/omar-wms/wms?
+      #baseUrl: http://localhost:8081/wms?
+      baseUrl: https://omar-dev.ossim.io/omar-wms/wms?
       enabled: true
     imageSpace:
-      baseUrl: http://localhost:80/omar-wms/imageSpace
+      #baseUrl: http://localhost:8081/imageSpace
+      baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace
       enabled: true
     thumbnails:
       baseUrl: http://localhost:80/omar-oms/imageSpace/getThumbnail
     footprints:
       baseUrl: http://localhost:80/omar-geoscript/footprints/getFootprints
+      #baseUrl: http://localhost:8081/imageSpace/getThumbnail
+      #baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
+    footprints:
+      baseUrl: http://localhost:8081/footprints/getFootprints
+      #baseUrl: https://omar-dev.ossim.io/omar-geoscript/footprints/getFootprints
+    avroMetadataApp:
+      baseUrl: https://omar-dev.ossim.io/omar-avro-metadata/avroMetadata/get/
     stagerApp:
       baseUrl: http://localhost:8081
     downloadApp:
@@ -187,6 +206,7 @@ omar:
     misc:
       icons:
         greenMarker: assets/search_marker_green.png
+      listRefreshButtonVisible: true
 #      placemarks:
 #        tableName: omar:cities
 #        columnName: CITY_NAME
@@ -213,3 +233,12 @@ spring:
       enabled: false
     discovery:
       enabled: false
+
+---
+grails:
+    cors:
+        enabled: true
+
+---
+# grails:
+#   serverURL: http://localhost:8888/omar-ui

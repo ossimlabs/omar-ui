@@ -667,6 +667,14 @@
               </ul>
             </li>
           </ul>
+          <form class="navbar-form navbar-left navbar-sort-refresh" ng-show="list.listRefreshButtonVisible">
+            <button class="btn btn-primary button-sort-refresh"
+              ng-click="list.refreshList()"
+              tooltip-placement="bottom"
+              uib-tooltip="Refresh the image list data">
+                <span class="fa fa-refresh"></span>
+            </button>
+          </form>
           <p class="navbar-text pull-right">&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="label label-primary">{{list.wfsFeatures}}</span>
           </p>

@@ -165,40 +165,36 @@ omar:
       baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace
       enabled: true
     thumbnails:
-      baseUrl: http://localhost:80/omar-oms/imageSpace/getThumbnail
+      baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
     footprints:
-      baseUrl: http://localhost:80/omar-geoscript/footprints/getFootprints
-      #baseUrl: http://localhost:8081/imageSpace/getThumbnail
-      #baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
-    footprints:
-      baseUrl: http://localhost:8081/footprints/getFootprints
-      #baseUrl: https://omar-dev.ossim.io/omar-geoscript/footprints/getFootprints
+      #baseUrl: http://localhost:8081/footprints/getFootprints
+      baseUrl: https://omar-dev.ossim.io/omar-geoscript/footprints/getFootprints
     avroMetadataApp:
       baseUrl: https://omar-dev.ossim.io/omar-avro-metadata/avroMetadata/get/
     stagerApp:
-      baseUrl: http://localhost:8081
+      baseUrl: https://omar-dev.ossim.io
     downloadApp:
-      baseUrl: http://localhost:8081
+      baseUrl: https://omar-dev.ossim.io
     apiApp:
-      baseUrl: http://localhost:8081/api
+      baseUrl: https://omar-dev.ossim.io/api
       enabled: true
     tlvApp:
-      baseUrl: http://o2.radiantbluecloud.com/tlv
+      baseUrl: https://omar-dev.ossim.io/tlv
       enabled: true
     twofishes:
       baseUrl: http://demo.twofishes.net
       proxy: /twoFishesProxy
     swipeApp:
-      baseUrl: http://localhost:8081/swipe
+      baseUrl: https://omar-dev.ossim.io/swipe
       enabled: false
     kmlApp:
-      baseUrl: http://localhost:8081/
+      baseUrl: https://omar-dev.ossim.io/
       enabled: true
     jpipApp:
-      baseUrl: http://localhost:8081/jpip
+      baseUrl: https://omar-dev.ossim.io/jpip
       enabled: true
     wmtsApp:
-      baseUrl: http://localhost:8081/wmts
+      baseUrl: https://omar-dev.ossim.io/wmts
       enabled: false
     #piwikApp:
       #baseUrl: http://omar.ossim.org/piwik/

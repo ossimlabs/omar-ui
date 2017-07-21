@@ -1,6 +1,7 @@
+---
 server:
   contextPath: /omar-ui
----
+
 hibernate:
     cache:
         queries: false
@@ -152,8 +153,8 @@ omar:
             visible: true
   app:
     wfs:
-      #baseUrl: http://localhost:8081/wfs?
-      baseUrl: https://omar-dev.ossim.io/omar-wfs/wfs?
+      baseUrl: http://localhost:8081/wfs?
+      #baseUrl: https://omar-dev.ossim.io/omar-wfs/wfs?
       enabled: true
       proxy: /proxy/index?url=
     wms:
@@ -167,8 +168,9 @@ omar:
     thumbnails:
       baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
     footprints:
-      #baseUrl: http://localhost:8081/footprints/getFootprints
-      baseUrl: https://omar-dev.ossim.io/omar-geoscript/footprints/getFootprints
+      baseUrl: http://localhost:80/omar-geoscript/footprints/getFootprints
+      #baseUrl: http://localhost:8081/imageSpace/getThumbnail
+      #baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
     avroMetadataApp:
       baseUrl: https://omar-dev.ossim.io/omar-avro-metadata/avroMetadata/get/
     stagerApp:

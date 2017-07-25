@@ -136,25 +136,25 @@ omar:
         -
           layerType: "tilewms"
           title: "OSM Basic"
-          url: "https://omar-rel.ossim.io/service-proxy/wmsProxy"
+          url: "https://omar-dev.ossim.io/o2-mapproxy/service"
           params:
             layers: "o2-basemap-basic"
             format: "image/jpeg"
           options:
-            visible: false
+            visible: true
         -
           layerType: "tilewms"
           title: "OSM Bright"
-          url: "https://omar-rel.ossim.io/service-proxy/wmsProxy"
+          url: "https://omar-rel.ossim.io/o2-mapproxy/service"
           params:
             layers: "o2-basemap-bright"
             format: "image/jpeg"
           options:
-            visible: true
+            visible: false
   app:
     wfs:
-      baseUrl: http://localhost:8081/wfs?
-      #baseUrl: https://omar-dev.ossim.io/omar-wfs/wfs?
+      #baseUrl: http://localhost:8081/wfs?
+      baseUrl: https://omar-dev.ossim.io/omar-wfs/wfs?
       enabled: true
       proxy: /proxy/index?url=
     wms:
@@ -162,15 +162,15 @@ omar:
       baseUrl: https://omar-dev.ossim.io/omar-wms/wms?
       enabled: true
     imageSpace:
-      #baseUrl: http://localhost:8081/imageSpace
+      #baseUrl: http://localhost:8081/omar-oms/imageSpace
       baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace
       enabled: true
     thumbnails:
+      #baseUrl: http://localhost:8081/omar-oms/imageSpace/getThumbnail
       baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
     footprints:
-      baseUrl: http://localhost:80/omar-geoscript/footprints/getFootprints
-      #baseUrl: http://localhost:8081/imageSpace/getThumbnail
-      #baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
+      #baseUrl: http://localhost:80/omar-geoscript/footprints/getFootprints
+      baseUrl: https://omar-dev.ossim.io/omar-oms/imageSpace/getThumbnail
     avroMetadataApp:
       baseUrl: https://omar-dev.ossim.io/omar-avro-metadata/avroMetadata/get/
     stagerApp:

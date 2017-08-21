@@ -591,7 +591,7 @@
         <div class="col-sm-4">
           <form id="searchForm" class="searchForm">
             <div class="input-group input-group-sm" ng-controller="SearchController as search">
-              <input id="searchInput" type="text" ng-model="search.searchInput" class="form-control" placeholder="Search O2" autofocus>
+              <input id="searchInput" type="text" ng-model="search.searchInput" class="form-control" placeholder="BE, Coordinate or Placename" autofocus>
               <span class="input-group-btn">
                 <button class="btn btn-info" type="button" ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled"><span class="glyphicon glyphicon-search"></span></button>
                 <button class="btn btn-default" type="button" ng-click="search.resetSearchInput()"><span class="glyphicon glyphicon-remove"></span></button>
@@ -657,7 +657,7 @@
               </a>
               <ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('CSV')">CSV</a></li>
-                <li ng-show="{{wfsOutputDownload.isaAppEnabled}}"><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToISA()">3DISA</a></li>
+                <li ng-show="{{wfsOutputDownload.isaAppEnabled}}"><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToISA()">ISA</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML2')">GML2</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML3')">GML3</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML32')">GML32</a></li>

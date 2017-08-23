@@ -241,7 +241,6 @@
 
           ol.source.TileImage.call(this, {
             attributions: options.attributions,
-            crossOrigin: options.crossOrigin,
             logo: options.logo,
             reprojectionErrorThreshold: options.reprojectionErrorThreshold,
             tileClass: ol.source.ZoomifyTile,
@@ -324,7 +323,6 @@
 
             });
 
-            var crossOrigin = 'anonymous';
             imgCenter = [imgWidth / 2, -imgHeight / 2];
 
             // Maps always need a projection, but Zoomify layers are not geo-referenced, and
@@ -342,7 +340,6 @@
               entry: entry,
               outputFormat: 'jpeg',
               size: [imgWidth, imgHeight],
-              crossOrigin: crossOrigin,
               numOfBands: numOfBands,
               bands: bands,
               brightness: brightness,
@@ -359,8 +356,7 @@
               filename: filename,
               entry: entry,
               outputFormat: 'png',
-              size: [imgWidth, imgHeight],
-              crossOrigin: crossOrigin
+              size: [imgWidth, imgHeight]
             });
 
             var interactions = ol.interaction.defaults({

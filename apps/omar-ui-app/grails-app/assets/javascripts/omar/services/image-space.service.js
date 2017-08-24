@@ -39,40 +39,37 @@
             imgID,
             transparent;
 
-        // Sets the initial url values for the oms service
-        var imageSpaceBaseUrl // = stateService.omarSitesState.url.base;
-        var imageSpaceContextPath // = stateService.omarSitesState.url.omsContextPath;
-        var imageSpaceRequestUrl // = imageSpaceBaseUrl + imageSpaceContextPath + '/imageSpace';
+        var imageSpaceBaseUrl,
+            imageSpaceContextPath,
+            imageSpaceRequestUrl;
 
-        // Sets the initial url values for the ui link
-        var uiBaseUrl // = stateService.omarSitesState.url.base;
-        var uiContextPath // = stateService.omarSitesState.url.uiContextPath;
-        var uiRequestUrl // = uiBaseUrl + uiContextPath;
+        var uiBaseUrl,
+            uiContextPath,
+            uiRequestUrl;
 
-        // Sets the initial url values for the mensa service
-        var mensaBaseUrl // = stateService.omarSitesState.url.base;
-        var mensaContextPath // = stateService.omarSitesState.url.mensaContextPath;
-        var mensaRequestUrl // = mensaBaseUrl + mensaContextPath + '/imageDistance?';
+        var mensaBaseUrl,
+            mensaContextPath,
+            mensaRequestUrl;
 
         /**
          * Description: Updates all of the url endpoints via the stateService omarSitesState object
          */
         this.setImageServiceUrlProps = function() {
 
-          // imageSpaceBaseUrl = stateService.omarSitesState.url.base;
-          // imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
+          imageSpaceBaseUrl = stateService.omarSitesState.url.base;
+          imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
           imageSpaceRequestUrl = $stateParams.imageSpaceRequestUrl + '/imageSpace';
           console.log(imageSpaceRequestUrl);
           console.log('$stateParams.imageSpaceRequestUrl', $stateParams.imageSpaceRequestUrl);
 
-          // uiBaseUrl = stateService.omarSitesState.url.base;
-          // uiContextPath = stateService.omarSitesState.url.uiContextPath;
+          uiBaseUrl = stateService.omarSitesState.url.base;
+          uiContextPath = stateService.omarSitesState.url.uiContextPath;
           uiRequestUrl = $stateParams.uiRequestUrl;
           console.log(uiRequestUrl);
           console.log('$stateParams.uiRequestUrl', $stateParams.uiRequestUrl);
 
-          // mensaBaseUrl = stateService.omarSitesState.url.base;
-          // mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
+          mensaBaseUrl = stateService.omarSitesState.url.base;
+          mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
           mensaRequestUrl = $stateParams.mensaRequestUrl + '/mensa/imageDistance?';
           console.log(mensaRequestUrl);
           console.log('$stateParams.mensaRequestUrl', $stateParams.mensaRequestUrl);
@@ -430,23 +427,24 @@
 
             this.getImageLink = function() {
 
-                //urlString = AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?filename=' +
-                urlString = uiRequestUrl + '/omar/#/mapImage?filename=' +
-                filename + '&entry_id=' +
-                entry + '&width=' +
-                imgWidth + '&height=' +
-                imgHeight + '&bands=' +
-                bands + '&numOfBands=' +
-                numOfBands + '&imageId=' +
-                imgID + '&brightness=' +
-                brightness + '&contrast=' +
-                contrast + '&histOp=' +
-                histOp + '&histCenterTile=' +
-                histCenterTile + '&resamplerFilter=' +
-                resamplerFilter + '&sharpenMode=' +
-                sharpenMode + '&transparent=' +
-                transparent;
-                return urlString;
+                return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
+                'bands=' + bands + '&' +
+                'brightness=' + brightness + '&' +
+                'contrast=' + contrast + '&' +
+                'entry_id=' + entry + '&' +
+                'filename=' + filename + '&' +
+                'height=' + imgHeight + '&' +
+                'histOp=' + histOp + '&' +
+                'histCenterTile=' + histCenterTile + '&' +
+                'imageId=' + imgID + '&' +
+                'numOfBands=' + numOfBands + '&' +
+                'resamplerFilter=' + resamplerFilter + '&' +
+                'sharpenMode=' + sharpenMode + '&' +
+                'transparent=' + transparent + '&' +
+                'width=' + imgWidth + '&' +
+                'imageSpaceRequestUrl=' + $stateParams.imageSpaceRequestUrl + '&' +
+                'uiRequestUrl=' + uiRequestUrl + '&' +
+                'mensaRequestUrl=' + mensaRequestUrl;
 
             };
 

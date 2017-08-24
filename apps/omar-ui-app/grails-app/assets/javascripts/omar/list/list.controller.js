@@ -40,15 +40,18 @@
             tlvRequestUrl;
 
         var imageSpaceBaseUrl,
-            imageSpaceContextPath;
+            imageSpaceContextPath,
+            imageSpaceRequestUrl;
         vm.imageSpaceRequestUrl = '';
 
         var uiBaseUrl,
-            uiContextPath;
+            uiContextPath,
+            uiRequestUrl;
         vm.uiRequestUrl = '';
 
         var mensaBaseUrl,
-            mensaContextPath;
+            mensaContextPath,
+            mensaRequestUrl;
         vm.mensaRequestUrl = '';
 
         function setlistControllerUrlProps() {
@@ -67,19 +70,21 @@
 
             imageSpaceBaseUrl = stateService.omarSitesState.url.base;
             imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
-            vm.imageSpaceRequestUrl = imageSpaceBaseUrl + imageSpaceContextPath;
+            imageSpaceRequestUrl = imageSpaceBaseUrl + imageSpaceContextPath;
+            vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
             //console.log('vm.imageSpaceRequestUrl= '  +  vm.imageSpaceRequestUrl);
 
             uiBaseUrl = stateService.omarSitesState.url.base;
             uiContextPath = stateService.omarSitesState.url.uiContextPath;
-            vm.uiRequestUrl = uiBaseUrl + uiContextPath;
+            uiRequestUrl = uiBaseUrl + uiContextPath;
+            vm.uiRequestUrl = uiRequestUrl;
             //console.log('vm.uiRequestUrl= '  +  vm.uiRequestUrl);
 
             mensaBaseUrl = stateService.omarSitesState.url.base;
             mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
-            vm.mensaRequestUrl = mensaBaseUrl + mensaContextPath;
+            mensaRequestUrl = mensaBaseUrl + mensaContextPath;
+            vm.mensaRequestUrl = mensaRequestUrl;
             //console.log('vm.mensaRequestUrll= '  +  vm.mensaRequestUrl);
-
 
         }
 
@@ -176,8 +181,9 @@
             var properties = image.properties;
 
             // DONE: Updated URL
-            //return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-            return uiRequestUrl + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width;
+            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
+            //return uiRequestUrl + '/omar/#/mapImage?' +
+            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl;
         }
 
         vm.thumbBorder = function(imageType) {
@@ -348,7 +354,7 @@
 
         });
 
-        vm.showImageModal = function(imageObj, imageSpaceDefaults) {
+        vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl) {
 
             // TODO: Update URL
             var modalInstance = $uibModal.open({
@@ -363,6 +369,9 @@
                     '$scope',
                     'imageObj',
                     'imageSpaceDefaults',
+                    'imageSpaceRequestUrl',
+                    'uiRequestUrl',
+                    'mensaRequestUrl',
                     ImageModalController
                 ],
                 controllerAs: 'vm',
@@ -372,6 +381,15 @@
                     },
                     imageSpaceDefaults: function() {
                         return imageSpaceDefaults;
+                    },
+                    imageSpaceRequestUrl: function() {
+                        return imageSpaceRequestUrl;
+                    },
+                    uiRequestUrl: function() {
+                        return uiRequestUrl;
+                    },
+                    mensaRequestUrl: function() {
+                        return mensaRequestUrl;
                     }
                 }
             });
@@ -408,7 +426,7 @@
     }
 
     // Handles the selected image modal obj
-    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults) {
+    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl) {
 
         var vm = this;
         vm.beData = [];
@@ -420,7 +438,6 @@
 
         //modal.rendered = false;
 
-        // TODO: Update URL
         //AppO2.APP_PATH is passed down from the .gsp
         vm.o2baseUrlModal = AppO2.APP_CONFIG.serverURL + '/omar';
         //vm.o2baseUrlModal = uiRequestUrl = '/omar';
@@ -460,9 +477,24 @@
             var defaults = imageSpaceDefaults;
             var properties = image.properties;
 
-            console.log('firing getImageSpaceUrl: ' + image);
-            //return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-            return uiRequestUrl + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width;
+            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
+            'bands=' + defaults.bands + '&' +
+            'brightness=' + defaults.brightness + '&' +
+            'contrast=' + defaults.contrast + '&' +
+            'entry_id=' + properties.entry_id + '&' +
+            'filename=' + properties.filename + '&' +
+            'height=' + properties.height + '&' +
+            'histOp=' + defaults.histOp + '&' +
+            'histCenterTile=' + defaults.histCenterTile + '&' +
+            'imageId=' + properties.id + '&' +
+            'numOfBands=' + properties.number_of_bands + '&' +
+            'resamplerFilter=' + defaults.resamplerFilter + '&' +
+            'sharpenMode=' + defaults.sharpenMode + '&' +
+            'width=' + properties.width + '&' +
+            'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' +
+            'uiRequestUrl=' + uiRequestUrl + '&' +
+            'mensaRequestUrl=' + mensaRequestUrl;
+
         }
 
         // Used to show/hide the 'Image not found message'
@@ -471,10 +503,6 @@
         // Executes a query to the omar-avro-metadata service to pull
         // in the associated Avro metadata information
         vm.loadAvroMetadata = function loadAvroMetadata() {
-
-            //console.log('imageObj', imageObj);
-            console.log('title: ', imageObj.properties.title);
-            console.log('title from vm', vm.selectedImage.properties.title);
 
             // Checks to see if there is a valid imageId to pass in
             // otherwise we need to use the image's filename
@@ -548,8 +576,8 @@
         };
 
         vm.shareModal = function(imageLink) {
-          console.log(imageLink);
-          shareService.imageLinkModal(imageLink);
+            console.log(imageLink);
+            shareService.imageLinkModal(imageLink);
         };
 
         vm.archiveDownload = function(imageId) {

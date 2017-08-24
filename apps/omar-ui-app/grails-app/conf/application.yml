@@ -256,7 +256,7 @@ omar:
           name: Aaron Local Server
           description: Aaron Local Server
         url:
-          base: http://localhost:8888
+          base: http://10.0.10.72:8888
           uiContextPath: /omar-ui
           wfsContextPath: /omar-wfs
           wmsContextPath: /omar-wms

@@ -771,7 +771,7 @@
               <div class="media-left">
                 <img ng-style="list.thumbBorder(image.properties.file_type)"
                   class="media-object"
-                  ng-click="list.showImageModal(image, list.imageSpaceDefaults); list.logRatingToPio(image.properties.id);"
+                  ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl); list.logRatingToPio(image.properties.id);"
                   tooltip-placement="right"
                   uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
                   ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
@@ -785,7 +785,7 @@
                 <div class="row">
                   <div class="col-md-12" style="font-size: 13px;">
                     ID:&nbsp;&nbsp;
-                    <span ng-click="list.showImageModal(image, list.imageSpaceDefaults); list.logRatingToPio(image.properties.id);"
+                    <span ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl); list.logRatingToPio(image.properties.id);"
                       class="text-success image-id-link">
                       <span ng-show="!image.properties.title">Unknown</span>
                       {{image.properties.title}}

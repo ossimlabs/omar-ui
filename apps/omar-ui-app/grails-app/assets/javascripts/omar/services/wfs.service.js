@@ -178,6 +178,17 @@
 
         }
 
+        this.getImageMetadata = function(filter) {
+
+          return wfsRequestUrl +
+            "filter=in(" + filter + ")&" +
+            "request=GetFeature&" +
+            "service=WFS&" +
+            "typeName=" + wfsRequest.typeName + "&" +
+            "version=" + wfsRequest.version;
+
+        }
+
     }
 
 }());

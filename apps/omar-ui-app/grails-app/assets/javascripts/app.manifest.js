@@ -63,6 +63,9 @@
 // <--List-->
 //= require omar/list/list.controller.js
 
+//<--Sites-->
+//= require omar/sites/sites.controller.js
+
 // <--Maps-->
 //= require omar/mapOrtho/map.ortho.controller.js
 //= require omar/mapImage/map.image.controller.js

@@ -2,9 +2,9 @@
 'use strict';
 angular
   .module('omarApp')
-  .service('mapService', ['stateService', 'wfsService', mapService]);
+  .service('mapService', ['stateService', 'wfsService', '$timeout', mapService]);
 
-function mapService(stateService, wfsService) {
+function mapService(stateService, wfsService, $timeout) {
 
   // #################################################################################
   // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -26,19 +26,49 @@ function mapService(stateService, wfsService) {
       filterStyle,
       footprintStyle,
       dragBox,
-      pointLatLon;
+      pointLatLon,
+      overlayGroup;
+
+  var version="1.1.1";
+  var layers="omar:raster_entry";
+  var styles="byFileType";
+  var format="image/gif";
+  var name="Image Footprints";
   var mapObj = {};
 
   var baseServerUrl = AppO2.APP_CONFIG.serverURL;
   var markerUrl = baseServerUrl + '/' + AppO2.APP_CONFIG.params.misc.icons.greenMarker;
+
+  // Sets the intial url values for the footprints (geoscript) service
+  var footprintsBaseUrl = stateService.omarSitesState.url.base;
+  var footprintsContextPath = stateService.omarSitesState.url.geoscriptContextPath;
+  var footprintsRequestUrl = footprintsBaseUrl + footprintsContextPath + '/footprints/getFootprints';
+
+  // Sets the initial url values for the thumbnails (oms) service
+  var thumbnailsBaseUrl = stateService.omarSitesState.url.base;
+  var thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
+  var thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + '/imageSpace/getThumbnail';
+
+  /**
+   * Description: Called from the mapController so that the $on. event that subscribes to the $broadcast
+   * can update the Geoscript and Thumbnails url and context path(s).
+   */
+  this.setMapServiceUrlProps = function() {
+
+    footprintsBaseUrl = stateService.omarSitesState.url.base;
+    footprintsContextPath = stateService.omarSitesState.url.geoscriptContextPath;
+    footprintsRequestUrl = footprintsBaseUrl + footprintsContextPath + '/footprints/getFootprints';
+    thumbnailsBaseUrl = stateService.omarSitesState.url.base;
+    thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
+    thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + '/imageSpace/getThumbnail';
+
+  }
 
   iconStyle = new ol.style.Style({
     image: new ol.style.Icon(({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        //opacity: 0.75,
-        //src: AppO2.APP_CONFIG.params.misc.icons.greenMarker
         src: markerUrl
     }))
   });
@@ -106,12 +136,6 @@ function mapService(stateService, wfsService) {
       maxZoom: 20
     });
 
-    var version="1.1.1";
-    var layers="omar:raster_entry";
-    var styles="byFileType";
-    var format="image/gif";
-    var name="Image Footprints";
-
     if(AppO2.APP_CONFIG.params.footprints.params != undefined )
     {
       if( AppO2.APP_CONFIG.params.footprints.params.version != undefined)
@@ -139,7 +163,7 @@ function mapService(stateService, wfsService) {
     footPrints = new ol.layer.Tile({
       title: name,
       source: new ol.source.TileWMS({
-        url: AppO2.APP_CONFIG.params.footprints.baseUrl,
+        url: footprintsRequestUrl,
         params: {
           FILTER: "",
           VERSION: version,
@@ -202,7 +226,7 @@ function mapService(stateService, wfsService) {
 
     }
 
-    var overlayGroup = new ol.layer.Group({
+    overlayGroup = new ol.layer.Group({
       title: 'Overlays',
       layers: []
     });
@@ -349,6 +373,18 @@ function mapService(stateService, wfsService) {
 
   };
 
+  function updateFootprintsUrl() {
+
+    footPrints.getSource().setUrl(footprintsRequestUrl);
+
+  }
+
+  this.updateFootprintsUrl = function() {
+
+    updateFootprintsUrl();
+
+  };
+
   // This is used to select images by creating a polygon based on the
   // current map extent and sending it to the wfs service to update the
   // card list
@@ -489,7 +525,7 @@ function mapService(stateService, wfsService) {
       '<div class="media">' +
       '<div class="media-left">' +
       '<img class="media-object" ' +
-      'src="' + AppO2.APP_CONFIG.params.thumbnails.baseUrl + '?filename=' +
+      'src="' + thumbnailsRequestUrl + '?filename=' +
       imageObj.properties.filename +
       '&entry=' + imageObj.properties.entry_id +
       '&size=50' + '&format=jpeg">' +
@@ -512,12 +548,13 @@ function mapService(stateService, wfsService) {
 
   };
 
-    this.getCenter = function() {
-        return map.getView().getCenter();
-    }
-    this.calculateExtent = function() {
-        return map.getView().calculateExtent(map.getSize());
-    }
+  this.getCenter = function() {
+      return map.getView().getCenter();
+  }
+
+  this.calculateExtent = function() {
+      return map.getView().calculateExtent(map.getSize());
+  }
 
   function getMapBbox() {
 
@@ -739,10 +776,13 @@ function mapService(stateService, wfsService) {
         //target: document.getElementById('mouse-position'),
         undefinedHTML: '&nbsp;'
     } );
-  mousePositionControl.coordFormat = 0;
+
+    mousePositionControl.coordFormat = 0;
     $('#mouseCoords').click(function() {
         mousePositionControl.coordFormat = mousePositionControl.coordFormat >= 3 ? 0 : mousePositionControl.coordFormat + 1;
     });
+
+
 
 }
 

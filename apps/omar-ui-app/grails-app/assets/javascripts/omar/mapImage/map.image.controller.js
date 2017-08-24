@@ -324,15 +324,17 @@
 
     $scope.draRegionType = {};
     $scope.draRegionTypes = [
+        { 'name': 'Viewport', 'value': 'true' },
         { 'name': 'Global', 'value': 'false' },
-        { 'name': 'Viewport', 'value': 'true' }
     ];
 
     $scope.draRegionType = $scope.draRegionTypes[1];
 
     angular.forEach( $scope.draRegionTypes, function( value, key ) {
-      if ( value.value == imageSpaceObj.histCenterTile ) {
+
+      if ( value.value != imageSpaceObj.histCenterTile ) {
         $scope.draRegionType = { 'name': value.name, 'value': value.value };
+        imageSpaceService.setDynamicRangeRegion(value.value);
       }
     });
 

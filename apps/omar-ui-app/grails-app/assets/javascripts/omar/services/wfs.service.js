@@ -10,10 +10,9 @@
         // #################################################################################
         //console.log('AppO2.APP_CONFIG in wfsService: ', AppO2.APP_CONFIG);
 
-        // Sets the inital url values for the WFS service
         var wfsBaseUrl = stateService.omarSitesState.url.base;
         var wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
-        var wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';;
+        var wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
 
 
         /**
@@ -25,6 +24,9 @@
           wfsBaseUrl = stateService.omarSitesState.url.base;
           wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
           wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
+          console.log(wfsRequestUrl);
+
+          console.log('setWfsUrlProps is firing!');
 
         }
 
@@ -152,42 +154,43 @@
 
         };
 
-        this.getImageSpaceHeaderText = function(params) {
+        this.getImageProperties = function(params) {
 
-          $http({
+          return $http({
             method: 'GET',
             url: wfsRequestUrl + "filter=" + encodeURIComponent("filename LIKE '" + params.filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
 
           }).then(function(response) {
 
-              var imageGeometry = response.data.features[0].geometry;
-              var imageProperties = response.data.features[0].properties;
-              var imageIdText = imageProperties.title || imageProperties.filename;
-              var acquisitionDateText = imageProperties.acquisition_date || "";
+              var imageData = response.data.features[0];
+
+              var imageIdText = imageData.properties.title || imageData.properties.filename;
+              var acquisitionDateText = imageData.properties.acquisition_date || "";
 
               if (acquisitionDateText != "") {
-                  acquisitionDateText = moment.utc(acquisitionDateText).format('MM-DD-YYYY HH:mm:ss') + " z";
+                acquisitionDateText = moment.utc(acquisitionDateText).format('MM-DD-YYYY HH:mm:ss') + " z";
               }
 
               stateService.navStateUpdate({
-                  titleLeft: imageIdText + " <br> " + acquisitionDateText,
-                  userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
+                titleLeft: imageIdText + " <br> " + acquisitionDateText,
+                userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
               });
 
+              return imageData;
           });
 
         }
 
-        this.getImageMetadata = function(filter) {
-
-          return wfsRequestUrl +
-            "filter=in(" + filter + ")&" +
-            "request=GetFeature&" +
-            "service=WFS&" +
-            "typeName=" + wfsRequest.typeName + "&" +
-            "version=" + wfsRequest.version;
-
-        }
+        // this.getImageMetadata = function(filter) {
+        //
+        //   return wfsRequestUrl +
+        //     "filter=in(" + filter + ")&" +
+        //     "request=GetFeature&" +
+        //     "service=WFS&" +
+        //     "typeName=" + wfsRequest.typeName + "&" +
+        //     "version=" + wfsRequest.version;
+        //
+        // }
 
     }
 

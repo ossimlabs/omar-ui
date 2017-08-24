@@ -37,7 +37,8 @@
             contrast,
             urlString,
             imgID,
-            transparent;
+            transparent,
+            imageData;
 
         var imageSpaceBaseUrl,
             imageSpaceContextPath,
@@ -59,20 +60,20 @@
           imageSpaceBaseUrl = stateService.omarSitesState.url.base;
           imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
           imageSpaceRequestUrl = $stateParams.imageSpaceRequestUrl + '/imageSpace';
-          console.log(imageSpaceRequestUrl);
-          console.log('$stateParams.imageSpaceRequestUrl', $stateParams.imageSpaceRequestUrl);
+          // console.log(imageSpaceRequestUrl);
+          // console.log('$stateParams.imageSpaceRequestUrl', $stateParams.imageSpaceRequestUrl);
 
           uiBaseUrl = stateService.omarSitesState.url.base;
           uiContextPath = stateService.omarSitesState.url.uiContextPath;
           uiRequestUrl = $stateParams.uiRequestUrl;
-          console.log(uiRequestUrl);
-          console.log('$stateParams.uiRequestUrl', $stateParams.uiRequestUrl);
+          // console.log(uiRequestUrl);
+          // console.log('$stateParams.uiRequestUrl', $stateParams.uiRequestUrl);
 
           mensaBaseUrl = stateService.omarSitesState.url.base;
           mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
           mensaRequestUrl = $stateParams.mensaRequestUrl + '/mensa/imageDistance?';
-          console.log(mensaRequestUrl);
-          console.log('$stateParams.mensaRequestUrl', $stateParams.mensaRequestUrl);
+          // console.log(mensaRequestUrl);
+          // console.log('$stateParams.mensaRequestUrl', $stateParams.mensaRequestUrl);
 
           //console.log('this.setImageServiceUrlProps firing!');
 
@@ -275,8 +276,13 @@
 
         this.initImageSpaceMap = function(params) {
 
-            // Sets header title
-            wfsService.getImageSpaceHeaderText(params);
+            // Sets header title and grabs the image's metadata
+            wfsService.getImageProperties(params).then(function(response) {
+              imageData = response;
+              console.log(imageData);
+              imageGeometry = imageData.geometry;
+              imageProperties = imageData.properties;
+            })
 
             filename = params.filename;
             entry = params.entry;
@@ -854,6 +860,7 @@
             }
             // End Position Quality Evaluator stuff
 
+            // TODO: Change URL
             this.groundToImage = function(points) {
                 var deferred = $q.defer();
 
@@ -879,18 +886,19 @@
             }
 
             this.getFootprintGeometry = function() {
-                return new ol.geom.MultiPolygon(imageGeometry.coordinates);
+              return new ol.geom.MultiPolygon(imageGeometry.coordinates);
             }
 
             this.setCenter = function(point) {
-                map.getView().setCenter(point);
+              map.getView().setCenter(point);
             }
 
             this.zoomToFullExtent = function() {
-                map.getView().setZoom(1);
+              map.getView().setZoom(1);
             }
 
             this.zoomToFullRes = function() {
+              console.log('imageProperties: ', imageProperties);
                 var gsd = Math.min(imageProperties.gsdx, imageProperties.gsdy);
                 map.getView().setResolution(1 / gsd);
             }

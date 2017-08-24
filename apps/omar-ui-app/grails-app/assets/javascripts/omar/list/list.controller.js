@@ -39,6 +39,10 @@
             tlvContextPath,
             tlvRequestUrl;
 
+        var wfsBaseUrl,
+            wfsContextPath,
+            wfsRequestUrl;
+
         var imageSpaceBaseUrl,
             imageSpaceContextPath,
             imageSpaceRequestUrl;
@@ -67,6 +71,11 @@
             tlvBaseUrl = stateService.omarSitesState.url.base;
             tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
             tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+
+            wfsBaseUrl = stateService.omarSitesState.url.base;
+            wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
+            wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
+            vm.wfsRequestUrl = wfsRequestUrl;
 
             imageSpaceBaseUrl = stateService.omarSitesState.url.base;
             imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
@@ -183,7 +192,7 @@
             // DONE: Updated URL
             return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
             //return uiRequestUrl + '/omar/#/mapImage?' +
-            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl;
+            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
         }
 
         vm.thumbBorder = function(imageType) {
@@ -354,7 +363,7 @@
 
         });
 
-        vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl) {
+        vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl) {
 
             // TODO: Update URL
             var modalInstance = $uibModal.open({
@@ -372,6 +381,7 @@
                     'imageSpaceRequestUrl',
                     'uiRequestUrl',
                     'mensaRequestUrl',
+                    'wfsRequestUrl',
                     ImageModalController
                 ],
                 controllerAs: 'vm',
@@ -390,6 +400,9 @@
                     },
                     mensaRequestUrl: function() {
                         return mensaRequestUrl;
+                    },
+                    wfsRequestUrl: function() {
+                        return wfsRequestUrl;
                     }
                 }
             });
@@ -426,9 +439,19 @@
     }
 
     // Handles the selected image modal obj
-    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl) {
+    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl) {
+
+
 
         var vm = this;
+
+        console.warn(wfsRequestUrl);
+        vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
+        vm.uiRequestUrl = uiRequestUrl;
+        vm.mensaRequestUrl = mensaRequestUrl;
+        vm.wfsRequestUrl = wfsRequestUrl;
+
+
         vm.beData = [];
         vm.avroMetaData;
 
@@ -493,7 +516,8 @@
             'width=' + properties.width + '&' +
             'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' +
             'uiRequestUrl=' + uiRequestUrl + '&' +
-            'mensaRequestUrl=' + mensaRequestUrl;
+            'mensaRequestUrl=' + mensaRequestUrl + '&' +
+            'wfsRequestUrl=' + wfsRequestUrl;
 
         }
 

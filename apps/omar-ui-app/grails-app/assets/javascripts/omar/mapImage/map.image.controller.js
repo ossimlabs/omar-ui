@@ -854,8 +854,10 @@
 
             // TODO: Update URL
             //var url = AppO2.APP_CONFIG.params.wfs.baseUrl + "filter=in(" + image.imageId + ")&" + "request=GetFeature&" + "service=WFS&" + "typeName=omar:raster_entry&" + "version=1.1.0";
-            var url = wfsService.getImageMetadata(image.imageId);
+            var url = $stateParams.wfsRequestUrl + "filter=in(" + image.imageId + ")&" + "request=GetFeature&" + "service=WFS&" + "typeName=omar:raster_entry&" + "version=1.1.0";
+            //var url = wfsService.getImageMetadata(image.imageId);
             window.open(url);
+
 
         }
         vm.zoomToFullExtent = function() {

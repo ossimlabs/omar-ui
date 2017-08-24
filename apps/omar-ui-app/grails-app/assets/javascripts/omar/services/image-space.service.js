@@ -185,7 +185,6 @@
         ol.inherits(RotateUpControl, ol.control.Control);
 
         var ImageSpace = function(opt_options) {
-<<<<<<< HEAD
             var options = opt_options || {};
 
             var size = options.size;
@@ -228,103 +227,6 @@
                     goog.asserts.fail();
                     break;
             }
-=======
-          var options = opt_options || {};
-
-          var size = options.size;
-          var tierSizeCalculation = options.tierSizeCalculation !== undefined ?
-            options.tierSizeCalculation :
-            ImageSpaceTierSizeCalculation.DEFAULT;
-
-          filename = options.filename;
-          entry = options.entry;
-          outputFormat = options.outputFormat;
-
-          var imageWidth = size[0];
-          var imageHeight = size[1];
-          var tierSizeInTiles = [];
-          var tileSize = ol.DEFAULT_TILE_SIZE || 256;
-
-          switch (tierSizeCalculation) {
-            case ImageSpaceTierSizeCalculation.DEFAULT:
-              while (imageWidth > tileSize || imageHeight > tileSize) {
-                tierSizeInTiles.push([
-                  Math.ceil(imageWidth / tileSize),
-                  Math.ceil(imageHeight / tileSize)
-                ]);
-                tileSize += tileSize;
-              }
-              break;
-            case ImageSpaceTierSizeCalculation.TRUNCATED:
-              var width = imageWidth;
-              var height = imageHeight;
-              while (width > tileSize || height > tileSize) {
-                tierSizeInTiles.push([
-                    Math.ceil(width / tileSize),
-                    Math.ceil(height / tileSize)
-                ]);
-                width >>= 1;
-                height >>= 1;
-              }
-              break;
-            default:
-                goog.asserts.fail();
-              break;
-          }
-
-          tierSizeInTiles.push([1, 1]);
-          tierSizeInTiles.reverse();
-
-          var resolutions = [1];
-          var tileCountUpToTier = [0];
-          var i = 1,
-            ii = tierSizeInTiles.length;
-          while (i < ii) {
-            resolutions.push(1 << i);
-            tileCountUpToTier.push(
-              tierSizeInTiles[i - 1][0] * tierSizeInTiles[i - 1][1] +
-              tileCountUpToTier[i - 1]
-            );
-              i++
-          }
-
-          resolutions.reverse();
-
-          var extent = [0, -size[1], size[0], 0];
-          var tileGrid = new ol.tilegrid.TileGrid({
-            extent: extent,
-            origin: ol.extent.getTopLeft(extent),
-            resolutions: resolutions
-          });
-
-          var url = options.url;
-
-          function tileUrlFunction(tileCoord, pixelRatio, projection) {
-            if (!tileCoord) {
-              return undefined;
-            } else {
-              tileZ = tileCoord[0];
-              tileX = tileCoord[1];
-              tileY = -tileCoord[2] - 1;
-
-              return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ +
-                '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat +
-                '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp +
-                '&histCenterTile=' + histCenterTile + '&brightness=' + brightness + '&contrast=' + contrast +
-                '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent='+transparent;
-              }
-          }
-
-          ol.source.TileImage.call(this, {
-            attributions: options.attributions,
-            logo: options.logo,
-            reprojectionErrorThreshold: options.reprojectionErrorThreshold,
-            tileClass: ol.source.ZoomifyTile,
-            tileGrid: tileGrid,
-            tileUrlFunction: tileUrlFunction
-          });
-        };
->>>>>>> dev
 
             tierSizeInTiles.push([1, 1]);
             tierSizeInTiles.reverse();
@@ -419,7 +321,9 @@
 
             });
 
-            imgCenter = [imgWidth / 2, -imgHeight / 2];
+            imgCenter = [
+                imgWidth / 2, -imgHeight / 2
+            ];
 
             // Maps always need a projection, but Zoomify layers are not geo-referenced, and
             // are only measured in pixels.  So, we create a fake projection that the map

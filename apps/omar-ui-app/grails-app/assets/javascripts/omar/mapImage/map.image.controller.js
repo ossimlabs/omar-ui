@@ -107,7 +107,6 @@
 
         vm.shareModal = function() {
             var imageLink = imageSpaceService.getImageLink();
-            console.log(imageLink);
             shareService.imageLinkModal(imageLink);
         };
 
@@ -540,7 +539,6 @@
                 sharpenMode: $stateParams.sharpenMode
             };
 
-            // TODO: Update URL
             vm.imageMapPath = AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?filename=' + imageSpaceObj.filename + '&entry_id=' + imageSpaceObj.entry + '&width=' + imageSpaceObj.imgWidth + '&height=' + imageSpaceObj.imgHeight + '&bands=' + imageSpaceObj.bands + '&numOfBands=' + imageSpaceObj.numOfBands + '&imageId=' + imageSpaceObj.imageId + '&brightness=' + imageSpaceObj.brightness + '&contrast=' + imageSpaceObj.contrast + '&histOp=' + imageSpaceObj.histOp + '&histCenterTile=' + imageSpaceObj.histCenterTile + '&resamplerFilter' + imageSpaceObj.resamplerFilter + '&sharpenMode'
             imageSpaceObj.sharpenMode;
 
@@ -853,7 +851,7 @@
         vm.viewMetadata = function(image) {
 
             //var url = AppO2.APP_CONFIG.params.wfs.baseUrl + "filter=in(" + image.imageId + ")&" + "request=GetFeature&" + "service=WFS&" + "typeName=omar:raster_entry&" + "version=1.1.0";
-            var url = $stateParams.wfsRequestUrl + "filter=in(" + image.imageId + ")&" + "request=GetFeature&" + "service=WFS&" + "typeName=omar:raster_entry&" + "version=1.1.0";
+            var url = $stateParams.wfsRequestUrl + "filter=in(" + image.imageId + ")&" + "request=GetFeature&" + "service=WFS&" + "typeName=omar:raster_entry&" + "version=1.1.0" + "&outputFormat=JSON";
             window.open(url);
 
         }

@@ -197,7 +197,7 @@ omar:
       -
         info:
           name: OMAR-REL
-          description: OMAR Release
+          description: OMAR Release Server (Unclassified)
         url:
           base: https://omar-rel.ossim.io
           uiContextPath: /omar-ui
@@ -216,7 +216,7 @@ omar:
       -
         info:
           name: OMAR-DEV
-          description: OMAR Development
+          description: OMAR Development Server (Unclassified)
         url:
           base: https://omar-dev.ossim.io
           uiContextPath: /omar-ui
@@ -234,8 +234,8 @@ omar:
           tlvContextPath: /tlv
       -
         info:
-          name: Aaron Local Server
-          description: Aaron Local Server
+          name: Local
+          description: Local Test Server
         url:
           base: http://10.0.10.72:8888
           uiContextPath: /omar-ui
@@ -261,14 +261,6 @@ omar:
 #        styles: 'bySensorType'
 #        styles: 'byMissionType'
         format: 'image/gif'
-    # avroMetadataApp:
-    #   baseUrl: http://localhost:8081/omar-avro-metadata/avroMetadata/get/
-    # mensaApp:
-    #   baseUrl: http://localhost:8081/mensa
-    # stagerApp:
-    #   baseUrl: http://localhost:8081
-    # downloadApp:
-    #   baseUrl: http://localhost:8081
     apiApp:
       baseUrl: http://localhost:8081/api
       enabled: true

@@ -613,66 +613,25 @@
       </div>
   </div>
   <div class="col-md-4" ng-controller="ListController as list">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <ui-select
-       class="form-control"
-       ng-model="list.selectedOmar"
-       theme="bootstrap"
-       on-select="list.changeOmarSiteUrl()"
-       style="
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-right: 0px;
-        padding-left: 0px;
-        border-top-width: 0px;
-        border-left-width: 0px;
-        border-right-width: 0px;
-        border-bottom-width: 0px;
-        margin-bottom: 5px"
-        >
-        <ui-select-match placeholder="{{list.selectedUrl}}">
-          {{$select.selected.url.base}}
-        </ui-select-match>
-        <ui-select-choices repeat="site in list.sites | filter: $select.search">
-          <span ng-bind="site.url.base"></span>
-        </ui-select-choices>
-      </ui-select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <ui-select
+     class="form-control omar-sites-select"
+     ng-model="list.selectedOmar"
+     theme="bootstrap"
+     on-select="list.changeOmarSiteUrl()">
+      <ui-select-match placeholder="{{list.selectedUrl}}">
+        {{$select.selected.info.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="site in list.sites | filter: $select.search">
+        <div ng-bind="site.info.name"></div>
+        <div><i class="fa fa-hdd-o" aria-hidden="true"></i>&nbsp;
+          <em><small ng-bind="site.info.description"></small></em>
+        </div>
+        <div>
+          <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;
+          <em><small ng-bind="site.url.base"></small></em>
+        </div>
+      </ui-select-choices>
+    </ui-select>
     <div class="visible-xs-block visible-sm-block">
       <hr>
     </div>

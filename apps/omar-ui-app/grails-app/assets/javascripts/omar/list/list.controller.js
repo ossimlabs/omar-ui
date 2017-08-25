@@ -111,11 +111,10 @@
 
         // The list of urls we want to iterate over
         vm.sites = AppO2.APP_CONFIG.params.sites;
-        vm.selectedUrl = AppO2.APP_CONFIG.params.sites[0].url.base;
+        vm.selectedUrl = AppO2.APP_CONFIG.params.sites[0].info.name;
 
         /**
-         * TODO: [description]
-         * @return {[type]} [description]
+         * Description: Updates the omar (o2) sites object from the select/dropdown
          */
         vm.changeOmarSiteUrl = function() {
 
@@ -503,24 +502,7 @@
             var defaults = imageSpaceDefaults;
             var properties = image.properties;
 
-            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-            'bands=' + defaults.bands + '&' +
-            'brightness=' + defaults.brightness + '&' +
-            'contrast=' + defaults.contrast + '&' +
-            'entry_id=' + properties.entry_id + '&' +
-            'filename=' + properties.filename + '&' +
-            'height=' + properties.height + '&' +
-            'histOp=' + defaults.histOp + '&' +
-            'histCenterTile=' + defaults.histCenterTile + '&' +
-            'imageId=' + properties.id + '&' +
-            'numOfBands=' + properties.number_of_bands + '&' +
-            'resamplerFilter=' + defaults.resamplerFilter + '&' +
-            'sharpenMode=' + defaults.sharpenMode + '&' +
-            'width=' + properties.width + '&' +
-            'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' +
-            'uiRequestUrl=' + uiRequestUrl + '&' +
-            'mensaRequestUrl=' + mensaRequestUrl + '&' +
-            'wfsRequestUrl=' + wfsRequestUrl;
+            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
 
         }
 
@@ -603,7 +585,6 @@
         };
 
         vm.shareModal = function(imageLink) {
-            console.log(imageLink);
             shareService.imageLinkModal(imageLink);
         };
 

@@ -178,6 +178,24 @@
 
         }
 
+        this.getExport = function(outputFormat) {
+
+          //var wfsRequestUrl = AppO2.APP_CONFIG.params.wfs.baseUrl;
+          var version = '1.1.0';
+          var typeName = 'omar:raster_entry';
+          var wfsUrl = wfsRequestUrl +
+            'service=WFS' +
+            '&version=' + version +
+            '&request=GetFeature' +
+            '&typeName=' + typeName +
+            '&filter=' + encodeURIComponent(this.spatialObj.filter) +
+            '&outputFormat=' + outputFormat +
+            '&sortBy=' + this.attrObj.sortField + this.attrObj.sortType +
+            '&startIndex=' + this.attrObj.startIndex;
+
+          return wfsUrl;
+
+        }
     }
 
 }());

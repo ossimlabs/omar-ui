@@ -265,8 +265,8 @@ omar:
       baseUrl: http://localhost:8081/api
       enabled: true
     isaApp:
-      baseUrl: http://localhost/isa
-      enabled: false
+    #  baseUrl: http://localhost/isa-ui
+      enabled: true
     tlvApp:
     #   baseUrl: http://localhost/tlv
       enabled: true
@@ -283,7 +283,7 @@ omar:
     #   baseUrl: http://localhost:8081/wmts
       enabled: false
     piwikApp:
-      baseUrl: http://omar.ossim.org/piwik/
+    #  baseUrl: http://omar.ossim.org/piwik/
       enabled: false
     userGuide:
       baseUrl: http://localhost/o2-docs

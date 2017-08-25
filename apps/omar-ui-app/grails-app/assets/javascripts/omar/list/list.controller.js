@@ -134,7 +134,8 @@
                 urlKmlContextPath: vm.selectedOmar.url.kmlContextPath,
                 urlJpipContextPath: vm.selectedOmar.url.jpipContextPath,
                 urlWmtsContextPath: vm.selectedOmar.url.wmtsContextPath,
-                urlTlvContextPath: vm.selectedOmar.url.tlvContextPath
+                urlTlvContextPath: vm.selectedOmar.url.tlvContextPath,
+                urlIsaContextPath: vm.selectedOmar.url.isaContextPath
             });
 
         }

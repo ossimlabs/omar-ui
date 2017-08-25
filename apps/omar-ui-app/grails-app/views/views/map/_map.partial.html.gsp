@@ -644,7 +644,6 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <!-- <p class="navbar-text">Sort:</p> -->
         </div>
         <div class="collapse navbar-collapse" id="sort-navbar-collapse">
           <ul class="nav navbar-nav">

@@ -39,7 +39,8 @@ angular
         kmlContextPath: '/omar-superoverlay',
         jpipContextPath: '/omar-jpip',
         wmtsContextPath: '/omar-wmts',
-        tlvContextPath: '/tlv'
+        tlvContextPath: '/tlv',
+        isaContextPath: '/isa-ui'
       }
     }
 
@@ -98,6 +99,8 @@ angular
       _this.omarSitesState.url.wmtsContextPath = checkForValidObjProp(_this.omarSitesState.url.wmtsContextPath, objParams.urlWmtsContextPath) ? objParams.urlWmtsContextPath : _this.omarSitesState.url.wmtsContextPath;
 
       _this.omarSitesState.url.tlvContextPath = checkForValidObjProp(_this.omarSitesState.url.tlvContextPath, objParams.urlTlvContextPath) ? objParams.urlTlvContextPath: '/tlv';
+
+      _this.omarSitesState.url.tlvContextPath = checkForValidObjProp(_this.omarSitesState.url.isaContextPath, objParams.urlIsaContextPath) ? objParams.IsaContextPath: '/isa-ui';
 
       // $timeout needed: http://stackoverflow.com/a/18996042
       $timeout(function() {

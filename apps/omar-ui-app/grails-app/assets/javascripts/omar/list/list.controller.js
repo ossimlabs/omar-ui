@@ -35,13 +35,19 @@
             uiContextPath,
             uiRequestUrl;
 
-        var tlvBaseUrl,
-            tlvContextPath,
-            tlvRequestUrl;
-
         var wfsBaseUrl,
             wfsContextPath,
             wfsRequestUrl;
+
+        var tlvBaseUrl,
+            tlvContextPath,
+            tlvRequestUrl;
+        vm.tlvRequestUrl = '';
+
+        var kmlBaseUrl,
+            kmlContextPath,
+            kmlRequestUrl;
+        vm.kmlRequestUrl = '';
 
         var imageSpaceBaseUrl,
             imageSpaceContextPath,
@@ -68,39 +74,37 @@
             uiContextPath = stateService.omarSitesState.url.uiContextPath;
             uiRequestUrl = uiBaseUrl + uiContextPath;
 
-            tlvBaseUrl = stateService.omarSitesState.url.base;
-            tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-            tlvRequestUrl = tlvBaseUrl + tlvContextPath;
-
             wfsBaseUrl = stateService.omarSitesState.url.base;
             wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
             wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
             vm.wfsRequestUrl = wfsRequestUrl;
 
+            tlvBaseUrl = stateService.omarSitesState.url.base;
+            tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+            tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+            vm.tlvRequestUrl = tlvRequestUrl;
+
+            kmlBaseUrl = stateService.omarSitesState.url.base;
+            kmlContextPath = stateService.omarSitesState.url.kmlContextPath;
+            kmlRequestUrl = kmlBaseUrl + kmlContextPath + '/superOverlay/createKml/';
+            vm.kmlRequestUrl = kmlRequestUrl;
+
             imageSpaceBaseUrl = stateService.omarSitesState.url.base;
             imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
             imageSpaceRequestUrl = imageSpaceBaseUrl + imageSpaceContextPath;
             vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
-            //console.log('vm.imageSpaceRequestUrl= '  +  vm.imageSpaceRequestUrl);
 
             uiBaseUrl = stateService.omarSitesState.url.base;
             uiContextPath = stateService.omarSitesState.url.uiContextPath;
             uiRequestUrl = uiBaseUrl + uiContextPath;
             vm.uiRequestUrl = uiRequestUrl;
-            //console.log('vm.uiRequestUrl= '  +  vm.uiRequestUrl);
 
             mensaBaseUrl = stateService.omarSitesState.url.base;
             mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
             mensaRequestUrl = mensaBaseUrl + mensaContextPath;
             vm.mensaRequestUrl = mensaRequestUrl;
-            //console.log('vm.mensaRequestUrll= '  +  vm.mensaRequestUrl);
 
         }
-
-        /**
-         * Sites state
-         */
-        // -----------------------------
 
         vm.selectedOmar = '';
 
@@ -114,7 +118,6 @@
          */
         vm.changeOmarSiteUrl = function() {
 
-            //console.log('selected: ', vm.selectedOmar.url.base);
             stateService.updateSitesAppState({
                 infoName: vm.selectedOmar.info.name,
                 infoDescription: vm.selectedOmar.info.description,
@@ -134,8 +137,6 @@
                 urlTlvContextPath: vm.selectedOmar.url.tlvContextPath
             });
 
-            //console.log(stateService.getOmarSitesState());
-
         }
 
         /**
@@ -145,7 +146,6 @@
 
         $scope.$on('omarSitesState.updated', function(event, params) {
 
-            //console.log('omarSitesState.updated firing in listController!');
             setlistControllerUrlProps();
             wfsService.setWfsUrlProps();
             downloadService.setDownloadServiceUrlProps();
@@ -164,8 +164,6 @@
             });
 
         });
-
-        // -----------------------------
 
         vm.totalPaginationCount = 1000;
         vm.pageLimit = 10;
@@ -363,9 +361,10 @@
 
         });
 
-        vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl) {
+        vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
-            // TODO: Update URL
+            console.log(kmlRequestUrl);
+
             var modalInstance = $uibModal.open({
                 size: 'lg',
                 templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-card.partial.html',
@@ -382,6 +381,8 @@
                     'uiRequestUrl',
                     'mensaRequestUrl',
                     'wfsRequestUrl',
+                    'tlvRequestUrl',
+                    'kmlRequestUrl',
                     ImageModalController
                 ],
                 controllerAs: 'vm',
@@ -403,6 +404,12 @@
                     },
                     wfsRequestUrl: function() {
                         return wfsRequestUrl;
+                    },
+                    tlvRequestUrl: function() {
+                        return tlvRequestUrl;
+                    },
+                    kmlRequestUrl: function() {
+                        return kmlRequestUrl;
                     }
                 }
             });
@@ -439,18 +446,15 @@
     }
 
     // Handles the selected image modal obj
-    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl) {
-
-
+    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
         var vm = this;
 
-        console.warn(wfsRequestUrl);
+        console.info(kmlRequestUrl);
         vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
         vm.uiRequestUrl = uiRequestUrl;
         vm.mensaRequestUrl = mensaRequestUrl;
         vm.wfsRequestUrl = wfsRequestUrl;
-
 
         vm.beData = [];
         vm.avroMetaData;
@@ -464,7 +468,6 @@
         //AppO2.APP_PATH is passed down from the .gsp
         vm.o2baseUrlModal = AppO2.APP_CONFIG.serverURL + '/omar';
         //vm.o2baseUrlModal = uiRequestUrl = '/omar';
-        //console.log('vm.o2baseUrlModal: ' + vm.o2baseUrlModal);
 
         vm.placemarkConfig = AppO2.APP_CONFIG.params.misc.placemarks;
         vm.beLookupEnabled = (vm.placemarkConfig)
@@ -473,7 +476,8 @@
 
         vm.kmlSuperOverlayAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
         if (vm.kmlSuperOverlayAppEnabled) {
-            vm.kmlSuperOverlayLink = AppO2.APP_CONFIG.params.kmlApp.baseUrl;
+            //vm.kmlSuperOverlayLink = AppO2.APP_CONFIG.params.kmlApp.baseUrl;
+            vm.kmlRequestUrl = kmlRequestUrl;
         }
 
         var imageSpaceObj = {};

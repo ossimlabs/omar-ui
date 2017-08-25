@@ -234,29 +234,10 @@ omar:
           tlvContextPath: /tlv
       -
         info:
-          name: Scotty Dev Test
-          description: Scotty Dev Test
-        url:
-          base: http://10.0.10.63
-          uiContextPath: /omar-ui
-          wfsContextPath: /omar-wfs
-          wmsContextPath: /omar-wms
-          omsContextPath: /omar-oms # Used for imageSpace, thumbnails
-          geoscriptContextPath: /omar-geoscript # Used for footprints
-          avroMetadataContextPath: /omar-avro-metadata
-          mensaContextPath: /omar-mensa
-          stagerContextPath: /omar-stager
-          downloadContextPath: /omar-download
-          kmlContextPath: /omar-superoverlay
-          jpipContextPath: /omar-jpip
-          wmtsContextPath: /omar-wmts
-          tlvContextPath: /tlv
-      -
-        info:
           name: Aaron Local Server
           description: Aaron Local Server
         url:
-          base: http://192.168.1.137:8888
+          base: http://10.0.10.72:8888
           uiContextPath: /omar-ui
           wfsContextPath: /omar-wfs
           wmsContextPath: /omar-wms
@@ -270,15 +251,15 @@ omar:
           jpipContextPath: /omar-jpip
           wmtsContextPath: /omar-wmts
           tlvContextPath: /tlv
-    wfs:
+    # wfs:
       # # baseUrl: http://localhost:8081/wfs?
       # # enabled: true
       # proxy: /proxy/index?url=
-      params: # misc params for the wfs request
-        name: "Image Footprints"
-        version: '1.1.1'
-        layers: 'omar:raster_entry'
-        styles: 'byFileType'
+      # params: # misc params for the wfs request
+      #   name: "Image Footprints"
+      #   version: '1.1.1'
+      #   layers: 'omar:raster_entry'
+      #   styles: 'byFileType'
     # wms:
     #   baseUrl: http://localhost:8081/wms?
     #   enabled: true
@@ -288,8 +269,8 @@ omar:
     # thumbnails:
     #   baseUrl: http://localhost:8081/imageSpace/getThumbnail
     footprints:
-      baseUrl: http://localhost:8081/footprints/getFootprints
-      params:
+      # baseUrl: http://localhost:8081/footprints/getFootprints
+      params: # misc params for the wfs request
         name: "Image Footprints"
         version: '1.1.1'
         layers: 'omar:raster_entry'
@@ -312,19 +293,19 @@ omar:
       baseUrl: http://localhost/isa
       enabled: false
     tlvApp:
-      baseUrl: http://localhost/tlv
+    #   baseUrl: http://localhost/tlv
       enabled: true
     twofishes:
       baseUrl: http://demo.twofishes.net
       proxy: /twoFishesProxy
     kmlApp:
-      baseUrl: http://localhost:8081
+    #   baseUrl: http://localhost:8081
       enabled: true
     jpipApp:
-      baseUrl: http://localhost:8081/jpip
-      enabled: true
+    #   baseUrl: http://localhost:8081/jpip
+      enabled: false
     wmtsApp:
-      baseUrl: http://localhost:8081/wmts
+    #   baseUrl: http://localhost:8081/wmts
       enabled: false
     piwikApp:
       baseUrl: http://omar.ossim.org/piwik/

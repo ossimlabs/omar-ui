@@ -771,7 +771,7 @@
               <div class="media-left">
                 <img ng-style="list.thumbBorder(image.properties.file_type)"
                   class="media-object"
-                  ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl); list.logRatingToPio(image.properties.id);"
+                  ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                   tooltip-placement="right"
                   uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
                   ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
@@ -785,7 +785,7 @@
                 <div class="row">
                   <div class="col-md-12" style="font-size: 13px;">
                     ID:&nbsp;&nbsp;
-                    <span ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl); list.logRatingToPio(image.properties.id);"
+                    <span ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                       class="text-success image-id-link">
                       <span ng-show="!image.properties.title">Unknown</span>
                       {{image.properties.title}}
@@ -844,7 +844,7 @@
                          tooltip-placement="right"
                          uib-tooltip="View rectified image in TLV"></i>&nbsp;&nbsp;
                       </a>
-                      <a ng-show="{{list.kmlSuperOverlayAppEnabled}}" href="{{list.kmlSuperOverlayLink}}/superOverlay/createKml/{{image.properties.id}}">
+                      <a ng-show="{{list.kmlSuperOverlayAppEnabled}}" href="{{list.kmlRequestUrl}}{{image.properties.id}}">
                         <i class="fa fa-map fa-border text-primary"
                          style="cursor: pointer;"
                          tooltip-placement="right"

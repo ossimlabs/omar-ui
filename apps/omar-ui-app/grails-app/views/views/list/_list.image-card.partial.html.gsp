@@ -15,7 +15,7 @@
            tooltip-placement="top"
            uib-tooltip="View rectified image in TLV"></i>&nbsp;&nbsp;
         </a>
-        <a ng-show="{{vm.kmlSuperOverlayAppEnabled}}" href="{{vm.kmlSuperOverlayLink}}/superOverlay/createKml/{{vm.selectedImage.properties.id}}">
+        <a ng-show="{{vm.kmlSuperOverlayAppEnabled}}" href="{{vm.kmlRequestUrl}}{{vm.selectedImage.properties.id}}">
           <i class="fa fa-map fa-border text-primary"
            style="cursor: pointer;"
            tooltip-placement="top"

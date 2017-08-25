@@ -24,9 +24,6 @@
           wfsBaseUrl = stateService.omarSitesState.url.base;
           wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
           wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
-          console.log(wfsRequestUrl);
-
-          console.log('setWfsUrlProps is firing!');
 
         }
 

@@ -251,23 +251,6 @@ omar:
           jpipContextPath: /omar-jpip
           wmtsContextPath: /omar-wmts
           tlvContextPath: /tlv
-    # wfs:
-      # # baseUrl: http://localhost:8081/wfs?
-      # # enabled: true
-      # proxy: /proxy/index?url=
-      # params: # misc params for the wfs request
-      #   name: "Image Footprints"
-      #   version: '1.1.1'
-      #   layers: 'omar:raster_entry'
-      #   styles: 'byFileType'
-    # wms:
-    #   baseUrl: http://localhost:8081/wms?
-    #   enabled: true
-    # imageSpace:
-    #   baseUrl: http://localhost:8081/imageSpace
-    #   enabled: true
-    # thumbnails:
-    #   baseUrl: http://localhost:8081/imageSpace/getThumbnail
     footprints:
       # baseUrl: http://localhost:8081/footprints/getFootprints
       params: # misc params for the wfs request

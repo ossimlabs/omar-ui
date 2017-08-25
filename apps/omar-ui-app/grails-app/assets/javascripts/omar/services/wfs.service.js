@@ -10,10 +10,9 @@
         // #################################################################################
         //console.log('AppO2.APP_CONFIG in wfsService: ', AppO2.APP_CONFIG);
 
-        var wfsBaseUrl = stateService.omarSitesState.url.base;
-        var wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
-        var wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
-
+        var wfsBaseUrl,
+            wfsContextPath,
+            wfsRequestUrl;
 
         /**
          * Description: Called from the listController so that the $on. event that subscribes to the $broadcast
@@ -26,6 +25,7 @@
           wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
 
         }
+        this.setWfsUrlProps();
 
         var wfsRequest = {
             typeName: 'omar:raster_entry',
@@ -177,17 +177,6 @@
           });
 
         }
-
-        // this.getImageMetadata = function(filter) {
-        //
-        //   return wfsRequestUrl +
-        //     "filter=in(" + filter + ")&" +
-        //     "request=GetFeature&" +
-        //     "service=WFS&" +
-        //     "typeName=" + wfsRequest.typeName + "&" +
-        //     "version=" + wfsRequest.version;
-        //
-        // }
 
     }
 

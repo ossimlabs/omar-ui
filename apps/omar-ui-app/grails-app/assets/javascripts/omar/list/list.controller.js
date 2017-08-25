@@ -10,13 +10,14 @@
         '$uibModal',
         'mapService',
         'jpipService',
+        'avroMetadataService',
         '$scope',
         '$http',
         '$log',
         ListController
     ]);
 
-    function ListController(stateService, wfsService, shareService, downloadService, beNumberService, $stateParams, $uibModal, mapService, jpipService, $scope, $http, $log) {
+    function ListController(stateService, wfsService, shareService, downloadService, beNumberService, $stateParams, $uibModal, mapService, jpipService, avroMetadataService, $scope, $http, $log) {
 
         // #################################################################################
         // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -151,6 +152,7 @@
             downloadService.setDownloadServiceUrlProps();
             wfsService.executeWfsQuery();
             mapService.updateFootprintsUrl();
+            avroMetadataService.setAvroMetadataUrlProps();
 
             $scope.$apply(function() {
 
@@ -363,8 +365,6 @@
 
         vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
-            console.log(kmlRequestUrl);
-
             var modalInstance = $uibModal.open({
                 size: 'lg',
                 templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-card.partial.html',
@@ -450,7 +450,6 @@
 
         var vm = this;
 
-        console.info(kmlRequestUrl);
         vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
         vm.uiRequestUrl = uiRequestUrl;
         vm.mensaRequestUrl = mensaRequestUrl;

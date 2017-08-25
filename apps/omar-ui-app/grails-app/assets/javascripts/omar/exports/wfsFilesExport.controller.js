@@ -37,9 +37,6 @@
             isaRequestUrl = isaBaseUrl + isaContextPath;
             vm.isaRequestUrl = isaRequestUrl;
 
-            console.log('setWFSOutputDlControllerUrlProps firing!');
-            console.log(vm.isaRequestUrl);
-
         }
 
         $scope.$on('omarSitesState.updated', function(event, params) {

@@ -2,12 +2,31 @@
     'use strict';
     angular
         .module('omarApp')
-        .controller('FilterController', ['$http', '$scope', 'wfsService', 'mapService', 'toastr', FilterController]);
+        .controller('FilterController', ['stateService', '$http', '$scope', 'wfsService', 'mapService', 'toastr', FilterController]);
 
-    function FilterController($http, $scope, wfsService, mapService, toastr) {
+    function FilterController(stateService, $http, $scope, wfsService, mapService, toastr) {
 
         /* jshint validthis: true */
         var vm = this;
+
+        var stagerBaseUrl,
+            stagerContextPath,
+            stagerRequestUrl;
+
+        function setfilterControllerUrlProps() {
+
+          stagerBaseUrl = stateService.omarSitesState.url.base;
+          stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
+          stagerRequestUrl = stagerBaseUrl + stagerContextPath + '/dataManager/getDistinctValues?property=';
+          console.log(stagerRequestUrl);
+
+        }
+
+        $scope.$on('omarSitesState.updated', function(event, params) {
+
+          setfilterControllerUrlProps();
+
+        });
 
         var filterString = "";
         var filterArray = [];
@@ -24,9 +43,9 @@
         $scope["missionIdTypes"] = [];
         $scope["sensorIdTypes"] = [];
         vm.getDistinctValues = function(property) {
+
             if (!$scope[property + "Types"] || $scope[property + "Types"].length == 0) {
-                var url = AppO2.APP_CONFIG.params.stagerApp.baseUrl +
-                    "/dataManager/getDistinctValues?property=" + property;
+                var url = stagerRequestUrl + property;
                 $http({
                     method: 'GET',
                     url: url
@@ -35,6 +54,7 @@
                     $scope[property + "Types"] = response.data;
                 });
             }
+            
         }
 
         function checkNoSpatialFilter() {

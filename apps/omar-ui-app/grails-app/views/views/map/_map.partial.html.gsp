@@ -619,16 +619,15 @@
      theme="bootstrap"
      on-select="list.changeOmarSiteUrl()">
       <ui-select-match placeholder="{{list.selectedUrl}}">
-        {{$select.selected.info.name}}
+        <div>{{$select.selected.info.description}}</div>
       </ui-select-match>
       <ui-select-choices repeat="site in list.sites | filter: $select.search">
-        <div ng-bind="site.info.name"></div>
-        <div><i class="fa fa-hdd-o" aria-hidden="true"></i>&nbsp;
-          <em><small ng-bind="site.info.description"></small></em>
+        <div>
+          <strong ng-bind="site.info.description"></strong>
         </div>
         <div>
-          <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;
-          <em><small ng-bind="site.url.base"></small></em>
+          <i class="fa fa-globe text-muted" aria-hidden="true"></i>&nbsp;
+          <em><small class="text-muted" ng-bind="site.url.base"></small></em>
         </div>
       </ui-select-choices>
     </ui-select>
@@ -645,7 +644,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <p class="navbar-text">Sort:</p>
+          <!-- <p class="navbar-text">Sort:</p> -->
         </div>
         <div class="collapse navbar-collapse" id="sort-navbar-collapse">
           <ul class="nav navbar-nav">

@@ -111,7 +111,7 @@
 
         // The list of urls we want to iterate over
         vm.sites = AppO2.APP_CONFIG.params.sites;
-        vm.selectedUrl = AppO2.APP_CONFIG.params.sites[0].info.name;
+        vm.selectedUrl = AppO2.APP_CONFIG.params.sites[0].info.description;
 
         /**
          * Description: Updates the omar (o2) sites object from the select/dropdown

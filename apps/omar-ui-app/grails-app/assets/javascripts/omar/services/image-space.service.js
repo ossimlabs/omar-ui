@@ -60,22 +60,16 @@
           imageSpaceBaseUrl = stateService.omarSitesState.url.base;
           imageSpaceContextPath = stateService.omarSitesState.url.omsContextPath;
           imageSpaceRequestUrl = $stateParams.imageSpaceRequestUrl + '/imageSpace';
-          // console.log(imageSpaceRequestUrl);
-          // console.log('$stateParams.imageSpaceRequestUrl', $stateParams.imageSpaceRequestUrl);
 
           uiBaseUrl = stateService.omarSitesState.url.base;
           uiContextPath = stateService.omarSitesState.url.uiContextPath;
           uiRequestUrl = $stateParams.uiRequestUrl;
-          // console.log(uiRequestUrl);
-          // console.log('$stateParams.uiRequestUrl', $stateParams.uiRequestUrl);
 
           mensaBaseUrl = stateService.omarSitesState.url.base;
           mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
-          mensaRequestUrl = $stateParams.mensaRequestUrl + '/mensa/imageDistance?';
-          // console.log(mensaRequestUrl);
+          mensaRequestUrl = $stateParams.mensaRequestUrl + '/mensa';
+          console.log(mensaRequestUrl);
           // console.log('$stateParams.mensaRequestUrl', $stateParams.mensaRequestUrl);
-
-          //console.log('this.setImageServiceUrlProps firing!');
 
         }
         this.setImageServiceUrlProps();
@@ -279,7 +273,6 @@
             // Sets header title and grabs the image's metadata
             wfsService.getImageProperties(params).then(function(response) {
               imageData = response;
-              console.log(imageData);
               imageGeometry = imageData.geometry;
               imageProperties = imageData.properties;
             })
@@ -631,7 +624,7 @@
                     $http({
 
                         method: 'POST',
-                        url: encodeURI(mensaRequestUrl),
+                        url: encodeURI(mensaRequestUrl+ '/imageDistance?'),
                         data: {
                             filename: filename,
                             entryId: entry,
@@ -779,7 +772,7 @@
 
                     var pqeMpArray = 'MULTIPOINT(' + pqeString + ')';
 
-                    var mensaPqeUrl = AppO2.APP_CONFIG.params.mensaApp.baseUrl + '/imagePointsToGround?';
+                    var mensaPqeUrl = mensaRequestUrl + '/imagePointsToGround?';
 
                     $http({
 
@@ -871,7 +864,7 @@
                         pointList: points
                     },
                     method: 'POST',
-                    url: encodeURI(AppO2.APP_CONFIG.params.mensaApp.baseUrl + "/groundToImagePoints")
+                    url: encodeURI(mensaRequestUrl + "/groundToImagePoints")
                 }).then(function(response) {
                     var pixels = response.data.data;
 

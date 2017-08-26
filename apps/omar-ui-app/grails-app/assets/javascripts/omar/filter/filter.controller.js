@@ -50,8 +50,9 @@
                     url: url
                 })
                 .then(function (response) {
+
                     $scope[property + "Types"] = response.data;
-                    console.log(response);
+
                 });
             }
 
@@ -244,7 +245,6 @@
 
         vm.getCustomEndDate = function() {
             // TODO: Pickup the time from the timepicker control instead of formatting from moment
-
             return moment(vm.endDate).format('MM-DD-YYYY HH:mm:ss+0000');
         };
 

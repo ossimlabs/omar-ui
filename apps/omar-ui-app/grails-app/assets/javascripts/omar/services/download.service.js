@@ -19,22 +19,15 @@
 
             downloadContextPath = stateService.omarSitesState.url.downloadContextPath;
             downloadRequestUrl = baseUrl + downloadContextPath;
-            //console.log(downloadRequestUrl);
 
             stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
             stagerRequestUrl = baseUrl + stagerContextPath;
-            //console.log(stagerRequestUrl);
 
-            //console.log('setDownloadServiceUrlProps firing in downloadService');
 
         }
         this.setDownloadServiceUrlProps();
 
         var imageLayerIds;
-        //var downloadManager = AppO2.APP_CONFIG.params.downloadApp.baseUrl;
-        //var downloadManager; // = downloadRequestUrl;
-        //var dataManager = AppO2.APP_CONFIG.params.stagerApp.baseUrl;
-        //var dataManager; // = stagerRequestUrl;
 
         var data = {
             'type': 'Download',
@@ -63,9 +56,6 @@
 
             var url = dataManager + '/dataManager/getRasterFiles?id=' + imageId;
             var dm = downloadManager + '/archive/download';
-
-            console.log('dataManager: ' + dataManager);
-            console.log('downloadManager: ' + downloadManager);
 
             $http({method: 'GET', url: url}).then(function(response) {
                 if (response.data.results.length > 0) {

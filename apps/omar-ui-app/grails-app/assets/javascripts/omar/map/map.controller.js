@@ -31,7 +31,6 @@
 
     $scope.$on('omarSitesState.updated', function (event, params) {
 
-      //console.log('omarSitesState.updated firing in mapController!');
       mapService.setMapServiceUrlProps();
 
     });

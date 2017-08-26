@@ -196,6 +196,26 @@
           return wfsUrl;
 
         }
+
+        this.search = function(filter) {
+
+          var wfsUrl = wfsRequestUrl +
+            "filter=" + encodeURIComponent("title LIKE '%" + filter.toUpperCase() + "%'") +
+            "&maxFeatures=" + wfsRequest.maxFeatures +
+            "&outputFormat=" + wfsRequest.outputFormat +
+            "&request=GetFeature" +
+            "&service=WFS" +
+            "&typeName=" + wfsRequest.typeName +
+            "&version=" + wfsRequest.version;
+
+          return $http({method: 'GET', url: wfsUrl}).then(function(response) {
+
+              var features = response.data.features;
+              return features;
+
+          });
+
+        }
     }
 
 }());

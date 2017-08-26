@@ -18,7 +18,6 @@
           stagerBaseUrl = stateService.omarSitesState.url.base;
           stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
           stagerRequestUrl = stagerBaseUrl + stagerContextPath + '/dataManager/getDistinctValues?property=';
-          console.log(stagerRequestUrl);
 
         }
 
@@ -52,9 +51,10 @@
                 })
                 .then(function (response) {
                     $scope[property + "Types"] = response.data;
+                    console.log(response);
                 });
             }
-            
+
         }
 
         function checkNoSpatialFilter() {

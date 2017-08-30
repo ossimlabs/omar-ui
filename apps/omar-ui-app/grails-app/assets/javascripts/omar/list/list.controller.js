@@ -5,7 +5,6 @@
         'wfsService',
         'shareService',
         'downloadService',
-        'beNumberService',
         '$stateParams',
         '$uibModal',
         'mapService',
@@ -17,7 +16,7 @@
         ListController
     ]);
 
-    function ListController(stateService, wfsService, shareService, downloadService, beNumberService, $stateParams, $uibModal, mapService, jpipService, avroMetadataService, $scope, $http, $log) {
+    function ListController(stateService, wfsService, shareService, downloadService, $stateParams, $uibModal, mapService, jpipService, avroMetadataService, $scope, $http, $log) {
 
         // #################################################################################
         // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -372,7 +371,7 @@
                     'shareService',
                     'downloadService',
                     '$uibModalInstance',
-                    'beNumberService',
+                    'wfsService',
                     'avroMetadataService',
                     '$scope',
                     'imageObj',
@@ -446,7 +445,7 @@
     }
 
     // Handles the selected image modal obj
-    function ImageModalController(shareService, downloadService, $uibModalInstance, beNumberService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
+    function ImageModalController(shareService, downloadService, $uibModalInstance, wfsService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
         var vm = this;
 
@@ -567,7 +566,7 @@
         });
 
         vm.loadBeData = function loadBeData(geom) {
-            vm.beData = beNumberService.getBeData(new ol.geom.MultiPolygon(imageObj.geometry.coordinates));
+          vm.beData = wfsService.beSearch(new ol.geom.MultiPolygon(imageObj.geometry.coordinates));
         };
 
         vm.calcRes = function calcRes() {
@@ -594,15 +593,18 @@
         };
 
         vm.viewOrtho = function(image, location) {
+
             var feature = new ol.format.GeoJSON().readFeature(image);
+            var extent = feature.getGeometry().getExtent();
 
             var centerLat,
                 centerLon;
+
             if (location) {
                 centerLat = location[1];
                 centerLon = location[0];
             } else {
-                var extent = feature.getGeometry().getExtent();
+
                 centerLat = (extent[1] + extent[3]) / 2;
                 centerLon = (extent[0] + extent[2]) / 2;
             }

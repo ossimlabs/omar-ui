@@ -68,8 +68,6 @@
           mensaBaseUrl = stateService.omarSitesState.url.base;
           mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
           mensaRequestUrl = $stateParams.mensaRequestUrl + '/mensa';
-          console.log(mensaRequestUrl);
-          // console.log('$stateParams.mensaRequestUrl', $stateParams.mensaRequestUrl);
 
         }
         this.setImageServiceUrlProps();
@@ -659,7 +657,6 @@
                 // Creates a new help tooltip
                 function createHelpTooltip() {
                     if (helpTooltipElement) {
-                        console.log('if in helpTooltipElement');
                         helpTooltipElement.parentNode.removeChild(helpTooltipElement);
                     }
                     helpTooltipElement = document.createElement('div');
@@ -851,9 +848,7 @@
                 map.removeInteraction(drawPqePoint);
 
             }
-            // End Position Quality Evaluator stuff
 
-            // TODO: Change URL
             this.groundToImage = function(points) {
                 var deferred = $q.defer();
 
@@ -879,21 +874,28 @@
             }
 
             this.getFootprintGeometry = function() {
+
               return new ol.geom.MultiPolygon(imageGeometry.coordinates);
+
             }
 
             this.setCenter = function(point) {
+
               map.getView().setCenter(point);
+
             }
 
             this.zoomToFullExtent = function() {
+
               map.getView().setZoom(1);
+
             }
 
             this.zoomToFullRes = function() {
-              console.log('imageProperties: ', imageProperties);
-                var gsd = Math.min(imageProperties.gsdx, imageProperties.gsdy);
-                map.getView().setResolution(1 / gsd);
+
+              var gsd = Math.min(imageProperties.gsdx, imageProperties.gsdy);
+              map.getView().setResolution(1 / gsd);
+
             }
 
         };

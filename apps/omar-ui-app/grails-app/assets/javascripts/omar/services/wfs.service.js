@@ -20,9 +20,9 @@
          */
         this.setWfsUrlProps = function() {
 
-          wfsBaseUrl = stateService.omarSitesState.url.base;
-          wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
-          wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
+            wfsBaseUrl = stateService.omarSitesState.url.base;
+            wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
+            wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
 
         }
         this.setWfsUrlProps();
@@ -153,66 +153,99 @@
 
         this.getImageProperties = function(params) {
 
-          return $http({
-            method: 'GET',
-            url: wfsRequestUrl + "filter=" + encodeURIComponent("filename LIKE '" + params.filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
+            return $http({
+                method: 'GET',
+                url: wfsRequestUrl + "filter=" + encodeURIComponent("filename LIKE '" + params.filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
 
-          }).then(function(response) {
+            }).then(function(response) {
 
-              var imageData = response.data.features[0];
+                var imageData = response.data.features[0];
 
-              var imageIdText = imageData.properties.title || imageData.properties.filename;
-              var acquisitionDateText = imageData.properties.acquisition_date || "";
+                var imageIdText = imageData.properties.title || imageData.properties.filename;
+                var acquisitionDateText = imageData.properties.acquisition_date || "";
 
-              if (acquisitionDateText != "") {
-                acquisitionDateText = moment.utc(acquisitionDateText).format('MM-DD-YYYY HH:mm:ss') + " z";
-              }
+                if (acquisitionDateText != "") {
+                    acquisitionDateText = moment.utc(acquisitionDateText).format('MM-DD-YYYY HH:mm:ss') + " z";
+                }
 
-              stateService.navStateUpdate({
-                titleLeft: imageIdText + " <br> " + acquisitionDateText,
-                userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
-              });
+                stateService.navStateUpdate({
+                    titleLeft: imageIdText + " <br> " + acquisitionDateText,
+                    userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
+                });
 
-              return imageData;
-          });
+                return imageData;
+            });
 
         }
 
         this.getExport = function(outputFormat) {
 
-          //var wfsRequestUrl = AppO2.APP_CONFIG.params.wfs.baseUrl;
-          var version = '1.1.0';
-          var typeName = 'omar:raster_entry';
-          var wfsUrl = wfsRequestUrl +
-            'service=WFS' +
-            '&version=' + version +
-            '&request=GetFeature' +
-            '&typeName=' + typeName +
-            '&filter=' + encodeURIComponent(this.spatialObj.filter) +
-            '&outputFormat=' + outputFormat +
-            '&sortBy=' + this.attrObj.sortField + this.attrObj.sortType +
-            '&startIndex=' + this.attrObj.startIndex;
+            var version = '1.1.0';
+            var typeName = 'omar:raster_entry';
+            var wfsUrl = wfsRequestUrl + 'service=WFS' + '&version=' + version + '&request=GetFeature' + '&typeName=' + typeName + '&filter=' + encodeURIComponent(this.spatialObj.filter) + '&outputFormat=' + outputFormat + '&sortBy=' + this.attrObj.sortField + this.attrObj.sortType + '&startIndex=' + this.attrObj.startIndex;
 
-          return wfsUrl;
+            return wfsUrl;
 
         }
 
         this.search = function(filter) {
 
-          var wfsUrl = wfsRequestUrl +
-            "filter=" + encodeURIComponent("title LIKE '%" + filter.toUpperCase() + "%'") +
-            "&maxFeatures=" + wfsRequest.maxFeatures +
-            "&outputFormat=" + wfsRequest.outputFormat +
-            "&request=GetFeature" +
-            "&service=WFS" +
-            "&typeName=" + wfsRequest.typeName +
-            "&version=" + wfsRequest.version;
+            var wfsUrl = wfsRequestUrl + "filter=" + encodeURIComponent("title LIKE '%" + filter.toUpperCase() + "%'") + "&maxFeatures=" + wfsRequest.maxFeatures + "&outputFormat=" + wfsRequest.outputFormat + "&request=GetFeature" + "&service=WFS" + "&typeName=" + wfsRequest.typeName + "&version=" + wfsRequest.version;
 
-          return $http({method: 'GET', url: wfsUrl}).then(function(response) {
+            return $http({method: 'GET', url: wfsUrl}).then(function(response) {
 
-              var features = response.data.features;
-              return features;
+                var features = response.data.features;
+                return features;
 
+            });
+
+        }
+
+        this.beSearch = function(geom) {
+
+          var beObj = [];
+          var placemarkConfig = AppO2.APP_CONFIG.params.misc.placemarks;
+
+          var beLookupEnabled = (placemarkConfig)
+              ? true
+              : false;
+          var typeName = (beLookupEnabled)
+              ? placemarkConfig.tableName
+              : null;
+          var sortBy = (beLookupEnabled)
+              ? placemarkConfig.columnName
+              : null;
+          var geomName = (beLookupEnabled)
+              ? placemarkConfig.geomName
+              : null;
+          var maxFeatures = (beLookupEnabled)
+              ? placemarkConfig.maxResults
+              : null;
+
+          var bbox = geom.getExtent().join(',');
+          var cql = "bbox(" + geomName + ", " + bbox + ")";
+
+          var url = wfsRequestUrl +
+            'service=WFS' +
+            '&version=1.1.0' +
+            '&request=GetFeature' +
+            '&typeName=' + typeName +
+            '&filter=' + cql +
+            '&outputFormat=JSON' +
+            '&sortBy=' + sortBy + '+A' +
+            '&startIndex=0' +
+            '&maxFeatures=' + maxFeatures;
+
+          $http({method: 'GET', url: url}).then(function(response) {
+
+              var data;
+              data = response.data.features;
+
+              // $timeout needed: http://stackoverflow.com/a/18996042
+              $timeout(function() {
+                  $rootScope.$broadcast('placemarks: updated', data);
+                  beObj = data;
+              });
           });
 
         }

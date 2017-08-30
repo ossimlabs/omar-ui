@@ -365,14 +365,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="foo in vm.beData">
+                <tr ng-repeat="be in vm.beData">
                   <td>
-                    <a href="" ng-click="vm.viewOrtho( vm.selectedImage, foo.geometry.coordinates )" target="_blank">
-                    {{foo.properties[vm.placemarkConfig.columnName]}}
+                    <a href="" ng-click="vm.viewOrtho(vm.selectedImage, be.geometry.coordinates)" target="_blank">
+                    {{be.properties[vm.placemarkConfig.columnName]}}
                   </a>
                   </td>
-                  <td>{{foo.geometry.coordinates[1]}}</td>
-                  <td>{{foo.geometry.coordinates[0]}}</td>
+                  <td>{{be.geometry.coordinates[1]}}</td>
+                  <td>{{be.geometry.coordinates[0]}}</td>
                 </tr>
               </tbody>
             </table>

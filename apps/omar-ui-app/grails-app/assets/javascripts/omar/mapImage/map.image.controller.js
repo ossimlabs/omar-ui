@@ -2,7 +2,6 @@
     'use strict';
     angular.module('omarApp').controller('MapImageController', [
         'wfsService',
-        'beNumberService',
         'coordinateConversionService',
         'downloadService',
         'imageSpaceService',
@@ -15,7 +14,7 @@
         MapImageController
     ]);
 
-    function MapImageController(wfsService, beNumberService, coordinateConversionService, downloadService, imageSpaceService, $location, $scope, shareService, $state, $stateParams, toastr) {
+    function MapImageController(wfsService, coordinateConversionService, downloadService, imageSpaceService, $location, $scope, shareService, $state, $stateParams, toastr) {
 
         var vm = this;
 

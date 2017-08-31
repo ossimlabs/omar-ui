@@ -31,10 +31,6 @@
             thumbnailsContextPath,
             thumbnailsRequestUrl;
 
-        var uiBaseUrl,
-            uiContextPath,
-            uiRequestUrl;
-
         var wfsBaseUrl,
             wfsContextPath,
             wfsRequestUrl;
@@ -137,7 +133,7 @@
                 urlIsaContextPath: vm.selectedOmar.url.isaContextPath
             });
 
-        }
+        };
 
         /**
          * Sets the initial state for the sites that are loaded into the UI
@@ -192,7 +188,7 @@
             return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
             //return uiRequestUrl + '/omar/#/mapImage?' +
             'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
-        }
+        };
 
         vm.thumbBorder = function(imageType) {
 
@@ -219,7 +215,7 @@
             wfsService.executeWfsQuery();
             vm.refreshSpin = true;
 
-        }
+        };
 
         // Shows/Hides the KML SuperOverlay button based on parameters passed down
         // from application.yml
@@ -455,7 +451,7 @@
         vm.wfsRequestUrl = wfsRequestUrl;
 
         vm.beData = [];
-        vm.avroMetaData;
+        //vm.avroMetaData;
 
         vm.selectedImage = imageObj;
         //used in the modal _list.image-card.partial.html.gsp
@@ -504,7 +500,7 @@
 
             return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
 
-        }
+        };
 
         // Used to show/hide the 'Image not found message'
         vm.showAvroMetadata = true;
@@ -541,7 +537,7 @@
 
             }
 
-        }
+        };
 
         // Updates the data in the Metadata modal after a
         // a user clicks on the Avro tab

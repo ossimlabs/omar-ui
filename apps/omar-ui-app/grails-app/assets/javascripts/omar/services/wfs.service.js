@@ -24,7 +24,7 @@
             wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
             wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
 
-        }
+        };
         this.setWfsUrlProps();
 
         var wfsRequest = {
@@ -96,7 +96,7 @@
             if (boolUpdate) {
                 $rootScope.$broadcast('attrObj.updated', this.attrObj.filter);
             }
-        }
+        };
 
         this.executeWfsQuery = function() {
 
@@ -137,7 +137,7 @@
                 });
             });
 
-            var wfsFeaturesUrl = wfsRequestUrl + "service=WFS" + "&version=" + wfsRequest.version + "&request=GetFeature" + "&typeName=" + wfsRequest.typeName + "&filter=" + encodeURIComponent(wfsRequest.cql) + "&outputFormat=" + wfsRequest.outputFormat + "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType + "&startIndex=" + wfsRequest.startIndex + "&resultType=hits"
+            var wfsFeaturesUrl = wfsRequestUrl + "service=WFS" + "&version=" + wfsRequest.version + "&request=GetFeature" + "&typeName=" + wfsRequest.typeName + "&filter=" + encodeURIComponent(wfsRequest.cql) + "&outputFormat=" + wfsRequest.outputFormat + "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType + "&startIndex=" + wfsRequest.startIndex + "&resultType=hits";
 
             $http({method: 'GET', url: wfsFeaturesUrl}).then(function(response) {
                 var features;
@@ -176,7 +176,7 @@
                 return imageData;
             });
 
-        }
+        };
 
         this.getExport = function(outputFormat) {
 
@@ -186,7 +186,7 @@
 
             return wfsUrl;
 
-        }
+        };
 
         this.search = function(filter) {
 
@@ -199,7 +199,7 @@
 
             });
 
-        }
+        };
 
         this.beSearch = function(geom) {
 
@@ -248,7 +248,7 @@
               });
           });
 
-        }
+        };
     }
 
 }());

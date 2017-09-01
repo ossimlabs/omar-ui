@@ -24,7 +24,7 @@
             stagerRequestUrl = baseUrl + stagerContextPath;
 
 
-        }
+        };
         this.setDownloadServiceUrlProps();
 
         var imageLayerIds;

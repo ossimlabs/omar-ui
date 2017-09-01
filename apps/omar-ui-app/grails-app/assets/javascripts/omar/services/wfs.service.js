@@ -100,7 +100,6 @@
 
         this.executeWfsQuery = function() {
 
-            //console.log('firing executeWfsQuery;')
             if (this.attrObj.filter === "") {
 
                 // Only send the spatialObj to filter the results
@@ -122,8 +121,6 @@
             wfsRequest.sortType = this.attrObj.sortType;
             wfsRequest.startIndex = this.attrObj.startIndex;
             wfsRequest.pageLimit = this.attrObj.pageLimit;
-
-            //console.log('wfsRequestUrl: ', wfsRequestUrl);
 
             var wfsUrl = wfsRequestUrl + "service=WFS" + "&version=" + wfsRequest.version + "&request=GetFeature" + "&typeName=" + wfsRequest.typeName + "&filter=" + encodeURIComponent(wfsRequest.cql) + "&outputFormat=" + wfsRequest.outputFormat + "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType + "&startIndex=" + wfsRequest.startIndex + "&maxFeatures=" + wfsRequest.pageLimit;
 
@@ -151,11 +148,11 @@
 
         };
 
-        this.getImageProperties = function(params) {
+        this.getImageProperties = function(wfsUrl, filename) {
 
             return $http({
                 method: 'GET',
-                url: wfsRequestUrl + "filter=" + encodeURIComponent("filename LIKE '" + params.filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
+                url: wfsUrl + "filter=" + encodeURIComponent("filename LIKE '" + filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
 
             }).then(function(response) {
 

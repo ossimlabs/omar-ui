@@ -690,59 +690,14 @@ function mapService(stateService, wfsService, $timeout) {
 
   }
 
+  // TOOD: Look at removing this, as we can set it in the HTML/CSS, and not need
+  // to dynamically set it anymore.
   function setFootprintColors(imageType) {
 
     var color = "rgba(255, 255, 50, 0.6)";
 
     switch (imageType) {
-      // case "adrg":
-      //     color = "rgba(50, 111, 111, 0.6)"; // atoll
-      //     break;
-      // case "aaigrid":
-      //     color = "rgba(255, 192, 203, 0.6)"; // pink
-      //     break;
-      // case "cadrg":
-      //     color = "rgba(0, 255, 255, 0.6)"; // cyan
-      //     break;
-      // case "ccf":
-      //     color = "rgba(128, 100, 255, 0.6)"; // light slate blue
-      //     break;
-      // case "cib":
-      //     color = "rgba(0, 128, 128, 0.6)"; // teal
-      //     break;
-      // case "doqq":
-      //     color = "rgba(128, 0, 128, 0.6)"; // purple
-      //     break;
-      // case "dted":
-      //     color = "rgba(0, 255, 0, 0.6)"; // green
-      //     break;
-      // case "imagine_hfa":
-      //     color = "rgba(211, 211, 211, 0.6)"; // lightGrey
-      //     break;
-      // case "jpeg":
-      //     color = "rgba(255, 255, 0, 0.6)"; // yellow
-      //     break;
-      // case "jpeg2000":
-      //     color = "rgba(255, 200, 0, 0.6)"; // orange
-      //     break;
-      // case "landsat7":
-      //     color = "rgba(255, 0, 255, 0.6)"; // pink
-      //     break;
-      // case "mrsid":
-      //     color = "rgba(0, 188, 0, 0.6)"; // light green
-      //     break;
-      // case "nitf":
-      //     color = "rgba(0, 0, 255, 0.6)"; // blue
-      //     break;
-      // case "tiff":
-      //     color = "rgba(255, 0, 0, 0.6)"; // red
-      //     break;
-      // case "mpeg":
-      //     color = "rgba(164, 254, 255, 0.6)"; // red
-      //     break;
-      // case "unspecified":
-      //     color = "rgba(255, 255, 255, 0.6)"; // white
-      //     break;
+
       default:
           color = "rgba(255, 255, 255, 0.6)"; // white
 
@@ -781,8 +736,6 @@ function mapService(stateService, wfsService, $timeout) {
     $('#mouseCoords').click(function() {
         mousePositionControl.coordFormat = mousePositionControl.coordFormat >= 3 ? 0 : mousePositionControl.coordFormat + 1;
     });
-
-
 
 }
 

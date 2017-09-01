@@ -38,7 +38,8 @@
             urlString,
             imgID,
             transparent,
-            imageData;
+            imageData,
+            wfsRequestUrl;
 
         var imageSpaceBaseUrl,
             imageSpaceContextPath,
@@ -268,13 +269,6 @@
 
         this.initImageSpaceMap = function(params) {
 
-            // Sets header title and grabs the image's metadata
-            wfsService.getImageProperties(params).then(function(response) {
-              imageData = response;
-              imageGeometry = imageData.geometry;
-              imageProperties = imageData.properties;
-            })
-
             filename = params.filename;
             entry = params.entry;
             histOp = params.histOp || "auto-minmax";
@@ -289,6 +283,14 @@
             resamplerFilter = params.resamplerFilter || "bilinear";
             sharpenMode = params.sharpenMode || "none";
             transparent = params.transparent || "true";
+            wfsRequestUrl = params.wfsRequestUrl; // TODO: Add a default in case this is undefined
+
+            // Sets header title and grabs the image's metadata
+            wfsService.getImageProperties(wfsRequestUrl, filename).then(function(response) {
+              imageData = response;
+              imageGeometry = imageData.geometry;
+              imageProperties = imageData.properties;
+            })
 
             // Make AJAX call here to getAngles with filename & entry as args
             // to get the upAngle and northAngle values
@@ -441,7 +443,8 @@
                 'width=' + imgWidth + '&' +
                 'imageSpaceRequestUrl=' + $stateParams.imageSpaceRequestUrl + '&' +
                 'uiRequestUrl=' + uiRequestUrl + '&' +
-                'mensaRequestUrl=' + mensaRequestUrl;
+                'mensaRequestUrl=' + mensaRequestUrl + '&' +
+                'wfsRequestUrl=' + wfsRequestUrl;
 
             };
 

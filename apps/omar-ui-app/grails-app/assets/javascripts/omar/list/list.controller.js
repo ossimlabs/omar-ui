@@ -108,6 +108,13 @@
         vm.sites = AppO2.APP_CONFIG.params.sites;
         vm.selectedUrl = AppO2.APP_CONFIG.params.sites[0].info.description;
 
+        // Only show the O2 sites select (dropdown) if there is more than
+        // one site in the list
+        vm.showSitesSelect = false;
+        if(AppO2.APP_CONFIG.params.sites.length > 1) {
+          vm.showSitesSelect = true;
+        }
+
         /**
          * Description: Updates the omar (o2) sites object from the select/dropdown
          */

@@ -617,7 +617,8 @@
      class="form-control omar-sites-select"
      ng-model="list.selectedOmar"
      theme="bootstrap"
-     on-select="list.changeOmarSiteUrl()">
+     on-select="list.changeOmarSiteUrl()"
+     ng-show="list.showSitesSelect">
       <ui-select-match placeholder="{{list.selectedUrl}}">
         <div>{{$select.selected.info.description}}</div>
       </ui-select-match>

@@ -164,10 +164,18 @@
                 if (acquisitionDateText != "") {
                     acquisitionDateText = moment.utc(acquisitionDateText).format('MM-DD-YYYY HH:mm:ss') + " z";
                 }
+                else {
+                  acquisitionDateText = "Unknown"
+                }
 
+                // TODO: We need to modify the way this information is bound to the DOM.  It should
+                //       be using an Angular model.
                 stateService.navStateUpdate({
-                    titleLeft: imageIdText + " <br> " + acquisitionDateText,
-                    userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
+                    titleLeft:
+                    '<span class="text-info">Server: </span>' + 'http://omar-test.ossim.io' + ' <br> ' +
+                    '<span class="text-info">Image ID: </span>' + imageIdText + ' <br> ' +
+                    '<span class="text-info">Acquisition Date: </span>' + acquisitionDateText + ' <br> ',
+                    userGuideUrl: 'omar-ui/docs/user-guide/omar-ui/#image-space'
                 });
 
                 return imageData;
@@ -222,7 +230,29 @@
           var bbox = geom.getExtent().join(',');
           var cql = "bbox(" + geomName + ", " + bbox + ")";
 
-          var url = wfsRequestUrl +
+          /**
+           * Description: This sets the context path for the beSearchUrl
+           * (WFS call).  It tries to pull the path from the APP_CONFIG, but if
+           * it is undefined it provides a default
+           * @type {string}
+           */
+          var beSearchUrlContext = AppO2.APP_CONFIG.params.sites[0].url.wfsContextPath || '/omar-wfs';
+
+          /**
+           * Description: We can use the first item in the sites array here,
+           * because this is the main O2 site.  We assume that there is at least
+           * one item in the array, because if not then the entire application
+           * will error out.
+           * This also assumes that the O2 admin has set the following app param
+           * beLookupEnabled: true, and that there are valid BE configuration
+           * params being passed in.  We can then use the main O2 site
+           * information for all federated O2 BE searches.
+           *
+           * @type {string}
+           */
+          var beSearchUrl = AppO2.APP_CONFIG.params.sites[0].url.base + beSearchUrlContext + '/wfs?';
+
+          var url = beSearchUrl +
             'service=WFS' +
             '&version=1.1.0' +
             '&request=GetFeature' +

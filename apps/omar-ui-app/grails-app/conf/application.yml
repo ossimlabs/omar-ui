@@ -1,5 +1,5 @@
-#server:
-#  contextPath: /o2-omar
+server:
+  contextPath: /omar-ui
 ---
 
 hibernate:
@@ -136,70 +136,36 @@ omar:
     baseMaps:
       -
         layerType: "tilewms"
-        title: "Open Street Map"
-        url: "http://vmap0.tiles.osgeo.org/wms/vmap0"
-        params:
-          layers: "basic,coastline_01,coastline_02,priroad,secroad,rail,ferry,tunnel,bridge,trail,CAUSE,clabel,statelabel,ctylabel"
-          format: "image/jpeg"
-        options:
-          visible: false
-      -
-        layerType: "tilewms"
-        title: "Natural Earth"
-        url: "http://demo.boundlessgeo.com/geoserver/wms"
-        params:
-          layers: "ne:NE1_HR_LC_SR_W_DR"
-          format: "image/jpeg"
-        options:
-          visible: false
-      -
-        layerType: "tilewms"
-        title: "Blue Marble"
-        url: "http://demo.opengeo.org/geoserver/wms"
-        params:
-          layers: "nasa:bluemarble"
-          format: "image/jpeg"
-        options:
-          visible: false
-      -
-        layerType: "tilewms"
         title: "OSM Basic"
-        url: "http://dev.o2.ossimc2s.com/service-proxy/wmsProxy"
+        url: "https://omar-dev.ossim.io/o2-mapproxy/service"
         params:
           layers: "o2-basemap-basic"
           format: "image/jpeg"
         options:
-          visible: false
-      -
-        layerType: "tilewms"
-        title: "OSM Bright"
-        url: "http://dev.o2.ossimc2s.com/service-proxy/wmsProxy"
-        params:
-          layers: "o2-basemap-bright"
-          format: "image/jpeg"
-        options:
           visible: true
+    # Uncomment the example below, and modify to add
+    # a custom overlay layer
     overlayLayers:
-      -
-        layerType: "tilewms"
-        title: "DGI"
-        url: "${serverProtocol}://${serverName}/geoscript-app/evwhs/wms"
-        params:
-          filter: ""
-          version: "1.3.0"
-          layers: ""
-          styles: ""
-          format: "image/png"
-        options:
-          visible: false
+      # -
+      #   layerType: "tilewms"
+      #   title: "DGI"
+      #   url: "${serverProtocol}://${serverName}/geoscript-app/evwhs/wms"
+      #   params:
+      #     filter: ""
+      #     version: "1.3.0"
+      #     layers: ""
+      #     styles: ""
+      #     format: "image/png"
+      #   options:
+      #     visible: false
   app:
     sites:
       -
         info:
-          name: OMAR-LOCAL
-          description: OMAR Local Server (Unclassified)
+          name: OMAR-DEV
+          description: OMAR Development Server (Unclassified)
         url:
-          base: http://10.0.10.73:8888
+          base: https://omar-dev.ossim.io
           # uiContextPath: /omar-ui
           # wfsContextPath: /omar-wfs
           # wmsContextPath: /omar-wms
@@ -214,48 +180,7 @@ omar:
           # wmtsContextPath: /omar-wmts
           # tlvContextPath: /tlv
           # isaContextPath: /isa-ui
-      -
-        info:
-          name: OMAR-REL
-          description: OMAR Release Server (Unclassified)
-        url:
-          base: https://omar-rel.ossim.io
-          uiContextPath: /omar-ui
-          # wfsContextPath: /omar-wfs
-          # wmsContextPath: /omar-wms
-          # omsContextPath: /omar-oms # Used for imageSpace, thumbnails
-          # geoscriptContextPath: /omar-geoscript # Used for footprints
-          # avroMetadataContextPath: /omar-avro-metadata
-          # mensaContextPath: /omar-mensa
-          # stagerContextPath: /omar-stager
-          # downloadContextPath: /omar-download
-          # kmlContextPath: /omar-superoverlay
-          # jpipContextPath: /omar-jpip
-          # wmtsContextPath: /omar-wmts
-          # tlvContextPath: /tlv
-          # isaContextPath: /isa-ui
-      -
-        info:
-          name: OMAR-DEV
-          description: OMAR Development Server (Unclassified)
-        url:
-          base: https://omar-dev.ossim.io
-          uiContextPath: /omar-ui
-          wfsContextPath: /omar-wfs
-          wmsContextPath: /omar-wms
-          omsContextPath: /omar-oms # Used for imageSpace, thumbnails
-          geoscriptContextPath: /omar-geoscript # Used for footprints
-          avroMetadataContextPath: /omar-avro-metadata
-          mensaContextPath: /omar-mensa
-          stagerContextPath: /omar-stager
-          downloadContextPath: /omar-download
-          kmlContextPath: /omar-superoverlay
-          jpipContextPath: /omar-jpip
-          wmtsContextPath: /omar-wmts
-          tlvContextPath: /tlv
-          isaContextPath: /isa-ui
     footprints:
-      # baseUrl: http://localhost:8081/footprints/getFootprints
       params: # misc params for the wfs request
         name: "Image Footprints"
         version: '1.1.1'
@@ -268,25 +193,19 @@ omar:
       baseUrl: http://localhost:8081/api
       enabled: true
     isaApp:
-    #  baseUrl: http://localhost/isa-ui
       enabled: true
     tlvApp:
-    #   baseUrl: http://localhost/tlv
       enabled: true
     twofishes:
       baseUrl: https://omar-dev.ossim.io/twofishes
       proxy: /twoFishesProxy
     kmlApp:
-    #   baseUrl: http://localhost:8081
       enabled: true
     jpipApp:
-    #   baseUrl: http://localhost:8081/jpip
       enabled: false
     wmtsApp:
-    #   baseUrl: http://localhost:8081/wmts
       enabled: false
     piwikApp:
-    #  baseUrl: http://omar.ossim.org/piwik/
       enabled: false
     userGuide:
       baseUrl: http://localhost/o2-docs
@@ -314,6 +233,10 @@ classificationBanner:
     # classificationType: Top Secret
 
 
-######### Example for External logback config settings in YAML
+# Example for External logback config settings in YAML
 # logging:
 #   config: <log back config location>
+
+---
+grails:
+  serverURL: http://192.168.1.137:8888/omar-ui

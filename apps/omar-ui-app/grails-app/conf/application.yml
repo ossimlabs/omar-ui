@@ -210,14 +210,14 @@ omar:
       enabled: true
     misc:
       beLookupEnabled: false
-      icons:
-        greenMarker: assets/search_marker_green.png
-      listRefreshButtonVisible: true
       # placemarks:
       #   tableName: omar:cities
       #   columnName: city_name
       #   geomName: geom
       #   maxResults: 100
+      icons:
+        greenMarker: assets/search_marker_green.png
+      listRefreshButtonVisible: true
       totalPaginationCount: 1000
       pageLimit: 10
 

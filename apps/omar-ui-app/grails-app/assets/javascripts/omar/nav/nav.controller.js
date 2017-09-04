@@ -16,9 +16,10 @@
       /* jshint validthis: true */
 
     $scope.$on('navState.updated', function(event, params) {
+
       vm.titleLeft = params.titleLeft;
 
-      if ( params.userGuideUrl && vm.userGuideEnabled ) { 
+      if ( params.userGuideUrl && vm.userGuideEnabled ) {
         var base = AppO2.APP_CONFIG.params.userGuide.baseUrl;
         vm.userGuideLink = base + params.userGuideUrl;
       }

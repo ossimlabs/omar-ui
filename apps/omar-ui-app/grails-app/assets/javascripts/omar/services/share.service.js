@@ -1,48 +1,48 @@
 (function() {
     'use strict';
-    angular
-        .module( 'omarApp' )
-        .service( 'shareService', ['clipboardService', '$uibModal', shareService]);
+    angular.module('omarApp').service('shareService', ['clipboardService', '$uibModal', shareService]);
 
-    function shareService( clipboardService, $uibModal ) {
+    function shareService(clipboardService, $uibModal) {
 
-      this.imageLinkModal = function( imageLink, title ) {
-        var modalInstance = $uibModal.open( {
-          templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-link.partial.html',
-          controller: ['clipboardService', '$uibModalInstance', 'imageLink', 'title', ImageLinkModalController],
-          controllerAs: 'vm',
-          resolve: {
-            imageLink: function() {
-              return imageLink;
-            },
-            title: function() {
-              return title;
-            }
-          }
-        });
-      };
+        this.imageLinkModal = function(imageLink, title) {
+            var modalInstance = $uibModal.open({
+                templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-link.partial.html',
+                controller: [
+                    'clipboardService', '$uibModalInstance', 'imageLink', 'title', ImageLinkModalController
+                ],
+                controllerAs: 'vm',
+                resolve: {
+                    imageLink: function() {
+                        return imageLink;
+                    },
+                    title: function() {
+                        return title;
+                    }
+                }
+            });
+        };
     }
 
-    function ImageLinkModalController( clipboardService, $uibModalInstance, imageLink, title ) {
+    function ImageLinkModalController(clipboardService, $uibModalInstance, imageLink, title) {
 
-      if (title === undefined) {
+        if (title === undefined) {
 
-        this.shareModalTitle = 'Share Image';
+            this.shareModalTitle = 'Share Image';
 
-      } else {
+        } else {
 
-        this.shareModalTitle = title;
+            this.shareModalTitle = title;
 
-      }
+        }
 
-      this.imageLink = imageLink;
-      this.emailLink = encodeURIComponent( imageLink );
+        this.imageLink = imageLink;
+        this.emailLink = encodeURIComponent(imageLink);
 
-      this.close = function() {
+        this.close = function() {
 
-        $uibModalInstance.close();
+            $uibModalInstance.close();
 
-      };
+        };
 
     }
-}() );
+}());

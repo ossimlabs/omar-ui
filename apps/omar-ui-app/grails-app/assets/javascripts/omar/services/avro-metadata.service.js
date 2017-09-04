@@ -2,19 +2,35 @@
   'use strict';
   angular
     .module('omarApp')
-    .service('avroMetadataService', ['$rootScope', '$http', '$timeout', avroMetadataService]);
+    .service('avroMetadataService', ['stateService', '$rootScope', '$http', '$timeout', avroMetadataService]);
 
-    function avroMetadataService($rootScope, $http, $timeout, $scope) {
+    function avroMetadataService(stateService, $rootScope, $http, $timeout, $scope) {
+
+      var avroMetadataBaseUrl,
+          avroMetadataContextPath,
+          avroMetadataRequestUrl;
+
+      /**
+       * Description: Called from the listController so that the $on. event that subscribes to the $broadcast
+       * can update the avroMetadata url and context path.
+       */
+      this.setAvroMetadataUrlProps = function() {
+
+        avroMetadataBaseUrl = stateService.omarSitesState.url.base;
+        avroMetadataContextPath = stateService.omarSitesState.url.avroMetadataContextPath;
+        avroMetadataRequestUrl = avroMetadataBaseUrl + avroMetadataContextPath + '/avroMetadata/get/';
+
+      }
 
       var avroData;
 
       this.getAvroMetadata = function(imageId) {
 
-        var avroMetadataUrl = AppO2.APP_CONFIG.params.avroMetadataApp.baseUrl;
+        //var avroMetadataUrl = AppO2.APP_CONFIG.params.avroMetadataApp.baseUrl;
 
         $http({
           method: 'GET',
-          url: avroMetadataUrl + encodeURIComponent(imageId),
+          url: avroMetadataRequestUrl + encodeURIComponent(imageId),
 
         }).then(function success (response){
 

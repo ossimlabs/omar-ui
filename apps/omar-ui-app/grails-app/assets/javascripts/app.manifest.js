@@ -43,7 +43,6 @@
 //= require omar/services/multiple.service.js
 //= require omar/services/image-space.service.js
 //= require omar/services/jpip.service.js
-//= require omar/services/be-number.service.js
 //= require omar/services/clipboard.service.js
 //= require omar/services/share.service.js
 //= require omar/services/download.service.js
@@ -62,6 +61,9 @@
 
 // <--List-->
 //= require omar/list/list.controller.js
+
+//<--Sites-->
+//= require omar/sites/sites.controller.js
 
 // <--Maps-->
 //= require omar/mapOrtho/map.ortho.controller.js

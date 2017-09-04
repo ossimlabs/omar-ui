@@ -613,6 +613,25 @@
       </div>
   </div>
   <div class="col-md-4" ng-controller="ListController as list">
+    <ui-select
+     class="form-control omar-sites-select"
+     ng-model="list.selectedOmar"
+     theme="bootstrap"
+     on-select="list.changeOmarSiteUrl()"
+     ng-show="list.showSitesSelect">
+      <ui-select-match placeholder="{{list.selectedUrl}}">
+        <div>{{$select.selected.info.description}}</div>
+      </ui-select-match>
+      <ui-select-choices repeat="site in list.sites | filter: $select.search">
+        <div>
+          <strong ng-bind="site.info.description"></strong>
+        </div>
+        <div>
+          <i class="fa fa-globe text-muted" aria-hidden="true"></i>&nbsp;
+          <em><small class="text-muted" ng-bind="site.url.base"></small></em>
+        </div>
+      </ui-select-choices>
+    </ui-select>
     <div class="visible-xs-block visible-sm-block">
       <hr>
     </div>
@@ -626,7 +645,6 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <p class="navbar-text">Sort:</p>
         </div>
         <div class="collapse navbar-collapse" id="sort-navbar-collapse">
           <ul class="nav navbar-nav">
@@ -711,9 +729,9 @@
               <div class="media-left">
                 <img ng-style="list.thumbBorder(image.properties.file_type)"
                   class="media-object"
-                  ng-click="list.showImageModal(image, list.imageSpaceDefaults); list.logRatingToPio(image.properties.id);"
+                  ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                   tooltip-placement="right"
-                  uib-tooltip="Click the thumbnail or the Image ID to preview image and view metadata"
+                  uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
                   ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
                   alt="Image thumbnail"
                   style="cursor: pointer;">&nbsp;
@@ -725,7 +743,7 @@
                 <div class="row">
                   <div class="col-md-12" style="font-size: 13px;">
                     ID:&nbsp;&nbsp;
-                    <span ng-click="list.showImageModal(image, list.imageSpaceDefaults); list.logRatingToPio(image.properties.id);"
+                    <span ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                       class="text-success image-id-link">
                       <span ng-show="!image.properties.title">Unknown</span>
                       {{image.properties.title}}
@@ -772,7 +790,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="text-primary" style="margin-top:.2em;">
-                      <a href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}" target="_blank">
+                      <a href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}" target="_blank">
                         <i class="fa fa-desktop fa-border text-primary"
                          style="cursor: pointer;"
                          tooltip-placement="right"
@@ -784,7 +802,7 @@
                          tooltip-placement="right"
                          uib-tooltip="View rectified image in TLV"></i>&nbsp;&nbsp;
                       </a>
-                      <a ng-show="{{list.kmlSuperOverlayAppEnabled}}" href="{{list.kmlSuperOverlayLink}}/superOverlay/createKml/{{image.properties.id}}">
+                      <a ng-show="{{list.kmlSuperOverlayAppEnabled}}" href="{{list.kmlRequestUrl}}{{image.properties.id}}">
                         <i class="fa fa-map fa-border text-primary"
                          style="cursor: pointer;"
                          tooltip-placement="right"

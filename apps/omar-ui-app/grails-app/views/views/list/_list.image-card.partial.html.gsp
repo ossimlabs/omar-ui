@@ -3,7 +3,7 @@
     <div class="col-sm-4">
     <div class="list-card-modal-header-links">
       <div class="text-primary list-card-image-modal-links" style="margin-top:.2em;">
-        <a href="{{vm.o2baseUrlModal}}/#/mapImage?filename={{vm.selectedImage.properties.filename}}&entry_id={{vm.selectedImage.properties.entry_id}}&width={{vm.selectedImage.properties.width}}&height={{vm.selectedImage.properties.height}}&bands={{vm.imageSpaceDefaults.bands}}&numOfBands={{vm.selectedImage.properties.number_of_bands}}&imageId={{vm.selectedImage.properties.id}}&brightness={{vm.imageSpaceDefaults.brightness}}&contrast={{vm.imageSpaceDefaults.contrast}}&histOp={{vm.imageSpaceDefaults.histOp}}&histCenterTile={{vm.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{vm.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{vm.imageSpaceDefaults.sharpenMode}}" target="_blank">
+        <a href="{{vm.o2baseUrlModal}}/#/mapImage?filename={{vm.selectedImage.properties.filename}}&entry_id={{vm.selectedImage.properties.entry_id}}&width={{vm.selectedImage.properties.width}}&height={{vm.selectedImage.properties.height}}&bands={{vm.imageSpaceDefaults.bands}}&numOfBands={{vm.selectedImage.properties.number_of_bands}}&imageId={{vm.selectedImage.properties.id}}&brightness={{vm.imageSpaceDefaults.brightness}}&contrast={{vm.imageSpaceDefaults.contrast}}&histOp={{vm.imageSpaceDefaults.histOp}}&histCenterTile={{vm.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{vm.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{vm.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{vm.imageSpaceRequestUrl}}&uiRequestUrl={{vm.uiRequestUrl}}&mensaRequestUrl={{vm.mensaRequestUrl}}&wfsRequestUrl={{vm.wfsRequestUrl}}" target="_blank">
           <i class="fa fa-desktop fa-border text-primary"
            style="cursor: pointer;"
            tooltip-placement="top"
@@ -15,7 +15,7 @@
            tooltip-placement="top"
            uib-tooltip="View rectified image in TLV"></i>&nbsp;&nbsp;
         </a>
-        <a ng-show="{{vm.kmlSuperOverlayAppEnabled}}" href="{{vm.kmlSuperOverlayLink}}/superOverlay/createKml/{{vm.selectedImage.properties.id}}">
+        <a ng-show="{{vm.kmlSuperOverlayAppEnabled}}" href="{{vm.kmlRequestUrl}}{{vm.selectedImage.properties.id}}">
           <i class="fa fa-map fa-border text-primary"
            style="cursor: pointer;"
            tooltip-placement="top"
@@ -365,14 +365,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="foo in vm.beData">
+                <tr ng-repeat="be in vm.beData">
                   <td>
-                    <a href="" ng-click="vm.viewOrtho( vm.selectedImage, foo.geometry.coordinates )" target="_blank">
-                    {{foo.properties[vm.placemarkConfig.columnName]}}
+                    <a href="" ng-click="vm.viewOrtho(vm.selectedImage, be.geometry.coordinates)" target="_blank">
+                    {{be.properties[vm.placemarkConfig.columnName]}}
                   </a>
                   </td>
-                  <td>{{foo.geometry.coordinates[1]}}</td>
-                  <td>{{foo.geometry.coordinates[0]}}</td>
+                  <td>{{be.geometry.coordinates[1]}}</td>
+                  <td>{{be.geometry.coordinates[0]}}</td>
                 </tr>
               </tbody>
             </table>

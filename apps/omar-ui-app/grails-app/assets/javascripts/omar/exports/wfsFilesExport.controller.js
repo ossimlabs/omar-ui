@@ -1,77 +1,115 @@
 (function() {
     'use strict';
-    angular
-        .module( 'omarApp' )
-        .controller( 'WFSOutputDlController', ['wfsService', '$http', 'mapService', '$scope', 'toastr', '$window', WFSOutputDlController]);
+    angular.module('omarApp').controller('WFSOutputDlController', [
+        'stateService',
+        'wfsService',
+        '$http',
+        'mapService',
+        '$scope',
+        'toastr',
+        '$window',
+        WFSOutputDlController
+    ]);
 
-    function WFSOutputDlController( wfsService, $http, mapService, $scope, toastr, $window )
-    {
-      var vm = this;
-      vm.attrFilter = "";
+    function WFSOutputDlController(stateService, wfsService, $http, mapService, $scope, toastr, $window) {
 
-      vm.getDownloadURL = function( outputFormat )
-      {
-        var wfsRequestUrl = AppO2.APP_CONFIG.params.wfs.baseUrl;
-        var version = '1.1.0';
-        var typeName = 'omar:raster_entry';
-        var wfsUrl = wfsRequestUrl +
-            'service=WFS' +
-            '&version=' + version +
-            '&request=GetFeature' +
-            '&typeName=' + typeName +
-            '&filter=' + encodeURIComponent( wfsService.spatialObj.filter ) +
-            '&outputFormat=' + outputFormat +
-            '&sortBy=' + wfsService.attrObj.sortField + wfsService.attrObj.sortType +
-            '&startIndex=' + wfsService.attrObj.startIndex;
-        vm.url = wfsUrl;
-        $window.open( vm.url.toString(), '_blank' );
-      };
+        var vm = this;
 
-      $scope.$on( 'attrObj.updated', function( event, response ) { vm.attrFilter = response; } );
+        var tlvBaseUrl,
+            tlvContextPath,
+            tlvRequestUrl;
+        vm.tlvRequestUrl = '';
 
-      // Shows/Hides the ISA button based on parameters passed down from application.yml
-      vm.isaAppEnabled = AppO2.APP_CONFIG.params.isaApp.enabled;
+        var isaBaseUrl,
+            isaContextPath,
+            isaRequestUrl;
+        vm.isaRequestUrl = '';
 
-      vm.goToISA = function() {
-        var isaBaseUrl = AppO2.APP_CONFIG.params.isaApp.baseUrl;
-        var filter = wfsService.spatialObj.filter;
-        if (filter == '') { toastr.error( "A spatial filter needs to be enabled." ); }
-        else {
-            var pointLatLon;
-            mapService.mapPointLatLon();
-            if ( mapService.pointLatLon ) {
-              pointLatLon = mapService.pointLatLon;
-            } else {
-              var center = mapService.getCenter();
-              pointLatLon = center.slice().reverse().join( ',' );
-            }
+        function setWFSOutputDlControllerUrlProps() {
 
-            var bbox = mapService.calculateExtent().join( ',' );
-            if ( vm.attrFilter ) { filter += " AND " + vm.attrFilter; }
-            var isaURL = isaBaseUrl + '/?bbox=' + bbox + '&filter=' + encodeURIComponent( filter ) + '&location=' + pointLatLon + '&maxResults=100';
-            $window.open( isaURL, '_blank' );
+            tlvBaseUrl = stateService.omarSitesState.url.base;
+            tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+            tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+            vm.tlvRequestUrl = tlvRequestUrl;
+
+            isaBaseUrl = stateService.omarSitesState.url.base;
+            isaContextPath = stateService.omarSitesState.url.isaContextPath;
+            isaRequestUrl = isaBaseUrl + isaContextPath;
+            vm.isaRequestUrl = isaRequestUrl;
+
         }
-      };
 
-      vm.goToTLV = function() {
-        var tlvBaseUrl = AppO2.APP_CONFIG.params.tlvApp.baseUrl;
-        var filter = wfsService.spatialObj.filter;
-        if (filter == '') { toastr.error( "A spatial filter needs to be enabled." ); }
-        else {
-            var pointLatLon;
-            mapService.mapPointLatLon();
-            if ( mapService.pointLatLon ) {
-              pointLatLon = mapService.pointLatLon;
+        $scope.$on('omarSitesState.updated', function(event, params) {
+
+            setWFSOutputDlControllerUrlProps();
+
+        });
+
+        vm.attrFilter = "";
+
+        vm.getDownloadURL = function(outputFormat) {
+
+            vm.url = wfsService.getExport(outputFormat);
+            $window.open(vm.url.toString(), '_blank');
+
+        };
+
+        $scope.$on('attrObj.updated', function(event, response) {
+            vm.attrFilter = response;
+        });
+
+        // Shows/Hides the ISA button based on parameters passed down from application.yml
+        vm.isaAppEnabled = AppO2.APP_CONFIG.params.isaApp.enabled;
+
+        vm.goToISA = function() {
+
+            var filter = wfsService.spatialObj.filter;
+            if (filter == '') {
+                toastr.error("A spatial filter needs to be enabled.");
             } else {
-              var center = mapService.getCenter();
-              pointLatLon = center.slice().reverse().join( ',' );
-            }
+                var pointLatLon;
+                mapService.mapPointLatLon();
+                if (mapService.pointLatLon) {
+                    pointLatLon = mapService.pointLatLon;
+                } else {
+                    var center = mapService.getCenter();
+                    pointLatLon = center.slice().reverse().join(',');
+                }
 
-            var bbox = mapService.calculateExtent().join( ',' );
-            if ( vm.attrFilter ) { filter += " AND " + vm.attrFilter; }
-            var tlvURL = tlvBaseUrl + '/?bbox=' + bbox + '&filter=' + encodeURIComponent( filter ) + '&location=' + pointLatLon + '&maxResults=100';
-            $window.open( tlvURL, '_blank' );
-        }
-      };
+                var bbox = mapService.calculateExtent().join(',');
+                if (vm.attrFilter) {
+                    filter += " AND " + vm.attrFilter;
+                }
+                var isaURL = isaRequestUrl + '/?bbox=' + bbox + '&filter=' + encodeURIComponent(filter) + '&location=' + pointLatLon + '&maxResults=100';
+                $window.open(isaURL, '_blank');
+            }
+        };
+
+        vm.goToTLV = function() {
+
+            var filter = wfsService.spatialObj.filter;
+            if (filter == '') {
+                toastr.error("A spatial filter needs to be enabled.");
+            } else {
+                var pointLatLon;
+                mapService.mapPointLatLon();
+                if (mapService.pointLatLon) {
+                    pointLatLon = mapService.pointLatLon;
+                } else {
+                    var center = mapService.getCenter();
+                    pointLatLon = center.slice().reverse().join(',');
+                }
+
+                var bbox = mapService.calculateExtent().join(',');
+                if (vm.attrFilter) {
+                    filter += " AND " + vm.attrFilter;
+                }
+
+                var tlvURL = tlvRequestUrl + '/?bbox=' + bbox + '&filter=' + encodeURIComponent(filter) + '&location=' + pointLatLon + '&maxResults=100';
+                $window.open(tlvURL, '_blank');
+
+            }
+        };
+
     }
 })();

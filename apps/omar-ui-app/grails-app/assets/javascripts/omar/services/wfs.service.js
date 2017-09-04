@@ -241,9 +241,9 @@
           /**
            * Description: We can use the first item in the sites array here,
            * because this is the main O2 site.  We assume that there is at least
-           * one item in the array, because if not then the entire application
+           * one item in the array, because if not, then the entire application
            * will error out.
-           * This also assumes that the O2 admin has set the following app param
+           * This also assumes that the O2 admin has set the application param
            * beLookupEnabled: true, and that there are valid BE configuration
            * params being passed in.  We can then use the main O2 site
            * information for all federated O2 BE searches.

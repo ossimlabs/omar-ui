@@ -211,15 +211,15 @@ omar:
       baseUrl: http://localhost/o2-docs
       enabled: true
     misc:
-      beLookupEnabled: true
+      beLookupEnabled: false
       icons:
         greenMarker: assets/search_marker_green.png
       listRefreshButtonVisible: true
-      placemarks:
-        tableName: omar:cities
-        columnName: city_name
-        geomName: geom
-        maxResults: 100
+      # placemarks:
+      #   tableName: omar:cities
+      #   columnName: city_name
+      #   geomName: geom
+      #   maxResults: 100
       totalPaginationCount: 1000
       pageLimit: 10
 
@@ -236,6 +236,7 @@ classificationBanner:
 # Example for External logback config settings in YAML
 # logging:
 #   config: <log back config location>
+#
 
 ---
 grails:

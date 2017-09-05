@@ -3,4 +3,5 @@ import omar.ui.OmarSitesConfig
 
 beans = {
   omarSitesConfig(OmarSitesConfig)
+  omarConfigConverter(OmarSitesConfig.OmarConfigConverter)
 }

@@ -178,12 +178,6 @@ omar:
           # wmtsContextPath: /omar-wmts
           # tlvContextPath: /tlv
           # isaContextPath: /isa-ui
-      -
-        info:
-          name: OMAR-REL
-          description: OMAR Release Server (Unclassified)
-        url:
-          base: https://omar-rel.ossim.io
     footprints:
       params: # misc params for the wfs request
         name: "Image Footprints"

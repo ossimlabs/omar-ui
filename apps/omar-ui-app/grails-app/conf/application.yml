@@ -164,7 +164,6 @@ omar:
           description: OMAR Local Server (Unclassified)
         url:
           base: http://localhost
-
     footprints:
       params: # misc params for the wfs request
         name: "Image Footprints"
@@ -187,8 +186,6 @@ omar:
     kmlApp:
       enabled: true
     jpipApp:
-      enabled: false
-    wmtsApp:
       enabled: false
     piwikApp:
       enabled: false

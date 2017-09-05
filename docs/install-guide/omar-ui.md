@@ -22,8 +22,37 @@ Ref: [omar-base](../../../omar-base/docs/install-guide/omar-base/)
 ## Configuration
 You can insert additional [Common Config Settings](../../../omar-common/docs/install-guide/omar-common/#common-config-settings).
 
-* **omar.openlayers.baseMaps** Allows one to controll the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app. If you do not have this field specified in the application YAML it ill use the default layers. The default layers includes **Open Street Map** layer, **Natural Earth** layer, and a **Blue Marble** layer.
-* **omar.app.root** Root settings for the rot url.
+* **omar**
+    * **openlayers**
+      * **baseMaps** Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app. If you do not have this field specified in the application YAML it will use the default layer. The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
+    * **app**
+      * **sites** A list of federated omar sites
+        * **info**
+          * **name** Short name for the omar site
+          * **description** Long name/description of the site.  This is displayed in the dropdown in the UI
+        * **url**
+          * **base** Base URL for the federated site
+          * **uiContextPath** Optional context path for the UI
+          * **wfsContextPath** Optional context path for the WFS
+          * **wmsContextPath** Optional context path for the WMS
+          * **omsContextPath** Optional context path for OMS
+          * **geoscriptContextPath** Optional context path for geoscript
+          * **avroMetadataContextPath** Optional context path for Avro Metadata
+          * **mensaContextPath** Optional context path for Mensa
+          * **stagerContextPath** Optional context path for Stager
+          * **downloadContextPath** Optional context path for Download
+          * **kmlContextPath** Optional context path for KML Superoverlay
+          * **jpipContextPath** Optional context path for JPIP
+          * **wmtsContextPath** Optional context path for WMTS
+          * **tlvContextPath** Optional context path for TLV UI
+          * **isaContextPath** Optional context path for ISA UI
+      * **footprints**
+        * **params** Misc. params for the wfs request
+
+
+
+
+
  * **baseURL** Base URL for the omar-app
 * **omar.app.wfs** Base URL and flag for WFS.
  * **baseURL** Base URL for the WFS service

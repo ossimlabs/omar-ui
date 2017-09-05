@@ -5,11 +5,14 @@ import omar.openlayers.OpenLayersConfig
 import org.springframework.beans.factory.InitializingBean
 import grails.converters.JSON
 
+import omar.ui.OmarSitesConfig
+
 class OmarController /*implements InitializingBean*/
 {
   def openlayers
 
   OpenLayersConfig openLayersConfig
+  OmarSitesConfig omarSitesConfig
 
   def index()
   {
@@ -31,7 +34,6 @@ class OmarController /*implements InitializingBean*/
       // if ( grailsApplication.config.spring.cloud.config.enabled ) {
       //     openLayersConfig.baseMaps.each { println it }
      //  }
-
 
       def clientConfig = [
         serverURL: getBaseUrl(),

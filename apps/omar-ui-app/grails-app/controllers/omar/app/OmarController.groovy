@@ -35,6 +35,10 @@ class OmarController /*implements InitializingBean*/
       //     openLayersConfig.baseMaps.each { println it }
      //  }
 
+    //  println omarSitesConfig
+
+     grailsApplication.config.omar.app.sites = omarSitesConfig.sites
+
       def clientConfig = [
         serverURL: getBaseUrl(),
         openlayers: openLayersConfig,

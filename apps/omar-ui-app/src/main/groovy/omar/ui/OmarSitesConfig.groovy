@@ -18,11 +18,12 @@ class OmarSitesConfig
   }
 
   @ConfigurationPropertiesBinding
-  static class OmarConfigConverter implements Converter<Map<String, String>, OmarConfig>
+  static class OmarConfigConverter implements Converter<Map<String, Object>, OmarConfig>
   {
     @Override
-    OmarConfig convert(Map<String, String> map)
+    OmarConfig convert(Map<String, Object> map)
     {
+      println map
       return new OmarConfig( map )
     }
   }

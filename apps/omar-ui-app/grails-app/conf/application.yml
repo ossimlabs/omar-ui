@@ -160,24 +160,10 @@ omar:
     sites:
       -
         info:
-          name: OMAR-DEV
-          description: OMAR Development Server (Unclassified)
+          name: OMAR-LOCAL
+          description: OMAR Local Server (Unclassified)
         url:
-          base: https://omar-dev.ossim.io
-          # uiContextPath: /omar-ui
-          # wfsContextPath: /omar-wfs
-          # wmsContextPath: /omar-wms
-          # omsContextPath: /omar-oms # Used for imageSpace, thumbnails
-          # geoscriptContextPath: /omar-geoscript # Used for footprints
-          # avroMetadataContextPath: /omar-avro-metadata
-          # mensaContextPath: /omar-mensa
-          # stagerContextPath: /omar-stager
-          # downloadContextPath: /omar-download
-          # kmlContextPath: /omar-superoverlay
-          # jpipContextPath: /omar-jpip
-          # wmtsContextPath: /omar-wmts
-          # tlvContextPath: /tlv
-          # isaContextPath: /isa-ui
+          base: http://localhost
     footprints:
       params: # misc params for the wfs request
         name: "Image Footprints"

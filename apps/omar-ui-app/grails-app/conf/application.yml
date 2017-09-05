@@ -207,8 +207,6 @@ omar:
       enabled: true
     jpipApp:
       enabled: false
-    wmtsApp:
-      enabled: false
     piwikApp:
       enabled: false
     userGuide:

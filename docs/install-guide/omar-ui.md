@@ -20,7 +20,7 @@ Ref: [omar-base](../../../omar-base/docs/install-guide/omar-base/)
 [https://artifactory.ossim.io/artifactory/webapp/#/artifacts/browse/tree/General/omar-local/io/ossim/omar/apps/omar-ui-app](https://artifactory.ossim.io/artifactory/webapp/#/artifacts/browse/tree/General/omar-local/io/ossim/omar/apps/omar-ui-app)
 
 ## Configuration
-You can insert additional [Common Config Settings](../../../omar-common/docs/install-guide/omar-common/#common-config-settings).
+You can insert additional [Common Config Settings](../../../omar-common/docs/install-guide/omar-common/#common-config-settings)
 
 * **omar**
     * **openlayers**
@@ -48,42 +48,44 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
           * **isaContextPath** Optional context path for ISA UI
       * **footprints**
         * **params** Misc. params for the wfs request
+          * **name** Name for the footprint layer.  Shows up in UI's layerswitcher
+          * **version** WFS version number
+          * **layers** Layer name
+          * **styles** Styling for the footprint layer. Choices are (byFileType, bySensorType, byMissionType)
+          * **format** Image format. Example: 'image/gif'
+      * **apiApp**
+        * **baseUrl** URL of aggregated API's for O2 services
+        * **enabled** Used to show/hide the API link on the O2 home page (True or False )
+      * **isaApp**
+        * **enabled** Used to show/hide the export to ISA app link in the UI (True or False)
+      * **tlvApp**
+        * **enabled** Used to show/hide the various links to the TLV app in the UI (True or False)
+      * **twofishes**
+        * **baseUrl** URL of Twofishes search service.  Used for geocoding place names
+        * **proxy** Context for the Twofishes search service
+      * **kmlApp**
+        * **enabled** Used to show/hide the KML Superoverlay buttons in the UI (True or False)
+      * **jpipApp**
+        * **enabled** Used to show/hide the JPIP buttons in the UI (True or False)
+      * **wmtsApp**
+        * **enabled** Used to turn on the WMTS links (True or False)
+      * **piwikApp**
+        * **enabled** Used to show/hide the PIWIK app link on the O2 home page (True or False )
+      * **userGuide**
+        * **baseUrl** URL of the userGuide
+        * **enabled** Used to show/hide the user guide links
+      * **misc** Base settings for the O2 UI general configuration
+        * **beLookupEnabled** Enable BE number lookups in the search field.
+        * **placemarks** The placemarks uses the WFS query engine to query placemark locations based on BE numbers.  
+          * **tableName** Namespace and table name where the BE's are stored and is a WFS tableId entry.
+          * **columName** The table column with the BE list
+          * **geomName** The spatial column in the BE table
+          * **maxResults** The maximum number of BE items to return in a query
+        * **listRefreshButtonVisible** Display or hide the refresh button in the Sort menu.
+        * **totalPaginationCount** is used to limit the number of items to paginate through.  
+        * **pageLimit** is used to identify the number of items to show per page.
 
 
-
-
-
- * **baseURL** Base URL for the omar-app
-* **omar.app.wfs** Base URL and flag for WFS.
- * **baseURL** Base URL for the WFS service
- * **enabled** Flag used to specify if the WFS service is enabled and ready
-* **omar.app.wms** Base URL and settings for the WMS service.
- * **baseURL** Base URL for the WMS service call
- * **enabled** Flag used to specify if the WMS service is enabled
-* **omar.app.imageSpace** Specifies the base settings for the image space services
- * **baseURL** Base URL for the image space services.  Because of the dependencies for WMS the baseURL can use the path to the IP/DNS location of the WMS service. In the above example we have a proxy called wms-app that points to the base WMS service on your WMS instance.
- * **enabled** specifies whether the image space services are enabled
-* **omar.app.thunbnails** Base settings for thumbnail generation
- * **baseURL**  Base URL for the thumbnail service. Because of the dependencies for WMS the baseURL can use the path to the IP/DNS location of the WMS service. In the above example we have a proxy called wms-app that points to the base WMS service on your WMS instance.
-* **omar.app.footprints** Base settings for footprints
- * **baseURL** Base URL for the footprints service.   Because of the dependencies for WMS the baseURL can use the path to the IP/DNS location of the WMS service. In the above example we have a proxy called wms-app that points to the base WMS service on your WMS instance.
-* **omar.app.kmlApp** Base settings for super overlay
- * **baeURL** Base URL for the KML superoverlay service.
-* **omar.app.predio** Base settings for predictionIO
- * **baseURL** Base URL for the location of the Prediction IO service API.
-* **omar.app.twofishes** Base settings for twofishes
- * **baseURL** Base URL for the Twofishes service.  This provide geolocation for coutry names, .. etc.
-* **omar.app.swipeApp** Base settings for swipe service
- * **baseURL** Base URL for the swipe service.
-* **omar.app.jpipApp** Base settings for thumbnail generation
- * **baseURL** Base URL for the JPIP service.
- * **enabled** Allows one to specify if the service is enabled.
-* **omar.app.misc** Base settings for the O2 UI general configuration
- * **beLookupEnabled** Enable BE number lookups in the search field.
- * **listRefreshButtonVisible** Display or hide the refresh button in the Sort menu.
- * **placemarks** The placemarks uses the WFS query engine to query placemark locations based on BE numbers.  the table name is the namespace and table name where the be's are stored and is a WFS tableId entry.  The other columns specified is the be name "be" and the spatial column name "location".  Note, "location" and "be" are arbitrary and should match the column names in the BE table you have imported.  
- * **totalPaginationCount** is used to limit the number of items to paginate through.  
- * **pageLimit** is used to identify the number of items to show per page.
 * **classificationBanner**
- * **backgroundColor** Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.  For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
- * **classificationType** This is the string displayed in the banners.  So setting to "My Secret Stuff" would print that string at the top and bottom of every page with a background color identified by the **backgroundColor** field
+  * **backgroundColor** Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.  For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
+  * **classificationType** This is the string displayed in the banners.  So setting to "My Secret Stuff" would print that string at the top and bottom of every page with a background color identified by the **backgroundColor** field

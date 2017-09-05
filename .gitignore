@@ -11,4 +11,4 @@ build/
 .settings
 .classpath
 
-/application.yml
+apps/omar-ui-app/application.yml

@@ -44,9 +44,35 @@
             </li>
             <li class="nav-title-left" ng-bind-html="nav.titleLeft" style="cursor:default"></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown mega-dropdown" ng-show="nav.aboutShow">
+              <a class="dropdown-toggle about-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false"><span class="fa fa-question-circle" aria-hidden="true"></span>
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu mega-dropdown-menu row about-menu" ng-click="$event.stopPropagation();">
+                <li class="col-sm-12">
+                  <ul>
+                    <li class="dropdown-header text-center">
+                      <p class="text-center">About</p>
+                    </li>
+                    <li class="about-row">
+                      <div class="col-sm-12">
+                        <span class="about-message">{{nav.aboutMessage}}</span>
+                        <hr>
+                        <p class="small"><span class="text-info">Release:</span>  {{nav.aboutReleaseName}}</p>
+                        <p class="small"><span class="text-info">Release Number:</span>  {{nav.aboutReleaseNumber}}</p>
+                        <hr>
+                        <p class="small"><span class="text-info">UI Build Version:</span> <g:meta name="info.app.version"/></p>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </nav>
-        <div ui-view></div>
+      <div ui-view></div>
     </div>
     <o2:classificationBanner position="bottom" />
     <asset:script>

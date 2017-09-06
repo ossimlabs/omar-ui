@@ -23,7 +23,14 @@
         var base = AppO2.APP_CONFIG.params.userGuide.baseUrl;
         vm.userGuideLink = base + params.userGuideUrl;
       }
+
     });
+
+    vm.aboutMessage = AppO2.APP_CONFIG.params.misc.about.message;
+    vm.aboutReleaseName = AppO2.APP_CONFIG.params.misc.about.releaseName;
+    vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.misc.about.releaseNumber;
+    vm.aboutUiBuildVersion = AppO2.APP_CONFIG.params.misc.about.uiBuildVersion;
+    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
 
     vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
     if (vm.apiAppEnabled) {

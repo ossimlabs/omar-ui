@@ -150,6 +150,14 @@
 
         this.getImageProperties = function(wfsUrl, filename) {
 
+            // We only want to grab the hostname from the wfsUrl,
+            // so that we can put it in the header on the imagespace
+            // page.  We are using the following GIST to do this.
+            // GIST: https://gist.github.com/jlong/2428561
+            var parser = document.createElement('a');
+            parser.href = wfsUrl;
+            console.log(parser.hostname);
+
             return $http({
                 method: 'GET',
                 url: wfsUrl + "filter=" + encodeURIComponent("filename LIKE '" + filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
@@ -172,7 +180,7 @@
                 //       be using an Angular model.
                 stateService.navStateUpdate({
                     titleLeft:
-                    '<span class="text-info">Server: </span>' + 'http://omar-test.ossim.io' + ' <br> ' +
+                    '<span class="text-info">Server: </span>' + parser.hostname + ' <br> ' +
                     '<span class="text-info">Image ID: </span>' + imageIdText + ' <br> ' +
                     '<span class="text-info">Acquisition Date: </span>' + acquisitionDateText + ' <br> ',
                     userGuideUrl: 'omar-ui/docs/user-guide/omar-ui/#image-space'

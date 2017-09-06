@@ -23,7 +23,6 @@ class OmarSitesConfig
     @Override
     OmarConfig convert(Map<String, Object> map)
     {
-      println map
       return new OmarConfig( map )
     }
   }

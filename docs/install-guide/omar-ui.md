@@ -87,7 +87,11 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
         * **motd** Message of The Display Banner settings
          * **message** Text for the message of the day
          * **enabled** Used to show/hide the message of the day banner
-
+        * **about** About dropdown settings
+         * **message** Optional about message
+         * **releaseName** O2 release name
+         * **releaseNumber** O2 release version number
+         * **enabled** Used to show/hide the About dropdown
 
 * **classificationBanner**
   * **backgroundColor** Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.  For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".

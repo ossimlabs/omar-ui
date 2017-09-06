@@ -834,6 +834,18 @@ body {
   margin-top: 5px;
 }
 
+.about-menu {
+  cursor: default;
+}
+
+.about-row {
+  min-width: 300px;
+}
+
+.about-message {
+    font-size: .75em;
+}
+
 .filter-row {
   margin-bottom: 10px;
 }

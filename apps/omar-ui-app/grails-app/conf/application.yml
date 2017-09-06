@@ -205,7 +205,7 @@ omar:
       totalPaginationCount: 1000
       pageLimit: 10
       motd:
-        message: Be sure to check out the new federation capability by selecting an O2 server from the new dropdown list located above the result cards list!
+        message: Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!
         enabled: true
 
 ---

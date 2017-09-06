@@ -84,6 +84,9 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
         * **listRefreshButtonVisible** Display or hide the refresh button in the Sort menu.
         * **totalPaginationCount** is used to limit the number of items to paginate through.  
         * **pageLimit** is used to identify the number of items to show per page.
+        * **motd** Message of The Display Banner settings
+         * **message** Text for the message of the day
+         * **enabled** Used to show/hide the message of the day banner
 
 
 * **classificationBanner**

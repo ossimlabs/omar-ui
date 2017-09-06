@@ -8,6 +8,11 @@
     </div>
   </div>
   <div class="container">
+    <div class="row" ng-show="home.showMotd">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="alert alert-info motd-banner text-center"><h4><strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Info:</strong>&nbsp;&nbsp;{{home.motd}}</h4></div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-4" ui-sref="map">
         <div class="text-center well well-home">

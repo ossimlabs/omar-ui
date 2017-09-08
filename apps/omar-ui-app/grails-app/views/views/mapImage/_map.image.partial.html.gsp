@@ -12,15 +12,6 @@
     <div class="collapse navbar-collapse" id="map-navbar-collapse">
       <div class="col-sm-8">
         <ul class="nav navbar-nav">
-          <!-- <li class="dropdown">
-            <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-              aria-expanded="false">Select<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li ng-click=""><a>Rectangle</a></li>
-              <li ng-click=""><a>Freehand Polygon</a></li>
-              <li ng-click=""><a>Add a point</a></li>
-            </ul>
-          </li> -->
           <li
             ng-click="image.archiveDownload(image.imageId)"
             tooltip-placement="right"
@@ -372,7 +363,11 @@
       </div>
       <!-- Map Column -->
       <div class="col-md-9">
-        <div id="imageMap" class="map imageMap imageMapBorder"></div>
+        <div id="imageMap" class="map imageMap imageMapBorder">
+          <div id="progress" class="text-info">
+            <i class="fa fa-spinner fa-pulse fa-4x text-info"></i>
+          </span>
+        </div>
       </div>
     </div>
   </div>

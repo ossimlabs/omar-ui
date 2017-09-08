@@ -29,7 +29,7 @@
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href = javascript:void(0) class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <asset:image src="o2-logo.png" style="width: 32px; height: 32px;"/>
+                <asset:image src="o2-logo.png" style="width: 20px; height: 20px;"/>
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">

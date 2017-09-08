@@ -365,10 +365,6 @@ function mapService(stateService, wfsService, $timeout) {
       view: mapView
     });
 
-    // map.on('postrender', function(event){
-    //   console.log('postrender!');
-    // });
-
     setupContextDialog();
 
     function setupContextDialog() {

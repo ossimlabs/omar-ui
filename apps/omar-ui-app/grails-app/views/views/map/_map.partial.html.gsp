@@ -611,6 +611,10 @@
       <div id="popup" class="ol-popup">
         <div id="popup-content"></div>
       </div>
+      <div id="progress" class="text-info">
+        <i class="fa fa-spinner fa-pulse fa-4x text-info"></i>
+      </span>
+      </div>
   </div>
   <div class="col-md-4" ng-controller="ListController as list">
     <ui-select

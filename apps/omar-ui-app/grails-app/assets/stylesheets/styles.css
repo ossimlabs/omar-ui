@@ -592,10 +592,6 @@ body {
     position: fixed;
 }
 
-.corner-ribbon.shadow {
-    /*box-shadow: 0 0 3px rgba(0,0,0,.3);*/
-}
-
 .corner-ribbon.top-left {
     top: 20px;
     left: -80px;
@@ -943,4 +939,21 @@ body {
 .ui-select-search.input-xs.ng-valid.ng-dirty.ng-touched,
 .ui-select-search.input-xs.ng-valid.ng-dirty.ng-valid-parse.ng-touched {
     width: auto !important;
+}
+
+#progress {
+  position: absolute;
+  top: 40%;
+  left: 48%;
+  width: 64px;
+  background-color: #2e3338;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding-left: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  overflow-y: auto;
+  z-index: 999999;
+
 }

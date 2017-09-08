@@ -156,7 +156,6 @@
             // GIST: https://gist.github.com/jlong/2428561
             var parser = document.createElement('a');
             parser.href = wfsUrl;
-            console.log(parser.hostname);
 
             return $http({
                 method: 'GET',

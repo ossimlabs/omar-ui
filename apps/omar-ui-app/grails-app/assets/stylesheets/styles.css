@@ -141,8 +141,8 @@ body {
   border-radius: 4px;
 }
 
-/* Keeps the temporal filter calendars from overlapping, and allows them
-to wrap using Bootstraps default media queries (mobile) */
+/* Keeps the temporal filter calendars from overlapping, and still allows them
+to wrap correctly using Bootstrap's default media queries (mobile) */
 @media screen and (min-width: 767px) AND (max-width: 1681px){
 
   .temporal-row {
@@ -553,10 +553,6 @@ to wrap using Bootstraps default media queries (mobile) */
     min-width: 112px;
 }
 
-/*.navbar-default .navbar-nav > .nav-download{
-  border-left: 1px solid #CCC;
-}*/
-
 .rotate-north {
     top: 65px;
     left: .5em;
@@ -638,10 +634,7 @@ to wrap using Bootstraps default media queries (mobile) */
 }
 
 #grayImageItem, #redImageItem, #greenImageItem, #blueImageItem {
-    /*display: inline-block;
-    vertical-align: middle;*/
     width: 60px;
-    /*float: right;*/
 }
 
 #gray-image-space-bands, #rgb-image-space-bands {
@@ -664,28 +657,12 @@ to wrap using Bootstraps default media queries (mobile) */
  .image-band-div {
    width: 100px;
    margin-bottom: 20px;
-   /*margin-top: 10px;
-   height: 50px;*/
  }
-
-/*.ui-select-container{
-    width: 90px;
-    height: 10px;
-}*/
 
 #image-space-bands{
     position: relative;
     top: 20px;
 }
-
-/*#image-space-bands .ui-select-container .selectize-input{
-    width: 50px;
-}*/
-
-/*.ui-select-container span{
-    font-size: .8em;
-    font-weight: bold;
-}*/
 
 .ui-select-container .selectize-input{
     padding: 4px 4px;
@@ -767,25 +744,8 @@ to wrap using Bootstraps default media queries (mobile) */
     text-overflow: ellipsis;
 }
 
-/*.navbar-nav>li>.dropdown-menu {
-  margin-top: 20px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-.navbar-default .navbar-nav>li>a {
-  width: 200px;
-  font-weight: bold;
-}*/
-
-/*.mega-dropdown {
-  position: static !important;
-  width: 100%;
-}*/
-
 .mega-dropdown-menu {
   padding: 20px 0px;
-  /*width: 100%;*/
   box-shadow: none;
   -webkit-box-shadow: none;
 }

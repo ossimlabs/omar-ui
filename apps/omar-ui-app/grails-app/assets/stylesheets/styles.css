@@ -141,6 +141,16 @@ body {
   border-radius: 4px;
 }
 
+/* Keeps the temporal filter calendars from overlapping, and allows them
+to wrap using Bootstraps default media queries (mobile) */
+@media screen and (min-width: 767px) AND (max-width: 1681px){
+
+  .temporal-row {
+    min-width: 600px;
+  }
+
+}
+
 @media screen and (max-height: 599px) {
     #map {
         height: 57vh;

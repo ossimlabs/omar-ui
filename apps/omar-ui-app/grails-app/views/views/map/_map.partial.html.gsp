@@ -421,24 +421,25 @@
                     <li class="dropdown-header text-center">
                       <p class="text-center">Spatial Filters</p>
                     </li>
-                    <li class="col-sm-3 filter-row">
+                    <li class="col-sm-2 filter-row">
                       <div class="input-group input-group-sm">
                         <span class="input-group-addon">
                           <input type="checkbox"
                           ng-model="filter.viewPortSpatial"
                           ng-change="filter.byViewPort(filter.viewPortSpatial)">
                         </span>
-                        <span class="input-group-addon spatial-name">Map Viewport</span>
+                        <span class="input-group-addon spatial-name">Map View</span>
                       </div>
                     </li>
-                    <li class="col-sm-9">
+                    <li class="col-sm-2">&nbsp;</li>
+                    <li class="col-sm-8">
                       <p>This filter is on by default.  It constrains the
                         query to the boundaries of the current map extent</p>
                     </li>
                     <li class="col-sm-12">
                       <hr>
                     </li>
-                    <li class="col-sm-3 filter-row">
+                    <li class="col-sm-2 filter-row">
                       <div class="input-group input-group-sm">
                         <span class="input-group-addon">
                           <input type="checkbox"
@@ -448,14 +449,15 @@
                         <span class="input-group-addon spatial-name">Point</span>
                       </<div>
                     </li>
-                    <li class="col-sm-9">
+                    <li class="col-sm-2">&nbsp;</li>
+                    <li class="col-sm-8">
                       <p>Single clicking on the map
                         will return a potential list of images at that location</p>
                     </li>
                     <li class="col-sm-12">
                       <hr>
                     </li>
-                    <li class="col-sm-3 filter-row">
+                    <li class="col-sm-2 filter-row">
                       <div class="input-group input-group-sm">
                         <span class="input-group-addon">
                           <input type="checkbox"
@@ -465,7 +467,8 @@
                         <span class="input-group-addon spatial-name">Polygon</span>
                       </div>
                     </li>
-                    <li class="col-sm-9 filter-row">
+                    <li class="col-sm-2">&nbsp;</li>
+                    <li class="col-sm-8 filter-row">
                       <p>Left-click and hold with the
                         ALT key to create a box that will return a potential list of images
                       </p>
@@ -483,7 +486,7 @@
               <a  class="dropdown-toggle temporal-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
                &nbsp;Temporal<span class="caret"></span></a>
-              <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
+              <ul class="dropdown-menu mega-dropdown-menu row temporal-row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">
                   <ul>
                     <li class="dropdown-header text-center">Temporal Filters</li>
@@ -523,21 +526,12 @@
                 </li>
                 <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
                   <ul>
-                    <li class="filter-row">
-                      <p class="text-center">Start Time & Date</p>
+                    <li>
+                      <label>Start Time & Date</label>
                     </li>
                   </ul>
-                </li>
-                <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
                   <ul>
                     <li>
-                      <p class="text-center">End Time & Date</p>
-                    </li>
-                  </ul>
-                </li>
-                <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
-                  <ul>
-                    <li class="filter-row text-center">
                       <div class="form-group form-group-sm">
                         <input type="text" class="form-control"
                          ng-model="filter.startDate"
@@ -559,7 +553,12 @@
                 </li>
                 <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
                   <ul>
-                    <li class="filter-row text-center">
+                    <li>
+                      <label>End Time & Date</label>
+                    </li>
+                  </ul>
+                  <ul>
+                    <li>
                       <div class="form-group form-group-sm">
                         <input type="text" size="8" class="form-control"
                          ng-model="filter.endDate"

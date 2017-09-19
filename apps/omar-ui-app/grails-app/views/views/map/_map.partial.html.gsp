@@ -526,12 +526,12 @@
                 </li>
                 <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
                   <ul>
-                    <li class="">
+                    <li>
                       <label>Start Time & Date</label>
                     </li>
                   </ul>
                   <ul>
-                    <li class="">
+                    <li>
                       <div class="form-group form-group-sm">
                         <input type="text" class="form-control"
                          ng-model="filter.startDate"
@@ -558,7 +558,7 @@
                     </li>
                   </ul>
                   <ul>
-                    <li class="">
+                    <li>
                       <div class="form-group form-group-sm">
                         <input type="text" size="8" class="form-control"
                          ng-model="filter.endDate"

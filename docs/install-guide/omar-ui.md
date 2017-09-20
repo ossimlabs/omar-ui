@@ -88,10 +88,29 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
          * **message** Text for the message of the day
          * **enabled** Used to show/hide the message of the day banner
         * **about** About dropdown settings
-         * **message** Optional about message
-         * **releaseName** O2 release name
-         * **releaseNumber** O2 release version number
-         * **enabled** Used to show/hide the About dropdown
+          * **message** Optional about message
+          * **releaseName** O2 release name
+          * **releaseNumber** O2 release version number
+          * **enabled** Used to show/hide the About dropdown
+        * **metrics** Metrics dropdown menu settings
+          * **enabled** Used to show/hide the Metrics dropdown menu in the UI
+          * **user** Settings for the User section of the metrics dropdown
+            * **enabled** Used to show/hide the User section of the metrics dropdown
+            * **eureka**
+              * **baseUrl** URL of the Eureka server used to show system status
+              * **enabled** Used to show/hide the Service Health & Status button
+          * **admin** Settings for the Admin section of the metrics dropdown
+            * **enabled** Used to show/hide the Admin section of the Metrics dropdown menu
+            * **hystrixTurbine** Hystrix and Turbine link settings
+              * **baseUrl** URL of the Hystrix and Turbine page
+              * **enabled** Used to show/hide the Real-time Insight/System Behavior button
+            * **sleuthZipkin** Sleuth and Zipkin link setttings
+              * **baseUrl** URL of the Sleuth and Zipkin page
+              * **enabled** Used to show/hide the Distributed Tracing button
+            * **Kibana** Kibana dashboard settings
+              * **baseUrl** URL of the Kibana dashboard
+              * **enabled** Used to show/hide the Dashboard button
+
 
 * **classificationBanner**
   * **backgroundColor** Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.  For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".

@@ -29,16 +29,18 @@
     // Show/Hide the Metrics dropdown menu
     vm.metricsShow = AppO2.APP_CONFIG.params.misc.metrics.enabled;
 
-    // Metrics dropdown menu user settings
+    // Show/hide the User section of the Metrics dropdown menu
     vm.metricsUserShow = AppO2.APP_CONFIG.params.misc.metrics.user.enabled;
 
+    // Metrics dropdown menu User settings
     vm.metricsEurekaUrl = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.baseUrl;
     vm.metricsEurekaEnabled = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
 
-    // Metrics dropdown menu admin settings
+    // Show/hide the Admin section of the Metrics dropdown menu
     // TODO: Show/Hide with Spring Security instead of through application.yaml
     vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
 
+    // Metrics dropdown menu Admin settings
     vm.metricsHystrixTurbineUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
     vm.metricsHystrixTurbineEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
 

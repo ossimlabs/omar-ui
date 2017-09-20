@@ -212,7 +212,7 @@ omar:
         message: DigitalGlobe | Radiant - Open Technologies Division
         releaseName: Egmont Key
         releaseNumber: 2.1.0
-      metrics:
+      metrics: # Metrics Dropdown Menu settings
         enabled: true
         admin:
           enabled: true # hide/show the Metrics Admin section
@@ -226,6 +226,7 @@ omar:
             baseUrl: http://kibana.ossim.io
             enabled: true
         user:
+          enabled: true # hide/show the Metrics Admin section
           eureka:
             baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
             enabled: true

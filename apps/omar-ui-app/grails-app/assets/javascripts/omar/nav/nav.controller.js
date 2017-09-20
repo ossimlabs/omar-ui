@@ -10,7 +10,7 @@
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    console.log('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
+    //console.log('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
 
       var vm = this;
       /* jshint validthis: true */
@@ -30,11 +30,15 @@
     vm.metricsShow = AppO2.APP_CONFIG.params.misc.metrics.enabled;
 
     // Metrics dropdown menu user settings
+    vm.metricsUserShow = AppO2.APP_CONFIG.params.misc.metrics.user.enabled;
+
     vm.metricsEurekaUrl = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.baseUrl;
     vm.metricsEurekaEnabled = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
 
     // Metrics dropdown menu admin settings
-    // TODO: Show/Hide with Spring Security
+    // TODO: Show/Hide with Spring Security instead of through application.yaml
+    vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
+
     vm.metricsHystrixTurbineUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
     vm.metricsHystrixTurbineEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
 

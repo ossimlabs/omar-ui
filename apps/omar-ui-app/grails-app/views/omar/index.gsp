@@ -44,8 +44,8 @@
             </li>
             <li class="nav-title-left" ng-bind-html="nav.titleLeft" style="cursor:default"></li>
           </ul>
-          <!-- Metrics dropdown menu -->
           <ul class="nav navbar-nav navbar-right">
+            <!-- Metrics dropdown menu -->
             <li class="dropdown mega-dropdown" ng-show="nav.metricsShow" tooltip-placement="bottom"
             uib-tooltip="Display various metrics about the O2 deployment">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

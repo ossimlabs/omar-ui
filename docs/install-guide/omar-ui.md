@@ -107,7 +107,7 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
             * **sleuthZipkin** Sleuth and Zipkin link setttings
               * **baseUrl** URL of the Sleuth and Zipkin page
               * **enabled** Used to show/hide the Distributed Tracing button
-            * **Kibana** Kibana dashboard settings
+            * **kibana** Kibana dashboard settings
               * **baseUrl** URL of the Kibana dashboard
               * **enabled** Used to show/hide the Dashboard button
 

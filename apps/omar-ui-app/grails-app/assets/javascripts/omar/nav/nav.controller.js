@@ -10,7 +10,7 @@
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    //console.log('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
+    console.log('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
 
       var vm = this;
       /* jshint validthis: true */
@@ -26,11 +26,32 @@
 
     });
 
+    // Show/Hide the Metrics dropdown menu
+    vm.metricsShow = AppO2.APP_CONFIG.params.misc.metrics.enabled;
+
+    // Metrics dropdown menu user settings
+    vm.metricsEurekaUrl = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.baseUrl;
+    vm.metricsEurekaEnabled = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
+
+    // Metrics dropdown menu admin settings
+    // TODO: Show/Hide with Spring Security
+    vm.metricsHystrixTurbineUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
+    vm.metricsHystrixTurbineEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
+
+    vm.metricsSleuthZipkinUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
+    vm.metricsSleuthZipkinEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
+
+    vm.metricsKibanaUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
+    vm.metricsKibanaEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.enabled;
+
+    // Show/hide the About dropdown menu
+    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
+
+    // About dropdown menu settings
     vm.aboutMessage = AppO2.APP_CONFIG.params.misc.about.message;
     vm.aboutReleaseName = AppO2.APP_CONFIG.params.misc.about.releaseName;
     vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.misc.about.releaseNumber;
     vm.aboutUiBuildVersion = AppO2.APP_CONFIG.params.misc.about.uiBuildVersion;
-    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
 
     vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
     if (vm.apiAppEnabled) {

@@ -208,11 +208,27 @@ omar:
         message: Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!
         enabled: true
       about:
+        enabled: true
         message: DigitalGlobe | Radiant - Open Technologies Division
         releaseName: Egmont Key
         releaseNumber: 2.1.0
+      metrics:
         enabled: true
-
+        admin:
+          enabled: true # hide/show the Metrics Admin section
+          hystrixTurbine:
+            baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
+            enabled: true
+          sleuthZipkin:
+            baseUrl: https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
+            enabled: true
+          kibana:
+            baseUrl: http://kibana.ossim.io
+            enabled: true
+        user:
+          eureka:
+            baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
+            enabled: true
 ---
 classificationBanner:
   backgroundColor: green

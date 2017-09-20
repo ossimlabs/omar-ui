@@ -216,10 +216,10 @@ omar:
         enabled: true
         admin:
           enabled: true # hide/show the Metrics Admin section
-          hystrixTurbine:
+          hystrixTurbine: # The baseUrl below is a placeholder until we get Hystrix and Turbine working
             baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
             enabled: true
-          sleuthZipkin:
+          sleuthZipkin: # The baseUrl below is a placeholder until we get Sleuth and Zipkin working
             baseUrl: https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
             enabled: true
           kibana:

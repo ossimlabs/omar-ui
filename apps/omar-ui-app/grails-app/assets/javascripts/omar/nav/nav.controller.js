@@ -26,11 +26,38 @@
 
     });
 
+    // Show/Hide the Metrics dropdown menu
+    vm.metricsShow = AppO2.APP_CONFIG.params.misc.metrics.enabled;
+
+    // Show/hide the User section of the Metrics dropdown menu
+    vm.metricsUserShow = AppO2.APP_CONFIG.params.misc.metrics.user.enabled;
+
+    // Metrics dropdown menu User settings
+    vm.metricsEurekaUrl = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.baseUrl;
+    vm.metricsEurekaEnabled = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
+
+    // Show/hide the Admin section of the Metrics dropdown menu
+    // TODO: Show/Hide with Spring Security instead of through application.yaml
+    vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
+
+    // Metrics dropdown menu Admin settings
+    vm.metricsHystrixTurbineUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
+    vm.metricsHystrixTurbineEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
+
+    vm.metricsSleuthZipkinUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
+    vm.metricsSleuthZipkinEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
+
+    vm.metricsKibanaUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
+    vm.metricsKibanaEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.enabled;
+
+    // Show/hide the About dropdown menu
+    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
+
+    // About dropdown menu settings
     vm.aboutMessage = AppO2.APP_CONFIG.params.misc.about.message;
     vm.aboutReleaseName = AppO2.APP_CONFIG.params.misc.about.releaseName;
     vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.misc.about.releaseNumber;
     vm.aboutUiBuildVersion = AppO2.APP_CONFIG.params.misc.about.uiBuildVersion;
-    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
 
     vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
     if (vm.apiAppEnabled) {

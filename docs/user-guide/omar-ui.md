@@ -1,5 +1,15 @@
 # OMAR-UI
 
+## Home Navigation Bar
+
+### About
+- **Release** current O2 release name
+- **Release Number** current O2 release number
+- **UI Build Version** omar-ui build version number
+
+### Metrics
+- **Service Health & Status** Displays a Spring Cloud Eureka page with information on the system status, uptime, and individual service statuses for the O2 deployment 
+
 ## Image Space
 
 ### Download

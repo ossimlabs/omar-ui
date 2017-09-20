@@ -45,8 +45,52 @@
             <li class="nav-title-left" ng-bind-html="nav.titleLeft" style="cursor:default"></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown mega-dropdown" ng-show="nav.aboutShow">
-              <a class="dropdown-toggle about-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
+            <!-- Metrics dropdown menu -->
+            <li class="dropdown mega-dropdown" ng-show="nav.metricsShow" tooltip-placement="bottom"
+            uib-tooltip="Display various metrics about the O2 deployment">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false"><span class="fa fa-dashboard" aria-hidden="true"></span>
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
+                <li class="col-sm-12">
+                  <ul>
+                    <li class="dropdown-header text-center">
+                      <p class="text-center">Metrics</p>
+                    </li>
+                    <li class="metrics-row">
+                      <!-- Metrics User area -->
+                      <div ng-show="nav.metricsUserShow">
+                        <hr>
+                        <div ng-href="" class="metrics-message text-center">User</div>
+                        <label>Eureka</label>
+                        <a ng-href="{{nav.metricsEurekaUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Service Health & Status</a>
+                      </div>
+                      <!-- Metrics Admin area -->
+                      <div ng-show="nav.metricsAdminShow">
+                        <hr class="metrics-hr">
+                        <div class="metrics-message text-center">System</div>
+                        <div ng-show="nav.metricsHystrixTurbineEnabled">
+                          <label>Hystrix/Turbine</label>
+                          <a ng-href="{{nav.metricsHystrixTurbineUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Real-time Insight/System Behavior</a>
+                        </div>
+                        <div ng-show="nav.metricsSleuthZipkinEnabled">
+                          <label>Sleuth/Zipkin</label>
+                          <a ng-href="{{nav.metricsSleuthZipkinUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Distributed Tracing</a>
+                        </div>
+                        <div ng-show="nav.metricsKibanaEnabled">
+                          <label>Kibana</label>
+                          <a ng-href="{{nav.metricsKibanaUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Dashboard</a>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <!-- About dropdown menu -->
+            <li class="dropdown mega-dropdown" ng-show="nav.aboutShow" tooltip-placement="bottom"
+            uib-tooltip="View installation information regarding the O2 deployment">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false"><span class="fa fa-question-circle" aria-hidden="true"></span>
                 <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row about-menu" ng-click="$event.stopPropagation();">

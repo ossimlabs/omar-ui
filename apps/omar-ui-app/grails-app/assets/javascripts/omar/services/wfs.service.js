@@ -165,7 +165,14 @@
 
                 var imageData = response.data.features[0];
 
-                var imageIdText = imageData.properties.title || imageData.properties.filename;
+                function getFileName(file) {
+                  if(file !== undefined) {
+                    var filename = file.replace(/^.*[\\\/]/, '');
+                    return filename;
+                  }
+                }
+
+                var imageIdText = imageData.properties.title || getFileName(imageData.properties.filename);
                 var acquisitionDateText = imageData.properties.acquisition_date || "";
 
                 if (acquisitionDateText != "") {

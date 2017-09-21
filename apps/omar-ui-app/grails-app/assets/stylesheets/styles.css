@@ -33,6 +33,15 @@ body {
   margin-left: 10px;
 }
 
+.nav-title-left h3 {
+  margin-top: 0.55em;
+}
+
+.nav-title-left p {
+  margin-bottom: -3px;
+  font-size: 0.95em;
+}
+
 .jumbotron {
     position: relative;
     background: #000 url("aerial_rs.jpg") center center;

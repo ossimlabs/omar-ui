@@ -179,9 +179,9 @@
                 //       be using an Angular model.
                 stateService.navStateUpdate({
                     titleLeft:
-                    '<span class="text-info">Server: </span>' + parser.hostname + ' <br> ' +
-                    '<span class="text-info">Image ID: </span>' + imageIdText + ' <br> ' +
-                    '<span class="text-info">Acquisition Date: </span>' + acquisitionDateText + ' <br> ',
+                    '<p><span class="text-info">Server: </span>' + parser.hostname + ' </p> ' +
+                    '<p><span class="text-info">Image ID: </span>' + imageIdText + ' </p> ' +
+                    '<p><span class="text-info">Acquisition Date: </span>' + acquisitionDateText + ' </p> ',
                     userGuideUrl: 'omar-ui/docs/user-guide/omar-ui/#image-space'
                 });
 

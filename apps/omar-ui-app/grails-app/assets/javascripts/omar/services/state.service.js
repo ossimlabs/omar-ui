@@ -54,14 +54,14 @@
     };
 
     /**
-         * Description: updates the omarSitesState object
-         *
-         * @param  {object} objParams An object that contains properties of the
-         * omarSitesState state object that are to be updated.
-         *
-         * @return Conducts a $broadcast for $on listeners (subscribers) for
-         * this update.
-         */
+     * Description: updates the omarSitesState object
+     *
+     * @param  {object} objParams An object that contains properties of the
+     * omarSitesState state object that are to be updated.
+     *
+     * @return Conducts a $broadcast for $on listeners (subscribers) for
+     * this update.
+     */
     _this.updateSitesAppState = function(objParams) {
       _this.omarSitesState.info.name = checkForValidObjProp(
         _this.omarSitesState.info.name,

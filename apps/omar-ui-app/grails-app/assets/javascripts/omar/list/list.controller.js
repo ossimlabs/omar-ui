@@ -192,7 +192,7 @@
             var properties = image.properties;
 
             return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
+            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl + '&' + 'showModalSplash=' + showModalSplash;
         };
 
         vm.thumbBorder = function(imageType) {
@@ -365,6 +365,8 @@
 
         vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
+            //var showModalSplash = stateService.appState.showModalSplash;
+
             var modalInstance = $uibModal.open({
                 size: 'lg',
                 templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-card.partial.html',
@@ -383,6 +385,7 @@
                     'wfsRequestUrl',
                     'tlvRequestUrl',
                     'kmlRequestUrl',
+                    //'showModalSplash',
                     ImageModalController
                 ],
                 controllerAs: 'vm',
@@ -410,7 +413,10 @@
                     },
                     kmlRequestUrl: function() {
                         return kmlRequestUrl;
-                    }
+                    },
+                    // showModalSplash: function() {
+                    //   return showModalSplash;
+                    // }
                 }
             });
 
@@ -449,6 +455,8 @@
     function ImageModalController(shareService, downloadService, $uibModalInstance, wfsService, avroMetadataService, $scope, imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
         var vm = this;
+
+        //console.log(showModalSplash);
 
         vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
         vm.uiRequestUrl = uiRequestUrl;
@@ -503,7 +511,7 @@
             var defaults = imageSpaceDefaults;
             var properties = image.properties;
 
-            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
+            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl + '&' + 'showModalSplash=true';
 
         };
 

@@ -113,36 +113,8 @@
             downloadService.downloadFiles(imageId);
         };
 
-        function checkStateParams() {
-
-            // Check to make sure that all of the $stateParams are defined.
-            // If there are undefined params return an error.
-            for (var i in $stateParams) {
-
-                if ($stateParams[i] === undefined) {
-
-                    toastr.error('There was an issue loading the selected image into the map.', 'A problem has occurred:', {
-                        positionClass: 'toast-bottom-left',
-                        closeButton: true,
-                        timeOut: 10000,
-                        extendedTimeOut: 5000,
-                        target: 'body'
-                    });
-
-                    return;
-
-                }
-
-            }
-
-            // We can load the map, because all parameters
-            // are present.
-            loadMapImage();
-            bandSelection();
-
-        }
-
-        checkStateParams();
+        loadMapImage();
+        bandSelection();
 
         vm.imageId = $stateParams.imageId;
 
@@ -536,7 +508,8 @@
                 histCenterTile: $stateParams.histCenterTile,
                 resamplerFilter: $stateParams.resamplerFilter,
                 sharpenMode: $stateParams.sharpenMode,
-                wfsRequestUrl: $stateParams.wfsRequestUrl
+                wfsRequestUrl: $stateParams.wfsRequestUrl,
+                showModalSplash: $stateParams.showModalSplash
             };
 
             vm.imageMapPath = AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?filename=' + imageSpaceObj.filename + '&entry_id=' + imageSpaceObj.entry + '&width=' + imageSpaceObj.imgWidth + '&height=' + imageSpaceObj.imgHeight + '&bands=' + imageSpaceObj.bands + '&numOfBands=' + imageSpaceObj.numOfBands + '&imageId=' + imageSpaceObj.imageId + '&brightness=' + imageSpaceObj.brightness + '&contrast=' + imageSpaceObj.contrast + '&histOp=' + imageSpaceObj.histOp + '&histCenterTile=' + imageSpaceObj.histCenterTile + '&resamplerFilter' + imageSpaceObj.resamplerFilter + '&sharpenMode'

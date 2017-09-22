@@ -525,7 +525,8 @@
                 'imageSpaceRequestUrl=' + $stateParams.imageSpaceRequestUrl + '&' +
                 'uiRequestUrl=' + uiRequestUrl + '&' +
                 'mensaRequestUrl=' + mensaRequestUrl + '&' +
-                'wfsRequestUrl=' + wfsRequestUrl;
+                'wfsRequestUrl=' + wfsRequestUrl + '&' +
+                'showModalSplash=true';
 
             };
 

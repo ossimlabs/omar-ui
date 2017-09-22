@@ -54,6 +54,7 @@
 
 // <--Home-->
 //= require omar/home/home.controller.js
+//= require omar/home/splash.controller.js
 
 // <--Map-->
 //= require omar/map/map.controller.js

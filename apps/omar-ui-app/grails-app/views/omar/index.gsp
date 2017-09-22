@@ -131,7 +131,7 @@
             </div>
           </div>
           <div class="modal-body" id="modal-body">
-            <p>
+            <p class="text-center">
               {{vm.splashModalMessage}}
             </p>
           </div>

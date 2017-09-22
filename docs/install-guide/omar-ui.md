@@ -75,6 +75,10 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
         * **baseUrl** URL of the userGuide
         * **enabled** Used to show/hide the user guide links
       * **misc** Base settings for the O2 UI general configuration
+        * **splashModal** Configurable splash menu that opens upon application start up
+          * **header** Splash modal header text
+          * **message** Splash modal message body text
+          * **enabled** Used to enable/disable the splash modal from displaying
         * **beLookupEnabled** Enable BE number lookups in the search field.
         * **placemarks** The placemarks uses the WFS query engine to query placemark locations based on BE numbers.  
           * **tableName** Namespace and table name where the BE's are stored and is a WFS tableId entry.

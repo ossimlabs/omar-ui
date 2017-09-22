@@ -365,8 +365,6 @@
 
         vm.showImageModal = function(imageObj, imageSpaceDefaults, imageSpaceRequestUrl, uiRequestUrl, mensaRequestUrl, wfsRequestUrl, tlvRequestUrl, kmlRequestUrl) {
 
-            //var showModalSplash = stateService.appState.showModalSplash;
-
             var modalInstance = $uibModal.open({
                 size: 'lg',
                 templateUrl: AppO2.APP_CONFIG.serverURL + '/views/list/list.image-card.partial.html',
@@ -385,7 +383,6 @@
                     'wfsRequestUrl',
                     'tlvRequestUrl',
                     'kmlRequestUrl',
-                    //'showModalSplash',
                     ImageModalController
                 ],
                 controllerAs: 'vm',
@@ -413,10 +410,7 @@
                     },
                     kmlRequestUrl: function() {
                         return kmlRequestUrl;
-                    },
-                    // showModalSplash: function() {
-                    //   return showModalSplash;
-                    // }
+                    }
                 }
             });
 
@@ -456,25 +450,20 @@
 
         var vm = this;
 
-        //console.log(showModalSplash);
-
         vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
         vm.uiRequestUrl = uiRequestUrl;
         vm.mensaRequestUrl = mensaRequestUrl;
         vm.wfsRequestUrl = wfsRequestUrl;
 
         vm.beData = [];
-        //vm.avroMetaData;
 
         vm.selectedImage = imageObj;
         //used in the modal _list.image-card.partial.html.gsp
         vm.imageSpaceDefaults = imageSpaceDefaults;
 
-        //modal.rendered = false;
 
         //AppO2.APP_PATH is passed down from the .gsp
         vm.o2baseUrlModal = AppO2.APP_CONFIG.serverURL + '/omar';
-        //vm.o2baseUrlModal = uiRequestUrl = '/omar';
 
         vm.placemarkConfig = AppO2.APP_CONFIG.params.misc.placemarks;
         vm.beLookupEnabled = (vm.placemarkConfig)
@@ -483,7 +472,6 @@
 
         vm.kmlSuperOverlayAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
         if (vm.kmlSuperOverlayAppEnabled) {
-            //vm.kmlSuperOverlayLink = AppO2.APP_CONFIG.params.kmlApp.baseUrl;
             vm.kmlRequestUrl = kmlRequestUrl;
         }
 

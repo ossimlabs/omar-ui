@@ -509,7 +509,7 @@
                 resamplerFilter: $stateParams.resamplerFilter,
                 sharpenMode: $stateParams.sharpenMode,
                 wfsRequestUrl: $stateParams.wfsRequestUrl,
-                showModalSplash: $stateParams.showModalSplash
+                //showModalSplash: $stateParams.showModalSplash
             };
 
             vm.imageMapPath = AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?filename=' + imageSpaceObj.filename + '&entry_id=' + imageSpaceObj.entry + '&width=' + imageSpaceObj.imgWidth + '&height=' + imageSpaceObj.imgHeight + '&bands=' + imageSpaceObj.bands + '&numOfBands=' + imageSpaceObj.numOfBands + '&imageId=' + imageSpaceObj.imageId + '&brightness=' + imageSpaceObj.brightness + '&contrast=' + imageSpaceObj.contrast + '&histOp=' + imageSpaceObj.histOp + '&histCenterTile=' + imageSpaceObj.histCenterTile + '&resamplerFilter' + imageSpaceObj.resamplerFilter + '&sharpenMode'

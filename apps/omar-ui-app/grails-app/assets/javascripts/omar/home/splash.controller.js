@@ -67,6 +67,9 @@
       // user, because it will be the first time they enter the application
       var showModalSplashStateParam = $stateParams.showModalSplash || 'true';
 
+      console.log('config: ' + AppO2.APP_CONFIG.params.misc.splashModal.enabled);
+      console.log('showModalSplashStateParam: ' + showModalSplashStateParam);
+
       if(AppO2.APP_CONFIG.params.misc.splashModal.enabled && showModalSplashStateParam === 'true'){
 
         // Displays the splash modal

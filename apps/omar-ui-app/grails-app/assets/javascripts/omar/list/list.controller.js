@@ -192,7 +192,7 @@
             var properties = image.properties;
 
             return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
+            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl + '&' + 'showModalSplash=' + showModalSplash;
         };
 
         vm.thumbBorder = function(imageType) {
@@ -456,17 +456,14 @@
         vm.wfsRequestUrl = wfsRequestUrl;
 
         vm.beData = [];
-        //vm.avroMetaData;
 
         vm.selectedImage = imageObj;
         //used in the modal _list.image-card.partial.html.gsp
         vm.imageSpaceDefaults = imageSpaceDefaults;
 
-        //modal.rendered = false;
 
         //AppO2.APP_PATH is passed down from the .gsp
         vm.o2baseUrlModal = AppO2.APP_CONFIG.serverURL + '/omar';
-        //vm.o2baseUrlModal = uiRequestUrl = '/omar';
 
         vm.placemarkConfig = AppO2.APP_CONFIG.params.misc.placemarks;
         vm.beLookupEnabled = (vm.placemarkConfig)
@@ -475,7 +472,6 @@
 
         vm.kmlSuperOverlayAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
         if (vm.kmlSuperOverlayAppEnabled) {
-            //vm.kmlSuperOverlayLink = AppO2.APP_CONFIG.params.kmlApp.baseUrl;
             vm.kmlRequestUrl = kmlRequestUrl;
         }
 
@@ -503,7 +499,7 @@
             var defaults = imageSpaceDefaults;
             var properties = image.properties;
 
-            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl;
+            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl + '&' + 'showModalSplash=true';
 
         };
 

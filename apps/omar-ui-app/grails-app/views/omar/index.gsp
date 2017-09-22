@@ -24,6 +24,7 @@
   <body>
     <o2:classificationBanner/>
     <div class="container-fluid">
+
       <nav style="margin-top: -15px;" class="navbar navbar-inverse" role="navigation" ng-controller="NavController as nav">
         <div class="collapse navbar-collapse" id="main-navbar-collapse">
           <ul class="nav navbar-nav">
@@ -116,7 +117,32 @@
           </ul>
         </div>
       </nav>
+
       <div ui-view></div>
+
+      <!-- Splash Modal -->
+      <div ng-controller="SplashController as splash">
+        <script type="text/ng-template" id="splashModalContent.html">
+          <div class="modal-header">
+            <div class="text-center">
+              <div class="alert alert-info">
+                <h3 class="modal-title" id="modal-title">{{vm.splashModalHeader}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body" id="modal-body">
+            <p class="text-center">
+              {{vm.splashModalMessage}}
+            </p>
+          </div>
+          <div class="modal-footer">
+            <div class="text-center">
+              <button class="btn btn-success" type="button" ng-click="vm.ok()"> <i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;OK</button>
+            </div>
+          </div>
+        </script>
+      </div
+
     </div>
     <o2:classificationBanner position="bottom" />
     <asset:script>

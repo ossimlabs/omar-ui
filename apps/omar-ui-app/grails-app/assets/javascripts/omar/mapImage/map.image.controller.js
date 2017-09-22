@@ -113,36 +113,8 @@
             downloadService.downloadFiles(imageId);
         };
 
-        function checkStateParams() {
-
-            // Check to make sure that all of the $stateParams are defined.
-            // If there are undefined params return an error.
-            for (var i in $stateParams) {
-
-                if ($stateParams[i] === undefined) {
-
-                    toastr.error('There was an issue loading the selected image into the map.', 'A problem has occurred:', {
-                        positionClass: 'toast-bottom-left',
-                        closeButton: true,
-                        timeOut: 10000,
-                        extendedTimeOut: 5000,
-                        target: 'body'
-                    });
-
-                    return;
-
-                }
-
-            }
-
-            // We can load the map, because all parameters
-            // are present.
-            loadMapImage();
-            bandSelection();
-
-        }
-
-        checkStateParams();
+        loadMapImage();
+        bandSelection();
 
         vm.imageId = $stateParams.imageId;
 

@@ -193,6 +193,10 @@ omar:
       baseUrl: http://localhost/o2-docs
       enabled: true
     misc:
+      splashModal:
+        header: "O2 Notice"
+        message: "Welcome to the O2 image discovery and analysis application.  This application was built and is maintained by the Open Technologies Divsion of DigitalGlobe | Radiant"
+        enabled: true
       beLookupEnabled: false
       # placemarks:
       #   tableName: omar:cities

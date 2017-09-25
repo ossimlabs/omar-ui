@@ -215,7 +215,7 @@ omar:
         enabled: true
       about:
         enabled: true
-        message: O2 | Image Discovery and Analysis
+        message: "O2 | Image Discovery and Analysis"
         releaseName: Egmont Key
         releaseNumber: 2.1.0
       metrics: # Metrics Dropdown Menu settings

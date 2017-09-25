@@ -11,9 +11,12 @@
       'angular-clipboard',
       'ui.select',
       'ngSanitize'])
-    .config(['$stateProvider', '$urlRouterProvider', '$uibTooltipProvider',
+    .config(['$stateProvider', '$urlRouterProvider', '$uibTooltipProvider', '$logProvider',
 
-      function ($stateProvider, $urlRouterProvider, $uibTooltipProvider) {
+      function ($stateProvider, $urlRouterProvider, $uibTooltipProvider, $logProvider) {
+
+        console.log(AppO2.APP_CONFIG.params.misc.javascriptDebug);
+        $logProvider.debugEnabled(AppO2.APP_CONFIG.params.misc.javascriptDebug);
 
         $uibTooltipProvider.options({
           'popupDelay': 1500

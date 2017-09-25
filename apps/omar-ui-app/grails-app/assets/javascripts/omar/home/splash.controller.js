@@ -9,7 +9,7 @@
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    //console.log('AppO2.APP_CONFIG in SplashController: ', AppO2.APP_CONFIG);
+    $log.debug('AppO2.APP_CONFIG in SplashController: ', AppO2.APP_CONFIG);
 
     /* jshint validthis: true */
     var vm = this;
@@ -67,9 +67,6 @@
       // user, because it will be the first time they enter the application
       var showModalSplashStateParam = $stateParams.showModalSplash || 'true';
 
-      console.log('config: ' + AppO2.APP_CONFIG.params.misc.splashModal.enabled);
-      console.log('showModalSplashStateParam: ' + showModalSplashStateParam);
-
       if(AppO2.APP_CONFIG.params.misc.splashModal.enabled && showModalSplashStateParam === 'true'){
 
         // Displays the splash modal
@@ -77,7 +74,7 @@
 
       }
 
-    }, 1000);
+    }, AppO2.APP_CONFIG.params.misc.splashModal.delay);
 
   }
 

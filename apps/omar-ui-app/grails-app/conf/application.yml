@@ -193,9 +193,11 @@ omar:
       baseUrl: http://localhost/o2-docs
       enabled: true
     misc:
+      javascriptDebug: false
       splashModal:
         header: "O2 Notice"
-        message: "Welcome to the O2 image discovery and analysis application.  This application was built and is maintained by the Open Technologies Divsion of DigitalGlobe | Radiant"
+        message: "Welcome to the O2 image discovery and analysis application."
+        delay: 1000
         enabled: true
       beLookupEnabled: false
       # placemarks:
@@ -213,7 +215,7 @@ omar:
         enabled: true
       about:
         enabled: true
-        message: DigitalGlobe | Radiant - Open Technologies Division
+        message: O2 | Image Discovery and Analysis
         releaseName: Egmont Key
         releaseNumber: 2.1.0
       metrics: # Metrics Dropdown Menu settings

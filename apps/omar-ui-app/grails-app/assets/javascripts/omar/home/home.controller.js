@@ -50,7 +50,9 @@
 
     vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;
     if (vm.tlvAppEnabled) {
-      vm.tlvAppLink = AppO2.APP_CONFIG.params.tlvApp.baseUrl;
+        var tlvBaseUrl =stateService.omarSitesState.url.base;
+        var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+        vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
     }
 
     var twofishProxy = AppO2.APP_CONFIG.params.twofishes.proxy;

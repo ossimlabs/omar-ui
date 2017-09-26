@@ -139,7 +139,7 @@
           </div>
           <div class="modal-footer">
             <div class="text-center">
-              <button class="btn btn-success" type="button" ng-click="vm.ok()"> <i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;OK</button>
+              <button class="btn btn-success" type="button" ng-click="vm.ok()" autofocus> <i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;OK</button>
             </div>
           </div>
         </script>

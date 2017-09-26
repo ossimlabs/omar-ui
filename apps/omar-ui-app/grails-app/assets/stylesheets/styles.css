@@ -814,6 +814,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   font-size: .75em;
 }
 
+.user-menu-row {
+  min-width: 300px;
+}
+
 .metrics-hr {
   margin-top: 14px !important;
 }

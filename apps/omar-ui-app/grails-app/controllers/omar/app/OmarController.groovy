@@ -10,39 +10,26 @@ import omar.ui.OmarSitesConfig
 class OmarController /*implements InitializingBean*/
 {
   def openlayers
+  def userInfo
 
   OpenLayersConfig openLayersConfig
   OmarSitesConfig omarSitesConfig
 
   def index()
   {
-      // println openLayersConfig as JSON
-      // println grailsApplication.config.omar.openlayers as JSON
 
-  		// def clientConfig = new ConfigObject()
-  		// clientConfig.params = grailsApplication.config.omar.app
-      //
-  		// clientConfig.openlayers = OmarOpenlayersUtils.openlayersConfig
-      // // clientConfig.openlayers = openlayers
-      //
-  		//  // Use Enhancer traits from omar-core getBaseUrl()
-  		// clientConfig.serverURL = getBaseUrl()
-      //
-  		// // Params to pass to client
-  		// def clientParams = grailsApplication.config.omar.app
+     userInfo = grailsApplication.config.omar.app.userInfo
+     println 'requestHeaderUserName: ' + userInfo
 
-      // if ( grailsApplication.config.spring.cloud.config.enabled ) {
-      //     openLayersConfig.baseMaps.each { println it }
-     //  }
-
-    //  println omarSitesConfig
-
-     grailsApplication.config.omar.app.sites = omarSitesConfig.sites
+      grailsApplication.config.omar.app.sites = omarSitesConfig.sites
 
       def clientConfig = [
         serverURL: getBaseUrl(),
         openlayers: openLayersConfig,
-        params: grailsApplication.config.omar.app
+        params: grailsApplication.config.omar.app,
+        userInfo: [
+          name: request.getHeader(userInfo.requestHeaderUserName)?:userInfo.requestHeaderUserNameDefault
+        ]
       ]
 
   		[

@@ -34,7 +34,7 @@
 //= require omar/core/geopoint.js
 //= require omar/core/mgrs.js
 //= require omar/core/fileDownload.js
-//= require omar/app.module.main.js
+//= require omar/app.module.main.es6
 
 // <--Services-->
 //= require omar/services/state.service.js
@@ -50,11 +50,11 @@
 //= require omar/services/avro-metadata.service.js
 
 // <--Nav-->
-//= require omar/nav/nav.controller.js
+//= require omar/nav/nav.controller.es6
 
 // <--Home-->
-//= require omar/home/home.controller.js
-//= require omar/home/splash.controller.js
+//= require omar/home/home.controller.es6
+//= require omar/home/splash.controller.es6
 
 // <--Map-->
 //= require omar/map/map.controller.js

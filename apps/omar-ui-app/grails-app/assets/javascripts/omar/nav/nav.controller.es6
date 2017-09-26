@@ -2,15 +2,15 @@
   'use strict';
   angular
     .module('omarApp')
-    .controller('NavController', ['stateService', '$scope', NavController]);
+    .controller('NavController', ['$log', 'stateService', '$scope', NavController]);
 
-  function NavController(stateService, $scope) {
+  function NavController($log, stateService, $scope) {
 
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    //console.log('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
+    $log.debug('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
 
       var vm = this;
       /* jshint validthis: true */
@@ -25,6 +25,10 @@
       }
 
     });
+
+    vm.userShow = true;
+    vm.userName = AppO2.APP_CONFIG.userInfo.name;
+    $log.debug(`vm.userName = ${vm.userName}`);
 
     // Show/Hide the Metrics dropdown menu
     vm.metricsShow = AppO2.APP_CONFIG.params.misc.metrics.enabled;

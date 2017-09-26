@@ -26,6 +26,9 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
     * **openlayers**
       * **baseMaps** Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app. If you do not have this field specified in the application YAML it will use the default layer. The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
     * **app**
+      * **userInfo**
+        * **requestHeaderUserName** Configurable request header name parameter
+        * **requestHeaderUserNameDefault** Configurable default name for the request header user (Default: Anonymous).  Used if no name is found in PKI cert
       * **sites** A list of federated omar sites
         * **info**
           * **name** Short name for the omar site
@@ -75,6 +78,7 @@ You can insert additional [Common Config Settings](../../../omar-common/docs/ins
         * **baseUrl** URL of the userGuide
         * **enabled** Used to show/hide the user guide links
       * **misc** Base settings for the O2 UI general configuration
+        * **javascrptDebug** Allows logging for javascript i
         * **splashModal** Configurable splash menu that opens upon application start up
           * **header** Splash modal header text
           * **message** Splash modal message body text

@@ -1,20 +1,16 @@
 (function() {
   "use strict";
   angular
-    .module("omarApp")
-    .controller("HomeController", [
-      "stateService",
-      "$window",
-      "toastr",
-      HomeController
+    .module('omarApp')
+    .controller('HomeController', ['$log', 'stateService', '$window', 'toastr', HomeController
     ]);
 
-  function HomeController(stateService, $window, toastr) {
+  function HomeController($log, stateService, $window, toastr) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    //console.log('AppO2.APP_CONFIG in HomeController: ', AppO2.APP_CONFIG);
+    $log.log('AppO2.APP_CONFIG in HomeController: ', AppO2.APP_CONFIG);
 
     // set header title
     stateService.navStateUpdate({

@@ -157,6 +157,9 @@ omar:
       #   options:
       #     visible: false
   app:
+    userInfo:
+      requestHeaderUserName: username
+      requestHeaderUserNameDefault: Anonymous
     sites:
       -
         info:

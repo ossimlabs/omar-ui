@@ -18,10 +18,9 @@ class OmarController /*implements InitializingBean*/
   def index()
   {
 
-     userInfo = grailsApplication.config.omar.app.userInfo
-     println 'requestHeaderUserName: ' + userInfo
+    userInfo = grailsApplication.config.omar.app.userInfo
 
-      grailsApplication.config.omar.app.sites = omarSitesConfig.sites
+    grailsApplication.config.omar.app.sites = omarSitesConfig.sites
 
       def clientConfig = [
         serverURL: getBaseUrl(),

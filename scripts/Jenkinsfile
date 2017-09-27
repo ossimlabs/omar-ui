@@ -49,7 +49,7 @@ node(""){
                 // It's important to add --info because of SONARJNKNS-281
                 sh """
                 pushd ${workspaceDir}/${appName}/
-                ./gradlew --info sonarqube -Dsonar.organization=${env.SONARCLOUD_ORGANIZATION}
+                ./gradlew --info sonarqube
                 popd
               """
             }

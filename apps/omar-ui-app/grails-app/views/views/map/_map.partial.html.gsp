@@ -611,7 +611,7 @@
         <div id="popup-content"></div>
       </div>
       <div id="progress" class="text-info">
-        <i class="fa fa-spinner fa-pulse fa-4x text-info"></i>
+        <i class="fa fa-spinner fa-spin fa-4x"></i>
       </span>
       </div>
   </div>

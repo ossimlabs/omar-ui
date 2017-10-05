@@ -937,15 +937,9 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   position: absolute;
   top: 40%;
   left: 48%;
-  width: 64px;
-  background-color: #2e3338;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  overflow-y: auto;
   z-index: 99;
+}
 
+.fa-spinner {
+  color: white;
 }

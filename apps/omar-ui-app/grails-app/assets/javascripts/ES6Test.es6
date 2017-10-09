@@ -1,3 +1,4 @@
+/*
 class Foobar
 {
   constructor(name='World')
@@ -17,3 +18,4 @@ class Foobar
 var foobar = new Foobar();
 
 foobar.sayHello();
+*/

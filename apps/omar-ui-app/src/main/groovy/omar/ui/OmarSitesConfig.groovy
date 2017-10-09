@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding
 import org.springframework.core.convert.converter.Converter
 
-@ConfigurationProperties(prefix="omar.app",ignoreInvalidFields=true,merge=false)
+@ConfigurationProperties(prefix="omar.app",ignoreInvalidFields=true)
 @ToString(includeNames=true)
 class OmarSitesConfig
 {

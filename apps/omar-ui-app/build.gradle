@@ -48,7 +48,7 @@ assets {
   minifyCss = true
   includes = ["**/fonts/**"]
   excludes = [
-    "**/application.js",
+    //"**/application.js",
     "**/i18n/**",
     "**/jquery*",
     "**/omar/**",

@@ -34,6 +34,7 @@
             bands,
             numOfBands,
             brightness,
+            numResLevels,
             contrast,
             urlString,
             imgID,
@@ -251,7 +252,7 @@
                     tileX = tileCoord[1];
                     tileY = -tileCoord[2] - 1;
 
-                    return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ + '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat + '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp + '&histCenterTile=' + histCenterTile + '&brightness=' + brightness + '&contrast=' + contrast + '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent=' + transparent;
+                    return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ + '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat + '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp + '&histCenterTile=' + histCenterTile + '&numResLevels=' + numResLevels + '&width=' + imgWidth + '&height=' + imgHeight + '&brightness=' + brightness + '&contrast=' + contrast + '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent=' + transparent;
                 }
             }
 
@@ -280,6 +281,7 @@
             imgID = params.imageId;
             brightness = params.brightness || 0;
             contrast = params.contrast || 1;
+            numResLevels = params.numResLevels || 1;
             resamplerFilter = params.resamplerFilter || "bilinear";
             sharpenMode = params.sharpenMode || "none";
             transparent = params.transparent || "true";
@@ -340,6 +342,7 @@
                 ],
                 numOfBands: numOfBands,
                 bands: bands,
+                numResLevels: numResLevels,
                 brightness: brightness,
                 contrast: contrast,
                 histOp: histOp,
@@ -465,6 +468,8 @@
                         imgWidth,
                         0
                     ]
+                    // TODO: Need to add zoom level clamping for the image zoom
+                    // levels
                 })
             });
 
@@ -518,6 +523,7 @@
                 'histCenterTile=' + histCenterTile + '&' +
                 'imageId=' + imgID + '&' +
                 'numOfBands=' + numOfBands + '&' +
+                'numResLevels' + numResLevels + '&' +
                 'resamplerFilter=' + resamplerFilter + '&' +
                 'sharpenMode=' + sharpenMode + '&' +
                 'transparent=' + transparent + '&' +

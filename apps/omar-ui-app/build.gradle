@@ -63,6 +63,7 @@ assets {
 }
 
 repositories {
+  maven { url  "http://dl.bintray.com/dmahapatro/plugins" }
   mavenLocal()
   maven { url "${ossimMavenProxy}" }
   maven { url "https://repo.grails.org/grails/core" }
@@ -95,6 +96,9 @@ dependencies {
     compile(group: "io.ossim.omar.plugins", name: "omar-hibernate-spatial-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
   }
 */
+
+    compile "org.grails.plugins:actuator-ui:1.1"
+
 
   // compile "org.grails.plugins:grails3-cors-interceptor:1.2.1"
   compile "org.grails.plugins:browser-detection:3.3.0"

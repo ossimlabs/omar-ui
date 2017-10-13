@@ -188,10 +188,27 @@
         vm.getImageSpaceUrl = function(image) {
             var defaults = imageSpaceDefaults;
             var properties = image.properties;
-            console.log('properties: ' , properties);
 
             return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-            'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'numResLevels=' + properties.num_of_rez_levels + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl + '&' + 'showModalSplash=true';
+              'bands=' + defaults.bands + '&' +
+              'brightness=' + defaults.brightness + '&' +
+              'contrast=' + defaults.contrast + '&' +
+              'entry_id=' + properties.entry_id + '&' +
+              'filename=' + properties.filename + '&' +
+              'height=' + properties.height + '&' +
+              'histOp=' + defaults.histOp + '&' +
+              'histCenterTile=' + defaults.histCenterTile + '&' +
+              'imageId=' + properties.id + '&' +
+              'numOfBands=' + properties.number_of_bands + '&' +
+              'numResLevels=' + properties.number_of_res_levels + '&' +
+              'resamplerFilter=' + defaults.resamplerFilter + '&' +
+              'sharpenMode=' + defaults.sharpenMode + '&' +
+              'width=' + properties.width + '&' +
+              'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' +
+              'uiRequestUrl=' + uiRequestUrl + '&' +
+              'mensaRequestUrl=' + mensaRequestUrl + '&' +
+              'wfsRequestUrl=' + wfsRequestUrl + '&' +
+              'showModalSplash=true';
         };
 
         vm.thumbBorder = function(imageType) {
@@ -498,7 +515,26 @@
             var defaults = imageSpaceDefaults;
             var properties = image.properties;
 
-            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' + 'bands=' + defaults.bands + '&' + 'brightness=' + defaults.brightness + '&' + 'contrast=' + defaults.contrast + '&' + 'entry_id=' + properties.entry_id + '&' + 'filename=' + properties.filename + '&' + 'height=' + properties.height + '&' + 'numResLevels=' + properties.numResLevels + '&' + 'histOp=' + defaults.histOp + '&' + 'histCenterTile=' + defaults.histCenterTile + '&' + 'imageId=' + properties.id + '&' + 'numOfBands=' + properties.number_of_bands + '&' + 'resamplerFilter=' + defaults.resamplerFilter + '&' + 'sharpenMode=' + defaults.sharpenMode + '&' + 'width=' + properties.width + '&' + 'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' + 'uiRequestUrl=' + uiRequestUrl + '&' + 'mensaRequestUrl=' + mensaRequestUrl + '&' + 'wfsRequestUrl=' + wfsRequestUrl + '&' + 'showModalSplash=true';
+            return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
+             'bands=' + defaults.bands + '&' +
+             'brightness=' + defaults.brightness + '&' +
+             'contrast=' + defaults.contrast + '&' +
+             'entry_id=' + properties.entry_id + '&' +
+             'filename=' + properties.filename + '&' +
+             'height=' + properties.height + '&' +
+             'histOp=' + defaults.histOp + '&' +
+             'histCenterTile=' + defaults.histCenterTile + '&' +
+             'imageId=' + properties.id + '&' +
+             'numOfBands=' + properties.number_of_bands + '&' +
+             'numResLevels=' + properties.number_of_res_levels + '&' +
+             'resamplerFilter=' + defaults.resamplerFilter + '&' +
+             'sharpenMode=' + defaults.sharpenMode + '&' +
+             'width=' + properties.width + '&' +
+             'imageSpaceRequestUrl=' + imageSpaceRequestUrl + '&' +
+             'uiRequestUrl=' + uiRequestUrl + '&' +
+             'mensaRequestUrl=' + mensaRequestUrl + '&' +
+             'wfsRequestUrl=' + wfsRequestUrl + '&' +
+             'showModalSplash=true';
 
         };
 
@@ -581,7 +617,7 @@
         };
 
         vm.shareModal = function(imageLink) {
-            shareService.imageLinkModal(imageLink);
+          shareService.imageLinkModal(imageLink);
         };
 
         vm.archiveDownload = function(imageId) {

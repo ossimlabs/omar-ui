@@ -512,8 +512,21 @@
                 wfsRequestUrl: $stateParams.wfsRequestUrl
             };
 
-            vm.imageMapPath = AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?filename=' + imageSpaceObj.filename + '&entry_id=' + imageSpaceObj.entry + '&width=' + imageSpaceObj.imgWidth + '&height=' + imageSpaceObj.imgHeight + '&numResLevels=' + imageSpaceObj.numResLevels + '&bands=' + imageSpaceObj.bands + '&numOfBands=' + imageSpaceObj.numOfBands + '&imageId=' + imageSpaceObj.imageId + '&brightness=' + imageSpaceObj.brightness + '&contrast=' + imageSpaceObj.contrast + '&histOp=' + imageSpaceObj.histOp + '&histCenterTile=' + imageSpaceObj.histCenterTile + '&resamplerFilter' + imageSpaceObj.resamplerFilter + '&sharpenMode'
-            imageSpaceObj.sharpenMode;
+            vm.imageMapPath = AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
+              'filename=' + imageSpaceObj.filename +
+              '&entry_id=' + imageSpaceObj.entry +
+              '&width=' + imageSpaceObj.imgWidth +
+              '&height=' + imageSpaceObj.imgHeight +
+              '&numResLevels=' + imageSpaceObj.numResLevels +
+              '&bands=' + imageSpaceObj.bands +
+              '&numOfBands=' + imageSpaceObj.numOfBands +
+              '&imageId=' + imageSpaceObj.imageId +
+              '&brightness=' + imageSpaceObj.brightness +
+              '&contrast=' + imageSpaceObj.contrast +
+              '&histOp=' + imageSpaceObj.histOp +
+              '&histCenterTile=' + imageSpaceObj.histCenterTile +
+              '&resamplerFilter' + imageSpaceObj.resamplerFilter +
+              '&sharpenMode' + imageSpaceObj.sharpenMode;
 
             // Pass our imageSpaceObj constructed from the URL
             // ($stateParams) into the imageSpaceService and load

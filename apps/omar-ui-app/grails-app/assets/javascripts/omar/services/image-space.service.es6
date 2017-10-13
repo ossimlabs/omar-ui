@@ -177,6 +177,7 @@
         ol.inherits(RotateUpControl, ol.control.Control);
 
         var ImageSpace = function(opt_options) {
+
             var options = opt_options || {};
 
             var size = options.size;
@@ -245,14 +246,34 @@
             var url = options.url;
 
             function tileUrlFunction(tileCoord, pixelRatio, projection) {
-                if (!tileCoord) {
-                    return undefined;
-                } else {
-                    tileZ = tileCoord[0];
-                    tileX = tileCoord[1];
-                    tileY = -tileCoord[2] - 1;
 
-                    return url + '?filename=' + filename + '&entry=' + entry + '&z=' + tileZ + '&x=' + tileX + '&y=' + tileY + '&outputFormat=' + outputFormat + '&numOfBands=' + numOfBands + '&bands=' + bands + '&histOp=' + histOp + '&histCenterTile=' + histCenterTile + '&numResLevels=' + numResLevels + '&width=' + imgWidth + '&height=' + imgHeight + '&brightness=' + brightness + '&contrast=' + contrast + '&resamplerFilter=' + resamplerFilter + '&sharpenMode=' + sharpenMode + '&transparent=' + transparent;
+                if (!tileCoord) {
+                  return undefined;
+                } else {
+
+                  tileZ = tileCoord[0];
+                  tileX = tileCoord[1];
+                  tileY = -tileCoord[2] - 1;
+
+                  return url + '?' +
+                    'bands=' + bands +
+                    '&brightness=' + brightness +
+                    '&contrast=' + contrast +
+                    '&entry=' + entry +
+                    '&filename=' + filename +
+                    '&height=' + imgHeight +
+                    '&histOp=' + histOp +
+                    '&histCenterTile=' + histCenterTile +
+                    '&numOfBands=' + numOfBands +
+                    '&numResLevels=' + numResLevels +
+                    '&outputFormat=' + outputFormat +
+                    '&resamplerFilter=' + resamplerFilter +
+                    '&sharpenMode=' + sharpenMode +
+                    '&transparent=' + transparent +
+                    '&width=' + imgWidth +
+                    '&x=' + tileX +
+                    '&y=' + tileY +
+                    '&z=' + tileZ;
                 }
             }
 
@@ -513,26 +534,26 @@
             this.getImageLink = function() {
 
                 return AppO2.APP_CONFIG.serverURL + '/omar/#/mapImage?' +
-                'bands=' + bands + '&' +
-                'brightness=' + brightness + '&' +
-                'contrast=' + contrast + '&' +
-                'entry_id=' + entry + '&' +
-                'filename=' + filename + '&' +
-                'height=' + imgHeight + '&' +
-                'histOp=' + histOp + '&' +
-                'histCenterTile=' + histCenterTile + '&' +
-                'imageId=' + imgID + '&' +
-                'numOfBands=' + numOfBands + '&' +
-                'numResLevels' + numResLevels + '&' +
-                'resamplerFilter=' + resamplerFilter + '&' +
-                'sharpenMode=' + sharpenMode + '&' +
-                'transparent=' + transparent + '&' +
-                'width=' + imgWidth + '&' +
-                'imageSpaceRequestUrl=' + $stateParams.imageSpaceRequestUrl + '&' +
-                'uiRequestUrl=' + uiRequestUrl + '&' +
-                'mensaRequestUrl=' + mensaRequestUrl + '&' +
-                'wfsRequestUrl=' + wfsRequestUrl + '&' +
-                'showModalSplash=true';
+                  'bands=' + bands + '&' +
+                  'brightness=' + brightness + '&' +
+                  'contrast=' + contrast + '&' +
+                  'entry_id=' + entry + '&' +
+                  'filename=' + encodeURIComponent(filename) + '&' +
+                  'height=' + imgHeight + '&' +
+                  'histCenterTile=' + histCenterTile + '&' +
+                  'histOp=' + histOp + '&' +
+                  'imageId=' + imgID + '&' +
+                  'numOfBands=' + numOfBands + '&' +
+                  'numResLevels=' + numResLevels + '&' +
+                  'resamplerFilter=' + resamplerFilter + '&' +
+                  'sharpenMode=' + sharpenMode + '&' +
+                  'transparent=' + transparent + '&' +
+                  'width=' + imgWidth + '&' +
+                  'imageSpaceRequestUrl=' + encodeURIComponent($stateParams.imageSpaceRequestUrl) + '&' +
+                  'uiRequestUrl=' + encodeURIComponent(uiRequestUrl) + '&' +
+                  'mensaRequestUrl=' + encodeURIComponent(mensaRequestUrl) + '&' +
+                  'wfsRequestUrl=' + encodeURIComponent(wfsRequestUrl) + '&' +
+                  'showModalSplash=true';
 
             };
 

@@ -10,7 +10,7 @@
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    $log.log('AppO2.APP_CONFIG in HomeController: ', AppO2.APP_CONFIG);
+    //$log.log('AppO2.APP_CONFIG in HomeController: ', AppO2.APP_CONFIG);
 
     // set header title
     stateService.navStateUpdate({

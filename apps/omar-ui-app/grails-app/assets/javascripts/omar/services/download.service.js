@@ -65,9 +65,10 @@
                         httpMethod: 'POST',
                         dataType: 'text',
                         contentType: 'plain/text',
-                        data: {
-                            fileInfo: JSON.stringify(data)
-                        },
+                        // data: {
+                        //     fileInfo: JSON.stringify(data)
+                        // },
+                        data: JSON.stringify(data),
                         successCallback: function(url) {
                             toastr.success('Files are being downloaded.', {
                                 positionClass: 'toast-bottom-left',

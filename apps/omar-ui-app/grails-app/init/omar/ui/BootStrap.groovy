@@ -1,4 +1,5 @@
-package omar.app 
+package omar.ui
+
 class BootStrap {
 
     def init = { servletContext ->

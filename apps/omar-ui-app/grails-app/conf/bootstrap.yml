@@ -7,6 +7,10 @@ spring:
       uri: http://localhost:8888/omar-config-server
     discovery:
       enabled: false
+  sleuth:
+    enabled: false
+  zipkin:
+   enabled: false
 ---
 spring:
   profiles: production

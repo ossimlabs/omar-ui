@@ -266,3 +266,6 @@ classificationBanner:
   #classificationType: Secret // NOFORN
     # backgroundColor: yellow
     # classificationType: Top Secret
+---
+logging:
+  config: classpath:logback.groovy

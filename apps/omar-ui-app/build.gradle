@@ -63,7 +63,7 @@ assets {
 }
 
 repositories {
-  maven { url  "http://dl.bintray.com/dmahapatro/plugins" }
+  // maven { url  "http://dl.bintray.com/dmahapatro/plugins" }
   mavenLocal()
   maven { url "${ossimMavenProxy}" }
   maven { url "https://repo.grails.org/grails/core" }
@@ -97,7 +97,7 @@ dependencies {
   }
 */
 
-    compile "org.grails.plugins:actuator-ui:1.1"
+    // compile "org.grails.plugins:actuator-ui:1.1"
 
 
   // compile "org.grails.plugins:grails3-cors-interceptor:1.2.1"

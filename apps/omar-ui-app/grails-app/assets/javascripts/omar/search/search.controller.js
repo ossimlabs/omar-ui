@@ -61,7 +61,7 @@
 
         vm.executeSearch = function() {
 
-            wfsService.updateAttrFilter('');
+            //wfsService.updateAttrFilter('');
 
             var input = searchInput.val().trim();
 

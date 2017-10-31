@@ -97,10 +97,8 @@ dependencies {
   }
 */
 
-    // compile "org.grails.plugins:actuator-ui:1.1"
+  compile "de.codecentric:spring-boot-admin-starter-client:1.5.4"
 
-
-  // compile "org.grails.plugins:grails3-cors-interceptor:1.2.1"
   compile "org.grails.plugins:browser-detection:3.3.0"
 
   // UI Webjar core dependencies

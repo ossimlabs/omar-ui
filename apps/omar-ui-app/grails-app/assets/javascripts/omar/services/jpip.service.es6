@@ -3,15 +3,29 @@
     'use strict';
     angular
         .module('omarApp')
-        .service('jpipService', ['$rootScope', '$http', 'toastr', '$timeout', 'shareService', jpipService]);
+        .service('jpipService', ['stateService', '$rootScope', '$http', 'toastr', '$timeout', 'shareService', jpipService]);
 
-    function jpipService($rootScope, $http, toastr, $timeout, shareService) {
+    function jpipService(stateService, $rootScope, $http, toastr, $timeout, shareService) {
         var TRACE = 0;
         this.serviceRunning = true;
 
+        var jpipBaseUrl
+        var jpipContextPath
+        var jpipRequestUrl
+
+        /**
+         * Description: Called from the listController so that the $on. event that subscribes to the $broadcast
+         * can update the JPIP url and context path.
+         */
+        this.setJpipUrlProps = function() {
+            jpipBaseUrl = stateService.omarSitesState.url.base;
+            jpipContextPath = stateService.omarSitesState.url.jpipContextPath;
+            jpipRequestUrl = jpipBaseUrl + jpipContextPath + '/jpip';
+        };
+        this.setJpipUrlProps();
+
         this.getJpipStream = function($event, file, entry, projCode) {
                 var jpipAppEnabled = AppO2.APP_CONFIG.params.jpipApp.enabled;
-                var jpipLink = "";
                 var jpipServiceUrl = "";
                 var MAX = 240;
                 var secondsEllapsed = 0;
@@ -30,10 +44,8 @@
                     // Get the basename of the image file for the toastr popup:
                     f = file.replace(/^.*[\\\/]/, '');
 
-                    jpipLink = AppO2.APP_CONFIG.params.jpipApp.baseUrl;
-
                     // projCode can be: chip, geo-scaled, 4326, 3857
-                    jpipServiceUrl = jpipLink + '/createStream?filename=' + file + '&entry=' + entry + '&projCode=' + projCode;
+                    jpipServiceUrl = jpipRequestUrl + '/createStream?filename=' + file + '&entry=' + entry + '&projCode=' + projCode;
 
                     if (TRACE) {
                         console.log('jpipServiceUrl: ' + jpipServiceUrl);
@@ -57,8 +69,9 @@
                                 data = JSON.stringify(response.data);
                                 console.log('response data', JSON.stringify(response.data));
                             }
-
+                            //var foo = "FINISHED"
                             if (response.data.status === "FINISHED") {
+                            //if (foo === "FINISHED") {
                                 if (TRACE) {
                                     console.log('FINISHED...');
                                 }

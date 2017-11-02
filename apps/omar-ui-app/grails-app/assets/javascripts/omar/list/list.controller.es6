@@ -5,10 +5,10 @@
         'wfsService',
         'shareService',
         'downloadService',
+        'jpipService',
         '$stateParams',
         '$uibModal',
         'mapService',
-        'jpipService',
         'avroMetadataService',
         '$scope',
         '$http',
@@ -16,7 +16,7 @@
         ListController
     ]);
 
-    function ListController(stateService, wfsService, shareService, downloadService, $stateParams, $uibModal, mapService, jpipService, avroMetadataService, $scope, $http, $log) {
+    function ListController(stateService, wfsService, shareService, downloadService, jpipService, $stateParams, $uibModal, mapService, avroMetadataService, $scope, $http, $log) {
 
         // #################################################################################
         // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -155,6 +155,7 @@
             wfsService.executeWfsQuery();
             mapService.updateFootprintsUrl();
             avroMetadataService.setAvroMetadataUrlProps();
+            jpipService.setJpipUrlProps();
 
             $scope.$apply(function() {
 

@@ -65,7 +65,6 @@
                       <div ng-show="nav.metricsUserShow">
                         <hr>
                         <div ng-href="" class="metrics-message text-center">User</div>
-                        <label>Eureka</label>
                         <a ng-href="{{nav.metricsEurekaUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Service Health & Status</a>
                       </div>
                       <!-- Metrics Admin area -->
@@ -73,16 +72,20 @@
                         <hr class="metrics-hr">
                         <div class="metrics-message text-center">System</div>
                         <div ng-show="nav.metricsHystrixTurbineEnabled">
-                          <label>Hystrix/Turbine</label>
+                          <!-- <label>Hystrix/Turbine</label> -->
                           <a ng-href="{{nav.metricsHystrixTurbineUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Real-time Insight/System Behavior</a>
                         </div>
                         <div ng-show="nav.metricsSleuthZipkinEnabled">
-                          <label>Sleuth/Zipkin</label>
+                          <!-- <label>Sleuth/Zipkin</label> -->
                           <a ng-href="{{nav.metricsSleuthZipkinUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Distributed Tracing</a>
                         </div>
                         <div ng-show="nav.metricsKibanaEnabled">
-                          <label>Kibana</label>
-                          <a ng-href="{{nav.metricsKibanaUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Dashboard</a>
+                          <!-- <label>Kibana</label> -->
+                          <a ng-href="{{nav.metricsKibanaUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Kibana Dashboard</a>
+                        </div>
+                        <div ng-show="nav.metricsSpringBootAdminEnabled">
+                          <!-- <label>Admin</label> -->
+                          <a ng-href="{{nav.metricsSpringBootAdminUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Administration</a>
                         </div>
                       </div>
                     </li>

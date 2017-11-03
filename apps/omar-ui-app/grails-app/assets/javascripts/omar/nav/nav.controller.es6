@@ -54,6 +54,9 @@
     vm.metricsKibanaUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
     vm.metricsKibanaEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.enabled;
 
+    vm.metricsSpringBootAdminUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.baseUrl;
+    vm.metricsSpringBootAdminEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.enabled;
+
     // Show/hide the About dropdown menu
     vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
 

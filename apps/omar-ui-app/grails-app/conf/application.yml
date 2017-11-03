@@ -215,7 +215,7 @@ omar:
       baseUrl: http://localhost/o2-docs
       enabled: true
     misc:
-      javascriptDebug: false
+      javascriptDebug: true
       splashModal:
         header: "O2 Notice"
         message: "Welcome to the O2 image discovery and analysis application."
@@ -252,6 +252,9 @@ omar:
             enabled: true
           kibana:
             baseUrl: http://kibana.ossim.io
+            enabled: true
+          springBootAdmin:
+            baseUrl: http://omar-dev.ossim.io/omar-admin-server
             enabled: true
         user:
           enabled: true # hide/show the Metrics Admin section

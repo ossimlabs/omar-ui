@@ -254,7 +254,7 @@ omar:
             baseUrl: http://kibana.ossim.io
             enabled: true
           springBootAdmin:
-            baseUrl: http://omar-dev.ossim.io/omar-admin-server
+            baseUrl: https://omar-dev.ossim.io/omar-admin-server
             enabled: true
         user:
           enabled: true # hide/show the Metrics Admin section

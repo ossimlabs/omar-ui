@@ -215,7 +215,7 @@ omar:
       baseUrl: http://localhost/o2-docs
       enabled: true
     misc:
-      javascriptDebug: true
+      javascriptDebug: false
       splashModal:
         header: "O2 Notice"
         message: "Welcome to the O2 image discovery and analysis application."

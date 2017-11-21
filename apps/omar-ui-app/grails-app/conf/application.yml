@@ -269,6 +269,15 @@ classificationBanner:
   #classificationType: Secret // NOFORN
     # backgroundColor: yellow
     # classificationType: Top Secret
+
+# If page banner is needed, set it here
+# Optional
+# banner:
+#    backgroundColor: darkgray
+#    description: This application is subject to change without notice.
+#    text: BETA
+#    textColor: white
+#    enabled: true
 ---
 logging:
   config: classpath:logback.groovy

@@ -72,7 +72,7 @@
 
             wfsBaseUrl = stateService.omarSitesState.url.base;
             wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
-            wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs?';
+            wfsRequestUrl = wfsBaseUrl + wfsContextPath + '/wfs';
             vm.wfsRequestUrl = wfsRequestUrl;
 
             tlvBaseUrl = stateService.omarSitesState.url.base;

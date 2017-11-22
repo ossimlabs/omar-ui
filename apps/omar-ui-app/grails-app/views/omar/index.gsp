@@ -45,8 +45,8 @@
             </li>
             <li class="nav-title-left" ng-bind-html="nav.titleLeft" style="cursor:default"></li>
           </ul>
-          <ul>
-            <div class="release-field" ng-show="${grailsApplication.config.banner.enabled}">${grailsApplication.config.banner.text}</div>
+          <ul class="nav navbar-nav" ng-show="${grailsApplication.config.banner.enabled}">
+            <div class="release-field">${grailsApplication.config.banner.text}</div>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <!-- Current user -->

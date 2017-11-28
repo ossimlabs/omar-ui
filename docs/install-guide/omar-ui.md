@@ -1,8 +1,5 @@
 # OMAR UI
 
-## Source Location
-[https://github.com/ossimlabs/omar-ui](https://github.com/ossimlabs/omar-ui)
-
 ## Purpose
 The OMAR UI Service provides a user entry point for image analysis in the system. The UI provides a set of web pages and map views that expose the various OMAR functions the user via search boxes, sliders, maps, etc.
 

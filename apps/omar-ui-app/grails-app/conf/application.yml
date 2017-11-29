@@ -1,4 +1,296 @@
 ---
+# If there a page banner is needed, set it here
+banner:
+   backgroundColor: darkgray
+   description: This application is subject to change without notice.
+   text: BETA
+   textColor: white
+   enabled: true
+
+classificationBanner:
+  # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
+  # For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
+  backgroundColor: green
+
+  # This is the string displayed in the banners.
+  # So setting to "My Secret Stuff" would print that string at the top and bottom of every page with a background color identified by the "backgroundColor" field
+  classificationType: Unclassified
+
+logging:
+  config: classpath:logback.groovy
+
+omar:
+  openlayers:
+    # Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app.
+    # If you do not have this field specified in the application YAML it will use the default layer.
+    # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
+    baseMaps:
+      -
+        layerType: "tilewms"
+        title: "OSM Basic"
+        url: "${serverProtocol}://${serverName}/omar-mapproxy/service"
+        params:
+          layers: "o2-basemap-basic"
+          format: "image/jpeg"
+        options:
+          visible: true
+    # Uncomment the example below, and modify to add a custom overlay layer.
+    overlayLayers:
+      #-
+        #layerType: "tilewms"
+        #title: "DGI"
+        #url: "${serverProtocol}://${serverName}/geoscript-app/evwhs/wms"
+        #params:
+          #filter: ""
+          #version: "1.3.0"
+          #layers: ""
+          #styles: ""
+          #format: "image/png"
+        #options:
+          #visible: false
+  app:
+    userInfo:
+      # Configurable request header name parameter
+      requestHeaderUserName: username
+
+      # Configurable default name for the request header user (Default: Anonymous).
+      # Used if no name is found in PKI cert.
+      requestHeaderUserNameDefault: Anonymous
+    footprints:
+      # Misc. params for the wfs request
+      params:
+        # Name for the footprint layer.
+        # Shows up in UI's layerswitcher.
+        name: "Image Footprints"
+
+        # WFS version number
+        version: '1.1.1'
+
+        # Layer name
+        layers: 'omar:raster_entry'
+
+        # Styling for the footprint layer.
+        # Choices are "byFileType", "bySensorType", "byMissionType"
+        styles: 'byFileType'
+
+        # Image format
+        format: 'image/gif'
+    apiApp:
+      # URL of aggregated API's for O2 services
+      baseUrl: http://localhost:8081/api
+
+      # Used to show/hide the API link on the O2 home page (True or False )
+      enabled: false
+    isaApp:
+      # Used to show/hide the export to ISA app link in the UI (True or False)
+      enabled: true
+    tlvApp:
+      # Used to show/hide the various links to the TLV app in the UI (True or False)
+      enabled: true
+    twofishes:
+      # URL of Twofishes search service.
+      # Used for geocoding place names
+      baseUrl: ${serverProtocol}://${serverName}/twofishes
+
+      # Context for the Twofishes search service
+      proxy: /twoFishesProxy
+    kmlApp:
+      enabled: true
+    jpipApp:
+      # Used to show/hide the JPIP buttons in the UI (True or False)
+      enabled: true
+    piwikApp:
+      # Used to show/hide the PIWIK app link on the O2 home page (True or False )
+      enabled: false
+    userGuide:
+      # URL of the userGuide
+      baseUrl: ${serverProtocol}://${serverName}/omar-docs/
+
+      # Used to show/hide the user guide links
+      enabled: true
+
+    # Base settings for the O2 UI general configuration
+    misc:
+      # Allows logging for javascript
+      javascriptDebug: false
+
+      # Configurable splash menu that opens upon application start up
+      splashModal:
+        # Splash modal header text
+        header: "O2 Notice"
+
+        # Splash modal message body text
+        message: "Welcome to the O2 image discovery and analysis application."
+        delay: 1000
+
+        # Used to enable/disable the splash modal from displaying
+        enabled: true
+
+      # Enable BE number lookups in the search field.
+      beLookupEnabled: false
+
+      # The placemarks uses the WFS query engine to query placemark locations based on BE numbers.
+      #placemarks:
+        # Namespace and table name where the BE's are stored and is a WFS tableId entry.
+        #tableName: omar:cities
+
+        # The table column with the BE list
+        #columnName: city_name
+
+        # The spatial column in the BE table
+        #geomName: geom
+
+        # The maximum number of BE items to return in a query
+        #maxResults: 100
+      icons:
+        greenMarker: assets/search_marker_green.png
+
+      # Display or hide the refresh button in the Sort menu.
+      listRefreshButtonVisible: true
+
+      # Used to limit the number of items to paginate through.
+      totalPaginationCount: 1000
+
+      # Used to identify the number of items to show per page.
+      pageLimit: 10
+
+      # Message of The Display Banner settings
+      motd:
+        # Text for the message of the day
+        message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
+
+        # Used to show/hide the message of the day banner
+        enabled: true
+
+      # About dropdown settings
+      about:
+        # Optional about message
+        message: "O2 | Image Discovery and Analysis"
+
+        # O2 release name
+        releaseName: Egmont Key
+
+        # O2 release version number
+        releaseNumber: 2.1.3
+
+        # Used to show/hide the About dropdown
+        enabled: true
+
+      # Metrics dropdown menu settings
+      metrics:
+        # Used to show/hide the Metrics dropdown menu in the UI
+        enabled: true
+
+        # Settings for the Admin section of the metrics dropdown
+        admin:
+          # hide/show the Metrics Admin section
+          enabled: true
+
+          # The baseUrl below is a placeholder until we get Hystrix and Turbine working
+          hystrixTurbine:
+            # URL of the Hystrix and Turbine page
+            baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
+
+            # Used to show/hide the Real-time Insight/System Behavior button
+            enabled: true
+
+          # The baseUrl below is a placeholder until we get Sleuth and Zipkin working
+          sleuthZipkin:
+            # URL of the Sleuth and Zipkin page
+            baseUrl: https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
+
+            # Used to show/hide the Distributed Tracing button
+            enabled: true
+
+          # Kibana dashboard settings
+          kibana:
+            # URL of the Kibana dashboard
+            baseUrl: http://kibana.ossim.io
+
+            # Used to show/hide the Dashboard button
+            enabled: true
+
+          # Spring Boot Admin settings
+          springBootAdmin:
+            # URL of the Spring Boot Admin
+            baseUrl: ${serverProtocol}://${serverName}/omar-admin-server/#/
+
+            # Used to show/hide the SBA button
+            enabled: true
+
+        # Settings for the User section of the metrics dropdown
+        user:
+          # Used to show/hide the User section of the metrics dropdown
+          enabled: true
+          eureka:
+            # URL of the Eureka server used to show system status
+            baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
+
+            # Used to show/hide the Service Health & Status button
+            enabled: true
+
+---
+omar:
+  app:
+    sites:
+      -
+        info:
+          # Short name for the omar site
+          name: OMAR-DEV
+
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: OMAR Development Server (Unclassified)
+        url:
+          # Base URL for the federated site
+          base: ${serverProtocol}://${serverName}
+
+          # Optional context path for the UI
+          # uiContextPath: /omar-ui
+
+          # Optional context path for the WFS
+          # wfsContextPath: /omar-wfs
+
+          # Optional context path for the WMS
+          # wmsContextPath: /omar-wms
+
+          # Optional context path for OMS
+          # omsContextPath: /omar-oms # Used for imageSpace, thumbnails
+
+          # Optional context path for geoscript
+          # geoscriptContextPath: /omar-geoscript # Used for footprints
+
+          # Optional context path for Avro Metadata
+          # avroMetadataContextPath: /omar-avro-metadata
+
+          # Optional context path for Mensa
+          # mensaContextPath: /omar-mensa
+
+          # Optional context path for Stager
+          # stagerContextPath: /omar-stager
+
+          # Optional context path for Download
+          # downloadContextPath: /omar-download
+
+          # Optional context path for KML Superoverlay
+          # kmlContextPath: /omar-superoverlay
+
+          # Optional context path for JPIP
+          # jpipContextPath: /omar-jpip
+
+          # Optional context path for WMTS
+          # wmtsContextPath: /omar-wmts
+
+          # Optional context path for TLV UI
+          # tlvContextPath: /tlv
+
+          # Optional context path for ISA UI
+          # isaContextPath: /isa-ui
+
+# Set the context path for the application.
+#server:
+#  contextPath: /omar-ui
+
+---
 grails:
     cors:
       enabled: true
@@ -146,138 +438,3 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
----
-# Client params
-omar:
-  openlayers:
-    baseMaps:
-      -
-        layerType: "tilewms"
-        title: "OSM Basic"
-        url: "https://omar-dev.ossim.io/omar-mapproxy/service"
-        params:
-          layers: "o2-basemap-basic"
-          format: "image/jpeg"
-        options:
-          visible: true
-    # Uncomment the example below, and modify to add
-    # a custom overlay layer
-    overlayLayers:
-      # -
-      #   layerType: "tilewms"
-      #   title: "DGI"
-      #   url: "${serverProtocol}://${serverName}/geoscript-app/evwhs/wms"
-      #   params:
-      #     filter: ""
-      #     version: "1.3.0"
-      #     layers: ""
-      #     styles: ""
-      #     format: "image/png"
-      #   options:
-      #     visible: false
-  app:
-    userInfo:
-      requestHeaderUserName: username
-      requestHeaderUserNameDefault: Anonymous
-    sites:
-      -
-        info:
-          name: OMAR-LOCAL
-          description: OMAR Local Server (Unclassified)
-        url:
-          base: http://localhost
-    footprints:
-      params: # misc params for the wfs request
-        name: "Image Footprints"
-        version: '1.1.1'
-        layers: 'omar:raster_entry'
-        styles: 'byFileType'
-#        styles: 'bySensorType'
-#        styles: 'byMissionType'
-        format: 'image/gif'
-    apiApp:
-      baseUrl: http://localhost:8081/api
-      enabled: true
-    isaApp:
-      enabled: true
-    tlvApp:
-      enabled: true
-    twofishes:
-      baseUrl: https://omar-dev.ossim.io/twofishes
-      proxy: /twoFishesProxy
-    kmlApp:
-      enabled: true
-    jpipApp:
-      enabled: false
-    piwikApp:
-      enabled: false
-    userGuide:
-      baseUrl: http://localhost/o2-docs
-      enabled: true
-    misc:
-      javascriptDebug: false
-      splashModal:
-        header: "O2 Notice"
-        message: "Welcome to the O2 image discovery and analysis application."
-        delay: 1000
-        enabled: true
-      beLookupEnabled: false
-      # placemarks:
-      #   tableName: omar:cities
-      #   columnName: city_name
-      #   geomName: geom
-      #   maxResults: 100
-      icons:
-        greenMarker: assets/search_marker_green.png
-      listRefreshButtonVisible: true
-      totalPaginationCount: 1000
-      pageLimit: 10
-      motd:
-        message: Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!
-        enabled: true
-      about:
-        enabled: true
-        message: "O2 | Image Discovery and Analysis"
-        releaseName: Egmont Key
-        releaseNumber: 2.1.0
-      metrics: # Metrics Dropdown Menu settings
-        enabled: true
-        admin:
-          enabled: true # hide/show the Metrics Admin section
-          hystrixTurbine: # The baseUrl below is a placeholder until we get Hystrix and Turbine working
-            baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
-            enabled: true
-          sleuthZipkin: # The baseUrl below is a placeholder until we get Sleuth and Zipkin working
-            baseUrl: https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
-            enabled: true
-          kibana:
-            baseUrl: http://kibana.ossim.io
-            enabled: true
-          springBootAdmin:
-            baseUrl: https://omar-dev.ossim.io/omar-admin-server
-            enabled: true
-        user:
-          enabled: true # hide/show the Metrics Admin section
-          eureka:
-            baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
-            enabled: true
----
-classificationBanner:
-  backgroundColor: green
-  classificationType: Unclassified
-  #backgroundColor: red
-  #classificationType: Secret // NOFORN
-    # backgroundColor: yellow
-    # classificationType: Top Secret
-
-# If page banner is needed, set it here
-# Optional
-# banner:
-#    backgroundColor: darkgray
-#    description: This application is subject to change without notice.
-#    text: BETA
-#    textColor: white
-#    enabled: true
----
-logging:
-  config: classpath:logback.groovy

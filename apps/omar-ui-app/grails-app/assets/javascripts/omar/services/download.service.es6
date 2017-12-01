@@ -35,12 +35,13 @@
             'archiveOptions': {
                 'type': 'zip'
             },
-            'fileGroups': [
-                {
-                    'rootDirectory': '',
-                    'files': ['']
-                }
-            ]
+            'ids':[]
+//            'fileGroups': [
+//                {
+//                    'rootDirectory': '',
+//                    'files': ['']
+//                }
+//            ]
         };
 
         this.downloadFiles = function(imageId) {
@@ -48,18 +49,25 @@
           downloadManager = downloadRequestUrl;
           dataManager = stagerRequestUrl;
 
+          var idList = [];
             if (!imageId) {
                 imageLayerIds = $stateParams.layers.split(',');
                 imageId = imageLayerIds[0];
+                idList  = imageLayerIds;
+            }
+            else
+            {
+                idList = [imageId];
             }
 
-
-            var url = dataManager + '/dataManager/getRasterFiles?id=' + imageId;
+//            var url = dataManager + '/dataManager/getRasterFiles?id=' + imageId;
             var dm = downloadManager + '/archive/download';
 
-            $http({method: 'GET', url: url}).then(function(response) {
-                if (response.data.results.length > 0) {
-                    data.fileGroups[0].files = response.data.results;
+//            $http({method: 'GET', url: url}).then(function(response) {
+//                if (response.data.results.length > 0) {
+//                    data.fileGroups[0].files = response.data.results;
+
+                    data.ids = idList;
 
                     $.fileDownload(dm, {
                         httpMethod: 'POST',
@@ -90,19 +98,19 @@
                             });
                         }
                     });
-                } else {
-                    toastr.error('No files available to download.');
-                }
-            }, function error(response) {
-                toastr.error('Unable to download files.', {
-                    positionClass: 'toast-bottom-left',
-                    closeButton: true,
-                    timeOut: 10000,
-                    extendedTimeOut: 5000,
-                    target: 'body'
-                });
-                console.log('failed', response); // Supposed to have: data, status, headers, config, statusText
-            });
+//                  } else {
+//                    toastr.error('No files available to download.');
+//                }
+ //           }, function error(response) {
+ //               toastr.error('Unable to download files.', {
+ //                   positionClass: 'toast-bottom-left',
+ //                   closeButton: true,
+ //                   timeOut: 10000,
+ //                   extendedTimeOut: 5000,
+ //                   target: 'body'
+ //               });
+ //               console.log('failed', response); // Supposed to have: data, status, headers, config, statusText
+ //           });
         };
     }
 })();

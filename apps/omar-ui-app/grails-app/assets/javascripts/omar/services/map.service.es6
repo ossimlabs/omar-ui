@@ -318,21 +318,28 @@ function mapService(stateService, wfsService, $timeout) {
     // Takes a layer obj, and adds
     // the layer to the overlay layers array.
     function addOverlayLayers(layerObj) {
+        var params = {};
+        $.each(
+            layerObj.params,
+            function(key, value ) {
+                if ( value.search( /javascript:/ ) > -1 ) {
+                    value = new Function( value.replace( /javascript:/g, "" ) )();
+                }
+                params[ key ] = value;
+            }
+        );
 
       var overlayMapLayer = new ol.layer.Tile({
         title: layerObj.title,
         visible: layerObj.options.visible,
         source: new ol.source.TileWMS({
           url: layerObj.url,
-          params: {
-              FILTER: layerObj.params.filter,
-              VERSION: layerObj.params.version,
-              LAYERS: layerObj.params.layers,
-              STYLES: layerObj.params.styles,
-              FORMAT: layerObj.params.format,
-          }
+          params: params
         })
       });
+
+
+
       overlayGroup.getLayers().push(overlayMapLayer);
     }
 

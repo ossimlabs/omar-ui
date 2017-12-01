@@ -159,7 +159,7 @@
 
             return $http({
                 method: 'GET',
-                url: wfsUrl + "filter=" + encodeURIComponent("filename LIKE '" + filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
+                url: wfsUrl + "?filter=" + encodeURIComponent("filename LIKE '" + filename + "'") + "&outputFormat=JSON" + "&request=GetFeature" + "&service=WFS" + "&typeName=omar:raster_entry" + "&version=1.1.0"
 
             }).then(function(response) {
 

@@ -246,10 +246,10 @@ omar:
         message: "O2 | Image Discovery and Analysis"
 
         # O2 release name
-        releaseName: Egmont Key
+        releaseName: Fory Myers
 
         # O2 release version number
-        releaseNumber: 2.1.3
+        releaseNumber: 2.2.0
 
         # Used to show/hide the About dropdown
         enabled: true

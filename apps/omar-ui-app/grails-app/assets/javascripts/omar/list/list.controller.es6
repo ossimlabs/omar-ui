@@ -16,8 +16,56 @@
         '$log',
         ListController
     ]);
-
-    function ListController(stateService, wfsService, shareService, downloadService, jpipService, $stateParams, toastr, $uibModal, mapService, avroMetadataService, $scope, $http, $log) {
+/**
+ *
+ *
+ * @param {any} stateService
+ * @param {any} wfsService
+ * @param {any} shareService
+ * @param {any} downloadService
+ * @param {any} jpipService
+ * @param {any} $stateParams
+ * @param {any} toastr
+ * @param {any} $uibModal
+ * @param {any} mapService
+ * @param {any} avroMetadataService
+ * @param {any} $scope
+ * @param {any} $http
+ * @param {any} $log
+/**
+ *
+ *
+ * @param {any} stateService
+ * @param {any} wfsService
+ * @param {any} shareService
+ * @param {any} downloadService
+ * @param {any} jpipService
+ * @param {any} $stateParams
+ * @param {any} toastr
+ * @param {any} $uibModal
+ * @param {any} mapService
+ * @param {any} avroMetadataService
+ * @param {any} $scope
+ * @param {any} $http
+ * @param {any} $log
+/**
+ *
+ *
+ * @param {any} stateService
+ * @param {any} wfsService
+ * @param {any} shareService
+ * @param {any} downloadService
+ * @param {any} jpipService
+ * @param {any} $stateParams
+ * @param {any} toastr
+ * @param {any} $uibModal
+ * @param {any} mapService
+ * @param {any} avroMetadataService
+ * @param {any} $scope
+ * @param {any} $http
+ * @param {any} $log
+ */
+function ListController(stateService, wfsService, shareService, downloadService, jpipService, $stateParams, toastr, $uibModal, mapService, avroMetadataService, $scope, $http, $log) {
 
         // #################################################################################
         // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -282,16 +330,16 @@
 
         };
 
-        // Used to hold the currently selected image cards
+        // Used to hold the currently selected image cards.
         vm.selectedCards = [];
 
-        // Holds the visibility of the selected cards button
+        // Holds the visibility of the selected cards button.
         // It will only be visible if at least one card is
-        // selected
+        // selected.
         vm.showSelectedButton = false;
 
         // This method add or removes selected items from the
-        // selectedCards array
+        // selectedCards array.
         vm.addRemoveCards = (imageId) => {
 
           // Used to find the imageId in the vm.selectedCards
@@ -305,20 +353,16 @@
 
             // If the item is in the vm.selectedCards array we
             // need to remove it because it is already selected.
-            // Now lets unselect it.
+            // Now lets unselect (toggle) it.
             let i = vm.selectedCards.indexOf(imageId);
             if(i != -1) {
-
               vm.selectedCards.splice(i, 1);
-              console.log(vm.selectedCards);
-
             }
 
           } else {
 
             // Restrict the number of selected cards to 10
             if(vm.selectedCards.length >= 10) {
-
               toastr.warning("Maximum number of images have been selected. Please" +
                 " review your selections and choose a maximum of 10", 'Warning:', {
                 positionClass: 'toast-bottom-left',
@@ -332,7 +376,6 @@
             // The imageId is not in the vm.selectedCards array so we
             // need to add it
             vm.selectedCards.push(imageId);
-
           }
 
           // We need to show the selected button if we have one
@@ -354,10 +397,6 @@
 
         vm.downloadSelectedImages = () => {
 
-          // *****************************************
-          // TODO: Wrap in if block to check for items
-          // in the vm.selectedCards array
-          // *****************************************
           if(vm.selectedCards.length >= 1) {
             downloadService.downloadFiles(vm.selectedCards);
             toastr.success("Download started. Please do not close this window" +
@@ -380,13 +419,12 @@
             });
           }
 
-
-
         }
 
         // Remove selected items, and reset the DOM
         vm.clearSelectedImages = () => {
           vm.selectedCards = [];
+          vm.showSelectedButton = false;
         }
 
         vm.getJpipStream = function($event, file, entry, projCode, index, type) {

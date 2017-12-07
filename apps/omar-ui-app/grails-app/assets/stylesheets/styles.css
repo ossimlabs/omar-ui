@@ -361,7 +361,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   width: 15px;
   padding-top: 10px;
   margin-top: -10;
-  background-color: rgba(0,0,0,0.6) !important;
 }
 
 .navbar-sort-list-number {

@@ -690,11 +690,12 @@
           </ul>
           <form class="navbar-form navbar-left navbar-sort-refresh">
             <div class="btn-group" uib-dropdown ng-show="list.showSelectedButton">
-              <button id="btn-append-to-single-button" type="button" class="btn btn-info dropdown-sort-selected" uib-dropdown-toggle>
+              <button id="btn-append-to-single-button" type="button" class="btn btn-success dropdown-sort-selected" uib-dropdown-toggle>
                 <span class="fa fa-cloud-download dropdown-sort-selected-icon"></span>&nbsp;{{list.selectedCards.length}}
               </button>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
                 <li role="menuitem" ng-click="list.downloadSelectedImages()"><a href="">Download Selected</a></li>
+                <li class="divider"></li>
                 <li role="menuitem"ng-click="list.clearSelectedImages()"><a href="">Clear Selected</a></li>
               </ul>
             </div>
@@ -766,16 +767,6 @@
                       {{image.properties.title}}
                     </span>
                   </div>
-                  <!-- <div class="col-md-2"
-                    ng-click="list.addRemoveCards(image.properties.id)">
-                    <i class="fa fa-square-o"
-                      ng-class="{'fa-check-square text-info': list.checkSelectItem(image.properties.id)}"
-                      aria-hidden="true"
-                      style="cursor: pointer;"
-                      tooltip-placement="left"
-                      uib-tooltip="Add image to selected list">
-                    </i>
-                  </div> -->
                 </div>
                 <div class="row">
                   <div class="col-md-12" style="font-size: 13px;">

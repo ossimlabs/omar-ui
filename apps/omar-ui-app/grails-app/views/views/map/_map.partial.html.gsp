@@ -737,14 +737,6 @@
            ng-mouseleave="list.removeFootprint();">
             <div class="media">
               <div class="media-left" style="position: relative">
-                <i class="fa fa-square-o text-success"
-                  style="position: absolute; font-size: 20px; left: 10px; top: 10px; cursor: pointer;"
-                  ng-click="list.addRemoveCards(image.properties.id)"
-                  ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
-                  aria-hidden="true"
-                  tooltip-placement="right"
-                  uib-tooltip="Add image to selected list">
-                </i>
                 <img ng-style="list.thumbBorder(image.properties.file_type)"
                   class="media-object"
                   ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
@@ -759,13 +751,23 @@
               </div>
               <div class="media-body">
                 <div class="row">
-                  <div class="col-md-12" style="font-size: 13px;">
+                  <div class="col-md-10" style="font-size: 13px;">
                     ID:&nbsp;&nbsp;
                     <span ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                       class="text-success image-id-link">
                       <span ng-show="!image.properties.title">Unknown</span>
                       {{image.properties.title}}
                     </span>
+                  </div>
+                  <div class="col-md-2"
+                    ng-click="list.addRemoveCards(image.properties.id)">
+                    <i class="fa fa-square-o"
+                      ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
+                      aria-hidden="true"
+                      style="cursor: pointer;"
+                      tooltip-placement="left-bottom"
+                      uib-tooltip="Add image to selected list">
+                    </i>
                   </div>
                 </div>
                 <div class="row">

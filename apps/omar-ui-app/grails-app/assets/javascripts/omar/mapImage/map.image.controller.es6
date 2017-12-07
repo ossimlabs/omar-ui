@@ -336,7 +336,7 @@
                 'name': 'None',
                 'value': 'none'
             }, {
-                'name': 'Auto Min max',
+                'name': 'Auto Min Max',
                 'value': 'auto-minmax'
             }, {
                 'name': 'Auto Percentile',

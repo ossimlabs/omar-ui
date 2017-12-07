@@ -351,7 +351,7 @@ function ListController(stateService, wfsService, shareService, downloadService,
 
           if(vm.selectedCards.length >= 1) {
             downloadService.downloadFiles(vm.selectedCards);
-            toastr.success("Download started. Please do not close this browser tab" +
+            toastr.success("Download started. Please do not close this browser" +
               " until the download is complete.", 'Success:', {
               positionClass: 'toast-bottom-left',
               closeButton: true,

@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: omar-ui-app
+  namespace: omar-dev
+  selfLink: /oapi/v1/namespaces/omar-dev/deploymentconfigs/omar-ui-app
+  uid: dcf6ce58-82c2-11e7-ba3b-0e704fd9c8b2
+  resourceVersion: '8959266'
+  generation: 228
+  creationTimestamp: '2017-08-16T20:38:30Z'
+  labels:
+    app: omar-openshift
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - omar-ui-app
+        from:
+          kind: ImageStreamTag
+          namespace: o2
+          name: 'omar-ui-app:latest'
+        lastTriggeredImage: >-
+          172.30.181.173:5000/o2/omar-ui-app@sha256:83f1e0325832372a64dd955c3cd5738c4ef45a78b3d22b2a9ac970bf061ae17a
+  replicas: 1
+  test: false
+  selector:
+    app: omar-openshift
+    deploymentconfig: omar-ui-app
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: omar-openshift
+        deploymentconfig: omar-ui-app
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: omar-ui-app
+          image: >-
+            172.30.181.173:5000/o2/omar-ui-app@sha256:83f1e0325832372a64dd955c3cd5738c4ef45a78b3d22b2a9ac970bf061ae17a
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: dev
+            - name: SPRING_CLOUD_CONFIG_LABEL
+              value: master
+          resources: {}
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+status:
+  latestVersion: 222
+  observedGeneration: 228
+  replicas: 1
+  updatedReplicas: 1
+  availableReplicas: 1
+  unavailableReplicas: 0
+  details:
+    message: image change
+    causes:
+      - type: ImageChange
+        imageTrigger:
+          from:
+            kind: ImageStreamTag
+            namespace: o2
+            name: 'omar-ui-app:latest'
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2017-10-31T18:15:52Z'
+      lastTransitionTime: '2017-10-31T18:15:52Z'
+      message: Deployment config has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2017-12-01T21:16:19Z'
+      lastTransitionTime: '2017-12-01T21:16:18Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "omar-ui-app-222" successfully rolled out
+  readyReplicas: 1

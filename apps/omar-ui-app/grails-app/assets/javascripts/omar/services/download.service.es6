@@ -43,51 +43,50 @@
           downloadManager = downloadRequestUrl;
           dataManager = stagerRequestUrl;
 
-          var idList = [];
-            if (!imageId) {
-                imageLayerIds = $stateParams.layers.split(',');
-                imageId = imageLayerIds[0];
-                idList  = imageLayerIds;
-            }
-            else
-            {
-                idList = [imageId];
-            }
+          let idList = [];
 
-            var dm = downloadManager + '/archive/download';
+          if (!imageId) {
+            imageLayerIds = $stateParams.layers.split(',');
+            imageId = imageLayerIds[0];
+            idList  = imageLayerIds;
+          }
+          else {
+            idList = imageId;
+          }
 
+          var dm = downloadManager + '/archive/download';
 
-            data.ids = idList;
+          data.ids = idList;
 
-            $.fileDownload(dm, {
-                httpMethod: 'POST',
-                dataType: 'text',
-                contentType: 'plain/text',
-                data: {
-                    fileInfo: JSON.stringify(data)
-                },
-                successCallback: function(url) {
-                    toastr.success('Files are being downloaded.', {
-                        positionClass: 'toast-bottom-left',
-                        closeButton: true,
-                        timeOut: 10000,
-                        extendedTimeOut: 5000,
-                        target: 'body'
-                    });
-                },
-                failCallback: function(responseHtml, url, error) {
+          $.fileDownload(dm, {
+              httpMethod: 'POST',
+              dataType: 'text',
+              contentType: 'plain/text',
+              data: {
+                  fileInfo: JSON.stringify(data)
+              },
+              successCallback: function(url) {
+                  toastr.success('Files are being downloaded.', {
+                      positionClass: 'toast-bottom-left',
+                      closeButton: true,
+                      timeOut: 10000,
+                      extendedTimeOut: 5000,
+                      target: 'body'
+                  });
+              },
+              failCallback: function(responseHtml, url, error) {
 
-                    //Error will occur if type and archiveOptions type is not specified
+                  //Error will occur if type and archiveOptions type is not specified
 
-                    toastr.error('Unable to download with URL = ' + url, {
-                        positionClass: 'toast-bottom-left',
-                        closeButton: true,
-                        timeOut: 10000,
-                        extendedTimeOut: 5000,
-                        target: 'body'
-                    });
-                }
-            });
+                  toastr.error('Unable to download with URL = ' + url, {
+                      positionClass: 'toast-bottom-left',
+                      closeButton: true,
+                      timeOut: 10000,
+                      extendedTimeOut: 5000,
+                      target: 'body'
+                  });
+              }
+          });
         };
     }
 })();

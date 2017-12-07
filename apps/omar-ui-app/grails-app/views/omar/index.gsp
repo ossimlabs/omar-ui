@@ -149,7 +149,7 @@
             </div>
           </div>
         </script>
-      </div
+      </div>
 
     </div>
     <o2:classificationBanner position="bottom" />

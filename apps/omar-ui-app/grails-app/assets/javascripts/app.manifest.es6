@@ -34,6 +34,7 @@
 //= require omar/core/geopoint.js
 //= require omar/core/mgrs.js
 //= require omar/core/fileDownload.js
+//= require omar/core/array.prototype.find.js
 //= require omar/app.module.main.es6
 
 // <--Services-->

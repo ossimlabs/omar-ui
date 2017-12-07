@@ -203,20 +203,6 @@
       return true;
     }
 
-    // TODO: Use this to refactor the updateSitesAppState function
-    //
-    // function iterate(obj) {
-    //   for (var property in obj) {
-    //       if (obj.hasOwnProperty(property)) {
-    //           if (typeof obj[property] == "object")
-    //               iterate(obj[property]);
-    //           else
-    //               console.log(property + "   " + obj[property]);
-    //       }
-    //   }
-    // }
-    // iterate(omarSitesState);
-
     var mapState = {
       center: {
         lat: 0,
@@ -237,7 +223,8 @@
             lng: undefined
           }
         }
-      }
+      },
+      featureIds: []
     };
 
     _this.mapState = mapState;

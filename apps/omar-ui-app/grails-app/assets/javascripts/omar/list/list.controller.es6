@@ -16,55 +16,7 @@
         '$log',
         ListController
     ]);
-/**
- *
- *
- * @param {any} stateService
- * @param {any} wfsService
- * @param {any} shareService
- * @param {any} downloadService
- * @param {any} jpipService
- * @param {any} $stateParams
- * @param {any} toastr
- * @param {any} $uibModal
- * @param {any} mapService
- * @param {any} avroMetadataService
- * @param {any} $scope
- * @param {any} $http
- * @param {any} $log
-/**
- *
- *
- * @param {any} stateService
- * @param {any} wfsService
- * @param {any} shareService
- * @param {any} downloadService
- * @param {any} jpipService
- * @param {any} $stateParams
- * @param {any} toastr
- * @param {any} $uibModal
- * @param {any} mapService
- * @param {any} avroMetadataService
- * @param {any} $scope
- * @param {any} $http
- * @param {any} $log
-/**
- *
- *
- * @param {any} stateService
- * @param {any} wfsService
- * @param {any} shareService
- * @param {any} downloadService
- * @param {any} jpipService
- * @param {any} $stateParams
- * @param {any} toastr
- * @param {any} $uibModal
- * @param {any} mapService
- * @param {any} avroMetadataService
- * @param {any} $scope
- * @param {any} $http
- * @param {any} $log
- */
+
 function ListController(stateService, wfsService, shareService, downloadService, jpipService, $stateParams, toastr, $uibModal, mapService, avroMetadataService, $scope, $http, $log) {
 
         // #################################################################################
@@ -399,8 +351,8 @@ function ListController(stateService, wfsService, shareService, downloadService,
 
           if(vm.selectedCards.length >= 1) {
             downloadService.downloadFiles(vm.selectedCards);
-            toastr.success("Download started. Please do not close this window" +
-              " until the download is complete", 'Success:', {
+            toastr.success("Download started. Please do not close this browser tab" +
+              " until the download is complete.", 'Success:', {
               positionClass: 'toast-bottom-left',
               closeButton: true,
               timeOut: 10000,

@@ -7,6 +7,7 @@
         'downloadService',
         'jpipService',
         '$stateParams',
+        'toastr',
         '$uibModal',
         'mapService',
         'avroMetadataService',
@@ -16,7 +17,7 @@
         ListController
     ]);
 
-    function ListController(stateService, wfsService, shareService, downloadService, jpipService, $stateParams, $uibModal, mapService, avroMetadataService, $scope, $http, $log) {
+    function ListController(stateService, wfsService, shareService, downloadService, jpipService, $stateParams, toastr, $uibModal, mapService, avroMetadataService, $scope, $http, $log) {
 
         // #################################################################################
         // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -280,6 +281,113 @@
             mapService.mapRemoveImageFootprint();
 
         };
+
+        // Used to hold the currently selected image cards
+        vm.selectedCards = [];
+
+        // Holds the visibility of the selected cards button
+        // It will only be visible if at least one card is
+        // selected
+        vm.showSelectedButton = false;
+
+        // This method add or removes selected items from the
+        // selectedCards array
+        vm.addRemoveCards = (imageId) => {
+
+          // Used to find the imageId in the vm.selectedCards
+          // array
+          // -------------------------------------------------
+          // Note: omar/core/array.prototype.js is used as a
+          // a polyfill for the .find array method below. It
+          // is needed for IE. Boo...
+          // -------------------------------------------------
+          if (vm.selectedCards.find(num => imageId === num)) {
+
+            // If the item is in the vm.selectedCards array we
+            // need to remove it because it is already selected.
+            // Now lets unselect it.
+            let i = vm.selectedCards.indexOf(imageId);
+            if(i != -1) {
+
+              vm.selectedCards.splice(i, 1);
+              console.log(vm.selectedCards);
+
+            }
+
+          } else {
+
+            // Restrict the number of selected cards to 10
+            if(vm.selectedCards.length >= 10) {
+
+              toastr.warning("Maximum number of images have been selected. Please" +
+                " review your selections and choose a maximum of 10", 'Warning:', {
+                positionClass: 'toast-bottom-left',
+                closeButton: true,
+                timeOut: 10000,
+                extendedTimeOut: 5000,
+                target: 'body'
+              });
+              return;
+            }
+            // The imageId is not in the vm.selectedCards array so we
+            // need to add it
+            vm.selectedCards.push(imageId);
+
+          }
+
+          // We need to show the selected button if we have one
+          // or more image cards selected
+          if(vm.selectedCards.length >= 1) {
+            vm.showSelectedButton = true;
+          } else {
+            vm.showSelectedButton = false;
+          }
+
+        }
+
+        // Used for styling on the card checkbox icon.  It
+        // looks in the selectedCards array and adds the
+        // appropriate icon if it is contained in the array
+        vm.checkSelectItem = (imageId) => {
+          return $.inArray(imageId, vm.selectedCards) > -1;
+        }
+
+        vm.downloadSelectedImages = () => {
+
+          // *****************************************
+          // TODO: Wrap in if block to check for items
+          // in the vm.selectedCards array
+          // *****************************************
+          if(vm.selectedCards.length >= 1) {
+            downloadService.downloadFiles(vm.selectedCards);
+            toastr.success("Download started. Please do not close this window" +
+              " until the download is complete", 'Success:', {
+              positionClass: 'toast-bottom-left',
+              closeButton: true,
+              timeOut: 10000,
+              extendedTimeOut: 5000,
+              target: 'body'
+            });
+          }
+          else {
+            toastr.error("An error has occurred.  Please try your" +
+              " your selection again", 'Error:', {
+              positionClass: 'toast-bottom-left',
+              closeButton: true,
+              timeOut: 10000,
+              extendedTimeOut: 5000,
+              target: 'body'
+            });
+          }
+
+
+
+        }
+
+        // Remove selected items, and reset the DOM
+        vm.clearSelectedImages = () => {
+          vm.selectedCards = [];
+        }
 
         vm.getJpipStream = function($event, file, entry, projCode, index, type) {
             vm.showProcessInfo[index] = true;

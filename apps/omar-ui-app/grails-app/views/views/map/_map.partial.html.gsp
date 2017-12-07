@@ -652,7 +652,7 @@
         <div class="collapse navbar-collapse" id="sort-navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+              <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" role="button"
                aria-haspopup="true" aria-expanded="false">
                {{list.currentSortText}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -673,7 +673,7 @@
               </ul>
             </li>
             <li class="dropdown nav-download">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Export
+              <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Export
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">
@@ -688,16 +688,25 @@
               </ul>
             </li>
           </ul>
-          <form class="navbar-form navbar-left navbar-sort-refresh" ng-show="list.listRefreshButtonVisible">
-            <button class="btn btn-primary button-sort-refresh"
-              ng-click="list.refreshList()"
-              tooltip-placement="bottom"
-              uib-tooltip="Refresh the image list data">
-                <span class="fa fa-refresh" ng-class="{'fa-spin fa-pulse': list.refreshSpin}"></span>
-            </button>
+          <form class="navbar-form navbar-left navbar-sort-refresh">
+            <div class="btn-group" uib-dropdown ng-show="list.showSelectedButton">
+              <button id="btn-append-to-single-button" type="button" class="btn btn-info dropdown-sort-selected" uib-dropdown-toggle>
+                <span class="fa fa-cloud-download dropdown-sort-selected-icon"></span>&nbsp;{{list.selectedCards.length}}
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
+                <li role="menuitem" ng-click="list.downloadSelectedImages()"><a href="">Download Selected</a></li>
+                <li role="menuitem"ng-click="list.clearSelectedImages()"><a href="">Clear Selected</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-primary button-sort-refresh" ng-show="list.listRefreshButtonVisible"
+            ng-click="list.refreshList()"
+            tooltip-placement="bottom"
+            uib-tooltip="Refresh the image list data">
+              <span class="fa fa-refresh" ng-class="{'fa-spin fa-pulse': list.refreshSpin}"></span>
+          </button>
           </form>
           <p class="navbar-text pull-right navbar-sort-list-number">
-          <span class="label label-primary" ng-class="{'label-info': list.refreshSpin}">{{list.wfsFeatures}}</span>
+            <span class="label label-primary" ng-class="{'label-info': list.refreshSpin}">{{list.wfsFeatures}}</span>
           </p>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -718,9 +727,6 @@
             appropriate extent for your search.</p>
         </div>
       </div>
-      <!-- <div ng-show="list.wfsData.length >= 1"
-       ng-repeat="image in list.wfsData.slice(((list.currentStartIndex-1)*list.itemsPerPage), ((list.currentStartIndex)*list.itemsPerPage))" ng-init="list.showProcessInfo=[]"
-       ng-model="image"> -->
       <div ng-show="list.wfsFeatures >= 1"
         ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
         ng-model="image">
@@ -729,7 +735,15 @@
            ng-mouseenter="list.displayFootprint(image);"
            ng-mouseleave="list.removeFootprint();">
             <div class="media">
-              <div class="media-left">
+              <div class="media-left" style="position: relative">
+                <i class="fa fa-square-o text-success"
+                  style="position: absolute; font-size: 20px; left: 10px; top: 10px; cursor: pointer;"
+                  ng-click="list.addRemoveCards(image.properties.id)"
+                  ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
+                  aria-hidden="true"
+                  tooltip-placement="right"
+                  uib-tooltip="Add image to selected list">
+                </i>
                 <img ng-style="list.thumbBorder(image.properties.file_type)"
                   class="media-object"
                   ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
@@ -752,6 +766,16 @@
                       {{image.properties.title}}
                     </span>
                   </div>
+                  <!-- <div class="col-md-2"
+                    ng-click="list.addRemoveCards(image.properties.id)">
+                    <i class="fa fa-square-o"
+                      ng-class="{'fa-check-square text-info': list.checkSelectItem(image.properties.id)}"
+                      aria-hidden="true"
+                      style="cursor: pointer;"
+                      tooltip-placement="left"
+                      uib-tooltip="Add image to selected list">
+                    </i>
+                  </div> -->
                 </div>
                 <div class="row">
                   <div class="col-md-12" style="font-size: 13px;">

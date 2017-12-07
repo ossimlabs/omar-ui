@@ -131,6 +131,12 @@
                 // $timeout needed: http://stackoverflow.com/a/18996042
                 $timeout(function() {
                     $rootScope.$broadcast('wfs: updated', data);
+
+                    const imageIdArray = data.map((image) => image.properties.id);
+
+                    stateService.mapState.featureIds = imageIdArray;
+                    //console.log('featureIds: ', stateService.mapState.featureIds);
+
                 });
             });
 

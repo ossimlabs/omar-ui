@@ -2,6 +2,7 @@
     'use strict';
     angular.module('omarApp').controller('WFSOutputDlController', [
         'stateService',
+        'downloadService',
         'wfsService',
         '$http',
         'mapService',
@@ -11,7 +12,7 @@
         WFSOutputDlController
     ]);
 
-    function WFSOutputDlController(stateService, wfsService, $http, mapService, $scope, toastr, $window) {
+    function WFSOutputDlController(stateService, downloadService, wfsService, $http, mapService, $scope, toastr, $window) {
 
         var vm = this;
 
@@ -41,7 +42,7 @@
 
         $scope.$on('omarSitesState.updated', function(event, params) {
 
-            setWFSOutputDlControllerUrlProps();
+          setWFSOutputDlControllerUrlProps();
 
         });
 
@@ -55,7 +56,7 @@
         };
 
         $scope.$on('attrObj.updated', function(event, response) {
-            vm.attrFilter = response;
+          vm.attrFilter = response;
         });
 
         // Shows/Hides the ISA button based on parameters passed down from application.yml

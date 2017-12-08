@@ -143,7 +143,7 @@ dependencies {
 
   compile "org.springframework.cloud:spring-cloud-starter-config"
   compile "org.springframework.cloud:spring-cloud-starter-eureka"
-  compile "org.springframework.cloud:spring-cloud-starter-zipkin"
+  //compile "org.springframework.cloud:spring-cloud-starter-zipkin"
 
   compile "net.errbuddy.plugins:babel-asset-pipeline:2.1.0"
 

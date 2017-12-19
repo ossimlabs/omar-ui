@@ -44,7 +44,7 @@ ext {
 }
 
 assets {
-  minifyJs = true
+  minifyJs = false
   minifyCss = true
   includes = ["**/fonts/**"]
   excludes = [

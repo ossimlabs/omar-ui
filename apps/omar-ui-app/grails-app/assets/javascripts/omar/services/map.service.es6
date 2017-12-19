@@ -346,18 +346,23 @@ function mapService(stateService, wfsService, $timeout) {
             }
         );
 
+    var source;
+    if ( layerObject.layerType.toLowerCase() == "imagewms" ) {
+        source = new ol.source.ImageWMS({
+            url: layerObj.url,
+            params: params
+        });
+    }
+    else {
+        source = new ol.source.TileWMS({
+            url: layerObj.url,
+            params: params
+        });
+    }
       var overlayMapLayer = new ol.layer.Tile({
         title: layerObj.title,
         visible: layerObj.options.visible,
-        source: layerObj.layerType.toLowerCase() == "imagewms" ?
-            new ol.source.ImageWMS({
-                url: layerObj.url,
-                params: params
-            }) :
-            new ol.source.TileWMS({
-                url: layerObj.url,
-                params: params
-            })
+        source: source
       });
 
 

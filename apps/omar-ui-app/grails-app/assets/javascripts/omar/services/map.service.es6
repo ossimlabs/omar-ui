@@ -272,6 +272,23 @@ function mapService(stateService, wfsService, $timeout) {
       var baseMapLayer;
 
       switch (layerObj.layerType.toLowerCase()){
+        case 'imagewms':
+          baseMapLayer = new ol.layer.Image({
+            title: layerObj.title,
+            type: 'base',
+            visible: layerObj.options.visible,
+            source: new ol.source.ImageWMS({
+              url: layerObj.url,
+              params: {
+                'VERSION': '1.1.1',
+                'LAYERS': layerObj.params.layers,
+                'FORMAT': layerObj.params.format
+              },
+                wrapX: false
+            }),
+            name: layerObj.title
+            });
+          break;
         case 'tilewms':
           baseMapLayer = new ol.layer.Tile({
             title: layerObj.title,
@@ -332,10 +349,15 @@ function mapService(stateService, wfsService, $timeout) {
       var overlayMapLayer = new ol.layer.Tile({
         title: layerObj.title,
         visible: layerObj.options.visible,
-        source: new ol.source.TileWMS({
-          url: layerObj.url,
-          params: params
-        })
+        source: layerObj.layerType.toLowerCase() == "imagewms" ?
+            new ol.source.ImageWMS({
+                url: layerObj.url,
+                params: params
+            }) :
+            new ol.source.TileWMS({
+                url: layerObj.url,
+                params: params
+            })
       });
 
 

@@ -37,7 +37,7 @@ omar:
     # Uncomment the example below, and modify to add a custom overlay layer.
     overlayLayers:
       #-
-        #layerType: "tilewms"
+        #layerType: "imagewms"
         #title: "Last 24 Hours Imagery Access"
         #url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
         #params:
@@ -49,7 +49,7 @@ omar:
             #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
             #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
             #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.999';"
+            #return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.999';"
           #start_date: "javascript:
             #var date = new Date();
             #date.setDate( date.getDate() - 1 );
@@ -59,7 +59,7 @@ omar:
             #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
             #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
             #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.000';"
+            #return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.000';"
           #VERSION: 1.1.0
           #LAYERS: omar:heatmap
           #STYLES: x

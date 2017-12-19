@@ -346,26 +346,27 @@ function mapService(stateService, wfsService, $timeout) {
             }
         );
 
-    var source;
-    if ( layerObject.layerType.toLowerCase() == "imagewms" ) {
-        source = new ol.source.ImageWMS({
-            url: layerObj.url,
-            params: params
+    var overlayMapLayer;
+    if ( layerObj.layerType.toLowerCase() == "imagewms" ) {
+        overlayMapLayer = new ol.layer.Image({
+            title: layerObj.title,
+            visible: layerObj.options.visible,
+            source: new ol.source.ImageWMS({
+                url: layerObj.url,
+                params: params
+            })
         });
     }
     else {
-        source = new ol.source.TileWMS({
-            url: layerObj.url,
-            params: params
+        overlayMapLayer = new ol.layer.Tile({
+            title: layerObj.title,
+            visible: layerObj.options.visible,
+            source: new ol.source.TileWMS({
+                url: layerObj.url,
+                params: params
+            })
         });
     }
-      var overlayMapLayer = new ol.layer.Tile({
-        title: layerObj.title,
-        visible: layerObj.options.visible,
-        source: source
-      });
-
-
 
       overlayGroup.getLayers().push(overlayMapLayer);
     }

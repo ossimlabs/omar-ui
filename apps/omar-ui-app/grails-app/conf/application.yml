@@ -1,11 +1,11 @@
 ---
 # If there a page banner is needed, set it here
-banner:
-   backgroundColor: darkgray
-   description: This application is subject to change without notice.
-   text: BETA
-   textColor: white
-   enabled: true
+#banner:
+#   backgroundColor: darkgray
+#   description: This application is subject to change without notice.
+#   text: BETA
+#   textColor: white
+#   enabled: true
 
 classificationBanner:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
@@ -36,36 +36,36 @@ omar:
           visible: true
     # Uncomment the example below, and modify to add a custom overlay layer.
     overlayLayers:
-      #-
-        #layerType: "imagewms"
-        #title: "Last 24 Hours Imagery Access"
-        #url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
-        #params:
-          #end_date: "javascript:
-            #var date = new Date();
-            #var yyyy = date.getFullYear();
-            #var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            #var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.999';"
-          #start_date: "javascript:
-            #var date = new Date();
-            #date.setDate( date.getDate() - 1 );
-            #var yyyy = date.getFullYear();
-            #var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            #var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.000';"
-          #VERSION: 1.1.0
-          #LAYERS: omar:heatmap
-          #STYLES: x
-          #FORMAT: image/png
-        #options:
-          #visible: false
+      -
+        layerType: "imagewms"
+        title: "Last 24 Hours Imagery Access"
+        url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
+        params:
+          end_date: "javascript:
+            var date = new Date();
+            var yyyy = date.getFullYear();
+            var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
+            var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
+            var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
+            var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
+            var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
+            return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.999';"
+          start_date: "javascript:
+            var date = new Date();
+            date.setDate( date.getDate() - 1 );
+            var yyyy = date.getFullYear();
+            var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
+            var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
+            var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
+            var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
+            var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
+            return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.000';"
+          VERSION: 1.1.0
+          LAYERS: omar:heatmap
+          STYLES: x
+          FORMAT: image/png
+        options:
+          visible: false
       #-
         #layerType: "tilewms"
         #title: "Last 3 Days Imagery Access"

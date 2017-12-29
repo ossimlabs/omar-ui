@@ -271,7 +271,7 @@
           </div>
         </uib-tab>
         <uib-tab heading="Avro" ng-click="vm.loadAvroMetadata()">
-          <div class="panel panel-default panel-avro-metadata">
+          <div class="panel panel-default panel-avro-metadata" ng-show="vm.showAvroMetadata">
             <div class="col-md-4">
               <ul>
                 <li ng-repeat="item in vm.column1">

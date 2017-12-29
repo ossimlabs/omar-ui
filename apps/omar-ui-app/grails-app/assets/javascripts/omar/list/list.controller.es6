@@ -689,8 +689,11 @@ function ListController(stateService, wfsService, shareService, downloadService,
                 $scope.$apply(function() {
 
                   vm.avroMetadata = data;
+
                   let out = Object.keys(data).map(item => [item, data[item]]);
 
+                  // Takes an array, and breaks it into parts based on the chunkSize
+                  // that is passed in
                   let createGroupedArray = function(arr, chunkSize) {
                     let groups = [], i;
                     for (i = 0; i < arr.length; i += chunkSize) {
@@ -699,8 +702,10 @@ function ListController(stateService, wfsService, shareService, downloadService,
                     return groups;
                   }
 
+                  // Takes the Avro metadata and splits it into 3 arrays
                   let groupedArr = createGroupedArray(out,  Object.keys(out).length / 3);
 
+                  // Binds the 3 arrays to the associated view models in the UI
                   vm.column1 = groupedArr[0];
                   vm.column2 = groupedArr[1];
                   vm.column3 = groupedArr[2];

@@ -10,5 +10,6 @@ build/
 .project
 .settings
 .classpath
+.vscode
 
 apps/omar-ui-app/application.yml

@@ -2,9 +2,9 @@
   "use strict";
   angular
     .module("omarApp")
-    .service("stateService", ["$rootScope", "$timeout", stateService]);
+    .service("stateService", ["$rootScope", "$timeout", "$log", stateService]);
 
-  function stateService($rootScope, $timeout) {
+  function stateService($rootScope, $timeout, $log) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -82,7 +82,7 @@
         objParams.urlUiContextPath
       )
         ? objParams.urlUiContextPath
-        : _this.omarSitesState.url.uiContextPath;
+        : "/omar-ui"
 
       _this.omarSitesState.url.base = checkForValidObjProp(
         _this.omarSitesState.url.base,
@@ -96,91 +96,91 @@
         objParams.urlWfsContextPath
       )
         ? objParams.urlWfsContextPath
-        : _this.omarSitesState.url.wfsContextPath;
+        : "/omar-wfs"
 
       _this.omarSitesState.url.wmsContextPath = checkForValidObjProp(
         _this.omarSitesState.url.wmsContextPath,
         objParams.urlWmsContextPath
       )
         ? objParams.urlWmsContextPath
-        : _this.omarSitesState.url.wmsContextPath;
+        : "/omar-wms"
 
       _this.omarSitesState.url.omsContextPath = checkForValidObjProp(
         _this.omarSitesState.url.omsContextPath,
         objParams.urlOmsContextPath
       )
         ? objParams.urlOmsContextPath
-        : _this.omarSitesState.url.omsContextPath;
+        : "/omar-oms"
 
       _this.omarSitesState.url.geoscriptContextPath = checkForValidObjProp(
         _this.omarSitesState.url.geoscriptContextPath,
         objParams.urlGeoscriptContextPath
       )
         ? objParams.urlGeoscriptContextPath
-        : _this.omarSitesState.url.geoscriptContextPath;
+        : "/omar-geoscript"
 
       _this.omarSitesState.url.avroMetadataContextPath = checkForValidObjProp(
         _this.omarSitesState.url.avroMetadataContextPath,
         objParams.urlAvroMetadataContextPath
       )
         ? objParams.urlAvroMetadataContextPath
-        : _this.omarSitesState.url.avroMetadataContextPath;
+        : "/omar-avro-metadata"
 
       _this.omarSitesState.url.mensaContextPath = checkForValidObjProp(
         _this.omarSitesState.url.mensaContextPath,
         objParams.urlMensaContextPath
       )
         ? objParams.urlMensaContextPath
-        : _this.omarSitesState.url.mensaContextPath;
+        : "/omar-mensa"
 
       _this.omarSitesState.url.stagerContextPath = checkForValidObjProp(
         _this.omarSitesState.url.stagerContextPath,
         objParams.urlStagerContextPath
       )
         ? objParams.urlStagerContextPath
-        : _this.omarSitesState.url.stagerContextPath;
+        : "/omar-stager"
 
       _this.omarSitesState.url.downloadContextPath = checkForValidObjProp(
         _this.omarSitesState.url.downloadContextPath,
         objParams.urlDownloadContextPath
       )
         ? objParams.urlDownloadContextPath
-        : _this.omarSitesState.url.downloadContextPath;
+        : "/omar-download"
 
       _this.omarSitesState.url.kmlContextPath = checkForValidObjProp(
         _this.omarSitesState.url.kmlContextPath,
         objParams.urlKmlContextPath
       )
         ? objParams.urlKmlContextPath
-        : _this.omarSitesState.url.kmlContextPath;
+        : "/omar-superoverlay"
 
       _this.omarSitesState.url.jpipContextPath = checkForValidObjProp(
         _this.omarSitesState.url.jpipContextPath,
         objParams.urlJpipContextPath
       )
         ? objParams.urlJpipContextPath
-        : _this.omarSitesState.url.jpipContextPath;
+        : "/omar-jpip"
 
       _this.omarSitesState.url.wmtsContextPath = checkForValidObjProp(
         _this.omarSitesState.url.wmtsContextPath,
         objParams.urlWmtsContextPath
       )
         ? objParams.urlWmtsContextPath
-        : _this.omarSitesState.url.wmtsContextPath;
+        : "/omar-wmts"
 
       _this.omarSitesState.url.tlvContextPath = checkForValidObjProp(
         _this.omarSitesState.url.tlvContextPath,
         objParams.urlTlvContextPath
       )
         ? objParams.urlTlvContextPath
-        : _this.omarSitesState.url.tlvContextPath;
+        : "/tlv"
 
       _this.omarSitesState.url.isaContextPath = checkForValidObjProp(
         _this.omarSitesState.url.isaContextPath,
         objParams.urlIsaContextPath
       )
         ? objParams.IsaContextPath
-        : _this.omarSitesState.url.isaContextPath;
+        : "/isa-ui"
 
       // $timeout needed: http://stackoverflow.com/a/18996042
       $timeout(function() {
@@ -197,9 +197,12 @@
        * @return {boolean}                 Boolean value used to determine if the property can be updated
        */
     function checkForValidObjProp(objProp, objPropToAssign) {
+      $log.debug(`objProp: ${objProp}  objPropToAssign: ${objPropToAssign}`);
       if (objPropToAssign === undefined || objPropToAssign === "") {
+        $log.debug('checkForValidObjProp returning false');
         return false;
       }
+      $log.debug('checkForValidObjProp returning true');
       return true;
     }
 

@@ -15,6 +15,8 @@
 
       function ($stateProvider, $urlRouterProvider, $uibTooltipProvider, $logProvider) {
 
+        $logProvider.debugEnabled(AppO2.APP_CONFIG.params.misc.javascriptDebug);
+
         $uibTooltipProvider.options({
           'popupDelay': 1500
         });

@@ -688,7 +688,6 @@ function ListController(stateService, wfsService, shareService, downloadService,
                 // Bind the image metadata to the UI
                 $scope.$apply(function() {
 
-                  // console.log('data keys: ', Object.keys(data).length / 3);
                   vm.avroMetadata = data;
                   let out = Object.keys(data).map(item => [item, data[item]]);
 

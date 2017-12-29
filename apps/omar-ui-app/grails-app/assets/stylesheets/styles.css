@@ -417,7 +417,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 .panel-avro-metadata {
   overflow-y: auto;
-  font-size: 0.7em;
+  font-size: 0.8em;
   margin-top: 5px;
   overflow-wrap: break-word;
 }

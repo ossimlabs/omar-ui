@@ -691,7 +691,6 @@ function ListController(stateService, wfsService, shareService, downloadService,
                   // console.log('data keys: ', Object.keys(data).length / 3);
                   vm.avroMetadata = data;
                   let out = Object.keys(data).map(item => [item, data[item]]);
-                  console.log(out);
 
                   let createGroupedArray = function(arr, chunkSize) {
                     let groups = [], i;
@@ -702,7 +701,6 @@ function ListController(stateService, wfsService, shareService, downloadService,
                   }
 
                   let groupedArr = createGroupedArray(out,  Object.keys(out).length / 3);
-                  console.log(groupedArr[0]);
 
                   vm.column1 = groupedArr[0];
                   vm.column2 = groupedArr[1];

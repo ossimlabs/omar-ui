@@ -688,7 +688,25 @@ function ListController(stateService, wfsService, shareService, downloadService,
                 // Bind the image metadata to the UI
                 $scope.$apply(function() {
 
-                    vm.avroMetadata = data;
+                  // console.log('data keys: ', Object.keys(data).length / 3);
+                  vm.avroMetadata = data;
+                  let out = Object.keys(data).map(item => [item, data[item]]);
+                  console.log(out);
+
+                  let createGroupedArray = function(arr, chunkSize) {
+                    let groups = [], i;
+                    for (i = 0; i < arr.length; i += chunkSize) {
+                        groups.push(arr.slice(i, i + chunkSize));
+                    }
+                    return groups;
+                  }
+
+                  let groupedArr = createGroupedArray(out,  Object.keys(out).length / 3);
+                  console.log(groupedArr[0]);
+
+                  vm.column1 = groupedArr[0];
+                  vm.column2 = groupedArr[1];
+                  vm.column3 = groupedArr[2];
 
                 });
 

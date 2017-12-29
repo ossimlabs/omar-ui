@@ -407,11 +407,23 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 #modal-image-space-body.modal-body {
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-bottom: -20px;
 }
 
 #modal-image-space-footer.modal-footer {
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.panel-avro-metadata {
+  overflow-y: auto;
+  font-size: 0.7em;
+  margin-top: 5px;
+  overflow-wrap: break-word;
+}
+
+.panel-avro-metadata ul {
+  list-style: none;
 }
 
 .imageMap {

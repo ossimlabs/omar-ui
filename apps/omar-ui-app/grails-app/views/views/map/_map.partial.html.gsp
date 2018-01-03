@@ -707,7 +707,7 @@
           </button>
           </form>
           <p class="navbar-text pull-right navbar-sort-list-number">
-            <span class="label label-primary" ng-class="{'label-info': list.refreshSpin}">{{list.wfsFeatures}}</span>
+            <span class="label label-primary" ng-class="{'label-info': list.refreshSpin}" tooltip-placement="left" uib-tooltip="Number of Search Results">{{list.wfsFeatures}}</span>
           </p>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

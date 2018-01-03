@@ -8,7 +8,7 @@
 - **UI Build Version** omar-ui build version number
 
 ### Metrics
-- **Service Health & Status** Displays a Spring Cloud Eureka page with information on the system status, uptime, and individual service statuses for the O2 deployment 
+- **Service Health & Status** Displays a Spring Cloud Eureka page with information on the system status, uptime, and individual service statuses for the O2 deployment
 
 ## Image Space
 
@@ -124,7 +124,7 @@ The current coordinate of the mouse is displayed in the lower-right corner of th
 You can rotate the map by holding Shift + Alt while clicking and dragging.
 
 ### Results
-Search results are displayed in a box to the right of the map. Each image will have the corresponding links associated with it.
+Search results are displayed in a box to the right of the map with the total number of results shown in the top-right corner. Each image will have the corresponding links associated with it.
 
 * **<span class="fa fa-desktop"></span>&nbsp;:**
 View an image in image/raw space.

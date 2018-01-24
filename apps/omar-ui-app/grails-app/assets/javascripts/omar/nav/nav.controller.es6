@@ -61,6 +61,7 @@
     vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
 
     // About dropdown menu settings
+    vm.aboutContactEmail = AppO2.APP_CONFIG.params.misc.about.contactEmail;
     vm.aboutMessage = AppO2.APP_CONFIG.params.misc.about.message;
     vm.aboutReleaseName = AppO2.APP_CONFIG.params.misc.about.releaseName;
     vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.misc.about.releaseNumber;

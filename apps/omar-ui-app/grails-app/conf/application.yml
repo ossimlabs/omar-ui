@@ -242,6 +242,9 @@ omar:
 
       # About dropdown settings
       about:
+        # Email support
+        contactEmail: O2Support@digitalglobe.com
+
         # Optional about message
         message: "O2 | Image Discovery and Analysis"
 

@@ -22,7 +22,7 @@
 
 </head>
   <body>
-    <o2:classificationBanner/>
+    <o2:securityClassificationBanner/>
     <div class="container-fluid">
 
       <nav style="margin-top: -15px;" class="navbar navbar-inverse" role="navigation" ng-controller="NavController as nav">
@@ -153,7 +153,7 @@
       </div>
 
     </div>
-    <o2:classificationBanner position="bottom" />
+    <o2:securityClassificationBanner position="bottom" />
     <asset:script>
 
       var AppO2 = (function () {

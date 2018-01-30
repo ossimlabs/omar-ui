@@ -7,14 +7,17 @@
 #   textColor: white
 #   enabled: true
 
-classificationBanner:
+securityClassificationBanner:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
   # For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
   backgroundColor: green
 
   # This is the string displayed in the banners.
   # So setting to "My Secret Stuff" would print that string at the top and bottom of every page with a background color identified by the "backgroundColor" field
-  classificationType: Unclassified
+  classification: Unclassified
+
+  # The actual HTML style color for the classification text
+  textColor: white
 
 logging:
   config: classpath:logback.groovy

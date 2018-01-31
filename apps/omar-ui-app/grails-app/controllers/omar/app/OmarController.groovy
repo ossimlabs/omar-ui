@@ -25,6 +25,7 @@ class OmarController /*implements InitializingBean*/
 
     // We will use the requestHeaderUserNameDefault from the application.yml if the request
     // header name is null.  Otherwise we will use the value from the request.getHeader call.
+println requestHeaderName
     def userInfoName = (requestHeaderName == null) ?
       userInfo.requestHeaderUserNameDefault : requestHeaderName
 

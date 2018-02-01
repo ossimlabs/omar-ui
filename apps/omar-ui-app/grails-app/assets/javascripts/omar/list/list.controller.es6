@@ -474,6 +474,9 @@ function ListController(stateService, wfsService, shareService, downloadService,
                 if (features != undefined) {
                     vm.wfsFeaturesTotalPaginationCount = Math.min(vm.totalPaginationCount, vm.wfsFeatures);
                 }
+
+                // add a comma in-between every set of three numbers 
+                vm.totalWfsFeatures = features.toString().replace( /\B(?=(\d{3})+(?!\d))/g, "," );
             });
 
         });

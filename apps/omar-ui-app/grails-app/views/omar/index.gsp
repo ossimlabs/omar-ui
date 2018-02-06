@@ -112,9 +112,9 @@
                       <div class="col-sm-12">
                         <span class="about-message">{{nav.aboutMessage}}</span>
                         <hr>
-                        <p class="small"><span class="text-info">Contact:</span> <a href = "mailto:{{nav.aboutContactEmail}}">{{nav.aboutContactEmail}}</a></p>
-                        <p class="small"><span class="text-info">Release:</span><span> {{nav.aboutReleaseName}}</span></p>
-                        <p class="small"><span class="text-info">Release Number:</span><span>  {{nav.aboutReleaseNumber}}</span></p>
+                        <p class="small"><span class="text-info">Contact: </span><a href = "mailto:{{nav.aboutContactEmail}}">{{nav.aboutContactEmail}}</a></p>
+                        <p class="small"><span class="text-info">Release: </span><span>{{nav.aboutReleaseName}}</span></p>
+                        <p class="small"><span class="text-info">Release Number: </span><span>{{nav.aboutReleaseNumber}}</span></p>
                         <hr>
                         <p class="small"><span class="text-info">UI Build Version:</span><span> <g:meta name="info.app.version"/></span></p>
                       </div>

@@ -18,7 +18,7 @@
         $logProvider.debugEnabled(AppO2.APP_CONFIG.params.misc.javascriptDebug);
 
         $uibTooltipProvider.options({
-          'popupDelay': 1500
+          'popupDelay': 700
         });
 
         $urlRouterProvider.otherwise('/home');

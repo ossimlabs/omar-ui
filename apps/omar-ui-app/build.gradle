@@ -16,8 +16,7 @@ buildscript {
     classpath "org.grails:grails-gradle-plugin:$grailsVersion"
     classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
     classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.2"
-    classpath "net.errbuddy.plugins:babel-asset-pipeline:2.1.1"
-
+    classpath 'net.errbuddy.plugins:babel-asset-pipeline:2.1.1'
   }
 }
 
@@ -145,7 +144,7 @@ dependencies {
   compile "org.springframework.cloud:spring-cloud-starter-eureka"
   //compile "org.springframework.cloud:spring-cloud-starter-zipkin"
 
-  compile "net.errbuddy.plugins:babel-asset-pipeline:2.1.0"
+  compile 'net.errbuddy.plugins:babel-asset-pipeline:2.1.1'
 
   compile "org.springframework.boot:spring-boot-starter-logging"
   compile "org.springframework.boot:spring-boot-autoconfigure"

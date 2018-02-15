@@ -104,7 +104,7 @@ dependencies {
   // UI Webjar core dependencies
   compile "org.webjars:jquery:2.1.4"
   compile "org.webjars:jquery-ui:1.10.3"
-  compile "org.webjars:bootstrap:4.0.0"
+  compile "org.webjars:bootstrap:3.3.5"
   compile "org.webjars.bower:angularjs:1.4.8"
   compile "org.webjars:angular-ui-router:0.2.15"
   compile "org.webjars.npm:angular-ui-bootstrap:0.14.3"
@@ -124,7 +124,7 @@ dependencies {
   compile "org.webjars.bower:angular-ui-select2:0.0.5"
   compile "org.webjars.npm:angular-sanitize:1.4.8"
   compile "org.webjars.bower:microplugin:0.0.3"
-  compile "org.webjars:selectize.js:0.12../gradlew.bat :omar-ui-app:bootRun4"
+  compile "org.webjars:selectize.js:0.12.4"
   compile "org.webjars.bower:seiyria-bootstrap-slider:9.7.2"
 
   // Font stuff

@@ -24,7 +24,7 @@
 //= require webjars/angular-ui-select2/0.0.5/src/select2.js
 //= require webjars/angular-sanitize/1.4.8/angular-sanitize.js
 //= require webjars/microplugin/0.0.3/src/microplugin.js
-//= require webjars/selectize.js/0.12.3/js/selectize.js
+//= require webjars/selectize.js/0.12.4/js/selectize.js
 //= require webjars/seiyria-bootstrap-slider/9.7.2/dist/bootstrap-slider.js
 
 // <--Core-->

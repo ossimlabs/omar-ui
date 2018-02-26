@@ -17,7 +17,6 @@ buildscript {
     classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
     classpath "com.bertramlabs.plugins:asset-pipeline-gradle:$assetPipelineGradleV"
     classpath "net.errbuddy.plugins:babel-asset-pipeline:${babelAssetPipelineV}"
-
   }
 }
 

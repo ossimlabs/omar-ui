@@ -831,6 +831,10 @@
 
         // End Position Quality Evaluator Section
 
+        vm.openGeometries = function() {
+            imageSpaceService.openGeometries();
+        }
+
         vm.screenshot = function() {
             imageSpaceService.screenshot();
         }

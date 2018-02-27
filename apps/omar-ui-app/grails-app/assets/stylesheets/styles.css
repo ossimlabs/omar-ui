@@ -605,8 +605,9 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     right: 0;
 }
 
-.nav-download .dropdown-menu a {
-    text-align: center;
+.nav-download .dropdown-menu .dropdown-header {
+    padding: 0px 20px;
+    cursor: default;
 }
 
 .nav-download .dropdown-menu {

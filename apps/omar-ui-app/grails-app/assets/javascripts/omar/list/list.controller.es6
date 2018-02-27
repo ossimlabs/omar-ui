@@ -15,6 +15,7 @@
       "avroMetadataService",
       "$scope",
       "$http",
+      "$window",
       "$log",
       ListController
     ]);
@@ -32,6 +33,7 @@
     avroMetadataService,
     $scope,
     $http,
+    $window,
     $log
   ) {
     // #################################################################################
@@ -369,6 +371,12 @@
       }
     };
 
+    // Remove selected items, and reset the DOM
+    vm.clearSelectedImages = () => {
+      vm.selectedCards = [];
+      vm.showSelectedButton = false;
+    };
+
     // Used for styling on the card checkbox icon.  It
     // looks in the selectedCards array and adds the
     // appropriate icon if it is contained in the array
@@ -408,55 +416,22 @@
 
     vm.viewSelectedImagesTlv = () => {
       if (vm.selectedCards.length >= 1) {
-        console.log(
-          "viewSelectedImagesTlv firing with a select set: " + vm.selectedCards
+        $log.debug(
+          "vm.viewSelectedImagesTlv selected card set: " + vm.selectedCards
         );
 
-        var filter = wfsService.spatialObj.filter;
-        //console.log("TLV filter: ", filter);
-        if (filter == "") {
-          toastr.error("A spatial filter needs to be enabled.");
-        } else {
-          var pointLatLon;
-          mapService.mapPointLatLon();
-          if (mapService.pointLatLon) {
-            pointLatLon = mapService.pointLatLon;
-          } else {
-            var center = mapService.getCenter();
-            pointLatLon = center
-              .slice()
-              .reverse()
-              .join(",");
-          }
+        let filter = "in(" + vm.selectedCards + ")";
+        let bbox = mapService.calculateExtent().join(",");
 
-          var bbox = mapService.calculateExtent().join(",");
+        let tlvURL =
+          tlvRequestUrl +
+          "/?bbox=" +
+          bbox +
+          "&filter=" +
+          encodeURIComponent(filter);
 
-          if (vm.attrFilter) {
-            filter += " AND " + vm.attrFilter; // <= this is undefined...grab it from wfsService
-            console.log("adding to the filter with attrFilter: ", filter);
-          }
-          // console.log("bbox: " + bbox);
-          // console.log("vm.attrFilter: " + vm.attrFilter);
-          var tlvURL =
-            tlvRequestUrl +
-            "/?bbox=" +
-            bbox +
-            "&filter=" +
-            encodeURIComponent(filter) +
-            "&location=" +
-            pointLatLon +
-            "&maxResults=100";
-
-          console.log("tlvURL: " + tlvURL);
-          // $window.open(tlvURL, "_blank");
-        }
-      } // selected >= 1
-    };
-
-    // Remove selected items, and reset the DOM
-    vm.clearSelectedImages = () => {
-      vm.selectedCards = [];
-      vm.showSelectedButton = false;
+        $window.open(tlvURL, "_blank");
+      }
     };
 
     vm.getJpipStream = function($event, file, entry, projCode, index, type) {

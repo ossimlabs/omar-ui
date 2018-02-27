@@ -533,7 +533,8 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .the-table {
     white-space: nowrap;
     max-width: none;
-    min-width: 100% width: auto;
+    min-width: 100%;
+    width: auto;
 }
 
 .the-container {

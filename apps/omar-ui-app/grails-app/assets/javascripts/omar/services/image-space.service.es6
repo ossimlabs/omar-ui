@@ -998,7 +998,8 @@ var tlv = {};
             	var up = upAngle * 180 / Math.PI;
                 map.once( "postcompose", function( event ) {
             		var form = document.createElement( "form" );
-            		form.action = AppO2.APP_CONFIG.params.sites[ 0 ].url.tlvContextPath;
+                    var url = AppO2.APP_CONFIG.params.sites[ 0 ].url.tlvContextPath || "/tlv";
+                    form.action = url + "/geometries";
             		form.method = "post";
             		$( "body" ).append( form );
 

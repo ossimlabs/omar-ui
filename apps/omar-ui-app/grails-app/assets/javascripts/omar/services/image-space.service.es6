@@ -9,7 +9,7 @@
         // provides access to various client params in application.yml
         // #################################################################################
         //console.log('AppO2.APP_CONFIG in imageSpaceService: ', AppO2.APP_CONFIG);
-var tlv = {};
+
         var map,
             filename,
             entry,
@@ -992,8 +992,6 @@ var tlv = {};
             }
 
             this.openGeometries = function() {
-                console.dir(AppO2.APP_CONFIG.params.sites[ 0 ].url.tlvContextPath);
-
             	var north = northAngle * 180 / Math.PI;
             	var up = upAngle * 180 / Math.PI;
                 map.once( "postcompose", function( event ) {
@@ -1022,7 +1020,7 @@ var tlv = {};
 
             			$( form ).append( input );
             		});
-            		tlv.mapCanvas = event.context.canvas;
+            		$rootScope.tlv = { mapCanvas: event.context.canvas };
 
             		var popup = window.open( "about:blank", "Collection Geometries", "height=512,width=512" );
             		form.target = "Collection Geometries";

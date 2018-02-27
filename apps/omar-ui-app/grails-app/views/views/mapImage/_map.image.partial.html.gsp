@@ -17,6 +17,11 @@
             tooltip-placement="right"
             uib-tooltip="Download the raw image, histogram and overview files"><a>Download</a>
           </li>
+          <li style = "display: none;"
+            ng-click="image.openGeometries(image)"
+            tooltip-placement="right"
+            uib-tooltip="View collection geometries"><a>Geometries</a>
+          </li>
           <li class="dropdown">
             <a
               class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tooltip-placement="right" uib-tooltip="Measure area and distances, and calculate horizontal and vertical error for points">Measure<span class="caret"></span></a>

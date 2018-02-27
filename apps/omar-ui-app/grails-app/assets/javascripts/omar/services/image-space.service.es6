@@ -991,6 +991,46 @@
 
             }
 
+            this.openGeometries = function() {
+            	var north = northAngle * 180 / Math.PI;
+            	var up = upAngle * 180 / Math.PI;
+                map.once( "postcompose", function( event ) {
+            		var form = document.createElement( "form" );
+                    var url = AppO2.APP_CONFIG.params.sites[ 0 ].url.tlvContextPath || "/tlv";
+                    form.action = url + "/geometries";
+            		form.method = "post";
+            		$( "body" ).append( form );
+
+            		var size = map.getSize();
+            		var params = {
+            			azimuth: imageProperties.azimuth_angle,
+            			elevation: imageProperties.elevation_angle,
+            			height: size[ 1 ],
+            			imageRotation: 0,
+            			sunAzimuth: imageProperties.sun_azimuth,
+            			sunElevation: imageProperties.sun_elevation,
+            			up: up + north + 90,
+            			width: size[ 0 ]
+            		};
+            		$.each( params, function( key, value ) {
+            			var input = document.createElement( "input" );
+            			input.name = key;
+            			input.type = "hidden";
+            			input.value = value;
+
+            			$( form ).append( input );
+            		});
+            		$rootScope.tlv = { mapCanvas: event.context.canvas };
+
+            		var popup = window.open( "about:blank", "Collection Geometries", "height=512,width=512" );
+            		form.target = "Collection Geometries";
+
+            		form.submit();
+            		form.remove();
+            	});
+            	map.renderSync();
+            }
+
             this.setCenter = function(point) {
 
               map.getView().setCenter(point);

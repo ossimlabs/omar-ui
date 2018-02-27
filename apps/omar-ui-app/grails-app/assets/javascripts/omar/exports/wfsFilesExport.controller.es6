@@ -98,7 +98,6 @@
 
     vm.goToTLV = () => {
       var filter = wfsService.spatialObj.filter;
-      console.log("TLV filter: ", filter);
       if (filter == "") {
         toastr.error("A spatial filter needs to be enabled.");
       } else {
@@ -118,10 +117,8 @@
 
         if (vm.attrFilter) {
           filter += " AND " + vm.attrFilter;
-          console.log("adding to the filter with attrFilter: ", filter);
         }
-        console.log("bbox: " + bbox);
-        console.log("vm.attrFilter: " + vm.attrFilter);
+
         var tlvURL =
           tlvRequestUrl +
           "/?bbox=" +
@@ -132,8 +129,7 @@
           pointLatLon +
           "&maxResults=100";
 
-        console.log("tlvURL: " + tlvURL);
-        // $window.open(tlvURL, "_blank");
+        $window.open(tlvURL, "_blank");
       }
     };
   }

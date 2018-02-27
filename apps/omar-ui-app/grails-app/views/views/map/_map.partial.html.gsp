@@ -695,7 +695,8 @@
               </button>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
                 <li role="menuitem" ng-click="list.downloadSelectedImages()"><a href="">Download Selected</a></li>
-                <li role="menuitem" ng-click="list.viewSelectedImagesTlv()"><a href="">View Selected in TLV</a></li>
+                <li role="menuitem" ng-click="list.viewSelectedImages('tlv')"><a href="">View Selected in TLV</a></li>
+                <li role="menuitem" ng-click="list.viewSelectedImages('isa')"><a href="">View Selected in ISA</a></li>
                 <li class="divider"></li>
                 <li role="menuitem"ng-click="list.clearSelectedImages()"><a href="">Clear Selected</a></li>
               </ul>

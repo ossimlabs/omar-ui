@@ -52,6 +52,9 @@
     var tlvBaseUrl, tlvContextPath, tlvRequestUrl;
     vm.tlvRequestUrl = "";
 
+    var isaBaseUrl, isaContextPath, isaRequestUrl;
+    vm.isaRequestUrl = "";
+
     var kmlBaseUrl, kmlContextPath, kmlRequestUrl;
     vm.kmlRequestUrl = "";
 
@@ -83,6 +86,11 @@
       tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
       tlvRequestUrl = tlvBaseUrl + tlvContextPath;
       vm.tlvRequestUrl = tlvRequestUrl;
+
+      isaBaseUrl = stateService.omarSitesState.url.base;
+      isaContextPath = stateService.omarSitesState.url.isaContextPath;
+      isaRequestUrl = isaBaseUrl + isaContextPath;
+      vm.isaRequestUrl = isaRequestUrl;
 
       kmlBaseUrl = stateService.omarSitesState.url.base;
       kmlContextPath = stateService.omarSitesState.url.kmlContextPath;
@@ -141,6 +149,9 @@
         urlTlvContextPath: vm.selectedOmar.url.tlvContextPath,
         urlIsaContextPath: vm.selectedOmar.url.isaContextPath
       });
+      // Clears/resets the selected images, because they will not exist on the
+      // federated site
+      vm.clearSelectedImages();
     };
 
     /**
@@ -414,23 +425,62 @@
       }
     };
 
-    vm.viewSelectedImagesTlv = () => {
+    /**
+     * Purpose: Takes an app name parameter that specifies the application
+     * to open from the selected set of card images
+     * @param app
+     */
+    vm.viewSelectedImages = app => {
       if (vm.selectedCards.length >= 1) {
         $log.debug(
-          "vm.viewSelectedImagesTlv selected card set: " + vm.selectedCards
+          `vm.viewSelectedImages selected card set: ${vm.selectedCards}`
         );
+        $log.debug(`app = ${app}`);
 
         let filter = "in(" + vm.selectedCards + ")";
         let bbox = mapService.calculateExtent().join(",");
 
-        let tlvURL =
-          tlvRequestUrl +
-          "/?bbox=" +
-          bbox +
-          "&filter=" +
-          encodeURIComponent(filter);
+        let spatialFilter = wfsService.spatialObj.filter;
 
-        $window.open(tlvURL, "_blank");
+        if (spatialFilter == "") {
+          toastr.error("A spatial filter needs to be enabled.");
+        } else {
+          let pointLatLon;
+          mapService.mapPointLatLon();
+          if (mapService.pointLatLon) {
+            pointLatLon = mapService.pointLatLon;
+          } else {
+            let center = mapService.getCenter();
+            pointLatLon = center
+              .slice()
+              .reverse()
+              .join(",");
+          }
+
+          let appUrl;
+
+          switch (app) {
+            case "tlv":
+              appUrl = tlvRequestUrl;
+              break;
+            case "isa":
+              appUrl = isaRequestUrl;
+              break;
+          }
+
+          let url =
+            appUrl +
+            "/?bbox=" +
+            bbox +
+            "&filter=" +
+            encodeURIComponent(filter) +
+            "&location=" +
+            pointLatLon +
+            "&maxResults=100";
+          $log.debug(`url: ${url}`);
+
+          $window.open(url, "_blank");
+        }
       }
     };
 
@@ -612,8 +662,6 @@
 
       var filter = "in(" + feature.getProperties().id + ")";
 
-      // DONE: Updated URL
-      //var tlvUrl = AppO2.APP_CONFIG.params.tlvApp.baseUrl + "?" +
       var tlvUrl =
         tlvRequestUrl +
         "?" +

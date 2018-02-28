@@ -1020,7 +1020,7 @@
 
             			$( form ).append( input );
             		});
-            		$rootScope.tlv = { mapCanvas: event.context.canvas };
+            		mapCanvas = event.context.canvas;
 
             		var popup = window.open( "about:blank", "Collection Geometries", "height=512,width=512" );
             		form.target = "Collection Geometries";

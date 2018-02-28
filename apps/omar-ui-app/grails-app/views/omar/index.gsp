@@ -168,6 +168,8 @@
 
       })();
 
+        // used to share the map canvas between windows
+        var mapCanvas;
     </asset:script>
     <asset:deferredScripts/>
     <asset:javascript src="app.manifest.js"/>

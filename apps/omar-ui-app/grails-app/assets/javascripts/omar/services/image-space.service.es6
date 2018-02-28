@@ -1005,8 +1005,9 @@
                     var viewRotation = ( map.getView().getRotation() - northAngle ) * 180 / Math.PI;
             		var params = {
             			azimuth: imageProperties.azimuth_angle - viewRotation,
-            			elevation: imageProperties.elevation_angle - viewRotation,
+            			elevation: imageProperties.grazing_angle - viewRotation,
             			height: size[ 1 ],
+                        north: 90 - viewRotation,
             			sunAzimuth: imageProperties.sun_azimuth - viewRotation,
             			sunElevation: imageProperties.sun_elevation - viewRotation,
             			up: up + north + 90 - viewRotation,

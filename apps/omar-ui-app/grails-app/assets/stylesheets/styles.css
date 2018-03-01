@@ -984,3 +984,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .fa-spinner {
   color: white;
 }
+
+.classified-text {
+  text-shadow: none !important;
+}

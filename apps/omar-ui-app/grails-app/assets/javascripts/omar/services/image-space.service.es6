@@ -1002,14 +1002,15 @@
             		$( "body" ).append( form );
 
             		var size = map.getSize();
+                    var viewRotation = ( map.getView().getRotation() - northAngle ) * 180 / Math.PI;
             		var params = {
-            			azimuth: imageProperties.azimuth_angle,
-            			elevation: imageProperties.elevation_angle,
+            			azimuth: imageProperties.azimuth_angle - viewRotation,
+            			elevation: imageProperties.grazing_angle,
             			height: size[ 1 ],
-            			imageRotation: 0,
-            			sunAzimuth: imageProperties.sun_azimuth,
+                        north: 90 - viewRotation,
+            			sunAzimuth: imageProperties.sun_azimuth - viewRotation,
             			sunElevation: imageProperties.sun_elevation,
-            			up: up + north + 90,
+            			up: up + north + 90 - viewRotation,
             			width: size[ 0 ]
             		};
             		$.each( params, function( key, value ) {
@@ -1020,7 +1021,7 @@
 
             			$( form ).append( input );
             		});
-            		$rootScope.tlv = { mapCanvas: event.context.canvas };
+            		mapCanvas = event.context.canvas;
 
             		var popup = window.open( "about:blank", "Collection Geometries", "height=512,width=512" );
             		form.target = "Collection Geometries";

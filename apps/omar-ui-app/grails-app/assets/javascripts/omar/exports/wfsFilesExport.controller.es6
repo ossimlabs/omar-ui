@@ -96,7 +96,7 @@
       }
     };
 
-    vm.goToTLV = () => {
+    vm.goToTLV = function() {
       var filter = wfsService.spatialObj.filter;
       if (filter == "") {
         toastr.error("A spatial filter needs to be enabled.");
@@ -114,7 +114,6 @@
         }
 
         var bbox = mapService.calculateExtent().join(",");
-
         if (vm.attrFilter) {
           filter += " AND " + vm.attrFilter;
         }
@@ -128,7 +127,6 @@
           "&location=" +
           pointLatLon +
           "&maxResults=100";
-
         $window.open(tlvURL, "_blank");
       }
     };

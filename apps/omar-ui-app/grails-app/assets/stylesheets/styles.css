@@ -344,7 +344,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 }
 
 .button-sort-refresh {
-  margin-top: 4px;
+  margin-top: 9px;
 }
 
 .dropdown-sort-selected {
@@ -364,7 +364,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 }
 
 .navbar-sort-list-number {
-  margin-top: 22px;
   margin-right: 0px;
 }
 
@@ -611,8 +610,16 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     cursor: default;
 }
 
+.dropdown-header {
+    padding: 0px 20px;
+}
+
+.dropdown-header-note {
+    font-size: .7em;
+}
+
 .nav-download .dropdown-menu {
-    min-width: 112px;
+    min-width: 110px;
 }
 
 .rotate-north {

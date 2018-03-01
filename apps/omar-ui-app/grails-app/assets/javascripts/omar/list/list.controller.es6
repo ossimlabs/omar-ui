@@ -279,13 +279,13 @@
       return border;
     };
 
-    vm.listRefreshButtonVisible =
-      AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
-    vm.refreshSpin = false;
-    vm.refreshList = function() {
-      wfsService.executeWfsQuery();
-      vm.refreshSpin = true;
-    };
+    // vm.listRefreshButtonVisible =
+    //   AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
+    // vm.refreshSpin = false;
+    // vm.refreshList = function() {
+    //   wfsService.executeWfsQuery();
+    //   vm.refreshSpin = true;
+    // };
 
     // Shows/Hides the KML SuperOverlay button based on parameters passed down
     // from application.yml
@@ -425,12 +425,15 @@
       }
     };
 
+    // Shows/Hides the ISA button based on parameters passed down from application.yml
+    vm.isaAppEnabled = AppO2.APP_CONFIG.params.isaApp.enabled;
+
     /**
      * Purpose: Takes an app name parameter that specifies the application
      * to open from the selected set of card images
      * @param app
      */
-    vm.viewSelectedImages = app => {
+    vm.viewSelectedImagesApp = app => {
       if (vm.selectedCards.length >= 1) {
         $log.debug(
           `vm.viewSelectedImages selected card set: ${vm.selectedCards}`
@@ -481,6 +484,24 @@
 
           $window.open(url, "_blank");
         }
+      }
+    };
+
+    /**
+     * Purpose: Takes an output format parameter such as GML, CSV, and passes
+     * it to the wfsService to return the results in the desired format
+     * @param outputFormat
+     */
+    vm.exportSelectedImages = outputFormat => {
+      $log.debug(`outputFormat: ${outputFormat}`);
+      $log.debug(`vm.selectedCards: ${vm.selectedCards}`);
+
+      if (vm.selectedCards.length >= 1) {
+        let filter = "in(" + vm.selectedCards + ")";
+        vm.url = wfsService.getExport(outputFormat, filter);
+
+        $log.debug(`vm.url: ${vm.url}`);
+        window.open(vm.url.toString(), "_blank");
       }
     };
 

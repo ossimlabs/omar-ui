@@ -7,10 +7,11 @@
       "$rootScope",
       "$http",
       "$timeout",
+      "$log",
       wfsService
     ]);
 
-  function wfsService(stateService, $rootScope, $http, $timeout) {
+  function wfsService(stateService, $rootScope, $http, $timeout, $log) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -236,10 +237,16 @@
       });
     };
 
-    this.getExport = function(outputFormat) {
-      var version = "1.1.0";
-      var typeName = "omar:raster_entry";
-      var wfsUrl =
+    this.getExport = (outputFormat, filter) => {
+      $log.debug(`getExportImages outputFormat: ${outputFormat} + ${filter}`);
+      let wfsFilter = filter ? filter : this.spatialObj.filter;
+      $log.debug(`wfsFilter: ${wfsFilter}`);
+
+      console.log(`this.attrObj.filter: ${this.attrObj.filter}`);
+
+      let version = "1.1.0";
+      let typeName = "omar:raster_entry";
+      let wfsUrl =
         wfsRequestUrl +
         "service=WFS" +
         "&version=" +
@@ -248,7 +255,7 @@
         "&typeName=" +
         typeName +
         "&filter=" +
-        encodeURIComponent(this.spatialObj.filter) +
+        encodeURIComponent(wfsFilter) +
         "&outputFormat=" +
         outputFormat +
         "&sortBy=" +

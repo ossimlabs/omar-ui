@@ -493,8 +493,7 @@
         "," +
         convertToWktPolygon(getMapBbox()) +
         ")";
-      console.log(mapObj.cql);
-      //wfsService.spatialObj.filter = mapObj.cql;
+      wfsService.spatialObj.filter = mapObj.cql;
     };
 
     // This is used to select images by creating a polygon based on the
@@ -512,8 +511,6 @@
 
       // Update the image cards in the list via spatial bounds
       wfsService.updateSpatialFilter(mapObj.cql);
-      //this.updateFootPrintLayer(mapObj.cql);
-      //updateFootPrints(mapObj.cql);
     }
 
     this.viewPortFilter = function(status) {

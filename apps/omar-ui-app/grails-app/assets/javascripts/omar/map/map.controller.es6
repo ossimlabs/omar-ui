@@ -20,15 +20,6 @@
     $timeout,
     stateService
   ) {
-    // toastr.info("Click on the thumbnail or ID text in the image card to view the image and it's" +
-    //   " metadata", 'Heads Up:', {
-    //   positionClass: 'toast-bottom-left',
-    //   closeButton: true,
-    //   timeOut: 10000,
-    //   extendedTimeOut: 5000,
-    //   target: 'body'
-    // });
-
     mapService.mapInit();
     mapService.setIntialMapSpatialFilter();
 

@@ -430,7 +430,10 @@ function mapService(stateService, wfsService, $timeout) {
 
     geomField = 'ground_geom';
 
-    this.viewPortFilter(true);
+    // needed to avoid two WFS requests from happening when the page loads
+    map.once('moveend', function() {
+        map.on( 'moveend', filterByViewPort );
+    });
 
     dragBox = new ol.interaction.DragBox({
       condition: ol.events.condition.altKeyOnly

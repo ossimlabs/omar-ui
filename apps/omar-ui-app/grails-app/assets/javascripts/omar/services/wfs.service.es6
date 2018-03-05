@@ -236,13 +236,43 @@
         return imageData;
       });
     };
+    /**
+     * Purpose: Uses the WFS service to returns  list of images in various formats
+     *  such as GML, JSON, KML, etc
+     *
+     * @param outputFormat
+     * @param imageListFilter
+     */
+    this.getExport = (outputFormat, imageListFilter) => {
+      $log.debug(
+        `getExportImages outputFormat: ${outputFormat}, filter: ${imageListFilter}`
+      );
 
-    this.getExport = (outputFormat, filter) => {
-      $log.debug(`getExportImages outputFormat: ${outputFormat} + ${filter}`);
-      let wfsFilter = filter ? filter : this.spatialObj.filter;
+      let wfsFilter;
+      // We need to use this as the ONLY filter if an imageListFilter is passed in.
+      // The attr and spatial filters have already been accounted for.
+      if (imageListFilter) {
+        wfsFilter = imageListFilter;
+        $log.debug(wfsFilter);
+      } else {
+        // If we don't have an imageListFilter passed in we need to use the
+        // attr and spatial filters.  Checking here for the spatial filter.
+        if (this.spatialObj.filter || this.spatialObj.filter.length >= 1) {
+          wfsFilter = this.spatialObj.filter;
+          $log.debug(wfsFilter);
+        }
+        // If we don't have an imageListFilter passed in we need to use the
+        // attr and spatial filters.  Checking here for the attributes filter.
+        // If there isn't an attr or spatial filter set it to an empty string.
+        if (this.attrObj.filter || this.attrObj.filter.length >= 1) {
+          wfsFilter += " AND " + this.attrObj.filter;
+          $log.debug(wfsFilter);
+        } else {
+          wfsFilter = "";
+        }
+      }
+
       $log.debug(`wfsFilter: ${wfsFilter}`);
-
-      console.log(`this.attrObj.filter: ${this.attrObj.filter}`);
 
       let version = "1.1.0";
       let typeName = "omar:raster_entry";

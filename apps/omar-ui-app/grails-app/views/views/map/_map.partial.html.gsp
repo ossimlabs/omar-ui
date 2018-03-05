@@ -18,6 +18,10 @@
               <a class="dropdown-toggle keyword-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false"><span class="fa fa-key" aria-hidden="true"></span>
                  &nbsp;Keyword
+                 <span
+                  class="text-success filter-indicator"
+                  uib-tooltip="Indicates a keyword filter is being applied"
+                  tooltip-placement="right">&#9679;</span>
                <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">
@@ -208,6 +212,10 @@
               <a class="dropdown-toggle range-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false"><span class="fa fa-sliders" aria-hidden="true"></span>
                 &nbsp;Ranges
+                <span
+                  class="text-success filter-indicator"
+                  uib-tooltip="Indicates a range filter is being applied"
+                  tooltip-placement="right">&#9679;</span>
                 <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">
@@ -414,6 +422,10 @@
               <a class="dropdown-toggle spatial-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false"><span class="fa fa-map" aria-hidden="true"></span>
                 &nbsp;Spatial
+                <span
+                  class="text-success filter-indicator"
+                  uib-tooltip="Indicates a spatial filter is being applied"
+                  tooltip-placement="right">&#9679;</span>
                 <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">
@@ -485,7 +497,12 @@
             <li class="dropdown mega-dropdown">
               <a  class="dropdown-toggle temporal-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
-               &nbsp;Temporal<span class="caret"></span></a>
+               &nbsp;Temporal
+               <span
+                  class="text-success filter-indicator"
+                  uib-tooltip="Indicates a temporal filter is being applied"
+                  tooltip-placement="right">&#9679;</span>
+               <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row temporal-row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">
                   <ul>
@@ -623,12 +640,29 @@
 <div style="margin-top: -15px;" class="row">
   <div class="col-md-8">
     <div id="map" class="map" params="map.mapParams" map>
-        <form id="searchForm" class="searchForm" style="position: absolute; left: 60px; top: 0px; width: 320px;">
+        <form id="searchForm" class="searchForm">
             <div class="input-group input-group-sm" ng-controller="SearchController as search">
-              <input id="searchInput" style="box-shadow: 4px 3px 5px #808080; z-index: 9998; border-width: 1px; border-color: black;" type="text" ng-model="search.searchInput" class="form-control" placeholder="BE, Coordinate, Image ID or Placename" autofocus>
+              <input
+                id="searchInput"
+                type="text"
+                ng-model="search.searchInput"
+                class="form-control"
+                placeholder="BE, Coordinate, Image ID or Placename">
               <span class="input-group-btn">
-                <button class="btn btn-info" style="box-shadow: 2px 3px 5px #808080; z-index: 9999" type="button" ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled"><span class="glyphicon glyphicon-search"></span></button>
-                <button class="btn btn-default" style="box-shadow: 0px 3.5px 3px #808080; z-index: 9999;" type="button" ng-click="search.resetSearchInput()"><span class="glyphicon glyphicon-remove"></span></button>
+                <button
+                  id="searchButton"
+                  class="btn btn-info"
+                  type="button"
+                  ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <button
+                  id="searchClearButton"
+                  class="btn btn-default"
+                  type="button"
+                  ng-click="search.resetSearchInput()">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
               </span>
             </div>
         </form>
@@ -705,9 +739,13 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">
-                <li class="dropdown-header">Export the images in the following formats:</li>
-                <li class="dropdown-header dropdown-header-note">(A maximum of 1000 of the most recently acquired </li>
-                <li class="dropdown-header dropdown-header-note">images will be exported)</li>
+                <li class="dropdown-header">Export the images in the following formats   <i
+                    class="fa fa-info-circle"
+                    aria-hidden="true"
+                    tooltip-placement="left-bottom"
+                    uib-tooltip="(A maximum of 1000 of the most recently acquired
+                    images will be exported)"></i>
+                </li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('CSV')">CSV</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML2')">GML2</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML3')">GML3</a></li>
@@ -715,9 +753,14 @@
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('JSON')">JSON</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('KML')">KML</a></li>
                 <li role="separator" class="divider"></li>
-                <li class="dropdown-header">View the images in the following applications:</li>
-                <li class="dropdown-header dropdown-header-note">(A maximum of 100 of the most recently acquired</li>
-                <li class="dropdown-header dropdown-header-note">images can be viewed)</li>
+                <li class="dropdown-header">View the images in the following applications
+                  <i
+                    class="fa fa-info-circle"
+                    aria-hidden="true"
+                    tooltip-placement="left-bottom"
+                    uib-tooltip="(A maximum of 100 of the most recently acquired
+                    images can be viewed)"></i>
+                </li>
                 <li ng-show="{{wfsOutputDownload.isaAppEnabled}}"><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToISA()">ISA</a></li>
                 <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToTLV()">TLV</a></li>
               </ul>
@@ -731,23 +774,31 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
-                <li class="dropdown-header">Use the checkboxes on the image cards</li>
-                <li class="dropdown-header">to select individual images. They can then be</li>
-                <li class="dropdown-header"> downloaded, exported, or viewed in the following:</li>
+                <li class="dropdown-header">Use the checkboxes on the image cards to </li>
+                <li class="dropdown-header">select individual images. They can then be</li>
+                <li class="dropdown-header"> downloaded, exported, or viewed in</li>
+                <li class="dropdown-header">applications</li>
                 <li class="divider"></li>
-                <li class="dropdown-header dropdown-header-note">A maximum of 10 can be downloaded at one time</li>
                 <li
                   role="menuitem"
                   ng-class="{'disabled': !list.showSelectedButton}"
                   ng-click="list.downloadSelectedImages()">
-                  <a href="">Download</a>
+                  <a href="">Download
+                    <i
+                      class="fa fa-info-circle"
+                      aria-hidden="true"
+                      tooltip-placement="left-bottom"
+                      uib-tooltip="A maximum of 10 can be downloaded at one time"></i>
+                  </a>
                 </li>
                 <li class="divider"></li>
                 <li class="dropdown-header">
-                  Exports:
-                </li>
-                <li class="dropdown-header dropdown-header-note">
-                  Export the selected images into the following formats
+                  Exports
+                  <i
+                    class="fa fa-info-circle"
+                    aria-hidden="true"
+                    tooltip-placement="left-bottom"
+                    uib-tooltip="Export the selected images into the following formats"></i>
                 </li>
                 <li
                   role="menuitem"
@@ -786,8 +837,13 @@
                   <a href="">KML</a>
                 </li>
                 <li class="divider"></li>
-                <li class="dropdown-header">Applications:</li>
-                <li class="dropdown-header dropdown-header-note">A maximum of 100 can be viewed in the applications</li>
+                <li class="dropdown-header">Applications
+                  <i
+                    class="fa fa-info-circle"
+                    aria-hidden="true"
+                    tooltip-placement="left-bottom"
+                    uib-tooltip="A maximum of 100 can be viewed per application"></i>
+                  </li>
                 <li
                   role="menuitem"
                   ng-class="{'disabled': !list.showSelectedButton}"
@@ -802,48 +858,22 @@
                   <a href="">ISA</a>
                 </li>
                 <li class="divider"></li>
-                <li class="dropdown-header dropdown-header-note">Remove all currently selected image cards</li>
                 <li
                   role="menuitem"
                   ng-class="{'disabled': !list.showSelectedButton}"
                   ng-click="list.clearSelectedImages()">
-                  <a href="">Clear Selected</a>
+                  <a href="">Clear Selected
+                    <i
+                      class="fa fa-info-circle"
+                      aria-hidden="true"
+                      tooltip-placement="left-bottom"
+                      uib-tooltip="Remove all currently selected image cards"></i>
+                    </li>
+                  </a>
                 </li>
               </ul>
             </li>
           </ul>
-          <form class="navbar-form navbar-left navbar-sort-refresh">
-            <!-- <div class="btn-group" uib-dropdown >
-              <button
-                id="btn-append-to-single-button"
-                type="button"
-                class="btn btn-primary dropdown-sort-selected"
-                ng-class="{'btn-success': list.showSelectedButton}"
-                ng-disabled="!list.showSelectedButton"
-                uib-dropdown-toggle
-                uib-tooltip="View options for the selected images">
-                <span class="fa fa-picture-o dropdown-sort-selected-icon"></span> Selected: {{list.selectedCards.length}}
-              </button>
-              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-single-button">
-                <li role="menuitem" ng-click="list.downloadSelectedImages()"><a href="">Download Selected</a></li>
-                <li role="menuitem" ng-click="list.viewSelectedImages('tlv')"><a href="">View Selected in TLV</a></li>
-                <li ng-show="{{wfsOutputDownload.isaAppEnabled}}" role="menuitem" ng-click="list.viewSelectedImages('isa')"><a href="">View Selected in ISA</a></li>
-                <li class="divider"></li>
-                <li role="menuitem"ng-click="list.clearSelectedImages()"><a href="">Clear Selected</a></li>
-              </ul>
-            </div> -->
-
-
-            <!-- <button class="btn btn-primary button-sort-refresh pull-right" ng-show="list.listRefreshButtonVisible"
-              ng-click="list.refreshList()"
-              tooltip-placement="bottom"
-              uib-tooltip="Refresh the image list data">
-              <span class="fa fa-refresh" ng-class="{'fa-spin fa-pulse': list.refreshSpin}"></span>
-           </button> -->
-          </form>
-          <!-- <p class="navbar-text navbar-sort-list-number">
-            <span class="label label-primary" ng-class="{'label-info': list.refreshSpin}" tooltip-placement="left" uib-tooltip="Number of Search Results">{{list.totalWfsFeatures}}</span>
-          </p> -->
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>

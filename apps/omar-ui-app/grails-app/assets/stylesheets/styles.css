@@ -92,12 +92,47 @@ body {
 }
 
 .searchForm {
-    padding-top: 10px;
+  padding-top: 10px;
+  position: absolute;
+  left: 60px;
+  top: -3px;
+  width: 320px;
 }
 
 .searchForm .input-group-btn .glyphicon {
     padding-top: 3px;
     padding-bottom: 3px;
+}
+
+#searchInput {
+  z-index: 9998;
+  border-left-width: 3px;
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  border-color: #f5f1f1;
+  opacity: 0.9;
+}
+
+#searchButton {
+  z-index: 9999;
+  opacity: 0.9;
+  border-left-width: 0px;
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  border-right-width: 0px;
+  border-color: #f5f1f1;
+  padding-top: 3px;
+}
+
+#searchClearButton {
+  z-index: 9999;
+  opacity: 0.9;
+  border-left-width: 0px;
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  border-color: #f5f1f1;
+  padding-top: 3px;
 }
 
 .release-field {
@@ -612,6 +647,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 .dropdown-header {
     padding: 0px 20px;
+    cursor: default;
 }
 
 .dropdown-header-note {
@@ -882,6 +918,13 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 .about-message {
   font-size: .75em;
+}
+
+.filter-indicator {
+  position: absolute;
+  top: 0px;
+  font-size: 1.1em;
+  right: 14px;
 }
 
 .filter-row {

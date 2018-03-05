@@ -395,8 +395,11 @@
       return $.inArray(imageId, vm.selectedCards) > -1;
     };
 
+    /**
+     * Purpose: Uses the downloadService to download up to 10 images
+     */
     vm.downloadSelectedImages = () => {
-      if (vm.selectedCards.length >= 1) {
+      if (vm.selectedCards.length >= 1 && vm.selectedCards.length <= 10) {
         downloadService.downloadFiles(vm.selectedCards);
         toastr.success(
           "Download started. Please do not close this browser" +
@@ -410,19 +413,17 @@
             target: "body"
           }
         );
-      } else {
-        toastr.error(
-          "An error has occurred.  Please try your" + " your selection again",
-          "Error:",
-          {
-            positionClass: "toast-bottom-left",
-            closeButton: true,
-            timeOut: 10000,
-            extendedTimeOut: 5000,
-            target: "body"
-          }
-        );
+      } else if (vm.selectedCards.length > 10) {
+        toastr.warning("Please select 10 images or less", "Error:", {
+          positionClass: "toast-bottom-left",
+          closeButton: true,
+          timeOut: 10000,
+          extendedTimeOut: 5000,
+          target: "body"
+        });
+        return;
       }
+      return;
     };
 
     // Shows/Hides the ISA button based on parameters passed down from application.yml
@@ -497,8 +498,8 @@
       $log.debug(`vm.selectedCards: ${vm.selectedCards}`);
 
       if (vm.selectedCards.length >= 1) {
-        let filter = "in(" + vm.selectedCards + ")";
-        vm.url = wfsService.getExport(outputFormat, filter);
+        let imageListFilter = "in(" + vm.selectedCards + ")";
+        vm.url = wfsService.getExport(outputFormat, imageListFilter);
 
         $log.debug(`vm.url: ${vm.url}`);
         window.open(vm.url.toString(), "_blank");

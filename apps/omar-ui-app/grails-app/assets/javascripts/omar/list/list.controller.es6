@@ -146,7 +146,7 @@ function ListController(stateService, wfsService, shareService, downloadService,
         /**
          * Sets the initial state for the sites that are loaded into the UI
          */
-        stateService.updateSitesAppState({});
+        //stateService.updateSitesAppState({});
 
         $scope.$on('omarSitesState.updated', function(event, params) {
 
@@ -475,7 +475,7 @@ function ListController(stateService, wfsService, shareService, downloadService,
                     vm.wfsFeaturesTotalPaginationCount = Math.min(vm.totalPaginationCount, vm.wfsFeatures);
                 }
 
-                // add a comma in-between every set of three numbers 
+                // add a comma in-between every set of three numbers
                 vm.totalWfsFeatures = features.toString().replace( /\B(?=(\d{3})+(?!\d))/g, "," );
             });
 

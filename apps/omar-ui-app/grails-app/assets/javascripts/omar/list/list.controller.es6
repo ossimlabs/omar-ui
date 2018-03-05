@@ -146,7 +146,7 @@ function ListController(stateService, wfsService, shareService, downloadService,
         /**
          * Sets the initial state for the sites that are loaded into the UI
          */
-        //stateService.updateSitesAppState({});
+        stateService.updateSitesAppState({});
 
         $scope.$on('omarSitesState.updated', function(event, params) {
 

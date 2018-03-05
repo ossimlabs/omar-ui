@@ -19,7 +19,7 @@
                 aria-expanded="false"><span class="fa fa-key" aria-hidden="true"></span>
                  &nbsp;Keyword
                  <span
-                  class="text-success filter-indicator"
+                  class="text-info filter-indicator"
                   uib-tooltip="Indicates a keyword filter is being applied"
                   tooltip-placement="right">&#9679;</span>
                <span class="caret"></span></a>
@@ -213,7 +213,7 @@
                 aria-expanded="false"><span class="fa fa-sliders" aria-hidden="true"></span>
                 &nbsp;Ranges
                 <span
-                  class="text-success filter-indicator"
+                  class="text-info filter-indicator"
                   uib-tooltip="Indicates a range filter is being applied"
                   tooltip-placement="right">&#9679;</span>
                 <span class="caret"></span></a>
@@ -423,7 +423,7 @@
                 aria-expanded="false"><span class="fa fa-map" aria-hidden="true"></span>
                 &nbsp;Spatial
                 <span
-                  class="text-success filter-indicator"
+                  class="text-info filter-indicator"
                   uib-tooltip="Indicates a spatial filter is being applied"
                   tooltip-placement="right">&#9679;</span>
                 <span class="caret"></span></a>
@@ -499,7 +499,7 @@
                aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
                &nbsp;Temporal
                <span
-                  class="text-success filter-indicator"
+                  class="text-info filter-indicator"
                   uib-tooltip="Indicates a temporal filter is being applied"
                   tooltip-placement="right">&#9679;</span>
                <span class="caret"></span></a>
@@ -606,9 +606,9 @@
         </div>
         <div class="col-sm-2" style="padding-right: 0px">
           <p class="navbar-text navbar-sort-list-number pull-right">
-            <span class="label label-default">Total images</span>
+            <span class="label label-default cursor-default">Total images</span>
             <span
-              class="label label-primary"
+              class="label label-primary cursor-default"
               ng-class="{'label-info': filter.refreshSpin}"
               tooltip-placement="left"
               uib-tooltip="Number of Search Result Images">{{filter.totalWfsFeatures}}</span>
@@ -770,7 +770,7 @@
                 data-toggle="dropdown"
                 role="button"
                 aria-haspopup="true"
-                aria-expanded="false">Selected {{list.selectedCards.length}}
+                aria-expanded="false">Selected ({{list.selectedCards.length}})
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">

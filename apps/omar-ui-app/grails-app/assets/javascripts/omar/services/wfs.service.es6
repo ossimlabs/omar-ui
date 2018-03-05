@@ -45,7 +45,7 @@
 
     // When this changes it needs to be passed to the executeWfsQuery method
     this.spatialObj = {
-      filter: ""
+      filter: "" // Needs to initially be set as the mapview port
     };
 
     // When this changes it needs to be passed to the executeWfsQuery method

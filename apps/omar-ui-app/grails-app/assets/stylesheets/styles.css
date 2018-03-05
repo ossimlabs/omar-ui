@@ -920,6 +920,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   font-size: .75em;
 }
 
+.cursor-default {
+  cursor: default
+}
+
 .filter-indicator {
   position: absolute;
   top: 0px;

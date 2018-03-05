@@ -924,7 +924,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   position: absolute;
   top: 0px;
   font-size: 1.1em;
-  right: 14px;
+  right: 4px;
 }
 
 .filter-row {

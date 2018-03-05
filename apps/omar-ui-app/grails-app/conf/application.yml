@@ -252,10 +252,10 @@ omar:
         message: "O2 | Image Discovery and Analysis"
 
         # O2 release name
-        releaseName: Fort Myers
+        releaseName: Gasparilla
 
         # O2 release version number
-        releaseNumber: 2.2.0
+        releaseNumber: 2.3.0
 
         # Used to show/hide the About dropdown
         enabled: true

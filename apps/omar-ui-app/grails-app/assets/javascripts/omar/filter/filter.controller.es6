@@ -10,6 +10,7 @@
       "mapService",
       "$window",
       "toastr",
+      "$log",
       FilterController
     ]);
 
@@ -20,7 +21,8 @@
     wfsService,
     mapService,
     $window,
-    toastr
+    toastr,
+    $log
   ) {
     /* jshint validthis: true */
     var vm = this;
@@ -504,7 +506,7 @@
       }
 
       function pushKeywordToArray(dbName, formField) {
-        console.dir(formField);
+        $log.debug(`formField value: ${formField}`);
         var clause = "";
         if (dbName === "mission_id" || dbName === "sensor_id") {
           var clauses = [];

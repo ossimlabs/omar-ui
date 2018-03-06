@@ -67,6 +67,15 @@
 
     var stagerBaseUrl, stagerContextPath, stagerRequestUrl;
 
+    // Initial state of the filter indicators
+    function setInitialfilterIndicators() {
+      vm.filterKeywordIndicator = false;
+      vm.filterRangeIndicator = false;
+      vm.filterSpatialIndicator = true;
+      vm.filterTemporalIndicator = false;
+    }
+    setInitialfilterIndicators();
+
     function setfilterControllerUrlProps() {
       stagerBaseUrl = stateService.omarSitesState.url.base;
       stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
@@ -108,11 +117,20 @@
       }
     };
 
+    function setSpatialIndicator(show) {
+      setTimeout(function() {
+        $scope.$apply(function() {
+          vm.filterSpatialIndicator = show;
+        });
+      }, 250);
+    }
+
     function checkNoSpatialFilter() {
       // If we don't have any of the filters selected we will provide
       // a list of all the images.
       if (!vm.viewPortSpatial && !vm.pointSpatial && !vm.polygonSpatial) {
         mapService.viewPortFilter(false);
+        setSpatialIndicator(false);
       }
     }
 
@@ -128,6 +146,7 @@
       vm.polygonSpatial = false;
       mapService.polygonFilter(vm.polygonSpatial);
 
+      setSpatialIndicator(true);
       checkNoSpatialFilter();
     };
 
@@ -143,6 +162,7 @@
       vm.polygonSpatial = false;
       mapService.polygonFilter(vm.polygonSpatial);
 
+      setSpatialIndicator(true);
       checkNoSpatialFilter();
     };
 
@@ -158,6 +178,7 @@
       vm.pointSpatial = false;
       mapService.pointFilter(vm.pointSpatial);
 
+      setSpatialIndicator(true);
       checkNoSpatialFilter();
     };
 
@@ -331,9 +352,21 @@
       var dbName = vm.currentDateType.value; //"acquisition_date";
       var temporalParam = vm.currentTemporalDuration.value;
 
+      function setTemporalIndicator(show) {
+        setTimeout(function() {
+          $scope.$apply(function() {
+            vm.filterTemporalIndicator = show;
+          });
+        }, 250);
+      }
+
       // Feed the switch statement from the value of the currently selected date range
       switch (temporalParam) {
+        case "none":
+          setTemporalIndicator(false);
+          break;
         case "lastDay":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -349,6 +382,7 @@
           );
           break;
         case "yesterday":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -364,6 +398,7 @@
           );
           break;
         case "last3Days":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -379,6 +414,7 @@
           );
           break;
         case "last7Days":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -394,6 +430,7 @@
           );
           break;
         case "lastMonth":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -409,6 +446,7 @@
           );
           break;
         case "last3Months":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -424,6 +462,7 @@
           );
           break;
         case "last6Months":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -439,6 +478,7 @@
           );
           break;
         case "customDateRange":
+          setTemporalIndicator(true);
           vm.customDateRangeVisible = true;
           filterArray.push(
             [
@@ -496,8 +536,6 @@
             "', '" +
             subClause +
             "'))))";
-
-          // alert( clause );
         }
 
         filterArray.push(clause);
@@ -534,30 +572,82 @@
         }
       }
 
+      function setKeywordIndicator() {
+        setTimeout(function() {
+          $scope.$apply(function() {
+            vm.filterKeywordIndicator = true;
+          });
+        }, 250);
+      }
+
       // Keywords
       if (vm.beNumberCheck && vm.beNumber != "") {
         pushKeywordToArray("be_number", vm.beNumber);
+        setKeywordIndicator();
+      } else if (!vm.beNumberCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.countryCodeCheck && vm.countryCode != "") {
+        vm.filterKeywordIndicator = true;
         pushKeywordToArray("country_code", vm.countryCode);
+        setKeywordIndicator();
+      } else if (!vm.countryCodeCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.filenameCheck && vm.filename != "") {
         pushKeywordToArray("filename", vm.filename);
+        setKeywordIndicator();
+      } else if (!vm.filenameCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.imageIdCheck && vm.imageId != "") {
+        vm.filterKeywordIndicator = true;
         pushKeywordToArray("title", vm.imageId);
+        setKeywordIndicator();
+      } else if (!vm.imageIdCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.missionIdCheck && vm.missionId.length != 0) {
+        vm.filterKeywordIndicator = true;
         pushKeywordToArray("mission_id", vm.missionId);
+        setKeywordIndicator();
+      } else if (!vm.missionIdCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.sensorIdCheck && vm.sensorId.length != 0) {
+        vm.filterKeywordIndicator = true;
+        setKeywordIndicator();
         pushKeywordToArray("sensor_id", vm.sensorId);
+      } else if (!vm.sensorIdCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.targetIdCheck && vm.targetId != "") {
+        vm.filterKeywordIndicator = true;
         pushKeywordToArray("target_id", vm.targetId);
+        setKeywordIndicator();
+      } else if (!vm.targetIdCheck) {
+        vm.filterKeywordIndicator = false;
       }
+
       if (vm.wacNumberCheck && vm.wacNumber != "") {
+        vm.filterKeywordIndicator = true;
         pushKeywordToArray("wac_code", vm.wacNumber);
+      } else if (!vm.wacNumberCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      function setRangesIndicator() {
+        setTimeout(function() {
+          $scope.$apply(function() {
+            vm.filterRangeIndicator = true;
+          });
+        }, 250);
       }
 
       // Ranges
@@ -565,22 +655,41 @@
         //filterArray.push(["niirs",  ">=", vm.predNiirsMin, "AND", "niirs", "<=",
         //  vm.predNiirsMax].join(" "));
         pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
+        setRangesIndicator();
+      } else if (!vm.predNiirsCheck) {
+        vm.filterRangeIndicator = false;
       }
+
       if (vm.azimuthCheck) {
         //filterArray.push(["azimuth_angle",  ">=", vm.azimuthMin, "AND", "azimuth_angle", "<=",
         //  vm.azimuthMax].join(" "));
+        vm.filterRangeIndicator = true;
         pushRangeToArray("azimuth_angle", vm.azimuthMin, vm.azimuthMax);
+        setRangesIndicator();
+      } else if (!vm.azimuthCheck) {
+        vm.filterRangeIndicator = false;
       }
+
       if (vm.grazeElevCheck) {
         //filterArray.push(["grazing_angle",  ">=", vm.grazeElevMin, "AND", "grazing_angle", "<=",
         //  vm.grazeElevMax].join(" "));
+        vm.filterRangeIndicator = true;
         pushRangeToArray("grazing_angle", vm.grazeElevMin, vm.grazeElevMax);
+        setRangesIndicator();
+      } else if (!vm.grazeElevCheck) {
+        vm.filterRangeIndicator = false;
       }
+
       if (vm.sunAzimuthCheck) {
         //filterArray.push(["sun_azimuth",  ">=", vm.sunAzimuthMin, "AND", "sun_azimuth", "<=",
         //  vm.sunAzimuthMax].join(" "));
+        vm.filterRangeIndicator = true;
         pushRangeToArray("sun_azimuth", vm.sunAzimuthMin, vm.sunAzimuthMax);
+        setRangesIndicator();
+      } else if (!vm.sunAzimuthCheck) {
+        vm.filterRangeIndicator = false;
       }
+
       if (vm.sunElevationCheck) {
         //filterArray.push(["sun_elevation",  ">=", vm.sunElevationMin, "AND", "sun_elevation", "<=",
         //  vm.sunElevationMax].join(" "));
@@ -589,7 +698,11 @@
           vm.sunElevationMin,
           vm.sunElevationMax
         );
+        setRangesIndicator();
+      } else if (!vm.sunElevationCheck) {
+        vm.filterRangeIndicator = false;
       }
+
       if (vm.cloudCoverCheck) {
         if (isNaN(vm.cloudCover)) {
           toastr.error(
@@ -603,7 +716,10 @@
           filterArray.push(
             "(cloud_cover <= " + vm.cloudCover + " OR cloud_cover IS NULL)"
           );
+          setRangesIndicator();
         }
+      } else if (!vm.cloudCoverCheck) {
+        vm.filterRangeIndicator = false;
       }
 
       filterString = filterArray.join(" AND ");

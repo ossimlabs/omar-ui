@@ -20,6 +20,7 @@
                  &nbsp;Keyword
                  <span
                   class="text-info filter-indicator"
+                  ng-show="filter.filterKeywordIndicator"
                   uib-tooltip="Indicates a keyword filter is being applied"
                   tooltip-placement="right">&#9679;</span>
                <span class="caret"></span></a>
@@ -213,6 +214,7 @@
                 aria-expanded="false"><span class="fa fa-sliders" aria-hidden="true"></span>
                 &nbsp;Ranges
                 <span
+                  ng-show="filter.filterRangeIndicator"
                   class="text-info filter-indicator"
                   uib-tooltip="Indicates a range filter is being applied"
                   tooltip-placement="right">&#9679;</span>
@@ -423,6 +425,7 @@
                 aria-expanded="false"><span class="fa fa-map" aria-hidden="true"></span>
                 &nbsp;Spatial
                 <span
+                  ng-show="filter.filterSpatialIndicator"
                   class="text-info filter-indicator"
                   uib-tooltip="Indicates a spatial filter is being applied"
                   tooltip-placement="right">&#9679;</span>
@@ -495,13 +498,14 @@
               </ul>
             </li>
             <li class="dropdown mega-dropdown">
-              <a  class="dropdown-toggle temporal-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
-               aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
-               &nbsp;Temporal
-               <span
-                  class="text-info filter-indicator"
-                  uib-tooltip="Indicates a temporal filter is being applied"
-                  tooltip-placement="right">&#9679;</span>
+                <a  class="dropdown-toggle temporal-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
+                &nbsp;Temporal
+                <span
+                ng-show="filter.filterTemporalIndicator"
+                class="text-info filter-indicator"
+                uib-tooltip="Indicates a temporal filter is being applied"
+                tooltip-placement="right">&#9679;</span>
                <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row temporal-row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">

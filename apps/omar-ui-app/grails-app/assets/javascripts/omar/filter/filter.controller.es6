@@ -27,6 +27,7 @@
     /* jshint validthis: true */
     var vm = this;
 
+    vm.filterString = "Filter text here...";
     vm.listRefreshButtonVisible =
       AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
     vm.refreshSpin = false;
@@ -591,7 +592,6 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode != "") {
-        vm.filterKeywordIndicator = true;
         pushKeywordToArray("country_code", vm.countryCode);
         setKeywordIndicator();
       } else if (!vm.countryCodeCheck) {
@@ -606,7 +606,6 @@
       }
 
       if (vm.imageIdCheck && vm.imageId != "") {
-        vm.filterKeywordIndicator = true;
         pushKeywordToArray("title", vm.imageId);
         setKeywordIndicator();
       } else if (!vm.imageIdCheck) {
@@ -614,7 +613,6 @@
       }
 
       if (vm.missionIdCheck && vm.missionId.length != 0) {
-        vm.filterKeywordIndicator = true;
         pushKeywordToArray("mission_id", vm.missionId);
         setKeywordIndicator();
       } else if (!vm.missionIdCheck) {
@@ -622,7 +620,6 @@
       }
 
       if (vm.sensorIdCheck && vm.sensorId.length != 0) {
-        vm.filterKeywordIndicator = true;
         setKeywordIndicator();
         pushKeywordToArray("sensor_id", vm.sensorId);
       } else if (!vm.sensorIdCheck) {
@@ -630,7 +627,6 @@
       }
 
       if (vm.targetIdCheck && vm.targetId != "") {
-        vm.filterKeywordIndicator = true;
         pushKeywordToArray("target_id", vm.targetId);
         setKeywordIndicator();
       } else if (!vm.targetIdCheck) {
@@ -638,8 +634,8 @@
       }
 
       if (vm.wacNumberCheck && vm.wacNumber != "") {
-        vm.filterKeywordIndicator = true;
         pushKeywordToArray("wac_code", vm.wacNumber);
+        setKeywordIndicator();
       } else if (!vm.wacNumberCheck) {
         vm.filterKeywordIndicator = false;
       }
@@ -724,8 +720,13 @@
         vm.filterRangeIndicator = false;
       }
 
-      filterString = filterArray.join(" AND ");
+      console.log("filterArray before join", filterArray);
+      vm.filterArray = filterArray;
 
+      filterString = filterArray.join(" AND ");
+      vm.filterString = filterString;
+
+      $log.warn(`filterString: `, filterString);
       wfsService.updateAttrFilter(filterString);
     };
 
@@ -735,6 +736,15 @@
 
     vm.setInitialCustomStartDate();
     vm.setInitialCustomEndDate();
+
+    vm.clearFilters = () => {
+      vm.initSpatial();
+      vm.initKeywords();
+      vm.initRanges();
+
+      vm.setInitialCustomStartDate();
+      vm.setInitialCustomEndDate();
+    };
 
     vm.closeFilterDropdown = function(e) {
       var elem = "." + e;

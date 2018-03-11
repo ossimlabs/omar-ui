@@ -279,14 +279,6 @@
       return border;
     };
 
-    // vm.listRefreshButtonVisible =
-    //   AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
-    // vm.refreshSpin = false;
-    // vm.refreshList = function() {
-    //   wfsService.executeWfsQuery();
-    //   vm.refreshSpin = true;
-    // };
-
     // Shows/Hides the KML SuperOverlay button based on parameters passed down
     // from application.yml
     vm.kmlSuperOverlayAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;

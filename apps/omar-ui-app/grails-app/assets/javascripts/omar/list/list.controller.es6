@@ -195,7 +195,7 @@
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
     vm.thumbEntry = "&entry="; // Parameter provided by image.properties.entry_id
-    vm.thumbSize = "&thumbnailResolution=100";
+    vm.thumbSize = "&size=112";
     vm.thumbFormat = "&outputFormat=jpeg";
 
     vm.getImageSpaceUrl = function(image) {

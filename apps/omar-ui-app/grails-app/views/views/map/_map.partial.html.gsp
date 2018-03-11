@@ -200,10 +200,10 @@
                           ng-click="filter.updateFilterString()">Apply
                         </button>
                         <button class="btn btn-primary btn-xs" type="button"
-                          ng-click="filter.initKeywords();">Reset
+                          ng-click="filter.initKeywords(true);">Reset
                         </button>
                         <button class="btn btn-warning btn-xs" type="button"
-                          ng-click="filter.closeFilterDropdown('keyword-filter-dropdown')">Close
+                          ng-click="filter.closeFilterDropdown('keyword-filter-dropdown');">Close
                         </button>
                       </li>
                     </ul>
@@ -229,7 +229,8 @@
                       <li class="text-center">
                         <p>Click the checkbox next to the range parameter below to use it as a filter</p>
                       </li>
-                      <li class="col-sm-3 filter-row">
+                      <li class="col-sm-1"></li>
+                      <li class="col-sm-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -238,29 +239,42 @@
                           <span class="input-group-addon range-name">NIIRS</span>
                         </div>
                       </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Min</label>
-                      </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.predNiirsMin"
                           class="form-control input-sm" id="niirsMin"
                           placeholder="0.0" value="{{filter.predNiirsMin}}">
                       </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Max</label>
-                      </li>
-                      <li class="col-sm-2">
+                      <li
+                        class="col-sm-2">
                         <input ng-model="filter.predNiirsMax"
                         class="form-control input-sm" id="niirsMax"
                         placeholder="9.0" value="{{filter.predNiirsMax}}">
                       </li>
-                      <li class="col-sm-3">
-                        <small>Valid ranges  0.0 to 9.0</small>
+                      <li class="col-sm-1 range-info">
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Valid range 0.0 to 9.0"></i>
+                      </li>
+                      <li class="col-sm-3 range-include-unknown">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" ng-model="filter.predNiirsCheckNull">
+                          <label
+                            class="form-check-label range-include-unknown-label"
+                            for="predNiirsCheckNull">
+                            Include Unknown
+                          </label>
+                          <i
+                            class="fa fa-info-circle text-info"
+                            aria-hidden="true"
+                            uib-tooltip="Checking this box will allow results for images with null or unknown values ih the NIIRS metadata field"></i>
+                        </div>
                       </li>
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-3 filter-row">
+                      <li class="col-sm-1"></li>
+                      <li class="col-sm-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -269,29 +283,39 @@
                           <span class="input-group-addon range-name">Azimuth</span>
                         </div>
                       </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Min</label>
-                      </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.azimuthMin"
                         class="form-control input-sm" id="azimuthMin"
                         placeholder="0.0" value="{{filter.azimuthMin}}">
-                      </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Max</label>
                       </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.azimuthMax"
                         class="form-control input-sm" id="azimuthMax"
                         placeholder="0.0" value="{{filter.azimuthMax}}">
                       </li>
-                      <li class="col-sm-3">
-                        <small>Valid ranges 0 to 360 degrees</small>
+                      <li class="col-sm-1 range-info">
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Valid range 0 to 360"></i>
+                      </li>
+                      <li class="col-sm-3 range-include-unknown">
+                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.azimuthCheckNull">
+                        <label
+                          class="form-check-label range-include-unknown-label"
+                          for="azimuthCheckNull">
+                          Include Unknown
+                        </label>
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Checking this box will allow results for images with null or unknown values ih the Azimuth metadata field"></i>
                       </li>
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-3 filter-row">
+                      <li class="col-sm-1"></li>
+                      <li class="col-sm-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -300,29 +324,39 @@
                           <span class="input-group-addon range-name">Graze/Elev</span>
                         </div>
                       </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Min</label>
-                      </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.grazeElevMin"
                         class="form-control input-sm" id="grazeElevMin"
                         placeholder="0.0" value="{{filter.grazeElevMin}}">
-                      </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Max</label>
                       </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.grazeElevMax"
                         class="form-control input-sm" id="grazeElevMax"
                         placeholder="0.0" value="{{filter.grazeElevMax}}">
                       </li>
-                      <li class="col-sm-3">
-                        <small>Valid ranges 0 to 90 degrees</small>
+                      <li class="col-sm-1 range-info">
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Valid range  0 to 90"></i>
+                      </li>
+                      <li class="col-sm-3 range-include-unknown">
+                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.grazeElevCheckNull">
+                        <label
+                          class="form-check-label range-include-unknown-label"
+                          for="grazeElevCheckNull">
+                          Include Unknown
+                        </label>
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Checking this box will allow results for images with null or unknown values ih the Graze/Elev metadata field"></i>
                       </li>
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-3 filter-row">
+                      <li class="col-sm-1"></li>
+                      <li class="col-sm-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -331,29 +365,39 @@
                           <span class="input-group-addon range-name">Sun Azimuth</span>
                         </div>
                       </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Min</label>
-                      </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.sunAzimuthMin"
                         class="form-control input-sm" id="sunAzimuthMin"
                         placeholder="0.0" value="{{filter.sunAzimuthMin}}">
-                      </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Max</label>
                       </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.sunAzimuthMax"
                         class="form-control input-sm" id="sunAzimuthMax"
                         placeholder="9.0" value="{{filter.sunAzimuthMax}}">
                       </li>
-                      <li class="col-sm-3">
-                        <small>Valid ranges 0 to 360 degrees</small>
+                      <li class="col-sm-1 range-info">
+                        <i
+                        class="fa fa-info-circle text-info"
+                        aria-hidden="true"
+                        uib-tooltip="Valid range 0.0 to 360"></i>
+                      </li>
+                      <li class="col-sm-3 range-include-unknown">
+                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.sunAzimuthCheckNull">
+                        <label
+                          class="form-check-label range-include-unknown-label"
+                          for="sunAzimuthCheckNull">
+                          Include Unknown
+                        </label>
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Checking this box will allow results for images with null or unknown values ih the Sun Azimuth metadata field"></i>
                       </li>
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-3 filter-row">
+                      <li class="col-sm-1"></li>
+                      <li class="col-sm-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -362,29 +406,39 @@
                           <span class="input-group-addon range-name">Sun Elevation</span>
                         </div>
                       </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Min</label>
-                      </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.sunElevationMin"
                         class="form-control input-sm" id="sunElevationMin"
                         placeholder="0.0" value="{{filter.sunElevationMin}}">
-                      </li>
-                      <li class="col-sm-1 visible-xs">
-                        <label class="label label-primary">Max</label>
                       </li>
                       <li class="col-sm-2">
                         <input ng-model="filter.sunElevationMax"
                         class="form-control input-sm" id="sunElevationMax"
                         placeholder="90.0" value="{{filter.sunElevationMax}}">
                       </li>
-                      <li class="col-sm-3">
-                        <small>Valid ranges -90 to 90 degrees</small>
+                      <li class="col-sm-1 range-info">
+                        <i
+                        class="fa fa-info-circle text-info"
+                        aria-hidden="true"
+                        uib-tooltip="Valid range -90 to 90"></i>
+                      </li>
+                      <li class="col-sm-3 range-include-unknown">
+                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.sunElevationCheckNull">
+                        <label
+                          class="form-check-label range-include-unknown-label"
+                          for="sunElevationCheckNull">
+                          Include Unknown
+                        </label>
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Checking this box will allow results for images with null or unknown values ih the Sun Elevation metadata field"></i>
                       </li>
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-3 filter-row">
+                      <li class="col-sm-1"></li>
+                      <li class="col-sm-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -398,10 +452,24 @@
                         class="form-control input-sm" id="cloudCover"
                         placeholder="10.0" value="{{filter.cloudCover}}">
                       </li>
-                      <li class="col-sm-2">
                       </li>
-                      <li class="col-sm-3">
-                        <small>Valid ranges 0 to 100%</small>
+                      <li class="col-sm-1 range-info">
+                        <i
+                        class="fa fa-info-circle text-info"
+                        aria-hidden="true"
+                        uib-tooltip="Valid range 0 to 100"></i>
+                      </li>
+                      <li class="col-sm-3 range-include-unknown">
+                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.cloudCoverCheckNull">
+                        <label
+                          class="form-check-label range-include-unknown-label"
+                          for="cloudCoverCheckNull">
+                          Include Unknown
+                        </label>
+                        <i
+                          class="fa fa-info-circle text-info"
+                          aria-hidden="true"
+                          uib-tooltip="Checking this box will allow results for images with null or unknown values ih the Cloud Cover metadata field"></i>
                       </li>
                       <li class="col-sm-12">
                         <hr>
@@ -410,11 +478,11 @@
                         <button class="btn btn-primary btn-xs" type="button"
                           ng-click="filter.updateFilterString()">Apply
                         </button>
-                        <button class="btn btn-warning btn-xs" type="button"
-                          ng-click="filter.initRanges();">Reset
+                        <button class="btn btn-primary btn-xs" type="button"
+                          ng-click="filter.initRanges(true);">Reset
                         </button>
                         <button class="btn btn-warning btn-xs" type="button"
-                          ng-click="filter.closeFilterDropdown('range-filter-dropdown')">Close
+                          ng-click="filter.closeFilterDropdown('range-filter-dropdown');filter.updateFilterString()">Close
                         </button>
                       </li>
                     </ul>
@@ -631,15 +699,16 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid">
+  <div class="container-fluid" ng-show="filter.showCurrentFilter">
     <div class="row"
     style="
       margin-top: -10px;
       margin-bottom: 5px;">
       <div class="col-sm-12">
         <button class="btn btn-default btn btn-xs" ng-click="filter.clearFilters()">Clear Filters</button>
-        <span ng-repeat="filter in filter.filterArray">
-          <span class="tag label label-primary">
+        <span class="tag label label-info cursor-default">{{filter.currentSpatialFilter}}</span>
+        <span ng-repeat="filter in filter.currentAttrFilterArray">
+          <span class="tag label label-primary cursor-default">
             {{filter}}
             <!-- <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a> -->
           </span>
@@ -730,16 +799,19 @@
                 <ul class="dropdown-menu">
                   <li ng-click="list.sortWfs('acquisition_date', '+D', 'Acquired (New)');"><a>Acquired (New)</a></li>
                   <li ng-click="list.sortWfs('acquisition_date', '+A', 'Acquired (Old)');"><a>Acquired (Old)</a></li>
-                  <li role="separator" class="divider"></li>
+                  <li role="separator" class="divider sort-menu-divider"></li>
                   <li ng-click="list.sortWfs('ingest_date', '+D', 'Ingest (New)');"><a>Ingested (New)</a></li>
                   <li ng-click="list.sortWfs('ingest_date', '+A', 'Ingest (Old)');"><a>Ingested (Old)</a></li>
-                  <li role="separator" class="divider"></li>
+                  <li role="separator" class="divider sort-menu-divider"></li>
+                  <li ng-click="list.sortWfs('niirs', '+D', 'NIIRS (High Rating)');"><a>NIIRS (High Rating)</a></li>
+                  <li ng-click="list.sortWfs('niirs', '+A', 'NIIRS (Low Rating)');"><a>NIIRS (Low Rating)</a></li>
+                  <li role="separator" class="divider sort-menu-divider"></li>
                   <li ng-click="list.sortWfs('title', '+D', 'Image ID (Desc)');"><a>Image ID (Desc)</a></li>
                   <li ng-click="list.sortWfs('title', '+A', 'Image ID (Asc)');"><a>Image ID (Asc)</a></li>
-                  <li role="separator" class="divider"></li>
+                  <li role="separator" class="divider sort-menu-divider"></li>
                   <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor (Asc)');"><a>Sensor (Asc)</a></li>
                   <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor (Desc)');"><a>Sensor (Desc)</a></li>
-                  <li role="separator" class="divider"></li>
+                  <li role="separator" class="divider "></li>
                   <li ng-click="list.sortWfs('mission_id', '+A', 'Mission (Asc)');"><a>Misson (Asc)</a></li>
                   <li ng-click="list.sortWfs('mission_id', '+D', 'Mission (Desc)');"><a>Misson (Desc)</a></li>
                 </ul>
@@ -750,7 +822,7 @@
                 </a>
                 <ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">
                   <li class="dropdown-header">Export the images in the following formats   <i
-                      class="fa fa-info-circle"
+                      class="fa fa-info-circle text-info"
                       aria-hidden="true"
                       tooltip-placement="left-bottom"
                       uib-tooltip="(A maximum of 1000 of the most recently acquired
@@ -765,7 +837,7 @@
                   <li role="separator" class="divider"></li>
                   <li class="dropdown-header">View the images in the following applications
                     <i
-                      class="fa fa-info-circle"
+                      class="fa fa-info-circle text-info"
                       aria-hidden="true"
                       tooltip-placement="left-bottom"
                       uib-tooltip="(A maximum of 100 of the most recently acquired
@@ -795,7 +867,8 @@
                     ng-click="list.downloadSelectedImages()">
                     <a href="">Download
                       <i
-                        class="fa fa-info-circle"
+                        class="fa fa-info-circle text-info"
+                        style="font-size: 12px;"
                         aria-hidden="true"
                         tooltip-placement="left-bottom"
                         uib-tooltip="A maximum of 10 can be downloaded at one time"></i>
@@ -805,7 +878,7 @@
                   <li class="dropdown-header">
                     Exports
                     <i
-                      class="fa fa-info-circle"
+                      class="fa fa-info-circle text-info"
                       aria-hidden="true"
                       tooltip-placement="left-bottom"
                       uib-tooltip="Export the selected images into the following formats"></i>
@@ -849,7 +922,7 @@
                   <li class="divider"></li>
                   <li class="dropdown-header">Applications
                     <i
-                      class="fa fa-info-circle"
+                      class="fa fa-info-circle text-info"
                       aria-hidden="true"
                       tooltip-placement="left-bottom"
                       uib-tooltip="A maximum of 100 can be viewed per application"></i>
@@ -874,7 +947,7 @@
                     ng-click="list.clearSelectedImages()">
                     <a href="">Clear Selected
                       <i
-                        class="fa fa-info-circle"
+                        class="fa fa-info-circle text-info"
                         aria-hidden="true"
                         tooltip-placement="left-bottom"
                         uib-tooltip="Remove all currently selected image cards"></i>
@@ -907,9 +980,31 @@
           ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
           ng-model="image">
           <div class="panel panel-default" >
+            <div class="panel-heading"
+              style="
+                font-size: 11px;
+                padding: 2px 7px;">
+                <span
+                  ng-click="list.addRemoveCards(image.properties.id)">
+                  <i class="fa fa-square-o"
+                    ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
+                    aria-hidden="true"
+                    style="
+                      cursor: pointer;
+                      padding-right: 5px;"
+                    tooltip-placement="left-bottom"
+                    uib-tooltip="Add image to selected list">
+                  </i>
+                </span>
+              <span ng-click="list.showImageModal(image, list.imageSpaceDefaults,   list.imageSpaceRequestUrl, list.uiRequestUrl,     list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
+                class="text-default"
+                style="cursor: pointer;">
+                <span ng-show="!image.properties.title">Unknown</span>
+                {{image.properties.title}}
+            </div>
             <div class="panel-body"
-            ng-mouseenter="list.displayFootprint(image);"
-            ng-mouseleave="list.removeFootprint();">
+              ng-mouseenter="list.displayFootprint(image);"
+              ng-mouseleave="list.removeFootprint();">
               <div class="media">
                 <div class="media-left" style="position: relative">
                   <img ng-style="list.thumbBorder(image.properties.file_type)"
@@ -926,24 +1021,6 @@
                 </div>
                 <div class="media-body">
                   <div class="row">
-                    <div class="col-md-10" style="font-size: 13px;">
-                      ID:&nbsp;&nbsp;
-                      <span ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
-                        class="text-success image-id-link">
-                        <span ng-show="!image.properties.title">Unknown</span>
-                        {{image.properties.title}}
-                      </span>
-                    </div>
-                    <div class="col-md-2"
-                      ng-click="list.addRemoveCards(image.properties.id)">
-                      <i class="fa fa-square-o"
-                        ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
-                        aria-hidden="true"
-                        style="cursor: pointer;"
-                        tooltip-placement="left-bottom"
-                        uib-tooltip="Add image to selected list">
-                      </i>
-                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12" style="font-size: 13px;">
@@ -979,6 +1056,15 @@
                       <span class="text-success">
                         <span ng-show="!image.properties.mission_id">Unknown</span>
                         {{image.properties.mission_id}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12" style="font-size: 13px;">
+                      GSD:&nbsp;&nbsp;
+                      <span class="text-success">
+                        <span ng-show="!image.properties.gsdy">Unknown</span>
+                        {{image.properties.gsdy | number:4}} Meters
                       </span>
                     </div>
                   </div>

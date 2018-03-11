@@ -801,16 +801,16 @@
         }
         if (vm.cloudCoverCheckNull) {
           vm.currentAttrFilterArray.push(
-            `Cloud cover less than or equsl to ${
+            `Cloud cover less than or equal to ${
               vm.cloudCover
-            } (Show unknown values)`
+            }% (Show unknown values)`
           );
           filterArray.push(
             "(cloud_cover <= " + vm.cloudCover + " OR cloud_cover IS NULL)"
           );
         } else {
           vm.currentAttrFilterArray.push(
-            `Cloud cover less than or equsl to ${vm.cloudCover}`
+            `Cloud cover less than or equal to ${vm.cloudCover}%`
           );
           filterArray.push("(cloud_cover <= " + vm.cloudCover + ")");
         }

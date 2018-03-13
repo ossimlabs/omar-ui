@@ -623,7 +623,7 @@
         thumbnailsRequestUrl +
         "?id=" +
         imageObj.properties.id +
-        "filename=" +
+        "&filename=" +
         imageObj.properties.filename +
         "&entry=" +
         imageObj.properties.entry_id +

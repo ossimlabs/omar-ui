@@ -194,6 +194,7 @@
 
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
+    vm.thumbId = "&id="; // Parameter provided by image.properties.id
     vm.thumbEntry = "&entry="; // Parameter provided by image.properties.entry_id
     vm.thumbSize = "&size=112";
     vm.thumbFormat = "&outputFormat=jpeg";

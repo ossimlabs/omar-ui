@@ -1012,7 +1012,7 @@
                     ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                     tooltip-placement="right"
                     uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
-                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
+                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
                     alt="Image thumbnail"
                     style="cursor: pointer;">&nbsp;
                   <span class="text-center" ng-show="list.showProcessInfo[$index]">

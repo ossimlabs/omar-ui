@@ -876,6 +876,14 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-left: -11px;
 }
 
+.legend-control {
+  bottom: 65px;
+  right: .5em;
+}
+.ol-touch .legend-control {
+  bottom: 80px;
+}
+
 .truncate {
   width: 50px;
   white-space: nowrap;

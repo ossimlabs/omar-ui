@@ -27,6 +27,7 @@
     /* jshint validthis: true */
     var vm = this;
 
+    vm.showCurrentFilter = true;
     vm.listRefreshButtonVisible =
       AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
     vm.refreshSpin = false;
@@ -94,11 +95,12 @@
     var filterString = "";
     var filterArray = [];
 
+    vm.currentAttrFilterArray = [];
+    vm.currentSpatialFilter = "";
+
     vm.initSpatial = function() {
       vm.viewPortSpatial = true;
-
       vm.pointSpatial = false;
-
       vm.polygonSpatial = false;
     };
 
@@ -119,20 +121,12 @@
       }
     };
 
-    function setSpatialIndicator(show) {
-      setTimeout(function() {
-        $scope.$apply(function() {
-          vm.filterSpatialIndicator = show;
-        });
-      }, 250);
-    }
-
     function checkNoSpatialFilter() {
       // If we don't have any of the filters selected we will provide
       // a list of all the images.
       if (!vm.viewPortSpatial && !vm.pointSpatial && !vm.polygonSpatial) {
         mapService.viewPortFilter(false);
-        setSpatialIndicator(false);
+        setSpatialIndicator(false, "None");
       }
     }
 
@@ -148,9 +142,12 @@
       vm.polygonSpatial = false;
       mapService.polygonFilter(vm.polygonSpatial);
 
-      setSpatialIndicator(true);
+      setSpatialIndicator(true, "View Port");
       checkNoSpatialFilter();
     };
+
+    // Inital spatial filter is the View Port
+    setSpatialIndicator(true, "View Port");
 
     this.byPointer = function(status) {
       // Turn on point
@@ -164,7 +161,7 @@
       vm.polygonSpatial = false;
       mapService.polygonFilter(vm.polygonSpatial);
 
-      setSpatialIndicator(true);
+      setSpatialIndicator(true, "Point");
       checkNoSpatialFilter();
     };
 
@@ -180,11 +177,11 @@
       vm.pointSpatial = false;
       mapService.pointFilter(vm.pointSpatial);
 
-      setSpatialIndicator(true);
+      setSpatialIndicator(true, "Polygon");
       checkNoSpatialFilter();
     };
 
-    vm.initKeywords = function() {
+    vm.initKeywords = function(reset) {
       // Keywords
       vm.countryCodeCheck = false;
       vm.countryCode = "";
@@ -211,10 +208,12 @@
       vm.filename = "";
 
       // Clears out the current filter
-      vm.updateFilterString();
+      if (reset) {
+        vm.updateFilterString();
+      }
     };
 
-    vm.initRanges = function() {
+    vm.initRanges = function(reset) {
       // Ranges
       vm.predNiirsCheck = false;
       vm.predNiirsMin = "0.0";
@@ -239,8 +238,10 @@
       vm.cloudCoverCheck = false;
       vm.cloudCover = "20";
 
-      // Clears out the current filter
-      vm.updateFilterString();
+      if (reset) {
+        // Clears out the current filter
+        vm.updateFilterString();
+      }
     };
 
     vm.dateTypes = [
@@ -310,23 +311,53 @@
 
     vm.setInitialCustomEndDate = function() {
       vm.endDate = new Date();
-      //vm.endDate = new Date(new Date().setMinutes(0, 0));
     };
 
     vm.getCustomStartDate = function() {
-      // TODO: Pickup the time from the timepicker control instead of formatting from moment
       return moment(vm.startDate).format("MM-DD-YYYY HH:mm:ss+0000");
     };
 
     vm.getCustomEndDate = function() {
-      // TODO: Pickup the time from the timepicker control instead of formatting from moment
       return moment(vm.endDate).format("MM-DD-YYYY HH:mm:ss+0000");
     };
 
+    function setKeywordIndicator() {
+      setTimeout(function() {
+        $scope.$apply(function() {
+          vm.filterKeywordIndicator = true;
+        });
+      }, 250);
+    }
+
+    function setRangesIndicator(show) {
+      setTimeout(function() {
+        $scope.$apply(function() {
+          vm.filterRangeIndicator = show;
+        });
+      }, 250);
+    }
+
+    function setSpatialIndicator(show, type) {
+      setTimeout(function() {
+        $scope.$apply(function() {
+          vm.filterSpatialIndicator = show;
+          vm.currentSpatialFilter = `Spatial: ${type}`;
+        });
+      }, 250);
+    }
+
+    function setTemporalIndicator(show) {
+      setTimeout(function() {
+        $scope.$apply(function() {
+          vm.filterTemporalIndicator = show;
+        });
+      }, 250);
+    }
+
     vm.updateFilterString = function() {
       filterArray = [];
+      vm.currentAttrFilterArray = [];
 
-      // Move this to an init like the others?
       var dateToday = moment().format("MM-DD-YYYY 00:00+0000");
       var dateTodayEnd = moment().format("MM-DD-YYYY 23:59+0000");
       var dateYesterday = moment()
@@ -354,21 +385,18 @@
       var dbName = vm.currentDateType.value; //"acquisition_date";
       var temporalParam = vm.currentTemporalDuration.value;
 
-      function setTemporalIndicator(show) {
-        setTimeout(function() {
-          $scope.$apply(function() {
-            vm.filterTemporalIndicator = show;
-          });
-        }, 250);
-      }
+      let dateField =
+        dbName === "ingest_date" ? "Ingest Date" : "Acquisition Date";
 
       // Feed the switch statement from the value of the currently selected date range
       switch (temporalParam) {
         case "none":
           setTemporalIndicator(false);
+          vm.customDateRangeVisible = false;
           break;
         case "lastDay":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(`${dateField}: Today`);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -385,6 +413,7 @@
           break;
         case "yesterday":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(`${dateField}: Yesterday`);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -402,6 +431,7 @@
         case "last3Days":
           setTemporalIndicator(true);
           vm.customDateRangeVisible = false;
+          vm.currentAttrFilterArray.push(`${dateField}: Last 3 Days`);
           filterArray.push(
             [
               dbName,
@@ -417,6 +447,7 @@
           break;
         case "last7Days":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(`${dateField}: Last 7 Days`);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -433,6 +464,7 @@
           break;
         case "lastMonth":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(`${dateField}: Last Month`);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -449,6 +481,7 @@
           break;
         case "last3Months":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(`${dateField}: Last 3 Months`);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -465,6 +498,7 @@
           break;
         case "last6Months":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(`${dateField}: Last Six Months`);
           vm.customDateRangeVisible = false;
           filterArray.push(
             [
@@ -481,6 +515,12 @@
           break;
         case "customDateRange":
           setTemporalIndicator(true);
+          vm.currentAttrFilterArray.push(
+            `${dateField}: ` +
+              vm.getCustomStartDate() +
+              " to " +
+              vm.getCustomEndDate()
+          );
           vm.customDateRangeVisible = true;
           filterArray.push(
             [
@@ -497,11 +537,6 @@
           break;
         default:
           vm.customDateRangeVisible = false;
-          //filterArray.push([dbName,  ">='", dateToday, "'AND", dbName, "<='",  dateTodayEnd, "'
-          // AND"].join(" "));
-          //filterArray.push([dbName,  ">='", dateToday, "'AND", dbName, "<='",  dateTodayEnd, "'
-          // AND"].join(" "));
-          //filterArray.push([" ",].join(" "));
           break;
       }
 
@@ -543,8 +578,74 @@
         filterArray.push(clause);
       }
 
-      function pushRangeToArray(dbName, formFieldMin, formFieldMax) {
-        var min, max;
+      // Keywords
+      if (vm.beNumberCheck && vm.beNumber != "") {
+        vm.currentAttrFilterArray.push(`BE: ${vm.beNumber}`);
+        pushKeywordToArray("be_number", vm.beNumber);
+        setKeywordIndicator();
+      } else if (!vm.beNumberCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.countryCodeCheck && vm.countryCode != "") {
+        vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode}`);
+        pushKeywordToArray("country_code", vm.countryCode);
+        setKeywordIndicator();
+      } else if (!vm.countryCodeCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.filenameCheck && vm.filename != "") {
+        vm.currentAttrFilterArray.push(`File: ${vm.filename}`);
+        pushKeywordToArray("filename", vm.filename);
+        setKeywordIndicator();
+      } else if (!vm.filenameCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.imageIdCheck && vm.imageId != "") {
+        vm.currentAttrFilterArray.push(`Image: ${vm.imageId}`);
+        pushKeywordToArray("title", vm.imageId);
+        setKeywordIndicator();
+      } else if (!vm.imageIdCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.missionIdCheck && vm.missionId.length != 0) {
+        vm.currentAttrFilterArray.push(`Mission: ${vm.missionId}`);
+        pushKeywordToArray("mission_id", vm.missionId);
+        setKeywordIndicator();
+      } else if (!vm.missionIdCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.sensorIdCheck && vm.sensorId.length != 0) {
+        vm.currentAttrFilterArray.push(`Sensor: ${vm.sensorId}`);
+        pushKeywordToArray("sensor_id", vm.sensorId);
+        setKeywordIndicator();
+      } else if (!vm.sensorIdCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.targetIdCheck && vm.targetId != "") {
+        vm.currentAttrFilterArray.push(`Target: ${vm.targetId}`);
+        pushKeywordToArray("target_id", vm.targetId);
+        setKeywordIndicator();
+      } else if (!vm.targetIdCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.wacNumberCheck && vm.wacNumber != "") {
+        vm.currentAttrFilterArray.push(`Targe: ${vm.wacNumber}`);
+        pushKeywordToArray("wac_code", vm.wacNumber);
+        setKeywordIndicator();
+      } else if (!vm.wacNumberCheck) {
+        vm.filterKeywordIndicator = false;
+      }
+
+      function pushRangeToArray(dbName, formFieldMin, formFieldMax, showNull) {
+        $log.debug(`showNull: ${showNull}`);
+        let min, max, clause;
 
         min = parseFloat(formFieldMin);
         max = parseFloat(formFieldMax);
@@ -557,150 +658,133 @@
               closeButton: true
             }
           );
-        } else if (dbName == "niirs") {
-          var clause =
-            "(( niirs >= " +
-            min +
-            " AND " +
-            dbName +
-            " <= " +
-            max +
-            ") OR niirs IS NULL)";
+        } else if (showNull === true) {
+          clause = `(( ${dbName} >= ${min} AND ${dbName} <= ${max} ) OR ${dbName} IS NULL)`;
           filterArray.push(clause);
         } else {
+          $log.debug(
+            "showNull, is not present, filtering without looking for NULL"
+          );
           filterArray.push(
             [dbName, ">=", min, "AND", dbName, "<=", max].join(" ")
           );
         }
       }
 
-      function setKeywordIndicator() {
-        setTimeout(function() {
-          $scope.$apply(function() {
-            vm.filterKeywordIndicator = true;
-          });
-        }, 250);
-      }
-
-      // Keywords
-      if (vm.beNumberCheck && vm.beNumber != "") {
-        pushKeywordToArray("be_number", vm.beNumber);
-        setKeywordIndicator();
-      } else if (!vm.beNumberCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.countryCodeCheck && vm.countryCode != "") {
-        vm.filterKeywordIndicator = true;
-        pushKeywordToArray("country_code", vm.countryCode);
-        setKeywordIndicator();
-      } else if (!vm.countryCodeCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.filenameCheck && vm.filename != "") {
-        pushKeywordToArray("filename", vm.filename);
-        setKeywordIndicator();
-      } else if (!vm.filenameCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.imageIdCheck && vm.imageId != "") {
-        vm.filterKeywordIndicator = true;
-        pushKeywordToArray("title", vm.imageId);
-        setKeywordIndicator();
-      } else if (!vm.imageIdCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.missionIdCheck && vm.missionId.length != 0) {
-        vm.filterKeywordIndicator = true;
-        pushKeywordToArray("mission_id", vm.missionId);
-        setKeywordIndicator();
-      } else if (!vm.missionIdCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.sensorIdCheck && vm.sensorId.length != 0) {
-        vm.filterKeywordIndicator = true;
-        setKeywordIndicator();
-        pushKeywordToArray("sensor_id", vm.sensorId);
-      } else if (!vm.sensorIdCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.targetIdCheck && vm.targetId != "") {
-        vm.filterKeywordIndicator = true;
-        pushKeywordToArray("target_id", vm.targetId);
-        setKeywordIndicator();
-      } else if (!vm.targetIdCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      if (vm.wacNumberCheck && vm.wacNumber != "") {
-        vm.filterKeywordIndicator = true;
-        pushKeywordToArray("wac_code", vm.wacNumber);
-      } else if (!vm.wacNumberCheck) {
-        vm.filterKeywordIndicator = false;
-      }
-
-      function setRangesIndicator() {
-        setTimeout(function() {
-          $scope.$apply(function() {
-            vm.filterRangeIndicator = true;
-          });
-        }, 250);
-      }
-
       // Ranges
       if (vm.predNiirsCheck) {
-        //filterArray.push(["niirs",  ">=", vm.predNiirsMin, "AND", "niirs", "<=",
-        //  vm.predNiirsMax].join(" "));
-        pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
-        setRangesIndicator();
+        //setRangesIndicator(true);
+        if (vm.predNiirsCheckNull) {
+          vm.currentAttrFilterArray.push(
+            `NIIRS between ${vm.predNiirsMin} and ${
+              vm.predNiirsMax
+            } (Show unknown values)`
+          );
+          pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax, true);
+        } else {
+          vm.currentAttrFilterArray.push(
+            `NIIRS between ${vm.predNiirsMin} and ${vm.predNiirsMax}`
+          );
+          pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
+        }
+        setRangesIndicator(true);
       } else if (!vm.predNiirsCheck) {
-        vm.filterRangeIndicator = false;
+        setRangesIndicator(false);
       }
 
       if (vm.azimuthCheck) {
-        //filterArray.push(["azimuth_angle",  ">=", vm.azimuthMin, "AND", "azimuth_angle", "<=",
-        //  vm.azimuthMax].join(" "));
-        vm.filterRangeIndicator = true;
-        pushRangeToArray("azimuth_angle", vm.azimuthMin, vm.azimuthMax);
-        setRangesIndicator();
+        if (vm.azimuthCheckNull) {
+          vm.currentAttrFilterArray.push(
+            `Azimuth Angle between ${vm.azimuthMin} and ${
+              vm.azimuthMax
+            } (Show unknown values)`
+          );
+          pushRangeToArray("azimuth_angle", vm.azimuthMin, vm.azimuthMax, true);
+        } else {
+          vm.currentAttrFilterArray.push(
+            `Azimuth Angle between ${vm.azimuthMin} and ${vm.azimuthMax}`
+          );
+          pushRangeToArray("azimuth_angle", vm.azimuthMin, vm.azimuthMax);
+        }
+        //setRangesIndicator(true);
       } else if (!vm.azimuthCheck) {
-        vm.filterRangeIndicator = false;
+        //setRangesIndicator(false);
       }
 
       if (vm.grazeElevCheck) {
-        //filterArray.push(["grazing_angle",  ">=", vm.grazeElevMin, "AND", "grazing_angle", "<=",
-        //  vm.grazeElevMax].join(" "));
-        vm.filterRangeIndicator = true;
-        pushRangeToArray("grazing_angle", vm.grazeElevMin, vm.grazeElevMax);
-        setRangesIndicator();
+        if (vm.grazeElevCheckNull) {
+          vm.currentAttrFilterArray.push(
+            `Grazing Angle between ${vm.grazeElevMin} and ${
+              vm.grazeElevMax
+            } (Show unknown values)`
+          );
+          pushRangeToArray(
+            "grazing_angle",
+            vm.grazeElevMin,
+            vm.grazeElevMax,
+            true
+          );
+        } else {
+          vm.currentAttrFilterArray.push(
+            `Grazing Angle between ${vm.grazeElevMin} and ${vm.grazeElevMax}`
+          );
+          pushRangeToArray("grazing_angle", vm.grazeElevMin, vm.grazeElevMax);
+        }
+        //setRangesIndicator(true);
       } else if (!vm.grazeElevCheck) {
-        vm.filterRangeIndicator = false;
+        //setRangesIndicator(false);
       }
 
       if (vm.sunAzimuthCheck) {
-        //filterArray.push(["sun_azimuth",  ">=", vm.sunAzimuthMin, "AND", "sun_azimuth", "<=",
-        //  vm.sunAzimuthMax].join(" "));
-        vm.filterRangeIndicator = true;
-        pushRangeToArray("sun_azimuth", vm.sunAzimuthMin, vm.sunAzimuthMax);
-        setRangesIndicator();
+        if (vm.sunAzimuthCheckNull) {
+          vm.currentAttrFilterArray.push(
+            `Sun Azimuth between ${vm.sunAzimuthMin} and ${
+              vm.sunAzimuthMax
+            } (Show unknown values)`
+          );
+          pushRangeToArray(
+            "sun_azimuth",
+            vm.sunAzimuthMin,
+            vm.sunAzimuthMax,
+            true
+          );
+        } else {
+          vm.currentAttrFilterArray.push(
+            `Sun Azimuth between ${vm.sunAzimuthMin} and ${vm.sunAzimuthMax}`
+          );
+          pushRangeToArray("sun_azimuth", vm.sunAzimuthMin, vm.sunAzimuthMax);
+        }
+        //setRangesIndicator(true);
       } else if (!vm.sunAzimuthCheck) {
-        vm.filterRangeIndicator = false;
+        //setRangesIndicator(false);
       }
 
       if (vm.sunElevationCheck) {
-        //filterArray.push(["sun_elevation",  ">=", vm.sunElevationMin, "AND", "sun_elevation", "<=",
-        //  vm.sunElevationMax].join(" "));
-        pushRangeToArray(
-          "sun_elevation",
-          vm.sunElevationMin,
-          vm.sunElevationMax
-        );
-        setRangesIndicator();
+        if (vm.sunElevationCheckNull) {
+          vm.currentAttrFilterArray.push(
+            `Sun Elevation between ${vm.sunElevationMin} and ${
+              vm.sunElevationMax
+            } (Show unknown values)`
+          );
+          pushRangeToArray(
+            "sun_elevation",
+            vm.sunElevationMin,
+            vm.sunElevationMax,
+            true
+          );
+        } else {
+          vm.currentAttrFilterArray.push(
+            `Sun Elevation between ${vm.sunElevationMin} and ${
+              vm.sunElevationMax
+            }`
+          );
+          pushRangeToArray(
+            "sun_elevation",
+            vm.sunElevationMin,
+            vm.sunElevationMax
+          );
+        }
+        setRangesIndicator(true);
       } else if (!vm.sunElevationCheck) {
         vm.filterRangeIndicator = false;
       }
@@ -714,18 +798,31 @@
               closeButton: true
             }
           );
-        } else {
+        }
+        if (vm.cloudCoverCheckNull) {
+          vm.currentAttrFilterArray.push(
+            `Cloud cover less than or equal to ${
+              vm.cloudCover
+            }% (Show unknown values)`
+          );
           filterArray.push(
             "(cloud_cover <= " + vm.cloudCover + " OR cloud_cover IS NULL)"
           );
-          setRangesIndicator();
+        } else {
+          vm.currentAttrFilterArray.push(
+            `Cloud cover less than or equal to ${vm.cloudCover}%`
+          );
+          filterArray.push("(cloud_cover <= " + vm.cloudCover + ")");
         }
+        //setRangesIndicator(true);
       } else if (!vm.cloudCoverCheck) {
-        vm.filterRangeIndicator = false;
+        //setRangesIndicator(false);
       }
 
       filterString = filterArray.join(" AND ");
+      //vm.filterString = filterString;
 
+      $log.debug(`filterString: `, filterString);
       wfsService.updateAttrFilter(filterString);
     };
 
@@ -736,16 +833,36 @@
     vm.setInitialCustomStartDate();
     vm.setInitialCustomEndDate();
 
+    let clearAllSpatialFilter = () => {
+      vm.viewPortSpatial = false;
+      vm.pointSpatial = false;
+      vm.polygonSpatial = false;
+      mapService.viewPortFilter(false);
+      setSpatialIndicator(false, "None");
+    };
+
+    vm.clearFilters = () => {
+      clearAllSpatialFilter();
+      vm.initKeywords();
+      vm.initRanges();
+
+      // Reset the temporal filters and it's menu
+      vm.currentTemporalDuration = vm.temporalDurations[0];
+      vm.customDateRangeVisible = false;
+      setTemporalIndicator(false);
+
+      vm.setInitialCustomStartDate();
+      vm.setInitialCustomEndDate();
+
+      vm.currentAttrFilterArray = [];
+
+      vm.updateFilterString();
+    };
+
     vm.closeFilterDropdown = function(e) {
       var elem = "." + e;
 
       $(elem).dropdown("toggle");
     };
-
-    // $(document).on('click', '.mega-dropdown', function(e) {
-    //
-    //   e.stopPropagation()
-    //
-    // });
   }
 })();

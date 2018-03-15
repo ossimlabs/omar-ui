@@ -194,8 +194,9 @@
 
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
+    vm.thumbId = "&id="; // Parameter provided by image.properties.id
     vm.thumbEntry = "&entry="; // Parameter provided by image.properties.entry_id
-    vm.thumbSize = "&thumbnailResolution=100";
+    vm.thumbSize = "&size=112";
     vm.thumbFormat = "&outputFormat=jpeg";
 
     vm.getImageSpaceUrl = function(image) {
@@ -278,14 +279,6 @@
 
       return border;
     };
-
-    // vm.listRefreshButtonVisible =
-    //   AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
-    // vm.refreshSpin = false;
-    // vm.refreshList = function() {
-    //   wfsService.executeWfsQuery();
-    //   vm.refreshSpin = true;
-    // };
 
     // Shows/Hides the KML SuperOverlay button based on parameters passed down
     // from application.yml

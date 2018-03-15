@@ -621,7 +621,9 @@
         '<img class="media-object" ' +
         'src="' +
         thumbnailsRequestUrl +
-        "?filename=" +
+        "?id=" +
+        imageObj.properties.id +
+        "&filename=" +
         imageObj.properties.filename +
         "&entry=" +
         imageObj.properties.entry_id +

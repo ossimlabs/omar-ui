@@ -72,7 +72,6 @@
           <br>
           <div class="col-md-6">
             <p>Acquisition Date:&nbsp;&nbsp;<span class="text-success">
-              <span ng-show="!vm.selectedImage.properties.acquisition_date">Unknown</span>
               {{vm.selectedImage.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
               <span ng-show="vm.selectedImage.properties.acquisition_date">z</span>
             </p>
@@ -82,37 +81,31 @@
                 <li>DB ID:&nbsp; &nbsp; <span class="text-success">{{vm.selectedImage.properties.id}}</span></li>
                 <li>Mission:&nbsp; &nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.mission_id">Unknown</span>
                     {{vm.selectedImage.properties.mission_id}}
                   </span>
                 </li>
                 <li>Sensor:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.sensor_id">Unknown</span>
                     {{vm.selectedImage.properties.sensor_id}}
                   </span>
                 </li>
                 <li>Organization:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.organization">Unknown</span>
                     {{vm.selectedImage.properties.organization}}
                   </span>
                 </li>
                 <li>Country Code:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.country_code">Unknown</span>
                     {{vm.selectedImage.properties.country_code}}
                   </span>
                 </li>
                 <li>WAC Code:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.wac_code">Unknown</span>
                     {{vm.selectedImage.properties.wac_code}}
                   </span>
                 </li>
                 <li>Image Representation:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.image_representation">Unknown</span>
                     {{vm.selectedImage.properties.image_representation}}
                   </span>
                 </li>
@@ -122,19 +115,16 @@
             <div class="panel panel-primary">
               <ul>
                 <li>Type:&nbsp;&nbsp;<span class="text-success">
-                  <span ng-show="!vm.selectedImage.properties.file_type">Unknown</span>
                     {{vm.selectedImage.properties.file_type}}
                   </span>
                 </li>
                 <li class="dont-break-out">Name:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.filename">Unknown</span>
                     {{vm.selectedImage.properties.filename}}
                   </span>
                 </li>
                 <li class="dont-break-out">Entry ID:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.entry_id">Unknown</span>
                     {{vm.selectedImage.properties.entry_id}}
                   </span>
                 </li>
@@ -145,12 +135,10 @@
               <ul>
                 <li>Description:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.description">Unknown</span>
                     {{vm.selectedImage.properties.description}}
                   </span>
                 </li>
                 <li class="dont-break-out">Title:&nbsp;&nbsp;
-                  <span class="text-success"><span ng-show="!vm.selectedImage.properties.title">Unknown</span>
                   {{vm.selectedImage.properties.title}}
                   </span>
                 </li>
@@ -165,7 +153,6 @@
           </div>
           <div class="col-md-6">
             <p>Ingest Date:&nbsp;&nbsp;<span class="text-success">
-              <span ng-show="!vm.selectedImage.properties.ingest_date">Unknown</span>
               {{vm.selectedImage.properties.ingest_date| date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
               <span ng-show="vm.selectedImage.properties.ingest_date">z</span>
             </p>
@@ -174,55 +161,46 @@
               <ul>
                 <li>NIIRS:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.niirs">Unknown</span>
                     {{vm.selectedImage.properties.niirs}}
                   </span>
                 </li>
                 <li>Azimuth Angle:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.azimuth_angle">Unknown</span>
                     {{vm.selectedImage.properties.azimuth_angle}}
                   </span>
                 </li>
                 <li>Grazing Angle:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.grazing_angle">Unknown</span>
                     {{vm.selectedImage.properties.grazing_angle}}
                   </span>
                 </li>
                 <li>Sun Azimuth:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.sun_azimuth">Unknown</span>
                     {{vm.selectedImage.properties.sun_azimuth}}
                   </span>
                 </li>
                 <li>Sun Elevation:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.sun_elevation">Unknown</span>
                     {{vm.selectedImage.properties.sun_elevation}}
                   </span>
                 </li>
                 <li>Cloud Cover:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.cloud_cover">Unknown</span>
                     {{vm.selectedImage.properties.cloud_cover}}
                     </span>
                 </li>
                 <li>Number of Bands:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.number_of_bands">Unknown</span>
                     {{vm.selectedImage.properties.number_of_bands}}
                   </span>
                 </li>
                 <li>Number of Resolution Levels:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.number_of_res_levels">Unknown</span>
                     {{vm.selectedImage.properties.number_of_res_levels}}
                   </span>
                 </li>
                 <li>Bit Depth:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.bit_depth">Unknown</span>
                     {{vm.selectedImage.properties.bit_depth}}
                   </span>
                 </li>
@@ -233,13 +211,11 @@
               <ul>
                 <li>Image Height:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.height">Unknown</span>
                     {{vm.selectedImage.properties.height}}
                   </span>
                 </li>
                 <li>Image Width:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.width">Unknown</span>
                     {{vm.selectedImage.properties.width}}
                   </span>
                 </li>
@@ -250,19 +226,16 @@
               <ul>
                 <li>GSD Unit:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.gsd_unit">Unknown</span>
                     {{vm.selectedImage.properties.gsd_unit}}
                   </span>
                 </li>
                 <li>GSD X:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.gsdx">Unknown</span>
                     {{vm.selectedImage.properties.gsdx}}
                   </span>
                 </li>
                 <li>GSD Y:&nbsp;&nbsp;
                   <span class="text-success">
-                    <span ng-show="!vm.selectedImage.properties.gsdx">Unknown</span>
                     {{vm.selectedImage.properties.gsdy}}
                   </span>
                 </li>

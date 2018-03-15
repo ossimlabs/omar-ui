@@ -524,7 +524,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .map-cord-div {
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 30px;
   cursor: pointer;
   z-index: 1;
   font-size: 0.7em;
@@ -608,6 +608,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   border: 1px solid #999;
   background: #2b3e50;
   overflow: auto;
+  z-ine
 }
 
 .autocomplete-suggestion {
@@ -826,7 +827,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .ol-viewport {
   border-radius: 4px;
   border: 1px solid;
-  background-color: #94c1e1;
+  background-color: #3e444c;
 }
 
 .ol-rotate,
@@ -877,11 +878,12 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 }
 
 .legend-control {
-  bottom: 65px;
+  bottom: 10px;
   right: .5em;
 }
+
 .ol-touch .legend-control {
-  bottom: 80px;
+  bottom: 45px;
 }
 
 .truncate {
@@ -1106,6 +1108,38 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   left: 48%;
   z-index: 99;
 }
+
+#legendButton {
+  cursor: pointer;
+}
+
+#legend {
+  position: absolute;
+  bottom: 38px;
+  right: 24px;
+  border-radius: 5px;
+  z-index: 1;
+  max-height: 70%;
+  overflow: auto;
+  display: none;
+}
+/*
+#legend::-webkit-scrollbar {
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#legend::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0,0,0,0.1);
+  border: 1px solid #ccc;
+}
+
+#legend::-webkit-scrollbar-track {
+	border-radius: 10px;
+  background: linear-gradient(left, #fff, #e4e4e4);
+  border: 1px solid #aaa;
+} */
 
 .fa-spinner {
   color: white;

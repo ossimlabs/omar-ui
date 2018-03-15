@@ -141,8 +141,8 @@
         center: [0, 0],
         extent: [-180, -90, 180, 90],
         projection: "EPSG:4326",
-        zoom: 2,
-        minZoom: 2,
+        zoom: 3,
+        minZoom: 3,
         maxZoom: 20
       });
 
@@ -380,9 +380,12 @@
         layers: [baseMapGroup, overlayGroup],
         controls: ol.control
           .defaults()
-          .extend([new ol.control.ScaleLine()])
-          .extend([mousePositionControl])
-          .extend([new LegendControl()]),
+          .extend([
+            new ol.control.ScaleLine(),
+            mousePositionControl,
+            new LegendControl(),
+            new ol.control.FullScreen()
+          ]),
         logo: false,
         overlays: [overlay],
         target: "map",
@@ -506,8 +509,6 @@
      */
     function filterByViewPort() {
       clearLayerSource(filterLayerVector);
-
-      console.log("FilterByViewPort is firing on mapend...");
 
       mapObj.cql =
         "INTERSECTS(" +
@@ -883,12 +884,30 @@
 
       const this_ = this;
 
+      var x = document.getElementById("legend");
+      x.style.cursor = "pointer";
+
       var handleGetLegend = function() {
-        console.log("handleGetLegend firing!");
+        switch (x.style.display) {
+          case "":
+            x.style.display = "block";
+            console.log("empty");
+            break;
+          case "block":
+            x.style.display = "none";
+            console.log("block");
+            break;
+          case "none":
+            x.style.display = "block";
+            console.log("none");
+            break;
+          default:
+            x.style.display = "none";
+            console.log("default none");
+        }
       };
 
       legendButton.addEventListener("click", handleGetLegend, false);
-      legendButton.addEventListener("touchstart", handleGetLegend, false);
 
       var legendElement = document.createElement("div");
       legendElement.className = "legend-control ol-unselectable ol-control";

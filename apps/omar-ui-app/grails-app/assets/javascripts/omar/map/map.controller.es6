@@ -20,6 +20,12 @@
     $timeout,
     stateService
   ) {
+    /* jshint validthis: true */
+    var vm = this;
+
+    vm.legendTitle = "Legend"; // TODO: Set this as a parameter from the app.yml
+    vm.legendUrl = "";
+
     mapService.mapInit();
     mapService.setIntialMapSpatialFilter();
 
@@ -33,6 +39,12 @@
 
     $scope.$on("omarSitesState.updated", function(event, params) {
       mapService.setMapServiceUrlProps();
+
+      // Need to change the Legend URL after we have federated
+      vm.legendUrl = `${stateService.omarSitesState.url.base}${
+        stateService.omarSitesState.url.wmsContextPath
+      }/wms/getLegendGraphic`;
+      console.log(vm.legendUrl);
     });
   }
 })();

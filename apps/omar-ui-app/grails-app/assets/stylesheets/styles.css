@@ -524,7 +524,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .map-cord-div {
   position: absolute;
   bottom: 10px;
-  right: 30px;
+  right: 36%;
   cursor: pointer;
   z-index: 1;
   font-size: 0.7em;
@@ -877,15 +877,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-left: -11px;
 }
 
-.legend-control {
-  bottom: 10px;
-  right: .5em;
-}
-
-.ol-touch .legend-control {
-  bottom: 45px;
-}
-
 .truncate {
   width: 50px;
   white-space: nowrap;
@@ -1109,13 +1100,18 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   z-index: 99;
 }
 
+.legend-control {
+  bottom: 10px;
+  right: .5em;
+}
+
 #legendButton {
   cursor: pointer;
 }
 
 #legend {
   position: absolute;
-  bottom: 38px;
+  bottom: 3.8em;
   right: 24px;
   border-radius: 5px;
   z-index: 1;

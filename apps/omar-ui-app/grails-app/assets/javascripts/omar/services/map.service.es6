@@ -383,8 +383,7 @@
           .extend([
             new ol.control.ScaleLine(),
             mousePositionControl,
-            new LegendControl(),
-            new ol.control.FullScreen()
+            new LegendControl()
           ]),
         logo: false,
         overlays: [overlay],
@@ -877,10 +876,12 @@
      *
      * */
     var LegendControl = function(opt_options) {
-      var options = opt_options || {};
+      //var options = opt_options || {};
 
-      var legendButton = document.createElement("legendButton");
+      var legendButton = document.createElement("button");
       legendButton.innerHTML = "Legend";
+      legendButton.style.width = "4em";
+      legendButton.style.height = "2em";
 
       const this_ = this;
 
@@ -915,8 +916,8 @@
       legendElement.appendChild(legendButton);
 
       ol.control.Control.call(this, {
-        element: legendElement,
-        target: options.target
+        element: legendElement
+        //target: options.target
       });
     };
     ol.inherits(LegendControl, ol.control.Control);

@@ -1114,7 +1114,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 #legend {
   position: absolute;
-  bottom: 3.8em;
+  bottom: 2.7em;
   right: 24px;
   border-radius: 5px;
   z-index: 1;

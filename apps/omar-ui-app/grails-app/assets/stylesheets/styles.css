@@ -1105,9 +1105,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   right: .5em;
 }
 
-#legendButton {
-  cursor: pointer;
-}
 
 #legend {
   position: absolute;
@@ -1118,6 +1115,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   max-height: 70%;
   overflow: auto;
   display: none;
+  color: black;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 /*
 #legend::-webkit-scrollbar {

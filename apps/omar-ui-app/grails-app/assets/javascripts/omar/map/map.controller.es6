@@ -9,6 +9,7 @@
       "toastr",
       "$timeout",
       "stateService",
+      "$log",
       MapController
     ]);
 
@@ -18,7 +19,8 @@
     $scope,
     toastr,
     $timeout,
-    stateService
+    stateService,
+    $log
   ) {
     /* jshint validthis: true */
     var vm = this;
@@ -40,11 +42,13 @@
     $scope.$on("omarSitesState.updated", function(event, params) {
       mapService.setMapServiceUrlProps();
 
-      // Need to change the Legend URL after we have federated
+      // Changes the Legend URL after federating
       vm.legendUrl = `${stateService.omarSitesState.url.base}${
         stateService.omarSitesState.url.wmsContextPath
-      }/wms/getLegendGraphic`;
-      console.log(vm.legendUrl);
+      }/wms/getLegendGraphic/${
+        AppO2.APP_CONFIG.params.footprints.params.styles
+      }`;
+      $log.debug(`vm.legendUrl: ${vm.legendUrl}`);
     });
   }
 })();

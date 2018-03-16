@@ -875,49 +875,42 @@
      * Purpose: Legend Control
      *
      * */
-    var LegendControl = function(opt_options) {
-      //var options = opt_options || {};
-
+    var LegendControl = function() {
       var legendButton = document.createElement("button");
       legendButton.innerHTML = "Legend";
       legendButton.style.width = "4em";
       legendButton.style.height = "2em";
 
-      const this_ = this;
+      var legendContainer = document.getElementById("legend");
+      legendContainer.style.cursor = "pointer";
 
-      var x = document.getElementById("legend");
-      x.style.cursor = "pointer";
-
+      // Used to show/hide the Legend
       var handleGetLegend = function() {
-        switch (x.style.display) {
+        switch (legendContainer.style.display) {
           case "":
-            x.style.display = "block";
-            console.log("empty");
+            legendContainer.style.display = "block";
             break;
           case "block":
-            x.style.display = "none";
-            console.log("block");
+            legendContainer.style.display = "none";
             break;
           case "none":
-            x.style.display = "block";
-            console.log("none");
+            legendContainer.style.display = "block";
             break;
           default:
-            x.style.display = "none";
-            console.log("default none");
+            legendContainer.style.display = "none";
         }
       };
 
       legendButton.addEventListener("click", handleGetLegend, false);
 
-      var legendElement = document.createElement("div");
-      legendElement.className = "legend-control ol-unselectable ol-control";
+      var legendContainerElement = document.createElement("div");
+      legendContainerElement.className =
+        "legend-control ol-unselectable ol-control";
 
-      legendElement.appendChild(legendButton);
+      legendContainerElement.appendChild(legendButton);
 
       ol.control.Control.call(this, {
-        element: legendElement
-        //target: options.target
+        element: legendContainerElement
       });
     };
     ol.inherits(LegendControl, ol.control.Control);

@@ -25,7 +25,7 @@
     /* jshint validthis: true */
     var vm = this;
 
-    vm.legendTitle = "Legend"; // TODO: Set this as a parameter from the app.yml
+    vm.legendTitle = "Legend";
     vm.legendUrl = "";
 
     mapService.mapInit();

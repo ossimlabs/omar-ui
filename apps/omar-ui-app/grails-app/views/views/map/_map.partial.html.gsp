@@ -1,5 +1,5 @@
 <div ng-controller="FilterController as filter">
-  <nav style="margin-top: -15px;" class="navbar yamm navbar-default" ng-controller="MapController as map">
+  <nav style="margin-top: -15px;" class="navbar yamm navbar-default">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
         data-target="#map-navbar-collapse" aria-expanded="false">
@@ -717,44 +717,57 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8" ng-controller="MapController as map">
       <div id="map" class="map" params="map.mapParams" map>
-          <form id="searchForm" class="searchForm">
-              <div class="input-group input-group-sm" ng-controller="SearchController as search">
-                <input
-                  id="searchInput"
-                  type="text"
-                  ng-model="search.searchInput"
-                  class="form-control"
-                  placeholder="BE, Coordinate, Image ID or Placename">
-                <span class="input-group-btn">
-                  <button
-                    id="searchButton"
-                    class="btn btn-info"
-                    type="button"
-                    ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled">
-                    <span class="glyphicon glyphicon-search"></span>
-                  </button>
-                  <button
-                    id="searchClearButton"
-                    class="btn btn-default"
-                    type="button"
-                    ng-click="search.resetSearchInput()">
-                    <span class="glyphicon glyphicon-remove"></span>
-                  </button>
-                </span>
-              </div>
-          </form>
+        <form id="searchForm" class="searchForm">
+          <div class="input-group input-group-sm" ng-controller="SearchController as search">
+            <input
+              id="searchInput"
+              type="text"
+              ng-model="search.searchInput"
+              class="form-control"
+              placeholder="BE, Coordinate, Image ID or Placename">
+            <span class="input-group-btn">
+              <button
+                id="searchButton"
+                class="btn btn-info"
+                type="button"
+                ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+              <button
+                id="searchClearButton"
+                class="btn btn-default"
+                type="button"
+                ng-click="search.resetSearchInput()">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </span>
+          </div>
+        </form>
+        <div
+          id="legend"
+          style="
+            color: black;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 5px;">
+            <div class="text-center"><b>{{map.legendTitle}}</b></div>
+            <img
+              src="{{map.legendUrl}}"
+              alt="{{map.legendTitle}}">
+        </div>
       </div>
-        <div id="mouseCoords" class="map-cord-div" tooltip-placement="top"
-        uib-tooltip="Click on the coordinates to change units." tooltip-popup-delay="300"></div>
-        <div id="popup" class="ol-popup">
-          <div id="popup-content"></div>
-        </div>
-        <div id="progress" class="text-info">
-          <i class="fa fa-spinner fa-spin fa-4x"></i>
-        </span>
-        </div>
+      <div id="mouseCoords" class="map-cord-div" tooltip-placement="top"
+        uib-tooltip="Click on the coordinates to change units." tooltip-popup-delay="300">
+      </div>
+      <div id="popup" class="ol-popup">
+        <div id="popup-content"></div>
+      </div>
+      <div id="progress" class="text-info">
+        <i class="fa fa-spinner fa-spin fa-4x"></i>
+      <!-- </span> -->
+      </div>
     </div>
     <div class="col-md-4" ng-controller="ListController as list">
       <ui-select

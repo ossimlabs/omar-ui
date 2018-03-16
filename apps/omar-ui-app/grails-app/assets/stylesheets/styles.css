@@ -524,7 +524,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .map-cord-div {
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 36%;
   cursor: pointer;
   z-index: 1;
   font-size: 0.7em;
@@ -608,6 +608,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   border: 1px solid #999;
   background: #2b3e50;
   overflow: auto;
+  z-ine
 }
 
 .autocomplete-suggestion {
@@ -826,7 +827,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .ol-viewport {
   border-radius: 4px;
   border: 1px solid;
-  background-color: #94c1e1;
+  background-color: #3e444c;
 }
 
 .ol-rotate,
@@ -1097,6 +1098,33 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   top: 40%;
   left: 48%;
   z-index: 99;
+}
+
+.legend-control {
+  bottom: 10px;
+  right: .5em;
+}
+
+.legend-control button {
+  width: 4em;
+  height: 1.3em;
+  font-size: 1em;
+  font-weight: 350;
+}
+
+#legend {
+  position: absolute;
+  bottom: 2.7em;
+  right: 24px;
+  border-radius: 5px;
+  z-index: 1;
+  max-height: 70%;
+  overflow: auto;
+  display: none;
+  color: black;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 .fa-spinner {

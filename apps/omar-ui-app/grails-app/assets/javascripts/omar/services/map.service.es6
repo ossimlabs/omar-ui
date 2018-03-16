@@ -872,20 +872,19 @@
     });
 
     /**
-     * Purpose: Legend Control
+     * Purpose: Creates a Legend Control using Openlayers
+     * inheritance properties
      *
      * */
-    var LegendControl = function() {
-      var legendButton = document.createElement("button");
+    let LegendControl = function() {
+      let legendButton = document.createElement("button");
       legendButton.innerHTML = "Legend";
-      legendButton.style.width = "4em";
-      legendButton.style.height = "2em";
 
-      var legendContainer = document.getElementById("legend");
+      let legendContainer = document.getElementById("legend");
       legendContainer.style.cursor = "pointer";
 
       // Used to show/hide the Legend
-      var handleGetLegend = function() {
+      let handleGetLegend = () => {
         switch (legendContainer.style.display) {
           case "":
             legendContainer.style.display = "block";
@@ -903,7 +902,7 @@
 
       legendButton.addEventListener("click", handleGetLegend, false);
 
-      var legendContainerElement = document.createElement("div");
+      let legendContainerElement = document.createElement("div");
       legendContainerElement.className =
         "legend-control ol-unselectable ol-control";
 

@@ -45,7 +45,7 @@
       // Changes the Legend URL after federating
       vm.legendUrl = `${stateService.omarSitesState.url.base}${
         stateService.omarSitesState.url.wmsContextPath
-      }/wms/getLegendGraphic/${
+      }/wms/getLegendGraphic?style=${
         AppO2.APP_CONFIG.params.footprints.params.styles
       }`;
       $log.debug(`vm.legendUrl: ${vm.legendUrl}`);

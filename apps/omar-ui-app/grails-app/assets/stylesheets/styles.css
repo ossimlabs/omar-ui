@@ -1105,6 +1105,12 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   right: .5em;
 }
 
+.legend-control button {
+  width: 4em;
+  height: 1.3em;
+  font-size: 1em;
+  font-weight: 350;
+}
 
 #legend {
   position: absolute;
@@ -1120,23 +1126,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   border: 1px solid white;
   border-radius: 5px;
 }
-/*
-#legend::-webkit-scrollbar {
-	width: 10px;
-	background-color: #F5F5F5;
-}
-
-#legend::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: rgba(0,0,0,0.1);
-  border: 1px solid #ccc;
-}
-
-#legend::-webkit-scrollbar-track {
-	border-radius: 10px;
-  background: linear-gradient(left, #fff, #e4e4e4);
-  border: 1px solid #aaa;
-} */
 
 .fa-spinner {
   color: white;

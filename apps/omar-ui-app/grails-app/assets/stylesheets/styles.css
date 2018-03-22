@@ -26,6 +26,10 @@ body {
   margin-left: -10%;
 }
 
+cursor-pointer {
+  cursor: pointer;
+}
+
 .navbar {
   min-height: 28px !important;
 }
@@ -417,25 +421,21 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-top: -15px;
 }
 
+#list .panel {
+ margin-bottom: 3px;
+}
+
+#list .panel-body{
+  padding-bottom: 10px;
+}
+
 #list .media {
   margin-bottom: -20px;
   margin-top: -5px;
 }
 
-#list .panel {
-  margin-bottom: 5px;
-}
-
-#list a:hover {
-  text-decoration: none;
-}
-
-#list .fa:hover {
-  font-size: 0.9em;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
+#list .media .btn-group {
+  margin-top: 2px;
 }
 
 .ranges hr {
@@ -488,13 +488,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 .imageMap {
   width: 100%;
-}
-
-.list-card-modal-header-links {
-  position: relative;
-  width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .list-card-modal-header-title {
@@ -966,7 +959,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 }
 .tag a {
   color: #bbb;
-  /* cursor: pointer; */
   opacity: 0.6;
 }
 .tag a:hover {

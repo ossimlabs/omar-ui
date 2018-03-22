@@ -196,7 +196,7 @@
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
     vm.thumbId = "&id="; // Parameter provided by image.properties.id
     vm.thumbEntry = "&entry="; // Parameter provided by image.properties.entry_id
-    vm.thumbSize = "&size=112";
+    vm.thumbSize = "&size=114";
     vm.thumbFormat = "&outputFormat=jpeg";
 
     vm.getImageSpaceUrl = function(image) {
@@ -501,16 +501,13 @@
 
     vm.getJpipStream = function($event, file, entry, projCode, index, type) {
       vm.showProcessInfo[index] = true;
-      vm.processType = "Creating JPIP " + type;
-      var TRACE = 0;
-      if (TRACE) {
-        console.log("list.getJpipStream entered...");
-        console.log("file: " + file);
-        console.log("entry: " + entry);
-      }
+      vm.processType = `Creating JPIP     `;
+
+      $log.debug("list.getJpipStream entered...");
+      $log.debug("file: " + file);
+      $log.debug("entry: " + entry);
 
       // Get the jpip stream. 3rd arg is projCode.  chip=image space.
-
       jpipService.getJpipStream($event, file, entry, projCode);
 
       $scope.$on("jpip: updated", function(event) {
@@ -520,9 +517,7 @@
         });
       });
 
-      if (TRACE) {
-        console.log("list.getJpipStream exited...");
-      }
+      $log.debug("list.getJpipStream exited...");
     };
 
     vm.currentSortText = "Acquired (New)";

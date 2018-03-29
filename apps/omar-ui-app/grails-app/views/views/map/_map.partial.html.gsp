@@ -766,7 +766,6 @@
       </div>
       <div id="progress" class="text-info">
         <i class="fa fa-spinner fa-spin fa-4x"></i>
-      <!-- </span> -->
       </div>
     </div>
     <div class="col-md-4" ng-controller="ListController as list">
@@ -1025,15 +1024,11 @@
                     ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                     tooltip-placement="right"
                     uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
-                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
-                    alt="Image thumbnail"
-                    style="cursor: pointer;">&nbsp;
+                    height="114"
+                    width="114"
+                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}">&nbsp;
                   <div
-                    class="well text-center"
-                    style="
-                    position: absolute;
-                    top: 45%;left: 45%;
-                    transform: translate(-50%, -50%);"
+                    class="well text-center jpip-loading-overlay"
                     ng-show="list.showProcessInfo[$index]">
                     <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
                   </div>

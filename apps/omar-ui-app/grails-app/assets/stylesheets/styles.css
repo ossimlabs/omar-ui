@@ -11,6 +11,7 @@
       format("svg");
 }
 
+
 body {
   padding-top: 50px;
   padding-bottom: 50px;
@@ -438,6 +439,19 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-top: 2px;
 }
 
+#list .media .media-left img {
+  cursor: pointer;
+  background-image: url('/omar-ui/assets/loading-thumbnail.gif');
+  background-repeat: no-repeat, repeat;
+  background-position: center
+}
+
+.jpip-loading-overlay {
+  position: absolute;
+  top: 45%;left: 45%;
+  transform: translate(-50%, -50%);
+}
+
 .ranges hr {
   margin-top: 0px;
   margin-bottom: 11px;
@@ -601,7 +615,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   border: 1px solid #999;
   background: #2b3e50;
   overflow: auto;
-  z-ine
 }
 
 .autocomplete-suggestion {
@@ -997,9 +1010,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   text-align: left;
 }
 
-.range-input-group {
-  /* padding-right: 30px; */
-}
 
 .filter-row .range-name {
   min-width: 100px;
@@ -1088,7 +1098,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 #progress {
   position: absolute;
   top: 40%;
-  left: 48%;
+  left: 45%;
   z-index: 99;
 }
 

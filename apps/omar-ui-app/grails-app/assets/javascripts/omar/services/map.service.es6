@@ -523,7 +523,7 @@
     this.viewPortFilter = function(status) {
       if (status) {
         map.on("moveend", filterByViewPort);
-        //filterByViewPort();
+        filterByViewPort();
       } else {
         // https://groups.google.com/d/msg/ol3-dev/Z4JoCBs-iEY/HSpihl8bcVIJ
         map.un("moveend", filterByViewPort);

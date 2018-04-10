@@ -287,8 +287,10 @@
               <tbody>
                 <tr ng-repeat="be in vm.beData">
                   <td>
+                    <span ng-show="be.properties.be">{{be.properties.be}}&nbsp;</span>
+                    <span ng-show="be.properties.suffix">{{be.properties.suffix}}&nbsp;</span>
                     <a href="" ng-click="vm.viewOrtho(vm.selectedImage, be.geometry.coordinates)" target="_blank">
-                    {{be.properties[vm.placemarkConfig.columnName]}}
+                    {{be.properties[vm.placemarkConfig.displayNameColumnName]}}
                   </a>
                   </td>
                   <td>{{be.geometry.coordinates[1]}}</td>

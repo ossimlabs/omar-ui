@@ -218,6 +218,9 @@ omar:
         # The table column with the BE list
         #columnName: city_name
 
+        # The table column with the display name
+        #displayNameColumnName: name
+
         # The spatial column in the BE table
         #geomName: geom
 

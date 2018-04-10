@@ -6,15 +6,16 @@
       "stateService",
       "wfsService",
       "$timeout",
+      "$log",
       mapService
     ]);
 
-  function mapService(stateService, wfsService, $timeout) {
+  function mapService(stateService, wfsService, $timeout, $log) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    //console.log('AppO2.APP_CONFIG in mapService: ', AppO2.APP_CONFIG);
+    $log.debug("AppO2.APP_CONFIG in mapService: ", AppO2.APP_CONFIG);
 
     var zoomToLevel = 16;
     var map,
@@ -108,7 +109,6 @@
       }),
       stroke: new ol.style.Stroke({
         width: 5.5
-        //color: 'rgba(255, 100, 50, 0.6)'
       })
     });
 
@@ -141,8 +141,8 @@
         center: [0, 0],
         extent: [-180, -90, 180, 90],
         projection: "EPSG:4326",
-        zoom: 2,
-        minZoom: 2,
+        zoom: 3,
+        minZoom: 3,
         maxZoom: 20
       });
 
@@ -380,8 +380,11 @@
         layers: [baseMapGroup, overlayGroup],
         controls: ol.control
           .defaults()
-          .extend([new ol.control.ScaleLine()])
-          .extend([mousePositionControl]),
+          .extend([
+            new ol.control.ScaleLine(),
+            mousePositionControl,
+            new LegendControl()
+          ]),
         logo: false,
         overlays: [overlay],
         target: "map",
@@ -484,8 +487,10 @@
       updateFootprintsUrl();
     };
 
-    // We need this to set the intial spatial filter for
-    // the WFS spatialObj's filter property.
+    /**
+     * We need this to set the intial spatial filter for
+     * the WFS spatialObj's filter property.
+     */
     this.setIntialMapSpatialFilter = function() {
       mapObj.cql =
         "INTERSECTS(" +
@@ -496,9 +501,11 @@
       wfsService.spatialObj.filter = mapObj.cql;
     };
 
-    // This is used to select images by creating a polygon based on the
-    // current map extent and sending it to the wfs service to update the
-    // card list
+    /**
+     * This is used to select images by creating a polygon based on the
+     * current map extent and sending it to the wfs service to update the
+     * card list
+     */
     function filterByViewPort() {
       clearLayerSource(filterLayerVector);
 
@@ -516,7 +523,7 @@
     this.viewPortFilter = function(status) {
       if (status) {
         map.on("moveend", filterByViewPort);
-        filterByViewPort();
+        //filterByViewPort();
       } else {
         // https://groups.google.com/d/msg/ol3-dev/Z4JoCBs-iEY/HSpihl8bcVIJ
         map.un("moveend", filterByViewPort);
@@ -526,9 +533,11 @@
       }
     };
 
-    // This is used to select images by getting the point the user clicked in
-    // the map and sending the XY (point) to the wfs service to update the card
-    // list
+    /**
+     * This is used to select images by getting the point the user clicked in
+     * the map and sending the XY (point) to the wfs service to update the card
+     * list
+     */
     function filterByPoint(event) {
       clearLayerSource(filterLayerVector);
 
@@ -544,8 +553,10 @@
       // Update the image cards in the list via spatial click coordinates
       wfsService.updateSpatialFilter(mapObj.cql);
 
-      // Grabs the current value of the attrObj.filter so that the click
-      // will also update if there are any temporal, keyword, or range filters
+      /**
+       * Grabs the current value of the attrObj.filter so that the click
+       * will also update if there are any temporal, keyword, or range filters
+       */
       wfsService.updateAttrFilter(wfsService.attrObj.filter);
 
       addMarker(coordinate[1], coordinate[0], filterLayerVector);
@@ -568,9 +579,6 @@
 
     this.polygonFilter = function(status) {
       if (status) {
-        // Add interaction
-        //filterByViewPort();
-
         map.addInteraction(dragBox);
       } else {
         // Remove interaction
@@ -809,8 +817,6 @@
       layer.getSource().addFeatures([centerFeature]);
     }
 
-    // TOOD: Look at removing this, as we can set it in the HTML/CSS, and not need
-    // to dynamically set it anymore.
     function setFootprintColors(imageType) {
       var color = "rgba(255, 255, 50, 0.6)";
 
@@ -847,8 +853,11 @@
         document.getElementById("mouseCoords").innerHTML = html;
       },
       projection: "EPSG:4326",
-      // comment the following two lines to have the mouse position
-      // be placed within the map.
+
+      /**
+       * comment the following two lines to have the mouse position
+       * be placed within the map.
+       */
       className: "custom-mouse-position",
       //target: document.getElementById('mouse-position'),
       undefinedHTML: "&nbsp;"
@@ -861,5 +870,48 @@
           ? 0
           : mousePositionControl.coordFormat + 1;
     });
+
+    /**
+     * Purpose: Creates a Legend Control using Openlayers
+     * inheritance properties
+     *
+     * */
+    let LegendControl = function() {
+      let legendButton = document.createElement("button");
+      legendButton.innerHTML = "Legend";
+
+      let legendContainer = document.getElementById("legend");
+      legendContainer.style.cursor = "pointer";
+
+      // Used to show/hide the Legend
+      let handleGetLegend = () => {
+        switch (legendContainer.style.display) {
+          case "":
+            legendContainer.style.display = "block";
+            break;
+          case "block":
+            legendContainer.style.display = "none";
+            break;
+          case "none":
+            legendContainer.style.display = "block";
+            break;
+          default:
+            legendContainer.style.display = "none";
+        }
+      };
+
+      legendButton.addEventListener("click", handleGetLegend, false);
+
+      let legendContainerElement = document.createElement("div");
+      legendContainerElement.className =
+        "legend-control ol-unselectable ol-control";
+
+      legendContainerElement.appendChild(legendButton);
+
+      ol.control.Control.call(this, {
+        element: legendContainerElement
+      });
+    };
+    ol.inherits(LegendControl, ol.control.Control);
   }
 })();

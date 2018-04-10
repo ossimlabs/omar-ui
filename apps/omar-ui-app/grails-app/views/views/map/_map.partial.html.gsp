@@ -1,5 +1,5 @@
 <div ng-controller="FilterController as filter">
-  <nav style="margin-top: -15px;" class="navbar yamm navbar-default" ng-controller="MapController as map">
+  <nav style="margin-top: -15px;" class="navbar yamm navbar-default">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
         data-target="#map-navbar-collapse" aria-expanded="false">
@@ -717,44 +717,56 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8" ng-controller="MapController as map">
       <div id="map" class="map" params="map.mapParams" map>
-          <form id="searchForm" class="searchForm">
-              <div class="input-group input-group-sm" ng-controller="SearchController as search">
-                <input
-                  id="searchInput"
-                  type="text"
-                  ng-model="search.searchInput"
-                  class="form-control"
-                  placeholder="BE, Coordinate, Image ID or Placename">
-                <span class="input-group-btn">
-                  <button
-                    id="searchButton"
-                    class="btn btn-info"
-                    type="button"
-                    ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled">
-                    <span class="glyphicon glyphicon-search"></span>
-                  </button>
-                  <button
-                    id="searchClearButton"
-                    class="btn btn-default"
-                    type="button"
-                    ng-click="search.resetSearchInput()">
-                    <span class="glyphicon glyphicon-remove"></span>
-                  </button>
-                </span>
-              </div>
-          </form>
+        <form id="searchForm" class="searchForm">
+          <div class="input-group input-group-sm" ng-controller="SearchController as search">
+            <input
+              id="searchInput"
+              type="text"
+              ng-model="search.searchInput"
+              class="form-control"
+              placeholder="BE, Coordinate, Image ID or Placename">
+            <span class="input-group-btn">
+              <button
+                id="searchButton"
+                class="btn btn-info"
+                type="button"
+                ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+              <button
+                id="searchClearButton"
+                class="btn btn-default"
+                type="button"
+                ng-click="search.resetSearchInput()">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </span>
+          </div>
+        </form>
+        <div
+          id="legend"
+          style="
+            color: black;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 5px;">
+            <div class="text-center"><b>{{map.legendTitle}}</b></div>
+            <img
+              src="{{map.legendUrl}}"
+              alt="{{map.legendTitle}}">
+        </div>
       </div>
-        <div id="mouseCoords" class="map-cord-div" tooltip-placement="top"
-        uib-tooltip="Click on the coordinates to change units." tooltip-popup-delay="300"></div>
-        <div id="popup" class="ol-popup">
-          <div id="popup-content"></div>
-        </div>
-        <div id="progress" class="text-info">
-          <i class="fa fa-spinner fa-spin fa-4x"></i>
-        </span>
-        </div>
+      <div id="mouseCoords" class="map-cord-div" tooltip-placement="top"
+        uib-tooltip="Click on the coordinates to change units." tooltip-popup-delay="300">
+      </div>
+      <div id="popup" class="ol-popup">
+        <div id="popup-content"></div>
+      </div>
+      <div id="progress" class="text-info">
+        <i class="fa fa-spinner fa-spin fa-4x"></i>
+      </div>
     </div>
     <div class="col-md-4" ng-controller="ListController as list">
       <ui-select
@@ -996,7 +1008,7 @@
                     uib-tooltip="Add image to selected list">
                   </i>
                 </span>
-              <span ng-click="list.showImageModal(image, list.imageSpaceDefaults,   list.imageSpaceRequestUrl, list.uiRequestUrl,     list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
+              <span ng-click="list.showImageModal(image, list.imageSpaceDefaults,   list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                 class="text-default"
                 style="cursor: pointer;">
                 <span ng-show="!image.properties.title">Unknown</span>
@@ -1012,12 +1024,14 @@
                     ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                     tooltip-placement="right"
                     uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
-                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}"
-                    alt="Image thumbnail"
-                    style="cursor: pointer;">&nbsp;
-                  <span class="text-center" ng-show="list.showProcessInfo[$index]">
-                    <span style="font-size: .8em">&nbsp;{{list.processType}}&nbsp;&nbsp;</span><i class="fa fa-cog fa-spin text-info"></i>
-                  </span>
+                    height="114"
+                    width="114"
+                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}">&nbsp;
+                  <div
+                    class="well text-center jpip-loading-overlay"
+                    ng-show="list.showProcessInfo[$index]">
+                    <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
+                  </div>
                 </div>
                 <div class="media-body">
                   <div class="row">
@@ -1068,60 +1082,77 @@
                       </span>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p class="text-primary" style="margin-top:.2em;">
-                        <a href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&showModalSplash=false" target="_blank">
-                          <i class="fa fa-desktop fa-border text-primary"
-                          style="cursor: pointer;"
+                  <div
+                    class="btn-group btn-group-sm"
+                    role="group"
+                    aria-label="card-buttons">
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&showModalSplash=false"
+                        target="_blank">
+                        <i class="fa fa-desktop text-default"
                           tooltip-placement="right"
-                          uib-tooltip="View raw image"></i>&nbsp;&nbsp;
-                        </a>
-                        <a href="" ng-click = "list.viewOrtho(image)" target="_blank">
-                          <i class="fa fa-history fa-border text-primary"
-                          style="cursor: pointer;"
+                          uib-tooltip="View raw image"></i>
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-click="list.viewOrtho(image)">
+                        <i class="fa fa-history text-default"
                           tooltip-placement="right"
-                          uib-tooltip="View rectified image in TLV"></i>&nbsp;&nbsp;
-                        </a>
-                        <a ng-show="{{list.kmlSuperOverlayAppEnabled}}" href="{{list.kmlRequestUrl}}{{image.properties.id}}">
-                          <i class="fa fa-map fa-border text-primary"
-                          style="cursor: pointer;"
+                          uib-tooltip="View rectified image in TLV"></i>
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-show="{{list.kmlSuperOverlayAppEnabled}}"
+                        href="{{list.kmlRequestUrl}}{{image.properties.id}}">
+                        <i class="fa fa-map text-default cursor-pointer"
                           tooltip-placement="right"
-                          uib-tooltip="Download KML"></i>&nbsp;&nbsp;
-                        </a>
-                        <a ng-href="" target="_blank" ng-click="list.shareModal(list.getImageSpaceUrl(image))">
-                          <i class="fa fa-share-alt fa-border text-primary"
-                          style="cursor: pointer;"
+                          uib-tooltip="Download KML"></i>
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-click="list.shareModal(list.getImageSpaceUrl(image))">
+                        <i class="fa fa-share-alt text-default"
+                        tooltip-placement="right"
+                        uib-tooltip="Share link"></i>
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-click="list.archiveDownload(image.properties.id)">
+                        <i class="fa fa-download text-default"
                           tooltip-placement="right"
-                          uib-tooltip="Share link"></i>&nbsp;&nbsp;
-                        </a>
-                        <a ng-href="" target="_blank" ng-click="list.archiveDownload(image.properties.id)">
-                          <i class="fa fa-download fa-border text-primary"
-                            style="cursor: pointer;"
-                            tooltip-placement="right"
-                            uib-tooltip="Download"></i>&nbsp;&nbsp;
-                        </a>
-                        <a ng-show="{{list.jpipAppEnabled}}" href="" ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, 'chip', $index, 'stream');">
-                          <i class="fa fa-file-image-o fa-border text-primary"
-                          style="cursor: pointer;"
+                          uib-tooltip="Download"></i>
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-show="{{list.jpipAppEnabled}}"
+                        ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, 'chip', $index, 'stream');">
+                        <i class="fa fa-file-image-o text-default"
                           tooltip-placement="top"
-                          uib-tooltip="JPIP image"></i>&nbsp;&nbsp;
-                        </a>
-                        <a ng-show="{{list.jpipAppEnabled}}" href="" ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, '4326', $index, 'ortho');">
-                          <i class="fa fa-image fa-border text-primary"
-                          style="cursor: pointer;"
+                          uib-tooltip="JPIP image"></i>
+                      </a>
+                      <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-show="{{list.jpipAppEnabled}}"
+                        ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, '4326', $index, 'ortho');"
+                        >
+                        <i class="fa fa-image text-default"
                           tooltip-placement="top"
-                          uib-tooltip="JPIP ortho"></i>&nbsp;&nbsp;
-                        </a>
-                      </p>
-                    </div>
+                          uib-tooltip="JPIP ortho"></i>
+                      </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
       <!-- right-click context menu -->
       <div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">
@@ -1143,6 +1174,11 @@
           ng-model="list.currentStartIndex"
           ng-change="list.pagingChanged()"
           max-size="5"
+          boundary-links="true"
+          force-ellipses="true"
+          rotate="false"
+          first-text="First"
+          last-text="Last"
           class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
         </uib-pagination>
       </div>

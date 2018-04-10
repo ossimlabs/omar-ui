@@ -11,6 +11,7 @@
       format("svg");
 }
 
+
 body {
   padding-top: 50px;
   padding-bottom: 50px;
@@ -24,6 +25,10 @@ body {
   width: 80%;
   height: 80%;
   margin-left: -10%;
+}
+
+cursor-pointer {
+  cursor: pointer;
 }
 
 .navbar {
@@ -417,25 +422,34 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-top: -15px;
 }
 
+#list .panel {
+ margin-bottom: 3px;
+}
+
+#list .panel-body{
+  padding-bottom: 10px;
+}
+
 #list .media {
   margin-bottom: -20px;
   margin-top: -5px;
 }
 
-#list .panel {
-  margin-bottom: 5px;
+#list .media .btn-group {
+  margin-top: 2px;
 }
 
-#list a:hover {
-  text-decoration: none;
+#list .media .media-left img {
+  cursor: pointer;
+  background-image: url('/omar-ui/assets/loading-thumbnail.gif');
+  background-repeat: no-repeat, repeat;
+  background-position: center
 }
 
-#list .fa:hover {
-  font-size: 0.9em;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
+.jpip-loading-overlay {
+  position: absolute;
+  top: 45%;left: 45%;
+  transform: translate(-50%, -50%);
 }
 
 .ranges hr {
@@ -490,13 +504,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   width: 100%;
 }
 
-.list-card-modal-header-links {
-  position: relative;
-  width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 .list-card-modal-header-title {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -524,7 +531,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .map-cord-div {
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 36%;
   cursor: pointer;
   z-index: 1;
   font-size: 0.7em;
@@ -826,7 +833,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .ol-viewport {
   border-radius: 4px;
   border: 1px solid;
-  background-color: #94c1e1;
+  background-color: #3e444c;
 }
 
 .ol-rotate,
@@ -965,7 +972,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 }
 .tag a {
   color: #bbb;
-  /* cursor: pointer; */
   opacity: 0.6;
 }
 .tag a:hover {
@@ -1004,9 +1010,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   text-align: left;
 }
 
-.range-input-group {
-  /* padding-right: 30px; */
-}
 
 .filter-row .range-name {
   min-width: 100px;
@@ -1095,8 +1098,35 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 #progress {
   position: absolute;
   top: 40%;
-  left: 48%;
+  left: 45%;
   z-index: 99;
+}
+
+.legend-control {
+  bottom: 10px;
+  right: .5em;
+}
+
+.legend-control button {
+  width: 4em;
+  height: 1.3em;
+  font-size: 1em;
+  font-weight: 350;
+}
+
+#legend {
+  position: absolute;
+  bottom: 2.7em;
+  right: 24px;
+  border-radius: 5px;
+  z-index: 1;
+  max-height: 70%;
+  overflow: auto;
+  display: none;
+  color: black;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 .fa-spinner {

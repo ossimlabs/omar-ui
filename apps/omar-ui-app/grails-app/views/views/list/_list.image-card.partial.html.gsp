@@ -1,52 +1,50 @@
 <div class="modal-header" id="modal-image-space">
   <div class="row">
     <div class="col-sm-4">
-    <div class="list-card-modal-header-links">
-      <div class="text-primary list-card-image-modal-links" style="margin-top:.2em;">
-        <a href="{{vm.o2baseUrlModal}}/#/mapImage?filename={{vm.selectedImage.properties.filename}}&entry_id={{vm.selectedImage.properties.entry_id}}&width={{vm.selectedImage.properties.width}}&height={{vm.selectedImage.properties.height}}&bands={{vm.imageSpaceDefaults.bands}}&numOfBands={{vm.selectedImage.properties.number_of_bands}}&imageId={{vm.selectedImage.properties.id}}&brightness={{vm.imageSpaceDefaults.brightness}}&contrast={{vm.imageSpaceDefaults.contrast}}&histOp={{vm.imageSpaceDefaults.histOp}}&numResLevels={{vm.selectedImage.properties.number_of_res_levels}}&histCenterTile={{vm.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{vm.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{vm.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{vm.imageSpaceRequestUrl}}&uiRequestUrl={{vm.uiRequestUrl}}&mensaRequestUrl={{vm.mensaRequestUrl}}&wfsRequestUrl={{vm.wfsRequestUrl}}&showModalSplash=false" target="_blank">
-          <i class="fa fa-desktop fa-border text-primary"
-           style="cursor: pointer;"
+      <div
+        class="btn-group btn-group-sm"
+        role="group"
+        aria-label="card-buttons">
+        <a
+          type="button"
+          class="btn btn-default"
+          href="{{vm.o2baseUrlModal}}/#/mapImage?filename={{vm.selectedImage.properties.filename}}&entry_id={{vm.selectedImage.properties.entry_id}}&width={{vm.selectedImage.properties.width}}&height={{vm.selectedImage.properties.height}}&bands={{vm.imageSpaceDefaults.bands}}&numOfBands={{vm.selectedImage.properties.number_of_bands}}&imageId={{vm.selectedImage.properties.id}}&brightness={{vm.imageSpaceDefaults.brightness}}&contrast={{vm.imageSpaceDefaults.contrast}}&histOp={{vm.imageSpaceDefaults.histOp}}&numResLevels={{vm.selectedImage.properties.number_of_res_levels}}&histCenterTile={{vm.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{vm.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{vm.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{vm.imageSpaceRequestUrl}}&uiRequestUrl={{vm.uiRequestUrl}}&mensaRequestUrl={{vm.mensaRequestUrl}}&wfsRequestUrl={{vm.wfsRequestUrl}}&showModalSplash=false" target="_blank">
+          <i class="fa fa-desktop text-default"
            tooltip-placement="top"
-           uib-tooltip="View raw image"></i>&nbsp;&nbsp;
+           uib-tooltip="View raw image"></i>
         </a>
-        <a href="" ng-click="vm.viewOrtho(vm.selectedImage)" target="_blank">
-          <i class="fa fa-history fa-border text-primary"
-           style="cursor: pointer;"
-           tooltip-placement="top"
-           uib-tooltip="View rectified image in TLV"></i>&nbsp;&nbsp;
-        </a>
-        <a ng-show="{{vm.kmlSuperOverlayAppEnabled}}" href="{{vm.kmlRequestUrl}}{{vm.selectedImage.properties.id}}">
-          <i class="fa fa-map fa-border text-primary"
-           style="cursor: pointer;"
-           tooltip-placement="top"
-           uib-tooltip="Download KML"></i>&nbsp;&nbsp;
-        </a>
-        <a ng-href="" target="_blank" ng-click="vm.shareModal(vm.getImageSpaceUrl(vm.selectedImage))">
-          <i class="fa fa-share-alt fa-border text-primary"
-           style="cursor: pointer;"
-           tooltip-placement="top"
-           uib-tooltip="Share link"></i>
-        </a>&nbsp;&nbsp;
-        <a ng-href="" target="_blank" ng-click="vm.archiveDownload(vm.selectedImage.properties.id)">
-          <i class="fa fa-download fa-border text-primary"
+        <a
+          type="button"
+          class="btn btn-default"
+          ng-click="vm.viewOrtho(vm.selectedImage)">
+          <i class="fa fa-history text-default"
             style="cursor: pointer;"
-            tooltip-placement="top"
-            uib-tooltip="Download"></i>&nbsp;&nbsp;
-        </a>
-        <a ng-show="{{vm.jpipAppEnabled}}" href="" ng-click="vm.getJpipStream($event, vm.selectedImage.properties.filename, vm.selectedImage.properties.entry_id, 'chip', $index, 'stream');">
-          <i class="fa fa-file-image-o fa-border text-primary"
-           style="cursor: pointer;"
-           tooltip-placement="top"
-           uib-tooltip="JPIP image"></i>
-        </a>&nbsp;
-        <a ng-show="{{vm.jpipAppEnabled}}" href="" ng-click="vm.getJpipStream($event, vm.selectedImage.properties.filename, vm.selectedImage.properties.entry_id, '4326', $index, 'ortho');">
-          <i class="fa fa-image fa-border text-primary"
-           style="cursor: pointer;"
-           tooltip-placement="top"
-           uib-tooltip="JPIP ortho"></i>
-        </a>
+            uib-tooltip="View rectified image in TLV"></i>
+          </a>
+          <a
+            type="button"
+            class="btn btn-default"
+            ng-show="{{vm.kmlSuperOverlayAppEnabled}}"
+            href="{{vm.kmlRequestUrl}}{{vm.selectedImage.properties.id}}">
+            <i class="fa fa-map text-default"
+              tooltip-placement="top"
+              uib-tooltip="Download KML"></i>
+          </a>
+          <a
+            type="button"
+            class="btn btn-default"
+            ng-click="vm.shareModal(vm.getImageSpaceUrl(vm.selectedImage))">
+            <i class="fa fa-share-alt text-default"
+              uib-tooltip="Share link"></i>
+          </a>
+          <a
+            type="button"
+            class="btn btn-default"
+            ng-click="vm.archiveDownload(vm.selectedImage.properties.id)">
+            <i class="fa fa-download text-default"
+              uib-tooltip="Download"></i>
+          </a>
       </div>
-    </div>
     </div>
     <div class="col-sm-4 text-center">
       <h3 class="list-card-modal-header-title">Metadata</h3>

@@ -636,7 +636,7 @@
       }
 
       if (vm.wacNumberCheck && vm.wacNumber != "") {
-        vm.currentAttrFilterArray.push(`Targe: ${vm.wacNumber}`);
+        vm.currentAttrFilterArray.push(`Target: ${vm.wacNumber}`);
         pushKeywordToArray("wac_code", vm.wacNumber);
         setKeywordIndicator();
       } else if (!vm.wacNumberCheck) {

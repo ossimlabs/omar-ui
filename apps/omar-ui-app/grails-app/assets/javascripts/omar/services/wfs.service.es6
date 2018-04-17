@@ -297,6 +297,23 @@
       return wfsUrl;
     };
 
+    /**
+     * Purpose: Uses an image id in a WFS GetFeature request to obtain the extent of the image
+     * @param id
+     */
+    this.getImagesExtent = id => {
+      let version = "1.1.0";
+      let typeName = "omar:raster_entry";
+
+      let wfsUrl = `${wfsRequestUrl}service=WFS&version=${version}&request=GetFeature&typeName=${typeName}&outputFormat=JSON&filter=in(${id})`;
+
+      return $http({ method: "GET", url: wfsUrl }).then(response => {
+        let feature = response.data.features[0];
+
+        return feature;
+      });
+    };
+
     this.search = function(filter) {
       var wfsUrl =
         wfsRequestUrl +

@@ -482,7 +482,13 @@
       VERSION: "1.1.1",
       LAYERS: "omar:raster_entry",
       FORMAT: "image/png",
-      FILTER: ""
+      FILTER: "",
+      STYLES: JSON.stringify({
+        bands: "default",
+        nullPixelFlip: false,
+        histOp: "auto-minmax",
+        histCenterTile: false
+      })
     };
 
     let updatedParams, selectedImages, mosaicCql;
@@ -503,7 +509,6 @@
         convertToWktPolygon(getMapBbox()) +
         ")";
 
-      console.log(typeof imageLayer);
       // Check to see if imageLayer exists as an OL layer yet
       if (imageLayer === undefined) {
         imageLayer = new ol.layer.Tile({
@@ -556,11 +561,6 @@
       updatedParams.FILTER = `IN(${selectedImagesArray.toString()})`;
       imageLayer.getSource().updateParams(updatedParams);
 
-      // Forces the layer to clear any cached tiles
-      imageLayer
-        .getSource()
-        .setTileLoadFunction(imageLayer.getSource().getTileLoadFunction());
-
       // If we have removed all items from the Mosaic layer collection we need to
       // remove it from the Group layer
       if (selectedImagesArray.length < 1) {
@@ -596,8 +596,6 @@
         const imageArray = response.geometry.coordinates[0][0];
 
         let polygon = new ol.geom.Polygon([imageArray]);
-
-        zoomAnimate();
 
         // Moves the map to the extent of the search item
         map.getView().fit(polygon.getExtent(), map.getSize());
@@ -891,7 +889,6 @@
           ]);
         map.getView().setZoom(stateService.mapState.zoom);
       } else {
-        zoomAnimate();
         map.getView().setZoom(12);
         map
           .getView()
@@ -935,8 +932,6 @@
 
       var searchItemExtent = searchLayerVector.getSource().getExtent();
 
-      zoomAnimate();
-
       // Moves the map to the extent of the search item
       map.getView().fit(searchItemExtent, map.getSize());
 
@@ -959,22 +954,22 @@
       resetFeatureMapStateObj();
     }
 
-    function zoomAnimate() {
-      var start = +new Date();
+    // function zoomAnimate() {
+    //   var start = +new Date();
 
-      var pan = ol.animation.pan({
-        duration: 750,
-        source: map.getView().getCenter(),
-        start: start
-      });
+    //   var pan = ol.animation.pan({
+    //     duration: 750,
+    //     source: map.getView().getCenter(),
+    //     start: start
+    //   });
 
-      var zoom = ol.animation.zoom({
-        duration: 1000,
-        resolution: map.getView().getResolution()
-      });
+    //   var zoom = ol.animation.zoom({
+    //     duration: 1000,
+    //     resolution: map.getView().getResolution()
+    //   });
 
-      map.beforeRender(zoom, pan);
-    }
+    //   map.beforeRender(zoom, pan);
+    // }
 
     function clearLayerSource(layer) {
       if (layer.getSource().getFeatures().length >= 1) {

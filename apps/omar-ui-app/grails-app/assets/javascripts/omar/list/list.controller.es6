@@ -405,7 +405,7 @@
 
     /**
      * Purpose: Used for styling on the card checkbox icon.  It
-     * looks in the selectedCards array and adds the ppropriate
+     * looks in the selectedCards array and adds the appropriate
      * icon if it is contained in the array
      * @param imageId
      */

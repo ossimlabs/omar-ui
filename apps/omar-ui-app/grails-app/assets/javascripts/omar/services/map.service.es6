@@ -32,7 +32,8 @@
       footprintStyle,
       dragBox,
       pointLatLon,
-      overlayGroup;
+      overlayGroup,
+      mosaicGroup;
 
     var version = "1.1.1";
     var layers = "omar:raster_entry";
@@ -58,6 +59,10 @@
     var thumbnailsRequestUrl =
       thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
+    var wmsBaseUrl = stateService.omarSitesState.url.base;
+    var wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
+    var wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+
     /**
      * Description: Called from the mapController so that the $on. event that subscribes to the $broadcast
      * can update the Geoscript and Thumbnails url and context path(s).
@@ -68,10 +73,16 @@
         stateService.omarSitesState.url.geoscriptContextPath;
       footprintsRequestUrl =
         footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
+
       thumbnailsBaseUrl = stateService.omarSitesState.url.base;
       thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
       thumbnailsRequestUrl =
         thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+
+      wmsBaseUrl = stateService.omarSitesState.url.base;
+      wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
+      wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+      clearSelectedMosaicImages();
     };
 
     iconStyle = new ol.style.Style({
@@ -264,6 +275,11 @@
         layers: []
       });
 
+      mosaicGroup = new ol.layer.Group({
+        title: "Mosaics",
+        layers: []
+      });
+
       // Takes a map layer obj, and adds
       // the layer to the map layers array.
       function addBaseMapLayers(layerObj) {
@@ -367,17 +383,15 @@
       if (AppO2.APP_CONFIG.openlayers.baseMaps != null) {
         // Map over each map item in the baseMaps array
         AppO2.APP_CONFIG.openlayers.baseMaps.map(addBaseMapLayers);
-        //console.log("AppO2.APP_CONFIG.openlayers.baseMaps is null");
       }
       if (AppO2.APP_CONFIG.openlayers.overlayLayers != null) {
         // Map over each layer item in the overlayLayers array
         AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
-        //console.log("AppO2.APP_CONFIG.openlayers.overlayLayers is null");
       }
       overlayGroup.getLayers().push(footPrints);
 
       map = new ol.Map({
-        layers: [baseMapGroup, overlayGroup],
+        layers: [baseMapGroup, mosaicGroup, overlayGroup],
         controls: ol.control
           .defaults()
           .extend([
@@ -461,7 +475,164 @@
       });
     };
 
-    this.zoomMap = function(params) {
+    let selectedImagesArray = [];
+    let imageLayer;
+    let initialParams = {
+      SERVICE: "WMS",
+      VERSION: "1.1.1",
+      LAYERS: "omar:raster_entry",
+      FORMAT: "image/png",
+      FILTER: "",
+      STYLES: JSON.stringify({
+        bands: "default",
+        nullPixelFlip: false,
+        histOp: "auto-minmax",
+        histCenterTile: false
+      })
+    };
+
+    let updatedParams, selectedImages, mosaicCql;
+
+    /**
+     * Purpose: Takes an image id, and adds it to an Openlayers
+     * TileWMS source.  The Tile layer is used to hold the
+     * selected images as a mosaic from the WMS service.
+     *
+     * The layer participates in the mosaicGroup layer
+     * @param id
+     */
+    const addSelectedImageAsLayer = id => {
+      let mosaicCql =
+        "INTERSECTS(" +
+        geomField +
+        "," +
+        convertToWktPolygon(getMapBbox()) +
+        ")";
+
+      // Check to see if imageLayer exists as an OL layer yet
+      if (imageLayer === undefined) {
+        imageLayer = new ol.layer.Tile({
+          title: "Custom",
+          source: new ol.source.TileWMS({
+            url: wmsRequestUrl,
+            params: initialParams,
+            wrapX: false
+          }),
+          name: "Custom"
+        });
+        //map.addLayer(imageLayer);
+        mosaicGroup.getLayers().push(imageLayer);
+      }
+      // We need to check to make sure that the associated id
+      // isn't already in the array.  If it is we do not want to
+      // add it again
+      if (selectedImagesArray.find(num => id === num)) {
+        return;
+      } else {
+        selectedImagesArray.push(id);
+        selectedImages = selectedImagesArray.toString();
+
+        updatedParams = imageLayer.getSource().getParams();
+        updatedParams.FILTER = `IN(${selectedImages}) AND ${mosaicCql}`;
+        imageLayer.getSource().updateParams(updatedParams);
+      }
+    };
+
+    this.addSelectedImageAsLayer = id => {
+      addSelectedImageAsLayer(id);
+    };
+
+    /**
+     * Purpose: Takes an image id, and removes it from the selectedImagesArray.
+     * It upadtes the Openlayers imageLayer, and updates its parameters so that
+     * the image no longer appears in the mosaic.
+     * @param id
+     */
+    const removeSelectedImageLayer = id => {
+      selectedImagesArray.find(num => {
+        if (num === id) {
+          let i = selectedImagesArray.indexOf(id);
+          if (i != -1) {
+            selectedImagesArray.splice(i, 1);
+          }
+        }
+      });
+
+      updatedParams.FILTER = `IN(${selectedImagesArray.toString()})`;
+      imageLayer.getSource().updateParams(updatedParams);
+
+      // If we have removed all items from the Mosaic layer collection we need to
+      // remove it from the Group layer
+      if (selectedImagesArray.length < 1) {
+        mosaicGroup.getLayers().forEach(function(layer) {
+          if (
+            layer.get("name") != undefined &&
+            layer.get("name") === "Custom"
+          ) {
+            mosaicGroup.getLayers().pop(layer);
+
+            if (imageLayer !== undefined) {
+              // Sets the URL to the currently federated O2
+              updatedParams.FILTER = "";
+              imageLayer.getSource().updateParams(updatedParams);
+              imageLayer = undefined;
+            }
+          }
+        });
+      }
+    };
+
+    this.removeSelectedImageLayer = id => {
+      removeSelectedImageLayer(id);
+    };
+
+    /**
+     * Purpose: Uses the WFS service to obtain the extent for a given image.
+     * It then uses the returned extent to zoom the map there
+     * @param id
+     */
+    const zoomToSelectedImages = ids => {
+      wfsService.getImagesExtent(ids).then(function(response) {
+        const imageArray = response.geometry.coordinates[0][0];
+
+        let polygon = new ol.geom.Polygon([imageArray]);
+
+        // Moves the map to the extent of the search item
+        map.getView().fit(polygon.getExtent(), map.getSize());
+      });
+    };
+
+    this.zoomToSelectedImages = ids => {
+      zoomToSelectedImages(ids);
+    };
+
+    /**
+     * Purpose: Clears all of the selected images in the mosaic array.
+     * It does this by updating the filter parameters for the imageLayer
+     * to an empty string. It also removes the 'Custom' layer from the
+     * mosaicGroup layer
+     */
+    const clearSelectedMosaicImages = () => {
+      selectedImagesArray = [];
+      mosaicGroup.getLayers().forEach(function(layer) {
+        if (layer.get("name") != undefined && layer.get("name") === "Custom") {
+          mosaicGroup.getLayers().pop(layer);
+        }
+      });
+
+      if (imageLayer !== undefined) {
+        // Sets the URL to the currently federated O2
+        updatedParams.FILTER = "";
+        imageLayer.getSource().updateParams(updatedParams);
+        imageLayer = undefined;
+      }
+    };
+
+    this.clearSelectedMosaicImages = () => {
+      clearSelectedMosaicImages();
+    };
+
+    this.clearSelectedImages = this.zoomMap = function(params) {
       if (params.feature.wkt !== undefined) {
         zoomToExt(params);
       } else {
@@ -473,6 +644,9 @@
       var params = footPrints.getSource().getParams();
       params.FILTER = filter;
       footPrints.getSource().updateParams(params);
+      footPrints
+        .getSource()
+        .setTileLoadFunction(footPrints.getSource().getTileLoadFunction());
     }
 
     this.updateFootPrintLayer = function(filter) {
@@ -715,7 +889,6 @@
           ]);
         map.getView().setZoom(stateService.mapState.zoom);
       } else {
-        zoomAnimate();
         map.getView().setZoom(12);
         map
           .getView()
@@ -759,8 +932,6 @@
 
       var searchItemExtent = searchLayerVector.getSource().getExtent();
 
-      zoomAnimate();
-
       // Moves the map to the extent of the search item
       map.getView().fit(searchItemExtent, map.getSize());
 
@@ -783,22 +954,22 @@
       resetFeatureMapStateObj();
     }
 
-    function zoomAnimate() {
-      var start = +new Date();
+    // function zoomAnimate() {
+    //   var start = +new Date();
 
-      var pan = ol.animation.pan({
-        duration: 750,
-        source: map.getView().getCenter(),
-        start: start
-      });
+    //   var pan = ol.animation.pan({
+    //     duration: 750,
+    //     source: map.getView().getCenter(),
+    //     start: start
+    //   });
 
-      var zoom = ol.animation.zoom({
-        duration: 1000,
-        resolution: map.getView().getResolution()
-      });
+    //   var zoom = ol.animation.zoom({
+    //     duration: 1000,
+    //     resolution: map.getView().getResolution()
+    //   });
 
-      map.beforeRender(zoom, pan);
-    }
+    //   map.beforeRender(zoom, pan);
+    // }
 
     function clearLayerSource(layer) {
       if (layer.getSource().getFeatures().length >= 1) {

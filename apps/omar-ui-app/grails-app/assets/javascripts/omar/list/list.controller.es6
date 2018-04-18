@@ -344,6 +344,8 @@
         if (i != -1) {
           vm.selectedCards.splice(i, 1);
         }
+        // We also need to remove the image from the map
+        mapService.removeSelectedImageLayer(imageId, vm.selectedCards);
       } else {
         // Restrict the number of selected cards to 10
         if (vm.selectedCards.length >= 10) {
@@ -361,12 +363,17 @@
           );
           return;
         }
+
         // The imageId is not in the vm.selectedCards array so we
         // need to add it
         vm.selectedCards.push(imageId);
+
+        // The image id is used to add the selected image to the custom
+        // mosaic layer in the 'Mosaics' group
+        mapService.addSelectedImageAsLayer(imageId);
       }
 
-      // We need to show the selected button if we have one
+      // We need to enable the selected menu options if we have one
       // or more image cards selected
       if (vm.selectedCards.length >= 1) {
         vm.showSelectedButton = true;
@@ -375,15 +382,33 @@
       }
     };
 
+    /**
+     * Purpose: Allows the ability to zoom to the selected image. It
+     * is wired up to the button on the image card
+     * @param id
+     */
+    vm.zoomToSelectedImage = id => {
+      mapService.zoomToSelectedImages(id);
+    };
+
     // Remove selected items, and reset the DOM
     vm.clearSelectedImages = () => {
       vm.selectedCards = [];
       vm.showSelectedButton = false;
     };
 
-    // Used for styling on the card checkbox icon.  It
-    // looks in the selectedCards array and adds the
-    // appropriate icon if it is contained in the array
+    // Removes the selected images from the mosaic layer.  It is wired up
+    // to the Clear Selected item in the 'Selected' dropdown menu
+    vm.clearSelectedMosaicImages = () => {
+      mapService.clearSelectedMosaicImages();
+    };
+
+    /**
+     * Purpose: Used for styling on the card checkbox icon.  It
+     * looks in the selectedCards array and adds the appropriate
+     * icon if it is contained in the array
+     * @param imageId
+     */
     vm.checkSelectItem = imageId => {
       return $.inArray(imageId, vm.selectedCards) > -1;
     };

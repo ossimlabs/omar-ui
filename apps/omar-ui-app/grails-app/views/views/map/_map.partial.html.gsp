@@ -956,7 +956,7 @@
                   <li
                     role="menuitem"
                     ng-class="{'disabled': !list.showSelectedButton}"
-                    ng-click="list.clearSelectedImages()">
+                    ng-click="list.clearSelectedImages(); list.clearSelectedMosaicImages()">
                     <a href="">Clear Selected
                       <i
                         class="fa fa-info-circle text-info"
@@ -991,28 +991,26 @@
         <div ng-show="list.wfsFeatures >= 1"
           ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
           ng-model="image">
-          <div class="panel panel-default" >
+          <div class="panel panel-default cursor-pointer" >
             <div class="panel-heading"
+              ng-click="list.addRemoveCards(image.properties.id)"
               style="
                 font-size: 11px;
                 padding: 2px 7px;">
-                <span
-                  ng-click="list.addRemoveCards(image.properties.id)">
-                  <i class="fa fa-square-o"
+                <span>
+                  <i class="fa fa-square-o cursor-pointer"
                     ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
                     aria-hidden="true"
-                    style="
-                      cursor: pointer;
-                      padding-right: 5px;"
+                    style="padding-right: 5px;"
                     tooltip-placement="left-bottom"
                     uib-tooltip="Add image to selected list">
                   </i>
                 </span>
-              <span ng-click="list.showImageModal(image, list.imageSpaceDefaults,   list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
-                class="text-default"
-                style="cursor: pointer;">
+              <span
+                class="text-default cursor-pointer">
                 <span ng-show="!image.properties.title">Unknown</span>
                 {{image.properties.title}}
+              </span>
             </div>
             <div class="panel-body"
               ng-mouseenter="list.displayFootprint(image);"
@@ -1086,13 +1084,21 @@
                     class="btn-group btn-group-sm"
                     role="group"
                     aria-label="card-buttons">
-                      <a
+                    <a
+                        type="button"
+                        class="btn btn-default"
+                        ng-click="list.zoomToSelectedImage(image.properties.id);">
+                        <i class="fa fa-arrows text-default"
+                          tooltip-placement="right"
+                          uib-tooltip="Zoom to the image extent"></i>
+                      </a>
+                    <a
                         type="button"
                         class="btn btn-default"
                         href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&showModalSplash=false"
                         target="_blank">
                         <i class="fa fa-desktop text-default"
-                          tooltip-placement="right"
+                          tooltip-placement="pull-right"
                           uib-tooltip="View raw image"></i>
                       </a>
                       <a
@@ -1117,7 +1123,7 @@
                         class="btn btn-default"
                         ng-click="list.shareModal(list.getImageSpaceUrl(image))">
                         <i class="fa fa-share-alt text-default"
-                        tooltip-placement="right"
+                        tooltip-placement="top"
                         uib-tooltip="Share link"></i>
                       </a>
                       <a
@@ -1125,7 +1131,7 @@
                         class="btn btn-default"
                         ng-click="list.archiveDownload(image.properties.id)">
                         <i class="fa fa-download text-default"
-                          tooltip-placement="right"
+                          tooltip-placement="top"
                           uib-tooltip="Download"></i>
                       </a>
                       <a
@@ -1141,8 +1147,7 @@
                         type="button"
                         class="btn btn-default"
                         ng-show="{{list.jpipAppEnabled}}"
-                        ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, '4326', $index, 'ortho');"
-                        >
+                        ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, '4326', $index, 'ortho');">
                         <i class="fa fa-image text-default"
                           tooltip-placement="top"
                           uib-tooltip="JPIP ortho"></i>

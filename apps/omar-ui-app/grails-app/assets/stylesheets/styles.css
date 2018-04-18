@@ -14,7 +14,7 @@
 
 body {
   padding-top: 50px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .center-modal {
@@ -27,7 +27,7 @@ body {
   margin-left: -10%;
 }
 
-cursor-pointer {
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -246,7 +246,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 64vh;
   }
   #list {
-    height: 46vh;
+    height: 42vh;
   }
   #mapOrtho {
     height: 73vh;
@@ -264,7 +264,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 69vh;
   }
   #list {
-    height: 54vh;
+    height: 51vh;
   }
   #mapOrtho {
     height: 77vh;
@@ -282,7 +282,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 73vh;
   }
   #list {
-    height: 59vh;
+    height: 56vh;
   }
   #mapOrtho {
     height: 80vh;
@@ -300,7 +300,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 76vh;
   }
   #list {
-    height: 64vh;
+    height: 61vh;
   }
   #mapOrtho {
     height: 82vh;
@@ -318,7 +318,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 78vh;
   }
   #list {
-    height: 68vh;
+    height: 65vh;
   }
   #mapOrtho {
     height: 83vh;
@@ -336,7 +336,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 80vh;
   }
   #list {
-    height: 70vh;
+    height: 68vh;
   }
   #mapOrtho {
     height: 85vh;
@@ -354,7 +354,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
     height: 82vh;
   }
   #list {
-    height: 73vh;
+    height: 70vh;
   }
   #mapOrtho {
     height: 86vh;
@@ -428,6 +428,8 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 #list .panel-body{
   padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 2px;
 }
 
 #list .media {

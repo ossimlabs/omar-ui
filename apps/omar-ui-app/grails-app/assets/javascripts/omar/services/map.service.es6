@@ -485,9 +485,10 @@
       FILTER: "",
       STYLES: JSON.stringify({
         bands: "default",
-        nullPixelFlip: false,
+        histCenterTile: false,
         histOp: "auto-minmax",
-        histCenterTile: false
+        resamplerFilter: "bilinear",
+        nullPixelFlip: false
       })
     };
 

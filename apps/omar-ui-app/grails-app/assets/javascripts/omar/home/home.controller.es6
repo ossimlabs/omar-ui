@@ -1,8 +1,13 @@
 (function() {
   "use strict";
   angular
-    .module('omarApp')
-    .controller('HomeController', ['$log', 'stateService', '$window', 'toastr', HomeController
+    .module("omarApp")
+    .controller("HomeController", [
+      "$log",
+      "stateService",
+      "$window",
+      "toastr",
+      HomeController
     ]);
 
   function HomeController($log, stateService, $window, toastr) {
@@ -34,10 +39,23 @@
 
     vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
     if (vm.kmlAppEnabled) {
-      var kmlBaseUrl =stateService.omarSitesState.url.base;
+      var kmlBaseUrl = stateService.omarSitesState.url.base;
       var kmlContextPath = stateService.omarSitesState.url.kmlContextPath;
-      vm.kmlAppLink = kmlBaseUrl + kmlContextPath + "/superOverlay/getLastImagesKml";
+      vm.kmlAppLink =
+        kmlBaseUrl + kmlContextPath + "/superOverlay/getLastImagesKml";
     }
+
+    let geoscriptBaseUrl = stateService.omarSitesState.url.base;
+    let geoscriptContextPath =
+      stateService.omarSitesState.url.geoscriptContextPath;
+    //- /omar-geoscript/georss?be=<BE Number>
+    //- /omar-geoscript/georss?cc=<Country Code>
+    //- /omar-geoscript/georss?filter=<CQL Filter>
+
+    vm.geoRssBeNumbAppLink =
+      geoscriptBaseUrl + geoscriptContextPath + "/georss?be=";
+    vm.geoRssCcAppLink =
+      geoscriptBaseUrl + geoscriptContextPath + "/georss?cc=";
 
     vm.piwikAppEnabled = AppO2.APP_CONFIG.params.piwikApp.enabled;
     if (vm.piwikAppEnabled) {
@@ -46,9 +64,9 @@
 
     vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;
     if (vm.tlvAppEnabled) {
-        var tlvBaseUrl =stateService.omarSitesState.url.base;
-        var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-        vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
+      var tlvBaseUrl = stateService.omarSitesState.url.base;
+      var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
     }
 
     var twofishProxy = AppO2.APP_CONFIG.params.twofishes.proxy;

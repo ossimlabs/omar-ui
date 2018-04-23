@@ -152,7 +152,7 @@
         center: [0, 0],
         extent: [-180, -90, 180, 90],
         projection: "EPSG:4326",
-        zoom: 2,
+        zoom: 3,
         minZoom: 2,
         maxZoom: 20
       });

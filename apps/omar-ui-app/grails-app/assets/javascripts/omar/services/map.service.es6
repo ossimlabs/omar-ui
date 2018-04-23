@@ -393,7 +393,7 @@
       map = new ol.Map({
         layers: [baseMapGroup, mosaicGroup, overlayGroup],
         controls: ol.control
-          .defaults()
+          .defaults({ attribution: false })
           .extend([
             new ol.control.ScaleLine(),
             mousePositionControl,

@@ -9,7 +9,6 @@
       "$log",
       mapService
     ]);
-
   function mapService(stateService, wfsService, $timeout, $log) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -531,10 +530,12 @@
         return;
       } else {
         selectedImagesArray.push(id);
-        selectedImages = selectedImagesArray.toString();
+
+        getSelectedImages(id);
 
         updatedParams = imageLayer.getSource().getParams();
-        updatedParams.FILTER = `IN(${selectedImages}) AND ${mosaicCql}`;
+        updatedParams.FILTER = `${mosaicCql}`;
+        updatedParams.LAYERS = selectedImages;
         imageLayer.getSource().updateParams(updatedParams);
       }
     };
@@ -545,7 +546,7 @@
 
     /**
      * Purpose: Takes an image id, and removes it from the selectedImagesArray.
-     * It upadtes the Openlayers imageLayer, and updates its parameters so that
+     * It updates the Openlayers imageLayer, and updates its parameters so that
      * the image no longer appears in the mosaic.
      * @param id
      */
@@ -559,7 +560,9 @@
         }
       });
 
-      updatedParams.FILTER = `IN(${selectedImagesArray.toString()})`;
+      getSelectedImages(id);
+
+      updatedParams.LAYERS = selectedImages;
       imageLayer.getSource().updateParams(updatedParams);
 
       // If we have removed all items from the Mosaic layer collection we need to
@@ -575,6 +578,7 @@
             if (imageLayer !== undefined) {
               // Sets the URL to the currently federated O2
               updatedParams.FILTER = "";
+              updatedParams.LAYERS = "";
               imageLayer.getSource().updateParams(updatedParams);
               imageLayer = undefined;
             }
@@ -585,6 +589,22 @@
 
     this.removeSelectedImageLayer = id => {
       removeSelectedImageLayer(id);
+    };
+
+    /**
+     * Purpose: Takes an image db id, and builds up an array that can
+     * be used to pass an array of image id's with the omar:raster_entry table
+     * into the LAYERS param on the WMS
+     *
+     * @param id
+     */
+    const getSelectedImages = id => {
+      return (selectedImages = selectedImagesArray
+        .map(id => {
+          return "omar:raster_entry." + id;
+        })
+        .reverse()
+        .toString());
     };
 
     /**

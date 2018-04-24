@@ -51,10 +51,35 @@
             <h2>GeoRSS</h2>
             <div><span class="fa fa-rss fa-3x text-info"></span></div>
             <br>
-            <p>Download a GeoRSS feeds of the images</p>
+            <p>Create a GeoRSS feeds of the images</p>
           </div>
-          <p>Country Code:  <input style="width:35px" ng-model="rssCc"> <a type="button" class="btn btn-xs btn-success" ng-href="{{home.geoRssCcAppLink}}{{rssCc}}" target="_blank">Download</a></p>
-          <p>BE Number:  <input style="width:35px" ng-model="rssBe"> <a type="button" class="btn btn-xs btn-success" ng-href="{{home.geoRssBeNumbAppLink}}{{rssBe}}" target="_blank">Download</a></p>
+          <form class="form-inline">
+            <div class="form-group">
+              <label>Country Code</label>
+              <input style="width:35px" ng-model="rssCc">
+            </div>
+              <a
+                type="button"
+                class="btn btn-xs btn-success"
+                ng-href="{{home.geoRssCcAppLink}}{{rssCc}}"
+                target="_blank">Submit
+              </a>
+            <br>
+            <div class="form-group">
+              <label>BE Number</label>
+              <input style="width:35px" ng-model="rssBe">
+            </div>
+            <a
+              type="button"
+              class="btn btn-xs btn-success"
+              ng-href="{{home.geoRssBeNumbAppLink}}{{rssBe}}"
+              target="_blank">Submit
+            </a>
+          </form>
+          <p>BE Number:
+
+
+          </p>
           <br>
           <br>
         </div>

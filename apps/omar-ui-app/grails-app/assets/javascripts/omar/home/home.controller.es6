@@ -58,7 +58,7 @@
       geoscriptBaseUrl + geoscriptContextPath + "/georss?be=";
 
     vm.geoRssType = "countryCode"; // initial geoRSS type
-    vm.geoRssPlaceHolder = "code"; // initial geoRss input placeholder
+    vm.geoRssPlaceHolder = "code"; // initial geoRSS input placeholder
     vm.geoRssInput = ""; // initial geoRss input value
 
     vm.handleGeoRssPlaceholderChange = () => {
@@ -71,7 +71,7 @@
 
     vm.handleSelectedGeoRssType = () => {
       if (vm.geoRssType === "countryCode") {
-        // If the geoRssInput isn't being passed we will get the associated CC value
+        // If the geoRssInput is being passed we will get the associated CC value
         if (vm.geoRssInput !== "") {
           // We need to get the country code from the input
           $window.open(
@@ -95,6 +95,7 @@
           return;
         }
       } else if (vm.geoRssType === "beNumber") {
+        // If the geoRssInput is being passed we will get the associated BE value
         if (vm.geoRssInput !== "") {
           // We need to get the BE number from the input
           $window.open(

@@ -1,21 +1,19 @@
 <!-- partial-home.html -->
 <div ng-controller="HomeController as home">
-  <div class="jumbotron text-center">
-    <br>
-    <br>
+  <div class="jumbotron text-center" style="margin-top: -15px;">
     <div class="col-md-8 col-md-offset-2">
       <h1>{{home.title}}</h1>
     </div>
   </div>
-  <div class="container">
-    <div class="row" ng-show="home.showMotd">
+  <div class="container-fluid">
+    <div class="row" style="margin-top: -20px;" ng-show="home.showMotd">
       <div class="col-md-8 col-md-offset-2">
-        <div class="alert alert-info motd-banner text-center"><h4><strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Info:</strong>&nbsp;&nbsp;{{home.motd}}</h4></div>
+        <div class="alert alert-info motd-banner text-center" style="margin-bottom: 10px;"><h4><strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Info:</strong>&nbsp;&nbsp;{{home.motd}}</h4></div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4" ui-sref="map">
-        <div class="text-center well well-home">
+      <div class="col-md-3" ui-sref="map">
+        <div class="text-center well well-home" style="padding-bottom: 24px">
           <h2>Map</a></h2>
           <div><span class="fa fa-search fa-3x text-info"></span></div>
           <br>
@@ -24,37 +22,70 @@
           <a type="button" class="btn btn-success" ui-sref="map">View</a>
         </div>
       </div>
-      <div ng-show="{{home.tlvAppEnabled}}" class="col-md-4" ng-click="home.go(home.tlvAppLink);">
-        <div class="text-center well well-home" ng-href="{{home.tlvAppLink}}" target="_blank">
+      <div ng-show="{{home.tlvAppEnabled}}" class="col-md-3" ng-click="home.go(home.tlvAppLink);">
+        <div class="text-center well well-home" style="padding-bottom: 24px" ng-href="{{home.tlvAppLink}}" target="_blank">
           <h2>Time Lapse Viewer</h2>
           <div><span class="fa fa-history fa-3x text-info"></span></div>
+          <br>
           <br>
           <p>An on-demand imagery flipbook</p>
           <br><br>
           <a type="button" class="btn btn-success" target="_blank">View</a>
         </div>
       </div>
-      <div ng-init="max=10" ng-show="{{home.kmlAppEnabled}}" class="col-md-4">
+      <div ng-init="max=10" ng-show="{{home.kmlAppEnabled}}" class="col-md-3">
         <div class="text-center well">
           <h2>KML</h2>
           <div><span class="fa fa-map fa-3x text-info"></span></div>
           <br>
-          <p>Download a KML of the last &nbsp; <input style="width:35px" type="number" ng-model="max"> &nbsp; images acquired.</p>
+          <p>Download a KML of the last &nbsp; <input style="width:35px" type="number" ng-model="max"> &nbsp; images acquired</p>
+          <br>
           <br>
           <a type="button" class="btn btn-success" ng-href="{{home.kmlAppLink}}?max={{max}}" target="_blank">Download</a>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div ng-show="{{home.piwikAppEnabled}}" class="col-md-6" ng-click="home.go(home.piwikAppLink);">
-        <div class="text-center well well-home" ng-href="{{home.piwikAppLink}}" target="_blank">
-          <h2>PIWIK</h2>
-          <div><span class="fa fa-bar-chart fa-3x text-info"></span></div>
-          <br>
-          <p>View O2 web analytics. Track Key Performance Indicators such as visits, goal conversions
-            rates, downloads, keywords and more</p>
-          <br>
-          <a type="button" class="btn btn-success" ng-href="{{home.piwikAppLink}}" target="_blank">View</a>
+
+      <div class="col-md-3">
+        <div class="well">
+          <div class="text-center">
+            <h2>GeoRSS</h2>
+            <div><span class="fa fa-rss fa-3x text-info"></span></div>
+            <br>
+            <p>
+              <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="top"
+              uib-popover="A browser
+              extension is required for Internet Explorer and
+                Chrome.  Firefox has built in support
+                for RSS feeds."></i>
+              Create a GeoRSS feed of the images
+            </p>
+          </div>
+          <form class="form-inline">
+            <div class="text-center">
+              <div class="form-group">
+                <select ng-change="home.handleGeoRssPlaceholderChange()" class="form-control input-sm" ng-model="home.geoRssType">
+                  <option value="countryCode">Country Code</option>
+                  <option value="beNumber">BE Number</option>
+                </select>
+                <input
+                  class="form-control input-sm"
+                  style="width: 120px;"
+                  ng-model="home.geoRssInput"
+                  placeholder="{{home.geoRssPlaceHolder}}">
+              </div>
+              <br>
+              <br>
+              <a
+                type="button"
+                class="btn btn-success"
+                ng-click="home.handleSelectedGeoRssType()"
+                target="_blank">Create</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>

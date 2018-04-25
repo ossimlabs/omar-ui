@@ -54,30 +54,7 @@
             <p>Create a GeoRSS feed of the images</p>
           </div>
           <form class="form-inline">
-            <!-- <div class="form-group">
-              <label>Country Code</label>
-              <input style="width:35px" ng-model="rssCc">
-            </div>
-              <a
-                type="button"
-                class="btn btn-xs btn-success"
-                ng-href="{{home.geoRssCcAppLink}}{{rssCc}}"
-                target="_blank">Submit
-              </a>
-            <br>
-            <div class="form-group">
-              <label>BE Number</label>
-              <input style="width:35px" ng-model="rssBe">
-            </div>
-            <a
-              type="button"
-              class="btn btn-xs btn-success"
-              ng-href="{{home.geoRssBeNumbAppLink}}{{rssBe}}"
-              target="_blank">Submit
-            </a> -->
-
             <div class="text-center">
-
               <div class="form-group">
                 <select ng-change="home.handleGeoRssPlaceholderChange()" class="form-control input-sm" ng-model="home.geoRssType">
                   <option value="countryCode">Country Code</option>

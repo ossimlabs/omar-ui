@@ -1,19 +1,19 @@
 <!-- partial-home.html -->
 <div ng-controller="HomeController as home">
-  <div class="jumbotron text-center">
+  <div class="jumbotron text-center" style="margin-top: -15px;">
     <div class="col-md-8 col-md-offset-2">
       <h1>{{home.title}}</h1>
     </div>
   </div>
   <div class="container-fluid">
-    <div class="row" ng-show="home.showMotd">
+    <div class="row" style="margin-top: -20px;" ng-show="home.showMotd">
       <div class="col-md-8 col-md-offset-2">
-        <div class="alert alert-info motd-banner text-center"><h4><strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Info:</strong>&nbsp;&nbsp;{{home.motd}}</h4></div>
+        <div class="alert alert-info motd-banner text-center" style="margin-bottom: 10px;"><h4><strong><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Info:</strong>&nbsp;&nbsp;{{home.motd}}</h4></div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-3" ui-sref="map">
-        <div class="text-center well well-home">
+        <div class="text-center well well-home" style="padding-bottom: 24px">
           <h2>Map</a></h2>
           <div><span class="fa fa-search fa-3x text-info"></span></div>
           <br>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div ng-show="{{home.tlvAppEnabled}}" class="col-md-3" ng-click="home.go(home.tlvAppLink);">
-        <div class="text-center well well-home" ng-href="{{home.tlvAppLink}}" target="_blank">
+        <div class="text-center well well-home" style="padding-bottom: 24px" ng-href="{{home.tlvAppLink}}" target="_blank">
           <h2>Time Lapse Viewer</h2>
           <div><span class="fa fa-history fa-3x text-info"></span></div>
           <br>
@@ -51,10 +51,10 @@
             <h2>GeoRSS</h2>
             <div><span class="fa fa-rss fa-3x text-info"></span></div>
             <br>
-            <p>Create a GeoRSS feeds of the images</p>
+            <p>Create a GeoRSS feed of the images</p>
           </div>
           <form class="form-inline">
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label>Country Code</label>
               <input style="width:35px" ng-model="rssCc">
             </div>
@@ -74,28 +74,30 @@
               class="btn btn-xs btn-success"
               ng-href="{{home.geoRssBeNumbAppLink}}{{rssBe}}"
               target="_blank">Submit
-            </a>
+            </a> -->
+
+            <div class="text-center">
+
+              <div class="form-group">
+                <select ng-change="home.handleGeoRssPlaceholderChange()" class="form-control input-sm" ng-model="home.geoRssType">
+                  <option value="countryCode">Country Code</option>
+                  <option value="beNumber">BE Number</option>
+                </select>
+                <input
+                  class="form-control input-sm"
+                  style="width: 120px;"
+                  ng-model="home.geoRssInput"
+                  placeholder="{{home.geoRssPlaceHolder}}">
+              </div>
+              <br>
+              <br>
+              <a
+                type="button"
+                class="btn btn-success"
+                ng-click="home.handleSelectedGeoRssType()"
+                target="_blank">Create</a>
+            </div>
           </form>
-          <p>BE Number:
-
-
-          </p>
-          <br>
-          <br>
-        </div>
-      </div>
-
-    </div>
-    <div class="row">
-      <div ng-show="{{home.piwikAppEnabled}}" class="col-md-6" ng-click="home.go(home.piwikAppLink);">
-        <div class="text-center well well-home" ng-href="{{home.piwikAppLink}}" target="_blank">
-          <h2>PIWIK</h2>
-          <div><span class="fa fa-bar-chart fa-3x text-info"></span></div>
-          <br>
-          <p>View O2 web analytics. Track Key Performance Indicators such as visits, goal conversions
-            rates, downloads, keywords and more</p>
-          <br>
-          <a type="button" class="btn btn-success" ng-href="{{home.piwikAppLink}}" target="_blank">View</a>
         </div>
       </div>
     </div>

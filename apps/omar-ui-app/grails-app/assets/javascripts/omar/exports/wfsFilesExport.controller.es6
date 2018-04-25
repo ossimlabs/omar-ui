@@ -11,6 +11,7 @@
       "$scope",
       "toastr",
       "$window",
+      "$log",
       WFSOutputDlController
     ]);
 
@@ -22,7 +23,8 @@
     mapService,
     $scope,
     toastr,
-    $window
+    $window,
+    $log
   ) {
     var vm = this;
 
@@ -31,6 +33,9 @@
 
     var isaBaseUrl, isaContextPath, isaRequestUrl;
     vm.isaRequestUrl = "";
+
+    var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
+    vm.geoscriptRequestUrl;
 
     function setWFSOutputDlControllerUrlProps() {
       tlvBaseUrl = stateService.omarSitesState.url.base;
@@ -42,6 +47,11 @@
       isaContextPath = stateService.omarSitesState.url.isaContextPath;
       isaRequestUrl = isaBaseUrl + isaContextPath;
       vm.isaRequestUrl = isaRequestUrl;
+
+      geoscriptBaseUrl = stateService.omarSitesState.url.base;
+      geoscriptContextPath =
+        stateService.omarSitesState.url.geoscriptContextPath;
+      geoscriptRequestUrl = geoscriptBaseUrl + geoscriptContextPath;
     }
 
     $scope.$on("omarSitesState.updated", function(event, params) {
@@ -129,6 +139,45 @@
           "&maxResults=100";
         $window.open(tlvURL, "_blank");
       }
+    };
+
+    vm.getGeoRss = () => {
+      vm.geoRssAppLink = geoscriptRequestUrl + "/georss?filter=";
+      let wfsFilter = "";
+
+      // Checking here for the spatial filter.
+      if (
+        wfsService.spatialObj.filter ||
+        wfsService.spatialObj.filter.length >= 1
+      ) {
+        wfsFilter = wfsService.spatialObj.filter;
+      }
+
+      // Checking here for the attributes filter.
+      if (wfsService.attrObj.filter || wfsService.attrObj.filter.length >= 1) {
+        // Check to see if we already have a spatial filter in the
+        // wfsFilter.  If so we will combine them as a filter.
+        if (wfsFilter !== "") {
+          wfsFilter += " AND " + wfsService.attrObj.filter;
+          return $window.open(
+            vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+            "_blank"
+          );
+        }
+
+        // We don't have a spatial filter so we will just make the filter with
+        // the attrObj filter.
+        wfsFilter = wfsService.attrObj.filter;
+        return $window.open(
+          vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+          "_blank"
+        );
+      }
+      // There isn't a spatial OR a attribute filter.  We will just create an empty filter.
+      return $window.open(
+        vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+        "_blank"
+      );
     };
   }
 })();

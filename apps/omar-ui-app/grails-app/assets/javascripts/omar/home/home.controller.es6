@@ -49,8 +49,6 @@
     let geoscriptContextPath =
       stateService.omarSitesState.url.geoscriptContextPath;
 
-    //- /omar-geoscript/georss?filter=<CQL Filter>
-
     vm.geoRssCcAppLink =
       geoscriptBaseUrl + geoscriptContextPath + "/georss?cc=";
 
@@ -71,7 +69,8 @@
 
     vm.handleSelectedGeoRssType = () => {
       if (vm.geoRssType === "countryCode") {
-        // If the geoRssInput is being passed we will get the associated CC value
+        // If the geoRssInput is being passed we will get the associated CC value and
+        // create the feed
         if (vm.geoRssInput !== "") {
           // We need to get the country code from the input
           $window.open(
@@ -95,7 +94,8 @@
           return;
         }
       } else if (vm.geoRssType === "beNumber") {
-        // If the geoRssInput is being passed we will get the associated BE value
+        // If the geoRssInput is being passed we will get the associated BE value and
+        // create the feed
         if (vm.geoRssInput !== "") {
           // We need to get the BE number from the input
           $window.open(

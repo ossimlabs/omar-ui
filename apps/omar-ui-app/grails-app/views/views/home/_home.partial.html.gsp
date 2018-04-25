@@ -51,7 +51,18 @@
             <h2>GeoRSS</h2>
             <div><span class="fa fa-rss fa-3x text-info"></span></div>
             <br>
-            <p>Create a GeoRSS feed of the images</p>
+            <p>
+              <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="top"
+              uib-popover="A browser
+              extension is required for Internet Explorer and
+                Chrome.  Firefox has built in support
+                for RSS feeds."></i>
+              Create a GeoRSS feed of the images
+            </p>
           </div>
           <form class="form-inline">
             <div class="text-center">

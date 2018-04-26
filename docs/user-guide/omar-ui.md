@@ -36,7 +36,7 @@ Select the kernel size used for sharpening. You can also try squinting really ha
 * **Rotation:**
 You can rotate the map by holding Shift + Alt while clicking and dragging.
 
-### Measure  
+### Measure
 * Measurements
 * * **Path:**
 Single-click to start measuring. Double-click to end.
@@ -126,6 +126,8 @@ You can rotate the map by holding Shift + Alt while clicking and dragging.
 ### Results
 Search results are displayed in a box to the right of the map with the total number of results shown in the top-right corner. Each image will have the corresponding links associated with it.
 
+* **<span class="fa fa-arrows"></span>&nbsp;:**
+Zoom to an image extent.
 * **<span class="fa fa-desktop"></span>&nbsp;:**
 View an image in image/raw space.
 * **<span class="fa fa-history"></span>&nbsp;:**

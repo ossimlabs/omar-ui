@@ -44,25 +44,8 @@ omar:
         title: "Last 24 Hours Imagery Access"
         url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
         params:
-          end_date: "javascript:
-            var date = new Date();
-            var yyyy = date.getFullYear();
-            var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.999';"
-          start_date: "javascript:
-            var date = new Date();
-            date.setDate( date.getDate() - 1 );
-            var yyyy = date.getFullYear();
-            var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            return yyyy + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.000';"
+          end_date: 0 days #ago
+          start_date: 1 days #ago
           VERSION: 1.1.0
           LAYERS: omar:heatmap
           STYLES: x
@@ -74,25 +57,8 @@ omar:
         #title: "Last 3 Days Imagery Access"
         #url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
         #params:
-          #end_date: "javascript:
-            #var date = new Date();
-            #var yyyy = date.getFullYear();
-            #var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            #var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.000';"
-          #start_date: "javascript:
-            #var date = new Date();
-            #date.setDate( date.getDate() - 3 );
-            #var yyyy = date.getFullYear();
-            #var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            #var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.000';"
+          #end_date: 0 days #ago
+          #start_date: 3 days #ago
           #VERSION: 1.1.0
           #LAYERS: omar:heatmap
           #STYLES: x
@@ -104,25 +70,8 @@ omar:
         #title: "Last 7 Days Imagery Access"
         #url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
         #params:
-          #end_date: "javascript:
-            #var date = new Date();
-            #var yyyy = date.getFullYear();
-            #var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            #var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.000';"
-          #start_date: "javascript:
-            #var date = new Date();
-            #date.setDate( date.getDate() - 7 );
-            #var yyyy = date.getFullYear();
-            #var month = date.getMonth() + 1; if ( month < 10 ) { month = '0' + month; }
-            #var day = date.getDate(); if ( day < 10 ) { day = '0' + day; }
-            #var hours = date.getHours(); if ( hours < 10 ) { hours = '0' + hours; }
-            #var minutes = date.getMinutes(); if ( minutes < 10 ) { minutes = '0' + minutes; }
-            #var seconds = date.getSeconds(); if ( seconds < 10 ) { seconds = '0' + seconds; }
-            #return yyyy + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.000';"
+          #end_date: 0 days #ago
+          #start_date: 7 days #ago
           #VERSION: 1.1.0
           #LAYERS: omar:heatmap
           #STYLES: x

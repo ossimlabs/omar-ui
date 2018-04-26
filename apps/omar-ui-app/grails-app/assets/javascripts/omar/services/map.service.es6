@@ -348,9 +348,12 @@
       // the layer to the overlay layers array.
       function addOverlayLayers(layerObj) {
         var params = {};
-        $.each(layerObj.params, function(key, value) {
-          if (value.search(/javascript:/) > -1) {
-            value = new Function(value.replace(/javascript:/g, ""))();
+        $.each( layerObj.params, function( key, value ) {
+          // identify heat map layer
+          if ( key.toLowerCase().search( /date/ ) > -1 && value.search( /\d/ ) > -1 ) {
+            var time = value.split( " " )[ 0 ];
+            var interval = value.split( " " )[ 1 ];
+            value = moment().subtract( time, interval ).format( "YYYY-MM-DDTHH:mm:ss.SSS" );
           }
           params[key] = value;
         });

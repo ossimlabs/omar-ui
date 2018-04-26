@@ -73,8 +73,9 @@ body {
   width: 100%;
   background-size: contain;
   overflow: hidden;
-  padding-top: 24px;
+  padding-top: 4px;
   padding-bottom: 24px;
+  height: 180px;
 }
 
 .jumbotron h1 {

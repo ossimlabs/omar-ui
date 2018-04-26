@@ -847,6 +847,20 @@
                   <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('JSON')">JSON</a></li>
                   <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('KML')">KML</a></li>
                   <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Create a GeoRSS feed of the images
+                      <i
+                        class="fa fa-info-circle text-info"
+                        aria-hidden="true"
+                        tooltip-placement="left-bottom"
+                        uib-tooltip="A browser
+                        extension is required for Internet Explorer and
+                          Chrome.  Firefox has built in support
+                          for RSS feeds."></i>
+                    </li>
+                  <li>
+                    <a ng-href="" target="_blank" ng-click="wfsOutputDownload.getGeoRss()">GeoRSS</a>
+                  </li>
+                  <li role="separator" class="divider"></li>
                   <li class="dropdown-header">View the images in the following applications
                     <i
                       class="fa fa-info-circle text-info"

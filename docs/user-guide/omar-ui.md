@@ -146,6 +146,8 @@ Get a JPIP stream URL that has been orthorectified.
 #### Export
 * **CSV:**
 Comma Separated Values - Produces a listing of the images and metadata in CSV format.
+* **GeoRSS:**
+Geography Rich Site Summary - Produces an RSS feed for the currently selected search filters.
 * **GML2:**
 Geography Markup Language - Produces a listing of the images and metadata in GML2 format.
 * **GML3:**

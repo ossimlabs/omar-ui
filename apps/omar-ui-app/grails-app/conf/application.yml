@@ -207,7 +207,7 @@ omar:
         releaseName: Gasparilla
 
         # O2 release version number
-        releaseNumber: 2.3.0
+        releaseNumber: 2.3.2
 
         # Used to show/hide the About dropdown
         enabled: true

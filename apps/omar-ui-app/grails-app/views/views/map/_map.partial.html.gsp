@@ -441,8 +441,8 @@
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-1"></li>
-                      <li class="col-sm-2 range-input-group filter-row">
+                      <li class="col-lg-1"></li>
+                      <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -451,19 +451,21 @@
                           <span class="input-group-addon range-name">Cloud Cover</span>
                         </div>
                       </li>
-                      <li class="col-sm-2">
+                      <li class="col-sm-3 col-lg-2">
                         <input ng-model="filter.cloudCover"
                         class="form-control input-sm" id="cloudCover"
                         placeholder="10.0" value="{{filter.cloudCover}}">
                       </li>
+                      <li class="col-sm-3 col-lg-2">
                       </li>
-                      <li class="col-sm-1 range-info">
+                      </li>
+                      <li class="col-sm-2 col-md-1 range-info">
                         <i
                         class="fa fa-info-circle text-info"
                         aria-hidden="true"
                         uib-tooltip="Valid range 0 to 100"></i>
                       </li>
-                      <li class="col-sm-3 range-include-unknown">
+                      <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
                         <input class="form-check-input" type="checkbox" value="" ng-model="filter.cloudCoverCheckNull">
                         <label
                           class="form-check-label range-include-unknown-label"

@@ -229,8 +229,8 @@
                       <li class="text-center">
                         <p>Click the checkbox next to the range parameter below to use it as a filter</p>
                       </li>
-                      <li class="col-sm-1"></li>
-                      <li class="col-sm-2 range-input-group filter-row">
+                      <li class="col-lg-1"></li>
+                      <li class="col-sm-4 col-md-3 col-lg-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -239,13 +239,13 @@
                           <span class="input-group-addon range-name">NIIRS</span>
                         </div>
                       </li>
-                      <li class="col-sm-2">
+                      <li class="col-sm-4 col-md-2">
                         <input ng-model="filter.predNiirsMin"
                           class="form-control input-sm" id="niirsMin"
                           placeholder="0.0" value="{{filter.predNiirsMin}}">
                       </li>
                       <li
-                        class="col-sm-2">
+                        class="col-sm-4 col-md-2">
                         <input ng-model="filter.predNiirsMax"
                         class="form-control input-sm" id="niirsMax"
                         placeholder="9.0" value="{{filter.predNiirsMax}}">
@@ -256,7 +256,7 @@
                           aria-hidden="true"
                           uib-tooltip="Valid range 0.0 to 9.0"></i>
                       </li>
-                      <li class="col-sm-3 range-include-unknown">
+                      <li class="col-sm-0 col-lg-4 range-include-unknown">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" ng-model="filter.predNiirsCheckNull">
                           <label
@@ -273,8 +273,8 @@
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-1"></li>
-                      <li class="col-sm-2 range-input-group filter-row">
+                      <li class="col-lg-1"></li>
+                      <li class="col-sm-4 col-md-3 col-lg-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -283,12 +283,13 @@
                           <span class="input-group-addon range-name">Azimuth</span>
                         </div>
                       </li>
-                      <li class="col-sm-2">
+                      <li class="col-sm-4 col-md-2">
                         <input ng-model="filter.azimuthMin"
                         class="form-control input-sm" id="azimuthMin"
                         placeholder="0.0" value="{{filter.azimuthMin}}">
                       </li>
-                      <li class="col-sm-2">
+                      <li
+                        class="col-sm-4 col-md-2">
                         <input ng-model="filter.azimuthMax"
                         class="form-control input-sm" id="azimuthMax"
                         placeholder="0.0" value="{{filter.azimuthMax}}">
@@ -299,7 +300,7 @@
                           aria-hidden="true"
                           uib-tooltip="Valid range 0 to 360"></i>
                       </li>
-                      <li class="col-sm-3 range-include-unknown">
+                      <li class="col-sm-0 col-lg-4 range-include-unknown">
                         <input class="form-check-input" type="checkbox" value="" ng-model="filter.azimuthCheckNull">
                         <label
                           class="form-check-label range-include-unknown-label"
@@ -314,8 +315,8 @@
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-1"></li>
-                      <li class="col-sm-2 range-input-group filter-row">
+                      <li class="col-lg-1"></li>
+                      <li class="col-sm-4 col-md-3 col-lg-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -324,12 +325,13 @@
                           <span class="input-group-addon range-name">Graze/Elev</span>
                         </div>
                       </li>
-                      <li class="col-sm-2">
+                      <li class="col-sm-4 col-md-2">
                         <input ng-model="filter.grazeElevMin"
                         class="form-control input-sm" id="grazeElevMin"
                         placeholder="0.0" value="{{filter.grazeElevMin}}">
                       </li>
-                      <li class="col-sm-2">
+                      <li
+                        class="col-sm-4 col-md-2">
                         <input ng-model="filter.grazeElevMax"
                         class="form-control input-sm" id="grazeElevMax"
                         placeholder="0.0" value="{{filter.grazeElevMax}}">
@@ -340,7 +342,7 @@
                           aria-hidden="true"
                           uib-tooltip="Valid range  0 to 90"></i>
                       </li>
-                      <li class="col-sm-3 range-include-unknown">
+                      <li class="col-sm-0 col-lg-4 range-include-unknown">
                         <input class="form-check-input" type="checkbox" value="" ng-model="filter.grazeElevCheckNull">
                         <label
                           class="form-check-label range-include-unknown-label"
@@ -355,8 +357,8 @@
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-1"></li>
-                      <li class="col-sm-2 range-input-group filter-row">
+                      <li class="col-lg-1"></li>
+                      <li class="col-sm-4 col-md-3 col-lg-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -365,12 +367,13 @@
                           <span class="input-group-addon range-name">Sun Azimuth</span>
                         </div>
                       </li>
-                      <li class="col-sm-2">
+                      <li class="col-sm-4 col-md-2">
                         <input ng-model="filter.sunAzimuthMin"
                         class="form-control input-sm" id="sunAzimuthMin"
                         placeholder="0.0" value="{{filter.sunAzimuthMin}}">
                       </li>
-                      <li class="col-sm-2">
+                      <li
+                        class="col-sm-4 col-md-2">
                         <input ng-model="filter.sunAzimuthMax"
                         class="form-control input-sm" id="sunAzimuthMax"
                         placeholder="9.0" value="{{filter.sunAzimuthMax}}">
@@ -381,7 +384,7 @@
                         aria-hidden="true"
                         uib-tooltip="Valid range 0.0 to 360"></i>
                       </li>
-                      <li class="col-sm-3 range-include-unknown">
+                      <li class="col-sm-0 col-lg-4 range-include-unknown">
                         <input class="form-check-input" type="checkbox" value="" ng-model="filter.sunAzimuthCheckNull">
                         <label
                           class="form-check-label range-include-unknown-label"
@@ -396,8 +399,8 @@
                       <li class="col-sm-12">
                         <hr>
                       </li>
-                      <li class="col-sm-1"></li>
-                      <li class="col-sm-2 range-input-group filter-row">
+                      <li class="col-lg-1"></li>
+                      <li class="col-sm-4 col-md-3 col-lg-2 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
                             <input type="checkbox"
@@ -406,12 +409,13 @@
                           <span class="input-group-addon range-name">Sun Elevation</span>
                         </div>
                       </li>
-                      <li class="col-sm-2">
+                      <li class="col-sm-4 col-md-2">
                         <input ng-model="filter.sunElevationMin"
                         class="form-control input-sm" id="sunElevationMin"
                         placeholder="0.0" value="{{filter.sunElevationMin}}">
                       </li>
-                      <li class="col-sm-2">
+                      <li
+                        class="col-sm-4 col-md-2">
                         <input ng-model="filter.sunElevationMax"
                         class="form-control input-sm" id="sunElevationMax"
                         placeholder="90.0" value="{{filter.sunElevationMax}}">
@@ -422,7 +426,7 @@
                         aria-hidden="true"
                         uib-tooltip="Valid range -90 to 90"></i>
                       </li>
-                      <li class="col-sm-3 range-include-unknown">
+                      <li class="col-sm-0 col-lg-4 range-include-unknown">
                         <input class="form-check-input" type="checkbox" value="" ng-model="filter.sunElevationCheckNull">
                         <label
                           class="form-check-label range-include-unknown-label"

@@ -58,7 +58,6 @@ node(""){
 
                     sh """
                     pushd ${workspaceDir}/${appName}
-                    gradle :${appName}-app:checkVersionStatus
                     gradle ${appName}-app:artifactoryPublish
                     """
             }

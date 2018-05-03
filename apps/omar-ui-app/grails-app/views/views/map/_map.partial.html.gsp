@@ -452,11 +452,11 @@
                         </div>
                       </li>
                       <li class="col-sm-3 col-lg-2">
+                      </li>
+                      <li class="col-sm-3 col-lg-2">
                         <input ng-model="filter.cloudCover"
                         class="form-control input-sm" id="cloudCover"
                         placeholder="10.0" value="{{filter.cloudCover}}">
-                      </li>
-                      <li class="col-sm-3 col-lg-2">
                       </li>
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">

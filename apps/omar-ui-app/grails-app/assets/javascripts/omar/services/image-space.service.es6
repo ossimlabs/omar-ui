@@ -436,10 +436,12 @@
 
       this.setImageRenderType = type => {
         if (type === "tile") {
+          imageRenderType = type;
           imageLayer.setVisible(false);
           tileLayer.setVisible(true);
           map.render();
         } else if (type === "single") {
+          imageRenderType = type;
           tileLayer.setVisible(false);
           imageLayer.setVisible(true);
           map.render();
@@ -957,7 +959,7 @@
       };
 
       /**
-       * Purpose: Used to set the style object of the layer
+       * Purpose: Used to set the style object of the layers
        * sources in the map
        */
       this.updateStyles = () => {

@@ -10,6 +10,7 @@
       "$timeout",
       "$q",
       "$stateParams",
+      "$log",
       imageSpaceService
     ]);
 
@@ -20,7 +21,8 @@
     wfsService,
     $timeout,
     $q,
-    $stateParams
+    $stateParams,
+    $log
   ) {
     var map,
       filename,
@@ -954,13 +956,22 @@
         return deferred.promise;
       };
 
+      /**
+       * Purpose: Used to set the style object of the layer
+       * sources in the map
+       */
       this.updateStyles = () => {
         let stylesObj = {
           STYLES: JSON.stringify(this.stylesParams)
         };
+
+        $log.debug("Updating layers styles with: ", stylesObj);
         sourceImage.updateParams(stylesObj);
         sourceTile.updateParams(stylesObj);
       };
+
+      // We need to set the default styles on init of the map
+      this.updateStyles();
 
       this.setCenter = function(point) {
         map.getView().setCenter(point);

@@ -457,7 +457,6 @@
           name: value.name,
           value: value.value
         };
-        imageSpaceService.setDynamicRangeRegion(value.value);
       }
     });
 

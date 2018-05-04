@@ -49,6 +49,8 @@
 
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
 
+    var wmsBaseUrl, wmsContextPath, wmsRequestUrl;
+
     var tlvBaseUrl, tlvContextPath, tlvRequestUrl;
     vm.tlvRequestUrl = "";
 
@@ -81,6 +83,11 @@
       wfsContextPath = stateService.omarSitesState.url.wfsContextPath;
       wfsRequestUrl = wfsBaseUrl + wfsContextPath + "/wfs";
       vm.wfsRequestUrl = wfsRequestUrl;
+
+      wmsBaseUrl = stateService.omarSitesState.url.base;
+      wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
+      wmsRequestUrl = wmsBaseUrl + wmsContextPath;
+      vm.wmsRequestUrl = wmsRequestUrl;
 
       tlvBaseUrl = stateService.omarSitesState.url.base;
       tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
@@ -302,9 +309,10 @@
       brightness: 0,
       contrast: 1,
       histOp: "auto-minmax",
-      histCenterTile: "true",
+      histCenterTile: "false",
       resamplerFilter: "bilinear",
-      sharpenMode: "none"
+      sharpenMode: "none",
+      imageRenderType: "tile"
     };
 
     //used in _map.partial.html.gsp
@@ -640,6 +648,7 @@
           "imageSpaceRequestUrl",
           "uiRequestUrl",
           "mensaRequestUrl",
+          "wmsRequestUrl",
           "wfsRequestUrl",
           "tlvRequestUrl",
           "kmlRequestUrl",
@@ -662,6 +671,9 @@
           mensaRequestUrl: function() {
             return mensaRequestUrl;
           },
+          wmsRequestUrl: function() {
+            return wmsRequestUrl;
+          },
           wfsRequestUrl: function() {
             return wfsRequestUrl;
           },
@@ -674,12 +686,12 @@
         }
       });
 
-      modalInstance.result.then(
-        function() {},
-        function() {
-          //console.log('Modal dismissed at: ' + new Date());
-        }
-      );
+      // modalInstance.result.then(
+      //   function() {},
+      //   function() {
+      //     //console.log('Modal dismissed at: ' + new Date());
+      //   }
+      // );
     };
 
     vm.viewOrtho = function(image, location) {
@@ -726,6 +738,7 @@
     imageSpaceRequestUrl,
     uiRequestUrl,
     mensaRequestUrl,
+    wmsRequestUrl,
     wfsRequestUrl,
     tlvRequestUrl,
     kmlRequestUrl
@@ -735,6 +748,7 @@
     vm.imageSpaceRequestUrl = imageSpaceRequestUrl;
     vm.uiRequestUrl = uiRequestUrl;
     vm.mensaRequestUrl = mensaRequestUrl;
+    vm.wmsRequestUrl = wmsRequestUrl;
     vm.wfsRequestUrl = wfsRequestUrl;
 
     vm.beData = [];
@@ -832,10 +846,13 @@
         "mensaRequestUrl=" +
         mensaRequestUrl +
         "&" +
+        "wmsRequestUrl=" +
+        wmsRequestUrl +
+        "&" +
         "wfsRequestUrl=" +
         wfsRequestUrl +
         "&" +
-        "showModalSplash=true"
+        "showModalSplash=false"
       );
     };
 

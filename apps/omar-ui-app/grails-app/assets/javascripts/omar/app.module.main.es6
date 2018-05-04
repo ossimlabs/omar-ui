@@ -52,7 +52,7 @@
           })
           .state("mapImage", {
             url:
-              "/mapImage?filename=&entry_id=&width=&height&bands=&numOfBands=&imageId=&brightness=&contrast=&histOp=&histCenterTile=&numResLevels=&resamplerFilter=&sharpenMode=&imageSpaceRequestUrl=&uiRequestUrl=&mensaRequestUrl=&wfsRequestUrl=&showModalSplash=",
+              "/mapImage?filename=&entry_id=&width=&height&bands=&numOfBands=&imageId=&brightness=&contrast=&histOp=&histCenterTile=&numResLevels=&resamplerFilter=&sharpenMode=&imageRenderType=&imageSpaceRequestUrl=&uiRequestUrl=&mensaRequestUrl=&wfsRequestUrl=&wmsRequestUrl=&showModalSplash=",
             templateUrl:
               AppO2.APP_CONFIG.serverURL +
               "/views/mapImage/map.image.partial.html"

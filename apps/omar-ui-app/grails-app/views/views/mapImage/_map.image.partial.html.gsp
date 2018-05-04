@@ -17,11 +17,6 @@
             tooltip-placement="right"
             uib-tooltip="Download the raw image, histogram and overview files"><a>Download</a>
           </li>
-          <li style = "display: none;"
-            ng-click="image.openGeometries(image)"
-            tooltip-placement="right"
-            uib-tooltip="View collection geometries"><a>Geometries</a>
-          </li>
           <li class="dropdown">
             <a
               class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tooltip-placement="right" uib-tooltip="Measure area and distances, and calculate horizontal and vertical error for points">Measure<span class="caret"></span></a>
@@ -196,15 +191,46 @@
             </div>
           </div>
         </div>
+        <!-- Image Type Panel -->
+        <div class="panel panel-info">
+          <div class="panel-body">
+            <small class="text text-info">Image Render Type</small>
+            <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="bottom"
+              uib-popover="Toggle between tile or single image rendering types.  Single image may be more performant with certain imagery types."></i>
+            <ui-select
+              ng-model="image.imageRenderType"
+              on-select="image.onImageRenderTypeSelect($select.selected.value)"
+              search-enabled="false"
+              theme="selectize">
+              <ui-select-match>
+                <span ng-bind="$select.selected.name"></span>
+              </ui-select-match>
+              <ui-select-choices repeat="val in image.imageRenderTypes">
+                <span ng-bind="val.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
         <!-- Band Selection Panel -->
         <div class="panel panel-info band-selection-panel">
           <div class="panel-body">
             <div id="band-type" class="image-bands">
               <small class="text text-info">Band Selection</small>
+              <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="top-right"
+              uib-popover="Allows one to select and permute the input bands."></i>
               <ui-select id="bandTypeItem"
                   ng-model="bandTypeItem"
                   on-select="showBands($select.selected.value)"
                   ng-disabled="enableBandType != true"
+                  search-enabled="false"
                   theme="selectize">
                 <ui-select-match>
                     <span ng-bind="$select.selected.value"></span>
@@ -221,7 +247,12 @@
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label for="grayImageItem">Band</label>
-                        <ui-select id="grayImageItem" theme="selectize" ng-model="grayImageItem" on-select="onBandSelect($select.selected.value, 'gray')">
+                        <ui-select
+                          id="grayImageItem"
+                          theme="selectize"
+                          search-enabled="false"
+                          ng-model="grayImageItem"
+                          on-select="onBandSelect($select.selected.value, 'gray')">
                           <ui-select-match>
                               <span ng-bind="$select.selected.value"></span>
                           </ui-select-match>
@@ -239,7 +270,12 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label for="redImageItem">Red</label>
-                      <ui-select id="redImageItem" theme="selectize" ng-model="redImageItem" on-select="onBandSelect($select.selected.value, 'red')">
+                      <ui-select
+                        id="redImageItem"
+                        theme="selectize"
+                        search-enabled="false"
+                        ng-model="redImageItem"
+                        on-select="onBandSelect($select.selected.value, 'red')">
                         <ui-select-match>{{$select.selected.value}}</ui-select-match>
                         <ui-select-choices repeat="val.key as val in bandValues | filter: $select.search">
                             <span ng-bind-html="val.value | highlight: $select.search"></span>
@@ -250,7 +286,12 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label for="greenImageItem">Green</label>
-                      <ui-select id="greenImageItem" theme="selectize" ng-model="greenImageItem" on-select="onBandSelect($select.selected.value, 'green')">
+                      <ui-select
+                        id="greenImageItem"
+                        theme="selectize"
+                        search-enabled="false"
+                        ng-model="greenImageItem"
+                        on-select="onBandSelect($select.selected.value, 'green')">
                         <ui-select-match>{{$select.selected.value}}</ui-select-match>
                         <ui-select-choices repeat="val.key as val in bandValues | filter: $select.search">
                             <span ng-bind-html="val.value | highlight: $select.search"></span>
@@ -261,7 +302,12 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label for="blueImageBand">Blue</label>
-                      <ui-select id="blueImageItem" theme="selectize" ng-model="blueImageItem" on-select="onBandSelect($select.selected.value, 'blue')">
+                      <ui-select
+                        id="blueImageItem"
+                        theme="selectize"
+                        search-enabled="false"
+                        ng-model="blueImageItem"
+                        on-select="onBandSelect($select.selected.value, 'blue')">
                         <ui-select-match>{{$select.selected.value}}</ui-select-match>
                         <ui-select-choices repeat="val.key as val in bandValues | filter: $select.search">
                             <span ng-bind-html="val.value | highlight: $select.search"></span>
@@ -301,9 +347,16 @@
         <div class="panel panel-info">
           <div class="panel-body">
             <small class="text text-info">Dynamic Range Adjustment</small>
+            <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="top"
+              uib-popover="Use different histogram algorithms to stretch the image"></i>
             <ui-select
               ng-model="draType"
               on-select="onDraSelect($select.selected.value)"
+              search-enabled="false"
               theme="selectize">
               <ui-select-match>
                 <span ng-bind="$select.selected.name"></span>
@@ -318,9 +371,16 @@
         <div class="panel panel-info">
           <div class="panel-body">
             <small class="text text-info">Dynamic Range Region</small>
+            <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="top"
+              uib-popover="Allows one to specify using the precomputed histogram (Global), or a calculated histogram (Viewport)"></i>
             <ui-select
               ng-model="draRegionType"
               on-select="onDraRegionSelect($select.selected.value)"
+              search-enabled="false"
               theme="selectize">
               <ui-select-match>
                 <span ng-bind="$select.selected.name"></span>
@@ -335,9 +395,16 @@
         <div class="panel panel-info">
           <div class="panel-body">
             <small class="text text-info">Interpolation</small>
+            <i
+              class="fa fa-info-circle text-info cursor-pointer"
+              style="font-size: 12px;"
+              aria-hidden="true"
+              popover-placement="right-top"
+              uib-popover="Determines how the pixel value is calculated based on the resolution."></i>
             <ui-select
               ng-model="resamplerFilterType"
               on-select="onResamplerFilterSelect($select.selected.value)"
+              search-enabled="false"
               theme="selectize">
               <ui-select-match>
                 <span ng-bind="$select.selected.name"></span>
@@ -355,6 +422,7 @@
             <ui-select
               ng-model="sharpenModeType"
               on-select="onSharpenModeSelect($select.selected.value)"
+              search-enabled="false"
               theme="selectize">
               <ui-select-match>
                 <span ng-bind="$select.selected.name"></span>
@@ -371,7 +439,7 @@
         <div id="imageMap" class="map imageMap imageMapBorder">
           <div id="progress" class="text-info">
             <i class="fa fa-spinner fa-spin fa-4x"></i>
-          </span>
+          </div>
         </div>
       </div>
     </div>

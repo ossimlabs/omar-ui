@@ -836,7 +836,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .ol-viewport {
   border-radius: 4px;
   border: 1px solid;
-  background-color: #3e444c;
+  background-color: #000000;
 }
 
 .ol-rotate,

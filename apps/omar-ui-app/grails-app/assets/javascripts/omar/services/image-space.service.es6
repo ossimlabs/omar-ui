@@ -290,15 +290,23 @@
         }
       };
 
+      let layerLoadStart, layerLoadEnd;
       // Show the progress icon.
       Progress.prototype.show = function() {
         this.el.style.visibility = "visible";
+        layerLoadStart = performance.now();
       };
 
       // Hide the progress icon.
       Progress.prototype.hide = function() {
         if (this.loading === this.loaded) {
           this.el.style.visibility = "hidden";
+          layerLoadEnd = performance.now();
+          $log.debug(
+            "Currently rendered layer took " +
+              (layerLoadEnd - layerLoadStart) +
+              " milliseconds to load."
+          );
         }
       };
 

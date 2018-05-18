@@ -444,7 +444,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 #list .media .media-left img {
   cursor: pointer;
-  background-image: url('/omar-ui/assets/loading-thumbnail.gif');
   background-repeat: no-repeat, repeat;
   background-position: center
 }

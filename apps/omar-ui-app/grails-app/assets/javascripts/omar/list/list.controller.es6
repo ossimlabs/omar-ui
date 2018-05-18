@@ -203,8 +203,10 @@
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
     vm.thumbId = "&id="; // Parameter provided by image.properties.id
     vm.thumbEntry = "&entry="; // Parameter provided by image.properties.entry_id
-    vm.thumbSize = "&size=114";
-    vm.thumbFormat = "&outputFormat=jpeg";
+    vm.thumbSize = "114";
+    vm.thumbFormat = "png";
+    vm.thumbTransparent = "true";
+    vm.padThumbnail = "false";
 
     vm.getImageSpaceUrl = function(image) {
       var defaults = imageSpaceDefaults;
@@ -269,22 +271,6 @@
         "&" +
         "showModalSplash=true"
       );
-    };
-
-    vm.thumbBorder = function(imageType) {
-      var border = {
-        "border-color": "white",
-        "border-width": "1px",
-        "border-style": "solid",
-        "border-radius": "4px"
-      };
-
-      switch (imageType) {
-        default:
-          border["border-color"] = "white";
-      }
-
-      return border;
     };
 
     // Shows/Hides the KML SuperOverlay button based on parameters passed down

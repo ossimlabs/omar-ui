@@ -65,6 +65,7 @@
                             </span>
                             <span class="input-group-addon name">BE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <input
+                              focus-input
                               ng-model="filter.beNumber"
                               class="form-control"
                               ng-enter="filter.updateFilterString()"
@@ -86,6 +87,7 @@
                             <span class="input-group-addon name">Mission</span>
                             <ui-select
                               multiple
+                              focus-input
                               close-on-select="true"
                               id="missionIdInput"
                               ng-change="filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
@@ -113,6 +115,7 @@
                             </span>
                             <span class="input-group-addon name">CC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <ui-select
+                              focus-input
                               id="countryCodeInput"
                               ng-change="filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
                               ng-click="filter.getDistinctValues('countryCode');"
@@ -138,6 +141,7 @@
                             <span class="input-group-addon name">Sensor&nbsp;</span>
                             <ui-select
                               multiple
+                              focus-input
                               close-on-select="true"
                               id="sensorIdInput"
                               ng-change="filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
@@ -165,6 +169,7 @@
                             </span>
                             <span class="input-group-addon name">File&nbsp;&nbsp;&nbsp;</span>
                             <input
+                              focus-input
                               ng-model="filter.filename"
                               ng-enter="filter.updateFilterString()"
                               ng-blur="filter.updateFilterString()"
@@ -185,6 +190,7 @@
                             </span>
                             <span class="input-group-addon name">Target&nbsp;</span>
                             <ui-select
+                              focus-input
                               class="form-control"
                               id = "targetIdInput"
                               ng-change="filter.targetIdCheck = filter.targetId === '' ? false : true;filter.updateFilterString()"
@@ -212,6 +218,7 @@
                             </span>
                             <span class="input-group-addon name">Image&nbsp;&nbsp;&nbsp;</span>
                             <input
+                            focus-input
                               ng-model="filter.imageId"
                               ng-enter="filter.updateFilterString()"
                               ng-blur="filter.updateFilterString()"
@@ -232,6 +239,7 @@
                             </span>
                             <span class="input-group-addon name">WAC&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <input
+                              focus-input
                               ng-model="filter.wacNumber"
                               ng-enter="filter.updateFilterString()"
                               ng-blur="filter.updateFilterString()"
@@ -299,6 +307,7 @@
                           step="0.1"
                           min="0"
                           max="8.9"
+                          focus-input
                           ng-change="filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -314,6 +323,7 @@
                           step="0.1"
                           min="0.1"
                           max="9"
+                          focus-input
                           ng-change="filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -370,6 +380,7 @@
                           step="1"
                           min="0"
                           max="359"
+                          focus-input
                           ng-change="filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -385,6 +396,7 @@
                           step="1"
                           min="1"
                           max="360"
+                          focus-input
                           ng-change="filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -439,6 +451,7 @@
                           step="0.1"
                           min="0"
                           max="89.9"
+                          focus-input
                           ng-change="filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -455,6 +468,7 @@
                           step="0.1"
                           min="0.1"
                           max="90"
+                          focus-input
                           ng-change="filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -509,6 +523,7 @@
                           step="1"
                           min="0"
                           max="359"
+                          focus-input
                           ng-change="filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -525,6 +540,7 @@
                           step="1"
                           min="1"
                           max="360"
+                          focus-input
                           ng-change="filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -579,6 +595,7 @@
                           step="1"
                           min="-90"
                           max="89"
+                          focus-input
                           ng-change="filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">
@@ -595,9 +612,10 @@
                           step="1"
                           min="-89"
                           max="90"
+                          focus-input
                           ng-change="filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
                           ng-enter="filter.updateFilterString()"
-                          ng-blur=";filter.updateFilterString()">
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
                         <i
@@ -651,6 +669,7 @@
                           step="1"
                           min="0"
                           max="100"
+                          focus-input
                           ng-change="filter.cloudCoverCheck = filter.cloudCover === 20 ? false: true;"
                           ng-enter="filter.updateFilterString()"
                           ng-blur="filter.updateFilterString()">

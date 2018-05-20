@@ -626,7 +626,7 @@
 
       if (vm.imageIdCheck && vm.imageId != "") {
         vm.currentAttrFilterArray.push(`Image: ${vm.imageId}`);
-        pushKeywordToArray("title", vm.imageId);
+        pushKeywordToArray("title", vm.imageId.toUpperCase());
         setKeywordIndicator();
       } else if (!vm.imageIdCheck) {
         vm.filterKeywordIndicator = false;
@@ -686,7 +686,7 @@
             {
               positionClass: "toast-bottom-left",
               closeButton: true,
-              timeOut: 10000,
+              timeOut: 5000,
               extendedTimeOut: 5000,
               target: "body"
             }
@@ -699,7 +699,7 @@
             {
               positionClass: "toast-bottom-left",
               closeButton: true,
-              timeOut: 10000,
+              timeOut: 5000,
               extendedTimeOut: 5000,
               target: "body"
             }
@@ -711,7 +711,7 @@
             {
               positionClass: "toast-bottom-left",
               closeButton: true,
-              timeOut: 10000,
+              timeOut: 5000,
               extendedTimeOut: 5000,
               target: "body"
             }
@@ -732,7 +732,6 @@
       // Ranges
       if (vm.predNiirsCheck) {
         //validateRange(vm.predNiirsMin, vm.predNiirsMax);
-
         if (vm.predNiirsCheckNull) {
           vm.currentAttrFilterArray.push(
             `NIIRS between ${vm.predNiirsMin} and ${

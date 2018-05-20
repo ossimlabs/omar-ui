@@ -24,6 +24,20 @@
         $uibTooltipProvider,
         $logProvider
       ) {
+        // This checks to make sure that the backspace/delete key does not
+        // allow the browser to go back a page (default browser behavior).  This
+        // behaviour has ill advised consequences when a user is NOT in an INPUT form
+        if (typeof window.event != "undefined")
+          document.onkeydown = function() {
+            if (event.srcElement.tagName.toUpperCase() != "INPUT")
+              return event.keyCode != 8;
+          };
+        else
+          document.onkeypress = function(e) {
+            if (e.target.nodeName.toUpperCase() != "INPUT")
+              return e.keyCode != 8;
+          };
+
         $logProvider.debugEnabled(AppO2.APP_CONFIG.params.misc.javascriptDebug);
 
         $uibTooltipProvider.options({
@@ -69,6 +83,31 @@
         if (name !== undefined) {
           var filename = name.replace(/^.*[\\\/]/, "");
           return filename;
+        }
+      };
+    })
+    .directive("ngEnter", function() {
+      return function(scope, elem, attrs) {
+        elem.bind("keydown keypress", function(event) {
+          // 13 represents enter button
+          if (event.which === 13) {
+            scope.$apply(function() {
+              scope.$eval(attrs.ngEnter);
+            });
+
+            event.preventDefault();
+          }
+        });
+      };
+    })
+    .directive("focusInput", function($timeout) {
+      return {
+        link: function(scope, element, attrs) {
+          element.bind("click", function() {
+            $timeout(function() {
+              element.focus();
+            }, 750);
+          });
         }
       };
     });

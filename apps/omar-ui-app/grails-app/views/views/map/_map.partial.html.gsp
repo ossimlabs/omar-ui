@@ -1,5 +1,22 @@
 <div ng-controller="FilterController as filter">
-  <nav style="margin-top: -15px;" class="navbar yamm navbar-default">
+  <div class="container-fluid" ng-show="filter.showCurrentFilter">
+    <div class="row"
+    style="
+      margin-top: -16px;
+      margin-bottom: 18px;">
+      <div class="col-sm-12">
+        <button class="btn btn-default btn btn-xs" ng-click="filter.clearFilters()">Clear Filters</button>
+        <span class="tag label label-info cursor-default">{{filter.currentSpatialFilter}}</span>
+        <span ng-repeat="filter in filter.currentAttrFilterArray">
+          <span class="tag label label-primary cursor-default">
+            {{filter}}
+            <!-- <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a> -->
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <nav style="margin-top: -15px; margin-bottom: 5px;" class="navbar yamm navbar-default">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
         data-target="#map-navbar-collapse" aria-expanded="false">
@@ -13,7 +30,7 @@
       <div class="row">
         <div class="collapse navbar-collapse" id="map-navbar-collapse">
           <div class="col-sm-9">
-            <ul class="nav navbar-nav ">
+            <ul class="nav navbar-nav">
               <p class="navbar-text">Filters:</p>
               <li class="dropdown mega-dropdown">
                 <a class="dropdown-toggle keyword-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -41,34 +58,46 @@
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.beNumberCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.beNumberCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">BE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <input ng-model="filter.beNumber"
-                            ng-click="filter.beNumberCheck = true;" class="form-control"
-                            ng-blur="filter.beNumberCheck = filter.beNumber === '' ? false: true;"
-                            id="beNumberInput"
-                            placeholder="Basic Encyclopedia Number"
-                            value="filter.beNumber">
+                            <input
+                              focus-input
+                              ng-model="filter.beNumber"
+                              class="form-control"
+                              ng-enter="filter.updateFilterString()"
+                              ng-blur="filter.updateFilterString()"
+                              ng-change="filter.beNumberCheck = filter.beNumber === '' ? false: true;"
+                              id="beNumberInput"
+                              placeholder="Basic Encyclopedia Number"
+                              value="filter.beNumber">
                           </div>
                         </td>
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.missionIdCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.missionIdCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">Mission</span>
-                            <ui-select multiple
-                              close-on-select = "true"
-                              id = "missionIdInput"
-                              ng-blur = "filter.missionIdCheck = filter.missionId === '' ? false : true"
-                              ng-click = "filter.missionIdCheck = true; filter.getDistinctValues('missionId');"
-                              ng-model = "filter.missionId"
-                              theme = "bootstrap">
-                              <ui-select-match placeholder = "Mission ID">
+                            <ui-select
+                              multiple
+                              focus-input
+                              close-on-select="true"
+                              id="missionIdInput"
+                              ng-change="filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
+                              ng-click="filter.getDistinctValues('missionId');"
+                              ng-model="filter.missionId"
+                              theme="bootstrap">
+                              <ui-select-match placeholder="Mission ID">
                                   {{$item}}
                               </ui-select-match>
-                              <ui-select-choices repeat = "val in missionIdTypes | filter: $select.search">
+                              <ui-select-choices repeat="val in missionIdTypes | filter: $select.search">
                                   {{val}}
                               </ui-select-choices>
                             </ui-select>
@@ -79,19 +108,23 @@
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.countryCodeCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.countryCodeCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">CC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <ui-select
-                            id = "countryCodeInput"
-                            ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true"
-                            ng-click = "filter.countryCodeCheck = true; filter.getDistinctValues('countryCode');"
-                            ng-model = "filter.countryCode"
-                            theme = "selectize">
-                              <ui-select-match placeholder = "Country Code">
+                              focus-input
+                              id="countryCodeInput"
+                              ng-change="filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
+                              ng-click="filter.getDistinctValues('countryCode');"
+                              ng-model="filter.countryCode"
+                              theme="selectize">
+                              <ui-select-match placeholder="Country Code">
                                 {{$select.selected}}
                               </ui-select-match>
-                              <ui-select-choices repeat = "val in countryCodeTypes | filter: $select.search">
+                              <ui-select-choices repeat="val in countryCodeTypes | filter: $select.search">
                                 {{val}}
                               </ui-select-choices>
                             </ui-select>
@@ -100,19 +133,25 @@
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.sensorIdCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.sensorIdCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">Sensor&nbsp;</span>
-                            <ui-select multiple
-                            id = "sensorIdInput"
-                            ng-blur = "filter.sensorIdCheck = filter.sensorId === '' ? false : true"
-                            ng-click = "filter.sensorIdCheck = true; filter.getDistinctValues('sensorId');"
-                            ng-model = "filter.sensorId"
-                            theme = "bootstrap">
-                              <ui-select-match placeholder = "Sensor ID">
+                            <ui-select
+                              multiple
+                              focus-input
+                              close-on-select="true"
+                              id="sensorIdInput"
+                              ng-change="filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
+                              ng-click="filter.getDistinctValues('sensorId');"
+                              ng-model="filter.sensorId"
+                              theme="bootstrap">
+                              <ui-select-match placeholder="Sensor ID">
                                 {{$item}}
                               </ui-select-match>
-                              <ui-select-choices repeat = "val in sensorIdTypes | filter: $select.search">
+                              <ui-select-choices repeat="val in sensorIdTypes | filter: $select.search">
                                 {{val}}
                               </ui-select-choices>
                             </ui-select>
@@ -123,35 +162,45 @@
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.filenameCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.filenameCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">File&nbsp;&nbsp;&nbsp;</span>
-                            <input ng-model="filter.filename"
-                            ng-click="filter.filenameCheck = true;"
-                            ng-blur="filter.filenameCheck = filter.filename === '' ? false: true;"
-                            class="form-control"
-                            id="filenameInput"
-                            placeholder="File name"
-                            value="filter.filename">
+                            <input
+                              focus-input
+                              ng-model="filter.filename"
+                              ng-enter="filter.updateFilterString()"
+                              ng-blur="filter.updateFilterString()"
+                              ng-change="filter.filenameCheck = filter.filename === '' ? false: true;"
+                              class="form-control"
+                              id="filenameInput"
+                              placeholder="File name"
+                              value="filter.filename">
                           </div>
                         </td>
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.targetIdCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.targetIdCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">Target&nbsp;</span>
                             <ui-select
-                            class="form-control"
-                            id = "targetIdInput"
-                            ng-blur = "filter.targetIdCheck = filter.targetId === '' ? false : true"
-                            ng-click = "filter.targetIdCheck = true; filter.getDistinctValues('targetId');"
-                            ng-model = "filter.targetId"
-                            theme = "selectize">
-                              <ui-select-match placeholder = "Target ID">
+                              focus-input
+                              class="form-control"
+                              id = "targetIdInput"
+                              ng-change="filter.targetIdCheck = filter.targetId === '' ? false : true;filter.updateFilterString()"
+                              ng-click="filter.getDistinctValues('targetId');"
+                              ng-model="filter.targetId"
+                              theme="selectize">
+                              <ui-select-match placeholder="Target ID">
                                 {{$select.selected}}
                               </ui-select-match>
-                              <ui-select-choices repeat = "val in targetIdTypes | filter: $select.search">
+                              <ui-select-choices repeat="val in targetIdTypes | filter: $select.search">
                                 {{val}}
                               </ui-select-choices>
                             </ui-select>
@@ -162,31 +211,43 @@
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.imageIdCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.imageIdCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">Image&nbsp;&nbsp;&nbsp;</span>
-                            <input ng-model="filter.imageId"
-                            ng-click="filter.imageIdCheck = true;"
-                            ng-blur="filter.imageIdCheck = filter.imageId === '' ? false: true;"
-                            class="form-control"
-                            id="imageIdInput"
-                            placeholder="Image ID"
-                            value="filter.imageId">
+                            <input
+                            focus-input
+                              ng-model="filter.imageId"
+                              ng-enter="filter.updateFilterString()"
+                              ng-blur="filter.updateFilterString()"
+                              ng-change="filter.imageIdCheck = filter.imageId === '' ? false: true;"
+                              class="form-control"
+                              id="imageIdInput"
+                              placeholder="Image ID"
+                              value="filter.imageId">
                           </div>
                         </td>
                         <td class="filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
-                              <input type="checkbox" ng-model="filter.wacNumberCheck">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.wacNumberCheck"
+                                ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">WAC&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <input ng-model="filter.wacNumber"
-                            ng-click="filter.wacNumberCheck = true;"
-                            ng-blur="filter.wacNumberCheck = filter.wacNumber === '' ? false: true;"
-                            class="form-control"
-                            id="wacNumberInput"
-                            placeholder="World Area Code"
-                            value="filter.wacNumber">
+                            <input
+                              focus-input
+                              ng-model="filter.wacNumber"
+                              ng-enter="filter.updateFilterString()"
+                              ng-blur="filter.updateFilterString()"
+                              ng-change="filter.wacNumberCheck = filter.wacNumber === '' ? false: true;"
+                              class="form-control"
+                              id="wacNumberInput"
+                              placeholder="World Area Code"
+                              value="filter.wacNumber">
                           </div>
                         </td>
                       </tr>
@@ -197,13 +258,7 @@
                     <ul>
                       <li class="filter-row text-center">
                         <button class="btn btn-primary btn-xs" type="button"
-                          ng-click="filter.updateFilterString()">Apply
-                        </button>
-                        <button class="btn btn-primary btn-xs" type="button"
-                          ng-click="filter.initKeywords(true);">Reset
-                        </button>
-                        <button class="btn btn-warning btn-xs" type="button"
-                          ng-click="filter.closeFilterDropdown('keyword-filter-dropdown');">Close
+                          ng-click="filter.initKeywords(true);">Reset Keyword Filters
                         </button>
                       </li>
                     </ul>
@@ -233,32 +288,61 @@
                       <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
-                            <input type="checkbox"
-                            ng-model="filter.predNiirsCheck">
+                            <input
+                              type="checkbox"
+                              ng-model="filter.predNiirsCheck"
+                              ng-click="filter.updateFilterString()">
                           </span>
                           <span class="input-group-addon range-name">NIIRS</span>
                         </div>
                       </li>
                       <li class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.predNiirsMin"
-                          class="form-control input-sm" id="niirsMin"
-                          placeholder="0.0" value="{{filter.predNiirsMin}}">
-                      </li>
-                      <li
-                        class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.predNiirsMax"
-                        class="form-control input-sm" id="niirsMax"
-                        placeholder="9.0" value="{{filter.predNiirsMax}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.predNiirsMin"
+                          class="form-control input-sm"
+                          id="niirsMin"
+                          value="{{filter.predNiirsMin}}"
+                          step="0.1"
+                          min="0"
+                          max="8.9"
+                          focus-input
+                          ng-change="filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
+                    </li>
+                      <li class="col-sm-3 col-lg-2">
+                        <input
+                          type="number"
+                          placeholder="9"
+                          ng-model="filter.predNiirsMax"
+                          class="form-control input-sm"
+                          id="niirsMin"
+                          value="{{filter.predNiirsMax}}"
+                          step="0.1"
+                          min="0.1"
+                          max="9"
+                          focus-input
+                          ng-change="filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
                         <i
                           class="fa fa-info-circle text-info"
                           aria-hidden="true"
-                          uib-tooltip="Valid range 0.0 to 9.0"></i>
+                          uib-tooltip="Valid range 0 to 9"></i>
                       </li>
                       <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" ng-model="filter.predNiirsCheckNull">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            ng-disabled="!filter.predNiirsCheck"
+                            ng-model="filter.predNiirsCheckNull"
+                            ng-click="filter.updateFilterString()">
                           <label
                             class="form-check-label range-include-unknown-label"
                             for="predNiirsCheckNull">
@@ -277,22 +361,45 @@
                       <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
-                            <input type="checkbox"
-                            ng-model="filter.azimuthCheck">
+                            <input
+                              type="checkbox"
+                              ng-model="filter.azimuthCheck"
+                              ng-click="filter.updateFilterString()">
                           </span>
                           <span class="input-group-addon range-name">Azimuth</span>
                         </div>
                       </li>
                       <li class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.azimuthMin"
-                        class="form-control input-sm" id="azimuthMin"
-                        placeholder="0.0" value="{{filter.azimuthMin}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.azimuthMin"
+                          class="form-control input-sm"
+                          id="azimuthMin"
+                          value="{{filter.azimuthMin}}"
+                          step="1"
+                          min="0"
+                          max="359"
+                          focus-input
+                          ng-change="filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
-                      <li
-                        class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.azimuthMax"
-                        class="form-control input-sm" id="azimuthMax"
-                        placeholder="0.0" value="{{filter.azimuthMax}}">
+                      <li class="col-sm-3 col-lg-2">
+                        <input
+                          type="number"
+                          placeholder="360"
+                          ng-model="filter.azimuthMax"
+                          class="form-control input-sm"
+                          id="azimuthMax"
+                          value="{{filter.azimuthMax}}"
+                          step="1"
+                          min="1"
+                          max="360"
+                          focus-input
+                          ng-change="filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
                         <i
@@ -301,7 +408,13 @@
                           uib-tooltip="Valid range 0 to 360"></i>
                       </li>
                       <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
-                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.azimuthCheckNull">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          ng-disabled="!filter.azimuthCheck"
+                          ng-model="filter.azimuthCheckNull"
+                          ng-click="filter.updateFilterString()">
                         <label
                           class="form-check-label range-include-unknown-label"
                           for="azimuthCheckNull">
@@ -319,22 +432,46 @@
                       <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
-                            <input type="checkbox"
-                            ng-model="filter.grazeElevCheck">
+                            <input
+                              type="checkbox"
+                              ng-model="filter.grazeElevCheck"
+                              ng-click="filter.updateFilterString()">
                           </span>
                           <span class="input-group-addon range-name">Graze/Elev</span>
                         </div>
                       </li>
                       <li class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.grazeElevMin"
-                        class="form-control input-sm" id="grazeElevMin"
-                        placeholder="0.0" value="{{filter.grazeElevMin}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.grazeElevMin"
+                          class="form-control input-sm"
+                          id="grazeElevMin"
+                          value="{{filter.grazeElevMin}}"
+                          step="0.1"
+                          min="0"
+                          max="89.9"
+                          focus-input
+                          ng-change="filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li
                         class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.grazeElevMax"
-                        class="form-control input-sm" id="grazeElevMax"
-                        placeholder="0.0" value="{{filter.grazeElevMax}}">
+                        <input
+                          type="number"
+                          placeholder="90"
+                          ng-model="filter.grazeElevMax"
+                          class="form-control input-sm"
+                          id="grazeElevMax"
+                          value="{{filter.grazeElevMax}}"
+                          step="0.1"
+                          min="0.1"
+                          max="90"
+                          focus-input
+                          ng-change="filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
                         <i
@@ -343,7 +480,13 @@
                           uib-tooltip="Valid range  0 to 90"></i>
                       </li>
                       <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
-                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.grazeElevCheckNull">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          ng-disabled="!filter.grazeElevCheck"
+                          ng-model="filter.grazeElevCheckNull"
+                          ng-click="filter.updateFilterString()">
                         <label
                           class="form-check-label range-include-unknown-label"
                           for="grazeElevCheckNull">
@@ -361,31 +504,61 @@
                       <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
-                            <input type="checkbox"
-                            ng-model="filter.sunAzimuthCheck">
+                            <input
+                              type="checkbox"
+                              ng-model="filter.sunAzimuthCheck"
+                              ng-click="filter.updateFilterString()">
                           </span>
                           <span class="input-group-addon range-name">Sun Azimuth</span>
                         </div>
                       </li>
                       <li class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.sunAzimuthMin"
-                        class="form-control input-sm" id="sunAzimuthMin"
-                        placeholder="0.0" value="{{filter.sunAzimuthMin}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.sunAzimuthMin"
+                          class="form-control input-sm"
+                          id="sunAzimuthMin"
+                          value="{{filter.sunAzimuthMin}}"
+                          step="1"
+                          min="0"
+                          max="359"
+                          focus-input
+                          ng-change="filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li
                         class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.sunAzimuthMax"
-                        class="form-control input-sm" id="sunAzimuthMax"
-                        placeholder="9.0" value="{{filter.sunAzimuthMax}}">
+                        <input
+                          type="number"
+                          placeholder="360"
+                          ng-model="filter.sunAzimuthMax"
+                          class="form-control input-sm"
+                          id="sunAzimuthMax"
+                          value="{{filter.sunAzimuthMax}}"
+                          step="1"
+                          min="1"
+                          max="360"
+                          focus-input
+                          ng-change="filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
                         <i
                         class="fa fa-info-circle text-info"
                         aria-hidden="true"
-                        uib-tooltip="Valid range 0.0 to 360"></i>
+                        uib-tooltip="Valid range 0 to 360"></i>
                       </li>
                       <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
-                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.sunAzimuthCheckNull">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          ng-disabled="!filter.sunAzimuthCheck"
+                          ng-model="filter.sunAzimuthCheckNull"
+                          ng-click="filter.updateFilterString()">
                         <label
                           class="form-check-label range-include-unknown-label"
                           for="sunAzimuthCheckNull">
@@ -403,22 +576,46 @@
                       <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
-                            <input type="checkbox"
-                            ng-model="filter.sunElevationCheck">
+                            <input
+                              type="checkbox"
+                              ng-model="filter.sunElevationCheck"
+                              ng-click="filter.updateFilterString()">
                           </span>
                           <span class="input-group-addon range-name">Sun Elevation</span>
                         </div>
                       </li>
                       <li class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.sunElevationMin"
-                        class="form-control input-sm" id="sunElevationMin"
-                        placeholder="0.0" value="{{filter.sunElevationMin}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.sunElevationMin"
+                          class="form-control input-sm"
+                          id="sunElevationMin"
+                          value="{{filter.sunElevationMin}}"
+                          step="1"
+                          min="-90"
+                          max="89"
+                          focus-input
+                          ng-change="filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li
                         class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.sunElevationMax"
-                        class="form-control input-sm" id="sunElevationMax"
-                        placeholder="90.0" value="{{filter.sunElevationMax}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.sunElevationMax"
+                          class="form-control input-sm"
+                          id="sunElevationMax"
+                          value="{{filter.sunElevationMax}}"
+                          step="1"
+                          min="-89"
+                          max="90"
+                          focus-input
+                          ng-change="filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
                         <i
@@ -427,7 +624,13 @@
                         uib-tooltip="Valid range -90 to 90"></i>
                       </li>
                       <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
-                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.sunElevationCheckNull">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          ng-disabled="!filter.sunElevationCheck"
+                          ng-model="filter.sunElevationCheckNull"
+                          ng-click="filter.updateFilterString()">
                         <label
                           class="form-check-label range-include-unknown-label"
                           for="sunElevationCheckNull">
@@ -445,8 +648,10 @@
                       <li class="col-sm-6 col-md-4 col-lg-3 range-input-group filter-row">
                         <div class="input-group input-group-sm">
                           <span class="input-group-addon">
-                            <input type="checkbox"
-                            ng-model="filter.cloudCoverCheck">
+                            <input
+                              type="checkbox"
+                              ng-model="filter.cloudCoverCheck"
+                              ng-click="filter.updateFilterString()">
                           </span>
                           <span class="input-group-addon range-name">Cloud Cover</span>
                         </div>
@@ -454,9 +659,20 @@
                       <li class="col-sm-3 col-lg-2">
                       </li>
                       <li class="col-sm-3 col-lg-2">
-                        <input ng-model="filter.cloudCover"
-                        class="form-control input-sm" id="cloudCover"
-                        placeholder="10.0" value="{{filter.cloudCover}}">
+                        <input
+                          type="number"
+                          placeholder="0"
+                          ng-model="filter.cloudCover"
+                          class="form-control input-sm"
+                          id="cloudCover"
+                          value="{{filter.cloudCover}}"
+                          step="1"
+                          min="0"
+                          max="100"
+                          focus-input
+                          ng-change="filter.cloudCoverCheck = filter.cloudCover === 20 ? false: true;"
+                          ng-enter="filter.updateFilterString()"
+                          ng-blur="filter.updateFilterString()">
                       </li>
                       </li>
                       <li class="col-sm-2 col-md-1 range-info">
@@ -466,7 +682,13 @@
                         uib-tooltip="Valid range 0 to 100"></i>
                       </li>
                       <li class="col-sm-5 col-md-6 col-lg-3 range-include-unknown">
-                        <input class="form-check-input" type="checkbox" value="" ng-model="filter.cloudCoverCheckNull">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          ng-disabled="!filter.cloudCoverCheck"
+                          ng-model="filter.cloudCoverCheckNull"
+                          ng-click="filter.updateFilterString()">
                         <label
                           class="form-check-label range-include-unknown-label"
                           for="cloudCoverCheckNull">
@@ -482,19 +704,140 @@
                       </li>
                       <li class="col-sm-12 text-center">
                         <button class="btn btn-primary btn-xs" type="button"
-                          ng-click="filter.updateFilterString()">Apply
-                        </button>
-                        <button class="btn btn-primary btn-xs" type="button"
-                          ng-click="filter.initRanges(true);">Reset
-                        </button>
-                        <button class="btn btn-warning btn-xs" type="button"
-                          ng-click="filter.closeFilterDropdown('range-filter-dropdown');filter.updateFilterString()">Close
+                          ng-click="filter.initRanges(true);">Reset Range Filters
                         </button>
                       </li>
                     </ul>
                   </li>
                 </ul>
               </li><!-- End menu -->
+
+              <li class="dropdown mega-dropdown">
+                  <a  class="dropdown-toggle temporal-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
+                  &nbsp;Temporal
+                  <span
+                  ng-show="filter.filterTemporalIndicator"
+                  class="text-info filter-indicator"
+                  uib-tooltip="Indicates a temporal filter is being applied"
+                  tooltip-placement="right">&#9679;</span>
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu mega-dropdown-menu row temporal-row" ng-click="$event.stopPropagation();">
+                  <li class="col-sm-12">
+                    <ul>
+                      <li class="dropdown-header text-center">Temporal Filters</li>
+                      <li class="text-center">
+                        <p>Select a date type and duration filter from the select boxes below.  Changes will be reflected immediately</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="col-sm-6">
+                    <ul>
+                      <li class="filter-row">
+                        <div class="form-group form-group-sm">
+                          <label for="temporalTypeFilter">Date Type</label>
+                          <select
+                            ng-model="filter.currentDateType"
+                            ng-options="type.label for type in filter.dateTypes"
+                            id="temporalTypeFilter"
+                            class="form-control"
+                            ng-change="filter.updateFilterString()"
+                            ng-enter="filter.updateFilterString()">
+                          </select>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="col-sm-6">
+                    <ul>
+                      <li class="filter-row">
+                        <div class="form-group form-group-sm">
+                          <label for="temporalDuration">Duration</label>
+                          <select ng-model="filter.currentTemporalDuration"
+                            ng-options="duration.label for duration in filter.temporalDurations"
+                            ng-change="filter.updateFilterString()"
+                            id="temporalDuration"
+                            class="form-control">
+                          </select>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
+                    <ul>
+                      <li>
+                        <label>Start Time & Date</label>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li class="text-center">
+                        <div class="form-group form-group-sm">
+                          <input type="text" class="form-control"
+                            ng-model="filter.startDate"
+                            data-time-format="HH:mm:ss"
+                            data-autoclose="false"
+                            data-minute-step="1"
+                            data-second-step="1"
+                            placeholder="Time"
+                            bs-timepicker
+                            ng-blur="filter.updateFilterString()">
+                        </div>
+                        <div style="display:inline-block;">
+                          <uib-datepicker
+                            ng-model="filter.startDate"
+                            show-weeks="false"
+                            class="well well-sm"
+                            ng-change="filter.updateFilterString()">
+                          </uib-datepicker>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
+                    <ul>
+                      <li>
+                        <label>End Time & Date</label>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li class="text-center">
+                        <div class="form-group form-group-sm">
+                          <input
+                            type="text"
+                            size="8"
+                            class="form-control"
+                            ng-model="filter.endDate"
+                            data-time-format="HH:mm:ss"
+                            data-autoclose="0"
+                            data-minute-step="1"
+                            data-second-step="1"
+                            placeholder="Time"
+                            bs-timepicker
+                            ng-change="filter.updateFilterString()">
+                        </div>
+                        <div style="display:inline-block;">
+                          <uib-datepicker
+                            ng-model="filter.endDate"
+                            show-weeks="false"
+                            class="well well-sm"
+                            ng-change="filter.updateFilterString()">
+                          </uib-datepicker>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="col-sm-12 text-center">
+                    <button
+                      class="btn btn-primary btn-xs"
+                      type="button"
+                      ng-click="filter.initTemporal(true)">Reset Temporal Filters
+                    </button>
+                    <!-- <button class="btn btn-warning btn-xs" type="button"
+                      ng-click="filter.closeFilterDropdown('temporal-filter-dropdown')">Close
+                    </button> -->
+                  </li>
+                </ul><!-- end menu -->
+              </li>
               <li class="dropdown mega-dropdown">
                 <a class="dropdown-toggle spatial-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false"><span class="fa fa-map" aria-hidden="true"></span>
@@ -564,122 +907,13 @@
                         </p>
                       </li>
                       <li class="col-sm-12 text-center">
-                        <button class="btn btn-warning btn-xs" type="button"
+                        <!-- <button class="btn btn-warning btn-xs" type="button"
                           ng-click="filter.closeFilterDropdown('spatial-filter-dropdown')">Close
-                        </button>
+                        </button> -->
                       </li>
                     </ul>
                   </li>
                 </ul>
-              </li>
-              <li class="dropdown mega-dropdown">
-                  <a  class="dropdown-toggle temporal-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false"><span class="fa fa-clock-o" aria-hidden="true"></span>
-                  &nbsp;Temporal
-                  <span
-                  ng-show="filter.filterTemporalIndicator"
-                  class="text-info filter-indicator"
-                  uib-tooltip="Indicates a temporal filter is being applied"
-                  tooltip-placement="right">&#9679;</span>
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu mega-dropdown-menu row temporal-row" ng-click="$event.stopPropagation();">
-                  <li class="col-sm-12">
-                    <ul>
-                      <li class="dropdown-header text-center">Temporal Filters</li>
-                      <li class="text-center">
-                        <p>Select a date type and duration filter from the select boxes below.  Changes will be reflected immediately</p>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="col-sm-6">
-                    <ul>
-                      <li class="filter-row">
-                        <div class="form-group form-group-sm">
-                          <label for="temporalTypeFilter">Date Type</label>
-                          <select ng-model="filter.currentDateType"
-                            ng-options="type.label for type in filter.dateTypes"
-                            id="temporalTypeFilter"
-                            class="form-control">
-                          </select>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="col-sm-6">
-                    <ul>
-                      <li class="filter-row">
-                        <div class="form-group form-group-sm">
-                          <label for="temporalDuration">Duration</label>
-                          <select ng-model="filter.currentTemporalDuration"
-                            ng-options="duration.label for duration in filter.temporalDurations"
-                            ng-change="filter.updateFilterString()"
-                            id="temporalDuration"
-                            class="form-control">
-                          </select>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
-                    <ul>
-                      <li>
-                        <label>Start Time & Date</label>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <div class="form-group form-group-sm">
-                          <input type="text" class="form-control"
-                          ng-model="filter.startDate"
-                          data-time-format="HH:mm:ss"
-                          data-autoclose="false"
-                          data-minute-step="1"
-                          data-second-step="1"
-                          placeholder="Time" bs-timepicker>
-                        </div>
-                        <div style="display:inline-block;">
-                          <uib-datepicker
-                            ng-model="filter.startDate"
-                            show-weeks="false"
-                            class="well well-sm">
-                          </uib-datepicker>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="col-sm-6" ng-show="filter.customDateRangeVisible">
-                    <ul>
-                      <li>
-                        <label>End Time & Date</label>
-                      </li>
-                    </ul>
-                    <ul>
-                      <li>
-                        <div class="form-group form-group-sm">
-                          <input type="text" size="8" class="form-control"
-                          ng-model="filter.endDate"
-                          data-time-format="HH:mm:ss"
-                          data-autoclose="0" placeholder="Time" bs-timepicker>
-                        </div>
-                        <div style="display:inline-block;">
-                          <uib-datepicker
-                            ng-model="filter.endDate"
-                            show-weeks="false"
-                            class="well well-sm">
-                          </uib-datepicker>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="col-sm-12 text-center">
-                    <button class="btn btn-primary btn-xs" type="button"
-                      ng-click="filter.updateFilterString()">Apply
-                    </button>
-                    <button class="btn btn-warning btn-xs" type="button"
-                      ng-click="filter.closeFilterDropdown('temporal-filter-dropdown')">Close
-                    </button>
-                  </li>
-                </ul><!-- end menu -->
               </li>
             </ul>
           </div>
@@ -705,23 +939,6 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid" ng-show="filter.showCurrentFilter">
-    <div class="row"
-    style="
-      margin-top: -10px;
-      margin-bottom: 5px;">
-      <div class="col-sm-12">
-        <button class="btn btn-default btn btn-xs" ng-click="filter.clearFilters()">Clear Filters</button>
-        <span class="tag label label-info cursor-default">{{filter.currentSpatialFilter}}</span>
-        <span ng-repeat="filter in filter.currentAttrFilterArray">
-          <span class="tag label label-primary cursor-default">
-            {{filter}}
-            <!-- <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a> -->
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
   <div class="row">
     <div class="col-md-8" ng-controller="MapController as map">
       <div id="map" class="map" params="map.mapParams" map>
@@ -1037,14 +1254,14 @@
               ng-mouseleave="list.removeFootprint();">
               <div class="media">
                 <div class="media-left" style="position: relative">
-                  <img ng-style="list.thumbBorder(image.properties.file_type)"
+                  <img
                     class="media-object"
                     ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
                     tooltip-placement="right"
                     uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
                     height="114"
                     width="114"
-                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}{{list.thumbSize}}{{list.thumbFormat}}">&nbsp;
+                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
                   <div
                     class="well text-center jpip-loading-overlay"
                     ng-show="list.showProcessInfo[$index]">

@@ -83,6 +83,8 @@
       wmsBaseUrl = stateService.omarSitesState.url.base;
       wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
       wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+      autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
+
       clearSelectedMosaicImages();
     };
 

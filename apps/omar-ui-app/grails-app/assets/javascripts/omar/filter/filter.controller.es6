@@ -536,6 +536,7 @@
           break;
         case "customDateRange":
           setTemporalIndicator(true);
+          vm.maxEndDate = new Date();
           vm.currentAttrFilterArray.push(
             `${dateField}: ` +
               vm.getCustomStartDate() +

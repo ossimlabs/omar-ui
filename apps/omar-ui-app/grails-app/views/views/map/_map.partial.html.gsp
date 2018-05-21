@@ -785,6 +785,7 @@
                         <div style="display:inline-block;">
                           <uib-datepicker
                             ng-model="filter.startDate"
+                            max-date="filter.endDate"
                             show-weeks="false"
                             class="well well-sm"
                             ng-change="filter.updateFilterString()">
@@ -818,6 +819,8 @@
                         <div style="display:inline-block;">
                           <uib-datepicker
                             ng-model="filter.endDate"
+                            min-date="filter.startDate"
+                            max-date="filter.maxEndDate"
                             show-weeks="false"
                             class="well well-sm"
                             ng-change="filter.updateFilterString()">

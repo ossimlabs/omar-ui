@@ -100,11 +100,11 @@
         });
       };
     })
-    .directive("focusInput", function($timeout) {
+    .directive("focusInput", function() {
       return {
         link: function(scope, element, attrs) {
           element.bind("click", function() {
-            $timeout(function() {
+            setTimeout(function() {
               element.focus();
             }, 750);
           });

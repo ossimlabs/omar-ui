@@ -321,17 +321,11 @@
     };
 
     vm.setInitialCustomStartDate = function() {
-      // var yesterday = new Date();
-      // yesterday.setDate(yesterday.getDate() - 1);
-
-      // vm.startDate = yesterday;
       vm.startDate = moment().startOf("day");
     };
 
     vm.setInitialCustomEndDate = function() {
-      //vm.endDate = new Date();
       vm.endDate = moment().endOf("day");
-      //.format("MM-DD-YYYY HH:mm:ss+0000");
     };
 
     vm.getCustomStartDate = function() {

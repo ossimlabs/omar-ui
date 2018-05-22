@@ -37,14 +37,6 @@
       vm.apiAppLink = AppO2.APP_CONFIG.params.apiApp.baseUrl;
     }
 
-    vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
-    if (vm.kmlAppEnabled) {
-      var kmlBaseUrl = stateService.omarSitesState.url.base;
-      var kmlContextPath = stateService.omarSitesState.url.kmlContextPath;
-      vm.kmlAppLink =
-        kmlBaseUrl + kmlContextPath + "/superOverlay/getLastImagesKml";
-    }
-
     let geoscriptBaseUrl = stateService.omarSitesState.url.base;
     let geoscriptContextPath =
       stateService.omarSitesState.url.geoscriptContextPath;

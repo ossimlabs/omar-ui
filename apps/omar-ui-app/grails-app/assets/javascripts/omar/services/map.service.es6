@@ -84,7 +84,7 @@
       wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
       wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
       autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
-      console.log(`autoMosaicRequestUrl ${autoMosaicRequestUrl}`);
+
       clearSelectedMosaicImages();
     };
 
@@ -196,7 +196,6 @@
 
       var footprintsSource = footPrints.getSource();
 
-
       /* Adding Auto Mosaic */
       autoMosaic = new ol.layer.Tile({
         title: "Auto",
@@ -209,7 +208,7 @@
             STYLES: styles,
             FORMAT: format
           },
-          wrapX: false,
+          wrapX: false
         }),
         name: "Auto",
         visible: false
@@ -387,12 +386,17 @@
       // the layer to the overlay layers array.
       function addOverlayLayers(layerObj) {
         var params = {};
-        $.each( layerObj.params, function( key, value ) {
+        $.each(layerObj.params, function(key, value) {
           // identify heat map layer
-          if ( key.toLowerCase().search( /date/ ) > -1 && value.search( /\d/ ) > -1 ) {
-            var time = value.split( " " )[ 0 ];
-            var interval = value.split( " " )[ 1 ];
-            value = moment().subtract( time, interval ).format( "YYYY-MM-DDTHH:mm:ss.SSS" );
+          if (
+            key.toLowerCase().search(/date/) > -1 &&
+            value.search(/\d/) > -1
+          ) {
+            var time = value.split(" ")[0];
+            var interval = value.split(" ")[1];
+            value = moment()
+              .subtract(time, interval)
+              .format("YYYY-MM-DDTHH:mm:ss.SSS");
           }
           params[key] = value;
         });
@@ -739,13 +743,11 @@
 
     function updateAutoMosaicRequestUrl() {
       autoMosaic.getSource().setUrl(autoMosaicRequestUrl);
-      //console.log('autoMosaicRequestUrl', autoMosaicRequestUrl)
     }
 
     this.autoMosaicRequestUrl = function() {
       updateAutoMosaicRequestUrl();
     };
-
 
     /**
      * We need this to set the intial spatial filter for

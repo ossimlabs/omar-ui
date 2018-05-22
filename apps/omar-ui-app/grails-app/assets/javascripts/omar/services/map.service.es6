@@ -215,6 +215,8 @@
         visible: false
       });
 
+      var autoMosaicSource = autoMosaic.getSource();
+
       /**
        * Renders a progress icon.
        * @param {Element} el The target element.
@@ -289,6 +291,18 @@
       });
 
       footprintsSource.on("tileloaderror", function() {
+        progress.addLoaded();
+      });
+
+      autoMosaicSource.on("tileloadstart", function() {
+        progress.addLoading();
+      });
+
+      autoMosaicSource.on("tileloadend", function() {
+        progress.addLoaded();
+      });
+
+      autoMosaicSource.on("tileloaderror", function() {
         progress.addLoaded();
       });
 
@@ -709,6 +723,28 @@
     this.updateFootprintsUrl = function() {
       updateFootprintsUrl();
     };
+
+    function updateAutoMosaic(filter) {
+      var params = autoMosaic.getSource().getParams();
+      autoMosaic.FILTER = filter;
+      autoMosaic.getSource().updateParams(params);
+      autoMosaic
+        .getSource()
+        .setTileLoadFunction(autoMosaic.getSource().getTileLoadFunction());
+    }
+
+    this.updateAutoMosaicLayer = function(filter) {
+      updateAutoMosaic(filter);
+    };
+
+    function updateAutoMosaicUrl() {
+      autoMosaic.getSource().setUrl(autoMosaicRequestUrl);
+    }
+
+    this.autoMosaicRequestUrl = function() {
+      updateAutoMosaicRequestUrl();
+    };
+
 
     /**
      * We need this to set the intial spatial filter for

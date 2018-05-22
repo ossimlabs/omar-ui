@@ -20,6 +20,7 @@
     var map,
       mapView,
       footPrints,
+      autoMosaic,
       searchLayerVector, // Used for visualizing the search items map markers polygon boundaries
       filterLayerVector, // Used for visualizing the filter markers and polygon AOI's
       geomField,
@@ -61,6 +62,7 @@
     var wmsBaseUrl = stateService.omarSitesState.url.base;
     var wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
     var wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+    var autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
 
     /**
      * Description: Called from the mapController so that the $on. event that subscribes to the $broadcast
@@ -81,6 +83,8 @@
       wmsBaseUrl = stateService.omarSitesState.url.base;
       wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
       wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+      autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
+
       clearSelectedMosaicImages();
     };
 
@@ -192,6 +196,25 @@
 
       var footprintsSource = footPrints.getSource();
 
+
+      /* Adding Auto Mosaic */
+      autoMosaic = new ol.layer.Tile({
+        title: "Auto",
+        source: new ol.source.TileWMS({
+          url: autoMosaicRequestUrl,
+          params: {
+            FILTER: "",
+            VERSION: version,
+            LAYERS: layers,
+            STYLES: styles,
+            FORMAT: format
+          },
+          wrapX: false,
+        }),
+        name: "Auto",
+        visible: false
+      });
+
       /**
        * Renders a progress icon.
        * @param {Element} el The target element.
@@ -278,6 +301,8 @@
         title: "Mosaics",
         layers: []
       });
+
+      mosaicGroup.getLayers().push(autoMosaic);
 
       // Takes a map layer obj, and adds
       // the layer to the map layers array.

@@ -216,27 +216,47 @@
     vm.initRanges = function(reset) {
       // Ranges
       vm.predNiirsCheck = false;
-      vm.predNiirsMin = "0.0";
-      vm.predNiirsMax = "9.0";
+      vm.predNiirsMin = 0;
+      vm.predNiirsMax = 9;
+      vm.predNiirsCheckNull = false;
 
       vm.azimuthCheck = false;
-      vm.azimuthMin = "0";
-      vm.azimuthMax = "360";
+      vm.azimuthMin = 0;
+      vm.azimuthMax = 360;
+      vm.azimuthCheckNull = false;
 
       vm.grazeElevCheck = false;
-      vm.grazeElevMin = "0.0";
-      vm.grazeElevMax = "90.0";
+      vm.grazeElevMin = 0;
+      vm.grazeElevMax = 90;
+      vm.grazeElevCheckNull = false;
 
       vm.sunAzimuthCheck = false;
-      vm.sunAzimuthMin = "0.0";
-      vm.sunAzimuthMax = "360";
+      vm.sunAzimuthMin = 0;
+      vm.sunAzimuthMax = 360;
+      vm.sunAzimuthCheckNull = false;
 
       vm.sunElevationCheck = false;
-      vm.sunElevationMin = "-90";
-      vm.sunElevationMax = "90";
+      vm.sunElevationMin = -90;
+      vm.sunElevationMax = 90;
+      vm.sunElevationCheckNull = false;
 
       vm.cloudCoverCheck = false;
-      vm.cloudCover = "20";
+      vm.cloudCover = 0;
+      vm.cloudCoverCheckNull = false;
+
+      if (reset) {
+        // Clears out the current filter
+        vm.updateFilterString();
+      }
+    };
+
+    vm.initTemporal = reset => {
+      vm.currentDateType = vm.dateTypes[0]; // TODO: Make this configurable
+      vm.currentTemporalDuration = vm.temporalDurations[0]; // TODO: Make this configurable
+      vm.customDateRangeVisible = false;
+
+      vm.setInitialCustomStartDate();
+      vm.setInitialCustomEndDate();
 
       if (reset) {
         // Clears out the current filter
@@ -254,7 +274,6 @@
         label: "Ingest Date"
       }
     ];
-    vm.currentDateType = vm.dateTypes[0]; // sets the first selected date type (acquisition_date)
 
     vm.temporalDurations = [
       {
@@ -294,7 +313,6 @@
         label: "Custom Date Range"
       }
     ];
-    vm.currentTemporalDuration = vm.temporalDurations[0];
 
     vm.customDateRangeVisible = false;
 
@@ -303,14 +321,11 @@
     };
 
     vm.setInitialCustomStartDate = function() {
-      var yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-
-      vm.startDate = yesterday;
+      vm.startDate = moment().startOf("day");
     };
 
     vm.setInitialCustomEndDate = function() {
-      vm.endDate = new Date();
+      vm.endDate = moment().endOf("day");
     };
 
     vm.getCustomStartDate = function() {
@@ -515,6 +530,7 @@
           break;
         case "customDateRange":
           setTemporalIndicator(true);
+          vm.maxEndDate = new Date();
           vm.currentAttrFilterArray.push(
             `${dateField}: ` +
               vm.getCustomStartDate() +
@@ -605,7 +621,7 @@
 
       if (vm.imageIdCheck && vm.imageId != "") {
         vm.currentAttrFilterArray.push(`Image: ${vm.imageId}`);
-        pushKeywordToArray("title", vm.imageId);
+        pushKeywordToArray("title", vm.imageId.toUpperCase());
         setKeywordIndicator();
       } else if (!vm.imageIdCheck) {
         vm.filterKeywordIndicator = false;
@@ -617,6 +633,8 @@
         setKeywordIndicator();
       } else if (!vm.missionIdCheck) {
         vm.filterKeywordIndicator = false;
+      } else if (vm.missionId.length === 0) {
+        vm.missionIdCheck = false;
       }
 
       if (vm.sensorIdCheck && vm.sensorId.length != 0) {
@@ -625,6 +643,8 @@
         setKeywordIndicator();
       } else if (!vm.sensorIdCheck) {
         vm.filterKeywordIndicator = false;
+      } else if (vm.sensorId.length === 0) {
+        vm.sensorIdCheck = false;
       }
 
       if (vm.targetIdCheck && vm.targetId != "") {
@@ -636,7 +656,7 @@
       }
 
       if (vm.wacNumberCheck && vm.wacNumber != "") {
-        vm.currentAttrFilterArray.push(`Target: ${vm.wacNumber}`);
+        vm.currentAttrFilterArray.push(`WAC: ${vm.wacNumber}`);
         pushKeywordToArray("wac_code", vm.wacNumber);
         setKeywordIndicator();
       } else if (!vm.wacNumberCheck) {
@@ -650,12 +670,45 @@
         min = parseFloat(formFieldMin);
         max = parseFloat(formFieldMax);
 
-        if (isNaN(min) || isNaN(max)) {
+        /**
+         * Check to see if the user has exceeded the min or max ranges of the
+         * current range filter
+         */
+        if (isNaN(min)) {
           toastr.error(
-            "Please enter a valid number for the range filter.",
+            `Please check the allowable ranges, and enter a valid minimum value for the ${dbName.toUpperCase()} range filter.`,
             "Error",
             {
-              closeButton: true
+              positionClass: "toast-bottom-left",
+              closeButton: true,
+              timeOut: 5000,
+              extendedTimeOut: 5000,
+              target: "body"
+            }
+          );
+          return;
+        } else if (isNaN(max)) {
+          toastr.error(
+            `Please check the allowable ranges, and enter a valid maximum value for the ${dbName.toUpperCase()} range filter.`,
+            "Error",
+            {
+              positionClass: "toast-bottom-left",
+              closeButton: true,
+              timeOut: 5000,
+              extendedTimeOut: 5000,
+              target: "body"
+            }
+          );
+        } else if (min > max) {
+          toastr.error(
+            `Please make sure the minimum is less than the maximum for the ${dbName.toUpperCase()} range filter.`,
+            "Error",
+            {
+              positionClass: "toast-bottom-left",
+              closeButton: true,
+              timeOut: 5000,
+              extendedTimeOut: 5000,
+              target: "body"
             }
           );
         } else if (showNull === true) {
@@ -673,7 +726,7 @@
 
       // Ranges
       if (vm.predNiirsCheck) {
-        //setRangesIndicator(true);
+        //validateRange(vm.predNiirsMin, vm.predNiirsMax);
         if (vm.predNiirsCheckNull) {
           vm.currentAttrFilterArray.push(
             `NIIRS between ${vm.predNiirsMin} and ${
@@ -829,6 +882,7 @@
     vm.initSpatial();
     vm.initKeywords();
     vm.initRanges();
+    vm.initTemporal();
 
     vm.setInitialCustomStartDate();
     vm.setInitialCustomEndDate();
@@ -845,11 +899,12 @@
       clearAllSpatialFilter();
       vm.initKeywords();
       vm.initRanges();
+      vm.initTemporal();
 
       // Reset the temporal filters and it's menu
-      vm.currentTemporalDuration = vm.temporalDurations[0];
-      vm.customDateRangeVisible = false;
-      setTemporalIndicator(false);
+      //vm.currentTemporalDuration = vm.temporalDurations[0];
+      //vm.customDateRangeVisible = false;
+      //setTemporalIndicator(false);
 
       vm.setInitialCustomStartDate();
       vm.setInitialCustomEndDate();

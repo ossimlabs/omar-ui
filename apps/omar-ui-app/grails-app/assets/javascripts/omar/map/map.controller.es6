@@ -41,6 +41,7 @@
 
     $scope.$on("omarSitesState.updated", function(event, params) {
       mapService.setMapServiceUrlProps();
+      mapService.autoMosaicRequestUrl();
 
       // Changes the Legend URL after federating
       vm.legendUrl = `${stateService.omarSitesState.url.base}${

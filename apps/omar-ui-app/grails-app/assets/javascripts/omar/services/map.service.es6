@@ -84,7 +84,7 @@
       wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
       wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
       autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
-
+      console.log(`autoMosaicRequestUrl ${autoMosaicRequestUrl}`);
       clearSelectedMosaicImages();
     };
 
@@ -737,8 +737,9 @@
       updateAutoMosaic(filter);
     };
 
-    function updateAutoMosaicUrl() {
+    function updateAutoMosaicRequestUrl() {
       autoMosaic.getSource().setUrl(autoMosaicRequestUrl);
+      //console.log('autoMosaicRequestUrl', autoMosaicRequestUrl)
     }
 
     this.autoMosaicRequestUrl = function() {

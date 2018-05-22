@@ -665,7 +665,11 @@
         let polygon = new ol.geom.Polygon([imageArray]);
 
         // Moves the map to the extent of the search item
-        map.getView().fit(polygon.getExtent(), map.getSize());
+        var options = {
+            duration: 1000,
+            size: map.getSize()
+        };
+        map.getView().fit(polygon.getExtent(), options);
       });
     };
 

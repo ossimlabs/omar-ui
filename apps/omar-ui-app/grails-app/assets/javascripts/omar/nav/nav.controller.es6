@@ -79,7 +79,10 @@
 
     vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
     if (vm.kmlAppEnabled) {
-      vm.kmlAppLink = AppO2.APP_CONFIG.params.kmlApp.baseUrl + "/superOverlay/getLastImagesKml";
+      var kmlBaseUrl = stateService.omarSitesState.url.base;
+      var kmlContextPath = stateService.omarSitesState.url.kmlContextPath;
+      vm.kmlAppLink =
+        kmlBaseUrl + kmlContextPath + "/superOverlay/getLastImagesKml";
     }
 
     vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;

@@ -189,21 +189,16 @@
                                 ng-change="filter.updateFilterString()">
                             </span>
                             <span class="input-group-addon name">Target&nbsp;</span>
-                            <ui-select
+                            <input
                               focus-input
-                              class="form-control"
-                              id = "targetIdInput"
-                              ng-change="filter.targetIdCheck = filter.targetId === '' ? false : true;filter.updateFilterString()"
-                              ng-click="filter.getDistinctValues('targetId');"
                               ng-model="filter.targetId"
-                              theme="selectize">
-                              <ui-select-match placeholder="Target ID">
-                                {{$select.selected}}
-                              </ui-select-match>
-                              <ui-select-choices repeat="val in targetIdTypes | filter: $select.search">
-                                {{val}}
-                              </ui-select-choices>
-                            </ui-select>
+                              ng-enter="filter.updateFilterString()"
+                              ng-blur="filter.updateFilterString()"
+                              ng-change="filter.targetIdCheck = filter.targetId === '' ? false: true;"
+                              class="form-control"
+                              id="targetIdInput"
+                              placeholder="Target ID"
+                              value="filter.targetId">
                           </div>
                         </td>
                       </tr>

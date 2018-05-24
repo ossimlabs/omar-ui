@@ -104,6 +104,7 @@
       vm.polygonSpatial = false;
     };
 
+    $scope["countryCodeTypes"] = [];
     $scope["missionIdTypes"] = [];
     $scope["sensorIdTypes"] = [];
     vm.getDistinctValues = function(property) {
@@ -184,7 +185,7 @@
     vm.initKeywords = function(reset) {
       // Keywords
       vm.countryCodeCheck = false;
-      vm.countryCode = "";
+      vm.countryCode = [];
 
       vm.imageIdCheck = false;
       vm.imageId = "";

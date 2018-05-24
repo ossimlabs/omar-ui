@@ -603,12 +603,14 @@
         vm.filterKeywordIndicator = false;
       }
 
-      if (vm.countryCodeCheck && vm.countryCode != "") {
+      if (vm.countryCodeCheck && vm.countryCode.length != 0) {
         vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode}`);
         pushKeywordToArray("country_code", vm.countryCode);
         setKeywordIndicator();
       } else if (!vm.countryCodeCheck) {
         vm.filterKeywordIndicator = false;
+      } else if (vm.countryCode.length === 0) {
+        vm.countryCodeCheck = false;
       }
 
       if (vm.filenameCheck && vm.filename != "") {

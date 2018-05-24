@@ -115,14 +115,16 @@
                             </span>
                             <span class="input-group-addon name">CC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <ui-select
+                              multiple
                               focus-input
+                              close-on-select="true"
                               id="countryCodeInput"
                               ng-change="filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
                               ng-click="filter.getDistinctValues('countryCode');"
                               ng-model="filter.countryCode"
-                              theme="selectize">
+                              theme="bootstrap">
                               <ui-select-match placeholder="Country Code">
-                                {{$select.selected}}
+                                {{$item}}
                               </ui-select-match>
                               <ui-select-choices repeat="val in countryCodeTypes | filter: $select.search">
                                 {{val}}

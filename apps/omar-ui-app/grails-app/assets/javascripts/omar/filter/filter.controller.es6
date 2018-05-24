@@ -560,7 +560,7 @@
       function pushKeywordToArray(dbName, formField) {
         $log.debug(`formField value: ${formField}`);
         var clause = "";
-        if (dbName === "mission_id" || dbName === "sensor_id") {
+        if (dbName === "country_code" || dbName === "mission_id" || dbName === "sensor_id") {
           var clauses = [];
           $.each(formField, function(index, value) {
             clauses.push(dbName + " LIKE '%" + value.trim() + "%'");

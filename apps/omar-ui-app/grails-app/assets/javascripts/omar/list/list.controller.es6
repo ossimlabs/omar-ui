@@ -575,6 +575,11 @@
       wfsService.executeWfsQuery();
     });
 
+    // need some way of preventing a second hits URL call when pagination changes
+    $scope.$on("pagination.updated", function(event, filter) {
+      wfsService.executeWfsQuery( false );
+    });
+
     $scope.$on("wfs: updated", function(event, data) {
       // Update the DOM (card list) with the data
       $scope.$apply(function() {

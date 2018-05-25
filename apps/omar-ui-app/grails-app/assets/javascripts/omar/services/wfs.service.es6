@@ -89,11 +89,11 @@
         }
       }
       if (boolUpdate) {
-        $rootScope.$broadcast("attrObj.updated", this.attrObj.filter);
+        $rootScope.$broadcast("pagination.updated", this.attrObj.filter);
       }
     };
 
-    this.executeWfsQuery = function() {
+    this.executeWfsQuery = function( requestHits ) {
       if (this.attrObj.filter === "") {
         // Only send the spatialObj to filter the results
         wfsRequest.cql = this.spatialObj.filter;
@@ -145,34 +145,36 @@
         });
       });
 
-      var wfsFeaturesUrl =
-        wfsRequestUrl +
-        "service=WFS" +
-        "&version=" +
-        wfsRequest.version +
-        "&request=GetFeature" +
-        "&typeName=" +
-        wfsRequest.typeName +
-        "&filter=" +
-        encodeURIComponent(wfsRequest.cql) +
-        "&outputFormat=" +
-        wfsRequest.outputFormat +
-        "&sortBy=" +
-        wfsRequest.sortField +
-        wfsRequest.sortType +
-        "&startIndex=" +
-        wfsRequest.startIndex +
-        "&resultType=hits";
+        if ( requestHits !== false ) {
+            var wfsFeaturesUrl =
+                wfsRequestUrl +
+                "service=WFS" +
+                "&version=" +
+                wfsRequest.version +
+                "&request=GetFeature" +
+                "&typeName=" +
+                wfsRequest.typeName +
+                "&filter=" +
+                encodeURIComponent(wfsRequest.cql) +
+                "&outputFormat=" +
+                wfsRequest.outputFormat +
+                "&sortBy=" +
+                wfsRequest.sortField +
+                wfsRequest.sortType +
+                "&startIndex=" +
+                wfsRequest.startIndex +
+                "&resultType=hits";
 
-      $http({ method: "GET", url: wfsFeaturesUrl }).then(function(response) {
-        var features;
-        features = response.data.totalFeatures;
+            $http({ method: "GET", url: wfsFeaturesUrl }).then(function(response) {
+                var features;
+                features = response.data.totalFeatures;
 
-        // $timeout needed: http://stackoverflow.com/a/18996042
-        $timeout(function() {
-          $rootScope.$broadcast("wfs features: updated", features);
-        });
-      });
+                // $timeout needed: http://stackoverflow.com/a/18996042
+                $timeout(function() {
+                    $rootScope.$broadcast("wfs features: updated", features);
+                });
+            });
+        }
     };
 
     this.getImageProperties = function(wfsUrl, filename) {

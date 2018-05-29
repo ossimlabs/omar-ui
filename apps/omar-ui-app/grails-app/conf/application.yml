@@ -204,10 +204,10 @@ omar:
         message: "O2 | Image Discovery and Analysis"
 
         # O2 release name
-        releaseName: Gasparilla
+        releaseName: Hollywood
 
         # O2 release version number
-        releaseNumber: 2.3.2
+        releaseNumber: 2.4.0
 
         # Used to show/hide the About dropdown
         enabled: true

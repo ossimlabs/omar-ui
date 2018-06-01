@@ -4,14 +4,15 @@
     .module("omarApp")
     .service("wfsService", [
       "stateService",
-      "$rootScope",
       "$http",
-      "$timeout",
+      "$injector",
       "$log",
+      "$rootScope",
+      "$timeout",
       wfsService
     ]);
 
-  function wfsService(stateService, $rootScope, $http, $timeout, $log) {
+  function wfsService(stateService, $http, $injector, $log, $rootScope, $timeout) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -59,6 +60,24 @@
 
     if (AppO2.APP_CONFIG.params.misc.pageLimit != undefined) {
       this.attrObj.pageLimit = AppO2.APP_CONFIG.params.misc.pageLimit;
+    }
+
+    // this will just do a swap out INTERSECTS for BBOX based on the current map zoom level
+    this.modifyParamBasedOnZoom = function( string ) {
+        var intersectsPattern = /INTERSECTS[(]ground_geom,(.*)[)]/;
+
+        var currentZoom = $injector.get( "mapService" ).getZoom();
+        var zoomFilterChangeLevel = AppO2.APP_CONFIG.openlayers.zoomFilterChangeLevel;
+        if ( currentZoom < zoomFilterChangeLevel && string.match( intersectsPattern ) ) {
+            var wkt = RegExp.$1;
+            var polygon = new ol.format.WKT().readGeometry( wkt );
+
+            string = string.replace( "INTERSECTS", "BBOX" );
+            string = string.replace( wkt, polygon.getExtent().join( "," ) );
+        }
+
+
+        return string;
     }
 
     this.updateSpatialFilter = function(filter) {
@@ -113,22 +132,14 @@
       var wfsUrl =
         wfsRequestUrl +
         "service=WFS" +
-        "&version=" +
-        wfsRequest.version +
+        "&version=" + wfsRequest.version +
         "&request=GetFeature" +
-        "&typeName=" +
-        wfsRequest.typeName +
-        "&filter=" +
-        encodeURIComponent(wfsRequest.cql) +
-        "&outputFormat=" +
-        wfsRequest.outputFormat +
-        "&sortBy=" +
-        wfsRequest.sortField +
-        wfsRequest.sortType +
-        "&startIndex=" +
-        wfsRequest.startIndex +
-        "&maxFeatures=" +
-        wfsRequest.pageLimit;
+        "&typeName=" + wfsRequest.typeName +
+        "&filter=" + encodeURIComponent( this.modifyParamBasedOnZoom( wfsRequest.cql ) ) +
+        "&outputFormat=" + wfsRequest.outputFormat +
+        "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType +
+        "&startIndex=" + wfsRequest.startIndex +
+        "&maxFeatures=" + wfsRequest.pageLimit;
 
       $http({ method: "GET", url: wfsUrl }).then(function(response) {
         var data;
@@ -149,20 +160,13 @@
             var wfsFeaturesUrl =
                 wfsRequestUrl +
                 "service=WFS" +
-                "&version=" +
-                wfsRequest.version +
+                "&version=" + wfsRequest.version +
                 "&request=GetFeature" +
-                "&typeName=" +
-                wfsRequest.typeName +
-                "&filter=" +
-                encodeURIComponent(wfsRequest.cql) +
-                "&outputFormat=" +
-                wfsRequest.outputFormat +
-                "&sortBy=" +
-                wfsRequest.sortField +
-                wfsRequest.sortType +
-                "&startIndex=" +
-                wfsRequest.startIndex +
+                "&typeName=" + wfsRequest.typeName +
+                "&filter=" + encodeURIComponent( this.modifyParamBasedOnZoom( wfsRequest.cql ) ) +
+                "&outputFormat=" + wfsRequest.outputFormat +
+                "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType +
+                "&startIndex=" + wfsRequest.startIndex +
                 "&resultType=hits";
 
             $http({ method: "GET", url: wfsFeaturesUrl }).then(function(response) {

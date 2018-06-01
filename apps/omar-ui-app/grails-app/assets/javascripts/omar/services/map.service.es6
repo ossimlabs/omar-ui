@@ -929,6 +929,10 @@
       return map.getView().getCenter();
     };
 
+    this.getZoom = function() {
+        return map.getView().getZoom();
+    };
+
     this.calculateExtent = function() {
       return map.getView().calculateExtent(map.getSize());
     };

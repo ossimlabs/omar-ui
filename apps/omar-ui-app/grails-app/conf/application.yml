@@ -78,6 +78,9 @@ omar:
           #FORMAT: image/png
         #options:
           #visible: false
+    # if you would like to differentiate things on a specific zoom level, set it here
+    zoomFilterChangeLevel: 10
+
   app:
     userInfo:
       # Configurable request header name parameter

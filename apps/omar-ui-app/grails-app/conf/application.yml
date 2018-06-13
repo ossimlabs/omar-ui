@@ -210,7 +210,7 @@ omar:
         releaseName: Hollywood
 
         # O2 release version number
-        releaseNumber: 2.4.0
+        releaseNumber: 2.4.1
 
         # Used to show/hide the About dropdown
         enabled: true

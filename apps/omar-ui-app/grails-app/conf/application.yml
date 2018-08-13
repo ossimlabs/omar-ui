@@ -207,10 +207,10 @@ omar:
         message: "O2 | Image Discovery and Analysis"
 
         # O2 release name
-        releaseName: Hollywood
+        releaseName: Islamorada
 
         # O2 release version number
-        releaseNumber: 2.4.1
+        releaseNumber: 2.5.0
 
         # Used to show/hide the About dropdown
         enabled: true

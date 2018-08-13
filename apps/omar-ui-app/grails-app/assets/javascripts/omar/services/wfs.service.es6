@@ -64,7 +64,7 @@
 
     // this will just do a swap out INTERSECTS for BBOX based on the current map zoom level
     this.modifyParamBasedOnZoom = function( string ) {
-        var intersectsPattern = /INTERSECTS[(]ground_geom,(.*)[)]/;
+        var intersectsPattern = /INTERSECTS[(]ground_geom,([^)]*[)]{2})[)]/;
 
         var currentZoom = $injector.get( "mapService" ).getZoom();
         var zoomFilterChangeLevel = AppO2.APP_CONFIG.openlayers.zoomFilterChangeLevel;

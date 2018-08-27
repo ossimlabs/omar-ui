@@ -688,29 +688,9 @@
     vm.viewOrtho = function(image, location) {
       var feature = new ol.format.GeoJSON().readFeature(image);
 
-      var centerLat, centerLon;
-      if (location) {
-        centerLat = location[1];
-        centerLon = location[0];
-      } else {
-        var extent = feature.getGeometry().getExtent();
-        centerLat = (extent[1] + extent[3]) / 2;
-        centerLon = (extent[0] + extent[2]) / 2;
-      }
-
       var filter = "in(" + feature.getProperties().id + ")";
 
-      var tlvUrl =
-        tlvRequestUrl +
-        "?" +
-        "bbox=" +
-        extent.join(",") +
-        "&" +
-        "filter=" +
-        filter +
-        "&" +
-        "location=" +
-        [centerLat, centerLon].join(",");
+      var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
       window.open(tlvUrl, "_blank");
     };
@@ -950,31 +930,10 @@
 
     vm.viewOrtho = function(image, location) {
       var feature = new ol.format.GeoJSON().readFeature(image);
-      var extent = feature.getGeometry().getExtent();
-
-      var centerLat, centerLon;
-
-      if (location) {
-        centerLat = location[1];
-        centerLon = location[0];
-      } else {
-        centerLat = (extent[1] + extent[3]) / 2;
-        centerLon = (extent[0] + extent[2]) / 2;
-      }
 
       var filter = "in(" + feature.getProperties().id + ")";
 
-      var tlvUrl =
-        tlvRequestUrl +
-        "?" +
-        "bbox=" +
-        extent.join(",") +
-        "&" +
-        "filter=" +
-        filter +
-        "&" +
-        "location=" +
-        [centerLat, centerLon].join(",");
+      var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
       window.open(tlvUrl, "_blank");
     };

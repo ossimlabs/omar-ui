@@ -123,7 +123,6 @@
             .join(",");
         }
 
-        var bbox = mapService.calculateExtent().join(",");
         if (vm.attrFilter) {
           filter += " AND " + vm.attrFilter;
         }

@@ -130,12 +130,8 @@
 
         var tlvURL =
           tlvRequestUrl +
-          "/?bbox=" +
-          bbox +
-          "&filter=" +
+          "/?filter=" +
           encodeURIComponent(filter) +
-          "&location=" +
-          pointLatLon +
           "&maxResults=100";
         $window.open(tlvURL, "_blank");
       }

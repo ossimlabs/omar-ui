@@ -477,21 +477,21 @@
 
           switch (app) {
             case "tlv":
-              appUrl = tlvRequestUrl;
+              appUrl = tlvRequestUrl + "/?";
               break;
             case "isa":
-              appUrl = isaRequestUrl;
+              appUrl = isaRequestUrl +
+                "/?bbox=" +
+                bbox +
+                "&location=" +
+                pointLatLon +;
               break;
           }
 
           let url =
             appUrl +
-            "/?bbox=" +
-            bbox +
             "&filter=" +
             encodeURIComponent(filter) +
-            "&location=" +
-            pointLatLon +
             "&maxResults=100";
           $log.debug(`url: ${url}`);
 

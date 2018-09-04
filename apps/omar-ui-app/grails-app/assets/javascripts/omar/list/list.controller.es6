@@ -484,7 +484,7 @@
                 "/?bbox=" +
                 bbox +
                 "&location=" +
-                pointLatLon +;
+                pointLatLon;
               break;
           }
 

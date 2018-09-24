@@ -858,6 +858,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   bottom: 12px;
   left: -50px;
   min-width: 275px;
+  display: none;
 }
 
 .ol-popup:after,

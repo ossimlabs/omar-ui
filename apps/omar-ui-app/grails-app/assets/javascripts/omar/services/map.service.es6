@@ -139,16 +139,13 @@
      */
     var container = document.getElementById("popup");
     var content = document.getElementById("popup-content");
-    var closer = document.getElementById("popup-closer");
 
     /**
      * Create an overlay to anchor the popup to the map.
      */
-    var overlay = new ol.Overlay(
-      /** @type {olx.OverlayOptions} */ ({
-        element: container
-      })
-    );
+    var overlay = new ol.Overlay({
+      element: container
+    });
 
     this.mapInit = function() {
       mapView = new ol.View({
@@ -666,8 +663,8 @@
 
         // Moves the map to the extent of the search item
         var options = {
-            duration: 1000,
-            size: map.getSize()
+          duration: 1000,
+          size: map.getSize()
         };
         map.getView().fit(polygon.getExtent(), options);
       });
@@ -918,11 +915,13 @@
         "</div>";
 
       overlay.setPosition(featureExtentCenter);
+      container.style.display = "block";
     };
 
     this.mapRemoveImageFootprint = function() {
       clearLayerSource(searchLayerVector);
       overlay.setPosition(undefined);
+      container.style.display = "none";
     };
 
     this.getCenter = function() {
@@ -930,7 +929,7 @@
     };
 
     this.getZoom = function() {
-        return map.getView().getZoom();
+      return map.getView().getZoom();
     };
 
     this.calculateExtent = function() {

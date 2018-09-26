@@ -115,7 +115,7 @@
                         <p class="small"><span class="text-info">Contact: </span><a href = "mailto:{{nav.aboutContactEmail}}">{{nav.aboutContactEmail}}</a></p>
                         <p class="small"><span class="text-info">Release: </span><span>{{nav.aboutReleaseName}}</span></p>
                         <p class="small"><span class="text-info">Release Number: </span><span>{{nav.aboutReleaseNumber}}</span></p>
-                        <p class="small"><span class="text-info">Deployment: </span><span>${grailsApplication.config.deploymentTarget}</span></p>
+                        <p class="small"><span class="text-info">Deployment: </span><span>${System.getenv("DEPLOYMENT_TARGET")}</span></p>
                         <hr>
                         <p class="small"><span class="text-info">UI Build Version:</span><span> <g:meta name="info.app.version"/></span></p>
                       </div>

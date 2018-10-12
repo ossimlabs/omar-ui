@@ -11,9 +11,6 @@ class UrlMappings {
             }
         }
 
-        //"/"(view:"/index")
-        //"/" ( controller:'omar', action:'index' )
-        //"/"(uri: '/omar/index')
         "/"(redirect: '/omar/index#/map')
         "500"(view:'/error')
         "404"(view:'/notFound')

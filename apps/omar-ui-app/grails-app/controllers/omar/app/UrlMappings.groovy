@@ -11,7 +11,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(redirect: '/omar/index#/map')
         "500"(view:'/error')
         "404"(view:'/notFound')
     }

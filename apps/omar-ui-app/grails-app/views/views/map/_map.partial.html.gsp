@@ -1283,10 +1283,10 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12" style="font-size: 13px;">
-                      NIIRS:&nbsp;&nbsp;
+                      Security Class.:&nbsp;&nbsp;
                       <span class="text-success">
-                        <span ng-show="!image.properties.niirs">Unknown</span>
-                        {{image.properties.niirs}}
+                        <span ng-show="!image.properties.security_classification">Unknown</span>
+                        {{image.properties.security_classification}}
                       </span>
                     </div>
                   </div>
@@ -1301,19 +1301,25 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12" style="font-size: 13px;">
-                      Mission ID:&nbsp;&nbsp;
+                      Country Code:&nbsp;&nbsp;
                       <span class="text-success">
-                        <span ng-show="!image.properties.mission_id">Unknown</span>
-                        {{image.properties.mission_id}}
+                        <span ng-show="!image.properties.country_code">Unknown</span>
+                        {{image.properties.country_code}}
                       </span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12" style="font-size: 13px;">
+                      NIIRS:&nbsp;&nbsp;
+                      <span class="text-success">
+                        <span ng-show="!image.properties.niirs">Unknown</span>
+                        {{image.properties.niirs}}
+                      </span>
+                      &nbsp;&nbsp;/&nbsp;&nbsp;
                       GSD:&nbsp;&nbsp;
                       <span class="text-success">
                         <span ng-show="!image.properties.gsdy">Unknown</span>
-                        {{image.properties.gsdy | number:4}} Meters
+                        {{image.properties.gsdy | number:4}} m
                       </span>
                     </div>
                   </div>

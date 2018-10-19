@@ -47,7 +47,7 @@
           <a 
             type="button"
             class="btn btn-default">
-            <i class="fa fa-map text-default"
+            <i class="fa fa-clipboard text default" 
               tooltip-placement="top"
               uib-tooltip="Copy WMS to clipboard"></i>
           </a>

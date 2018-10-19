@@ -1395,6 +1395,13 @@
                           tooltip-placement="top"
                           uib-tooltip="JPIP ortho"></i>
                       </a>
+                      <a 
+                        type="button"
+                        class="btn btn-default">
+                        <i class="fa fa-clipboar text-default"
+                          tooltip-placement="top"
+                          uib-tooltip="Copy WMS to clipboard"></i>
+                      </a>
                   </div>
                 </div>
               </div>

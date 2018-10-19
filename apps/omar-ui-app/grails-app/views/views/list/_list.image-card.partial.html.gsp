@@ -47,8 +47,7 @@
           <a 
             type="button"
             class="btn btn-default"
-            ng-click="copytoClipboard(vm.imageLink)"
-            >
+            ng-click="copyToClipboard('Test')">
             <i class="fa fa-clipboard text default" 
               tooltip-placement="top"
               uib-tooltip="Copy WMS to clipboard"></i>

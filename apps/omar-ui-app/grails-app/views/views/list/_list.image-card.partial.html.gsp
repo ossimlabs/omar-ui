@@ -44,6 +44,14 @@
             <i class="fa fa-download text-default"
               uib-tooltip="Download"></i>
           </a>
+          <a 
+            type="button"
+            class="btn btn-default"
+            ng-click="copyToClipboard('Test')">
+            <i class="fa fa-clipboard text default" 
+              tooltip-placement="top"
+              uib-tooltip="Copy WMS to clipboard"></i>
+          </a>
       </div>
     </div>
     <div class="col-sm-4 text-center">

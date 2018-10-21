@@ -1283,20 +1283,31 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12" style="font-size: 13px;">
-                      Security Class.:&nbsp;&nbsp;
-                      <span class="text-success">
-                        <span ng-show="!image.properties.security_classification">Unknown</span>
-                        {{image.properties.security_classification}}
-                      </span>
+                      <span class = "text-info">
+                        <span ng-show = "!image.properties.security_classification">
+                            Security Classification Unknown
+                        </span>
+                        <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
+                                {{ image.properties.security_classification }}
+                        </span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12" style="font-size: 13px;">
-                      Sensor ID:&nbsp;&nbsp;
+                      Sensor:&nbsp;&nbsp;
                       <span class="text-success">
                         <span ng-show="!image.properties.sensor_id">Unknown</span>
                         {{image.properties.sensor_id}}
                       </span>
+                      &nbsp;&nbsp;
+                        <span ng-show="image.properties.valid_model">
+                          <span class = "glyphicon glyphicon-ok text-success"></span>
+                          <span class = "text-success">Valid Model</span>
+                        </span>
+                        <span ng-show="!image.properties.valid_model">
+                          <span class = "glyphicon glyphicon-ban-circle text-danger"></span>
+                          <span class = "text-danger">Invalid Model</span>
+                        </span>
                     </div>
                   </div>
                   <div class="row">

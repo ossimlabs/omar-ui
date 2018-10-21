@@ -1,0 +1,14 @@
+.unclassified {
+    background-color: green;
+    color: white;
+}
+
+.secret {
+    background-color: red;
+    color: white;
+}
+
+.top-secret {
+    background-color: yellow;
+    color: black;
+}

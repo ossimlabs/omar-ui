@@ -120,6 +120,10 @@
       vm.mensaRequestUrl = mensaRequestUrl;
     }
 
+    vm.getSecurityClassificationClass = function( string ) {
+        return string.toLowerCase().replace( /\s/g, "-" );
+    }
+
     vm.selectedOmar = "";
 
     // The list of urls we want to iterate over

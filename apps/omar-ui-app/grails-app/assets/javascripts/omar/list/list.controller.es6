@@ -121,7 +121,7 @@
     }
 
     vm.getSecurityClassificationClass = function( string ) {
-        return string.toLowerCase().replace( /\s/g, "-" );
+        return string ? string.toLowerCase().replace( /\s/g, "-" ) : "";
     }
 
     vm.selectedOmar = "";

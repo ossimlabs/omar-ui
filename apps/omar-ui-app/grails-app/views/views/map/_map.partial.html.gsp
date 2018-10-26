@@ -1409,7 +1409,7 @@
                       <a 
                         type="button"
                         class="btn btn-default"
-                        ng-click="wfsOutputDownload.getDownloadURL('JSON')">
+                        ng-click="list.getDownloadURL('WMS')">
                         <i class="fa fa-clipboard text-default"
                           tooltip-placement="top"
                           uib-tooltip="Copy WMS to clipboard"></i>

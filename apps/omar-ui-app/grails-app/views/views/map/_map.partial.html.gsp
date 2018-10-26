@@ -1069,7 +1069,7 @@
                   <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML32')">GML32</a></li>
                   <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('JSON')">JSON</a></li>
                   <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('KML')">KML</a></li>
-                  <li><a ng-href="" target="_blank" ng-clock="wfsOutputDownload.getDownloadURL('JSON')">WMS</a></li>
+                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('JSON')">WMS</a></li>
                   <li role="separator" class="divider"></li>
                   <li class="dropdown-header">Create a GeoRSS feed of the images
                       <i
@@ -1172,7 +1172,7 @@
                   <li 
                     role="menuitem"
                     ng-class="{'disabled': !list.showSelectedButton}"
-                    ng-click="list.exportSelectedImages('JSON')">
+                    ng-click="list.exportSelectedImages('WMS')">
                     <a href="">WMS</a>
                   </li>
                   <li class="divider"></li>

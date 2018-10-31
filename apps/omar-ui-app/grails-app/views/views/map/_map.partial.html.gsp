@@ -1173,9 +1173,15 @@
                   <li 
                     role="menuitem"
                     ng-class="{'disabled': !list.showSelectedButton}"
-                    ng-click="list.exportSelectedImages('WMS')">
-                    <a href="">WMS</a>
+                    ng-click="list.exportSelectedImages('WMS111')">
+                    <a href="">WMS111</a>
                   </li>
+                  <li 
+                    role="menuitem"
+                    ng-class="{'disabled': !list.showSelectedButton}"
+                    ng-click="list.exportSelectedImages('WMS130')">
+                    <a href="">WMS130</a>
+                  </li>                
                   <li class="divider"></li>
                   <li class="dropdown-header">Applications
                     <i

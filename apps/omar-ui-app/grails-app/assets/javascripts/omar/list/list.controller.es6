@@ -567,7 +567,7 @@
 
     vm.copyWmsCaps = function(outputFormat) {
       let imageListFilter = "in(" + vm.selectedCards + ")";
-      let url = wfsService.getExport(outputFormat, imageListFilter);
+      let url = wfsService.getExport(outputFormat);
 
       shareService.imageLinkModal(url, "Copy WMS Capabilities")
     }

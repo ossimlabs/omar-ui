@@ -1427,7 +1427,7 @@
                         <i class="fa fa-clipboard text-default"
                             tooltip-placement="top"
                             uib-tooltip="Copy WMS"></i>
-                        </a>
+                      </a>
                   </div>
                 </div>
               </div>

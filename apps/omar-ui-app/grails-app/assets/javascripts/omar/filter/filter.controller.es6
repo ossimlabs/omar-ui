@@ -27,6 +27,31 @@
     /* jshint validthis: true */
     var vm = this;
 
+    vm.getCountryListing = function() {
+        var baseUrl = stateService.omarSitesState.url.base;
+        var contextPath = stateService.omarSitesState.url.wfsContextPath;
+        var url = baseUrl + contextPath + "/wfs//getFeature";
+        var params = {
+            outputFormat: "JSON",
+            resultType: "results",
+            request: "GetFeature",
+            service: "WFS",
+            typeName: "omar:country",
+            version: "1.1.0"
+        };
+
+        $http({
+          method: "GET",
+          url: url + "?" + $.param( params )
+        }).then(function( response ) {
+            var values = response.data.features.map( function( feature ) {
+                return feature.properties;
+            });
+          $scope[ "countryListing" ] = values;
+        });
+    }
+
+
     vm.showCurrentFilter = true;
     vm.listRefreshButtonVisible =
       AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
@@ -104,7 +129,6 @@
       vm.polygonSpatial = false;
     };
 
-    $scope["countryCodeTypes"] = [];
     $scope["missionIdTypes"] = [];
     $scope["sensorIdTypes"] = [];
     vm.getDistinctValues = function(property) {
@@ -605,8 +629,8 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode}`);
-        pushKeywordToArray("country_code", vm.countryCode);
+        vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode.map( function( country ) { return country.alpha2 } ).join( "," )}`);
+        pushKeywordToArray("country_code", vm.countryCode.map( function( country ) { return country.alpha2 } ));
         setKeywordIndicator();
       } else if (!vm.countryCodeCheck) {
         vm.filterKeywordIndicator = false;

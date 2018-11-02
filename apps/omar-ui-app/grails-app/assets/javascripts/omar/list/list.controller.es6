@@ -565,6 +565,13 @@
       shareService.imageLinkModal(imageLink);
     };
 
+    vm.copyWmsCaps = function(outputFormat) {
+      let imageListFilter = "in(" + vm.selectedCards + ")";
+      let url = wfsService.getExport(outputFormat, imageListFilter);
+
+      shareService.imageLinkModal(url, "Copy WMS Capabilities")
+    }
+
     vm.archiveDownload = function(imageId) {
       downloadService.downloadFiles(imageId);
     };

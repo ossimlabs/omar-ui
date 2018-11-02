@@ -120,14 +120,14 @@
                               close-on-select="true"
                               id="countryCodeInput"
                               ng-change="filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
-                              ng-click="filter.getDistinctValues('countryCode');"
+                              ng-click="filter.getCountryListing();"
                               ng-model="filter.countryCode"
                               theme="bootstrap">
                               <ui-select-match placeholder="Country Code">
-                                {{$item}}
+                                {{$item.alpha2}}
                               </ui-select-match>
-                              <ui-select-choices repeat="val in countryCodeTypes | filter: $select.search">
-                                {{val}}
+                              <ui-select-choices repeat="val in countryListing | filter: $select.search">
+                                {{val.name}} ({{val.alpha2}})
                               </ui-select-choices>
                             </ui-select>
                           </div>
@@ -1170,18 +1170,18 @@
                     ng-click="list.exportSelectedImages('KML')">
                     <a href="">KML</a>
                   </li>
-                  <li 
+                  <li
                     role="menuitem"
                     ng-class="{'disabled': !list.showSelectedButton}"
                     ng-click="list.exportSelectedImages('WMS111')">
                     <a href="">WMS111</a>
                   </li>
-                  <li 
+                  <li
                     role="menuitem"
                     ng-class="{'disabled': !list.showSelectedButton}"
                     ng-click="list.exportSelectedImages('WMS130')">
                     <a href="">WMS130</a>
-                  </li>                
+                  </li>
                   <li class="divider"></li>
                   <li class="dropdown-header">Applications
                     <i

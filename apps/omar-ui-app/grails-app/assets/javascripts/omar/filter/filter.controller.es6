@@ -36,7 +36,7 @@
             resultType: "results",
             request: "GetFeature",
             service: "WFS",
-            typeName: "omar:country",
+            typeName: "omar:country_code",
             version: "1.1.0"
         };
 

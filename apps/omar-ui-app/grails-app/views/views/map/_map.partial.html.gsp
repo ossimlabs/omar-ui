@@ -124,10 +124,10 @@
                               ng-model="filter.countryCode"
                               theme="bootstrap">
                               <ui-select-match placeholder="Country Code">
-                                {{$item.alpha2}}
+                                {{$item.iso_a2}}
                               </ui-select-match>
                               <ui-select-choices repeat="val in countryListing | filter: $select.search">
-                                {{val.name}} ({{val.alpha2}})
+                                {{val.name}} ({{val.iso_a2}})
                               </ui-select-choices>
                             </ui-select>
                           </div>
@@ -1420,7 +1420,7 @@
                           tooltip-placement="top"
                           uib-tooltip="JPIP ortho"></i>
                       </a>
-                      <a 
+                      <a
                         type="button"
                         class="btn btn-default"
                         ng-click="list.copyWmsCaps(WMS130)">

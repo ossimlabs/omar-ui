@@ -629,8 +629,8 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode.map( function( country ) { return country.alpha2 } ).join( "," )}`);
-        pushKeywordToArray("country_code", vm.countryCode.map( function( country ) { return country.alpha2 } ));
+        vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode.map( function( country ) { return country.iso_a2 } ).join( "," )}`);
+        pushKeywordToArray("country_code", vm.countryCode.map( function( country ) { return country.iso_a2 } ));
         setKeywordIndicator();
       } else if (!vm.countryCodeCheck) {
         vm.filterKeywordIndicator = false;

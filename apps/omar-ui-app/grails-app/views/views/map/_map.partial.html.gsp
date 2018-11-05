@@ -1423,7 +1423,7 @@
                       <a
                         type="button"
                         class="btn btn-default"
-                        ng-click="list.copyWmsCaps(WMS130)">
+                        ng-click="list.copyWmsCaps(image.properties.id)">
                         <i class="fa fa-clipboard text-default"
                             tooltip-placement="top"
                             uib-tooltip="Copy WMS"></i>

@@ -50,6 +50,7 @@
             ng-click="vm.copyWmsCaps(vm.selectedImage.properties.id)">
             <i class="fa fa-clipboard text-default"
               uib-tooltip="Copy WMS"></i>
+          </a>
       </div>
     </div>
     <div class="col-sm-4 text-center">

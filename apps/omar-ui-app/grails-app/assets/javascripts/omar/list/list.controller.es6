@@ -938,6 +938,12 @@
       downloadService.downloadFiles(imageId);
     };
 
+    vm.copyWmsCaps = function(imageId) {        
+      let imageListFilter = "in(" + imageId + ")";
+      let url = wfsService.getExport('WMS130', imageListFilter);
+      shareService.imageLinkModal(url, "Copy WMS Capabilities");
+    };
+
     vm.viewOrtho = function(image, location) {
       var feature = new ol.format.GeoJSON().readFeature(image);
 

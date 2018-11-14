@@ -559,13 +559,21 @@
 
       //wfsService.updateAttrFilter(undefined, field, type);
       wfsService.updateAttrFilter(wfsService.attrObj.filter, field, type);
+
+      // update preferences
+      AppO2.APP_CONFIG.userPreferences.resultsSort = field + "," + type + "," + text;
     };
+    var sortPreference = AppO2.APP_CONFIG.userPreferences.resultsSort;
+    if ( sortPreference ) {
+        var sortFields = sortPreference.split( "," );
+        vm.sortWfs( sortFields[ 0 ], sortFields[ 1 ], sortFields[ 2 ] );
+    }
 
     vm.shareModal = function(imageLink) {
       shareService.imageLinkModal(imageLink);
     };
 
-    vm.copyWmsCaps = function(imageId) {        
+    vm.copyWmsCaps = function(imageId) {
       let imageListFilter = "in(" + imageId + ")";
       let url = wfsService.getExport('WMS130', imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
@@ -955,4 +963,5 @@
       });
     });
   }
+
 })();

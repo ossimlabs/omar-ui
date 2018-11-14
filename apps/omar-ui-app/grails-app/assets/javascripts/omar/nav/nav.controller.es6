@@ -2,9 +2,9 @@
   'use strict';
   angular
     .module('omarApp')
-    .controller('NavController', ['$log', 'stateService', '$scope', NavController]);
+    .controller('NavController', ['$log', 'mapService', 'stateService', '$scope', 'toastr', NavController]);
 
-  function NavController($log, stateService, $scope) {
+  function NavController($log, mapService, stateService, $scope, toastr) {
 
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
@@ -95,6 +95,30 @@
     vm.userGuideEnabled = AppO2.APP_CONFIG.params.userGuide.enabled;
     if (vm.userGuideEnabled) {
       vm.userGuideLink = AppO2.APP_CONFIG.params.userGuide.baseUrl;
+    }
+
+    vm.updateUserPreferences = function() {
+        var data = AppO2.APP_CONFIG.userPreferences;
+        delete data[ "id" ];
+        delete data[ "user" ];
+
+        var center = mapService.getCenter();
+        data.initialCenterX = center[ 0 ];
+        data.initialCenterY = center[ 1 ];
+        data.initialZoom = mapService.getZoom();
+
+        $.ajax({
+            contentType: "application/json",
+            data: JSON.stringify({ data }),
+            method: "POST",
+            url: "/preferences/updatePreferences"
+        })
+        .done( function() {
+             toastr.success( "Your preferences have been updated!", "Success" );
+        })
+        .fail( function() {
+            toastr.error( "Sorry, your preferences were not updated!", "Error" );
+        });
     }
   }
 })();

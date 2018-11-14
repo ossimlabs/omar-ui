@@ -44,6 +44,13 @@
             <i class="fa fa-download text-default"
               uib-tooltip="Download"></i>
           </a>
+          <a 
+            type="button"
+            class="btn btn-default"
+            ng-click="vm.copyWmsCaps(vm.selectedImage.properties.id)">
+            <i class="fa fa-clipboard text-default"
+              uib-tooltip="Copy WMS"></i>
+          </a>
       </div>
     </div>
     <div class="col-sm-4 text-center">

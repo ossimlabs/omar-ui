@@ -84,6 +84,7 @@ grails {
       compile project(':omar-openlayers-plugin')
       compile project(':omar-core-plugin')
       compile project(':omar-hibernate-spatial-plugin')
+    compile project(':omar-security-plugin')
   }
 }
 

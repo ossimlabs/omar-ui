@@ -148,11 +148,15 @@
     });
 
     this.mapInit = function() {
+        var initialCenter = [
+            AppO2.APP_CONFIG.userPreferences.initialCenterX || 0,
+            AppO2.APP_CONFIG.userPreferences.initialCenterY || 0
+        ];
       mapView = new ol.View({
-        center: [0, 0],
+        center: initialCenter,
         extent: [-180, -90, 180, 90],
         projection: "EPSG:4326",
-        zoom: 3,
+        zoom: AppO2.APP_CONFIG.userPreferences.initialZoom || 3,
         minZoom: 2,
         maxZoom: 20
       });

@@ -152,7 +152,6 @@
           const imageIdArray = data.map(image => image.properties.id);
 
           stateService.mapState.featureIds = imageIdArray;
-          //console.log('featureIds: ', stateService.mapState.featureIds);
         });
       });
 

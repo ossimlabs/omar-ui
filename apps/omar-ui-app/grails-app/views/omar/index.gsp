@@ -50,7 +50,27 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <!-- Current user -->
-            <li><p class="navbar-text"><span class="fa fa-user" aria-hidden="true"></span>&nbsp;&nbsp;<span ng-bind="nav.userName">Loading...</span></p></li>
+
+            <li class="dropdown mega-dropdown" ng-show="nav.metricsShow" tooltip-placement="bottom" uib-tooltip="User Preferences">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-user" aria-hidden="true"></span>
+                &nbsp;
+                <span ng-bind="nav.userName">Loading...</span>
+                <span class="caret"></span></a>
+              <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
+                <li class="col-sm-12">
+                  <ul>
+                    <li class="dropdown-header text-center">
+                      <p class="text-center">User</p>
+                    </li>
+                    <li class="metrics-row">
+                      <!-- User area -->
+                      <a class="btn btn-success btn-block btn-metrics" ng-click="nav.updateUserPreferences()" role="button">Update Preferences</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
             <!-- Metrics dropdown menu -->
             <li class="dropdown mega-dropdown" ng-show="nav.metricsShow" tooltip-placement="bottom"
             uib-tooltip="Display various metrics about the O2 deployment">

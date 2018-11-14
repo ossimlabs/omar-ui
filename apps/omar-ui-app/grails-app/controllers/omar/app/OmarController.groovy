@@ -7,15 +7,15 @@ import grails.converters.JSON
 
 import omar.ui.OmarSitesConfig
 
-class OmarController /*implements InitializingBean*/
-{
+class OmarController {
+
   def openlayers
+  def preferencesService
 
   OpenLayersConfig openLayersConfig
   OmarSitesConfig omarSitesConfig
 
-  def index()
-  {
+  def index() {
 
     // user information parameters coming in from application.yml
     def userInfo = grailsApplication.config.omar.app.userInfo
@@ -35,7 +35,8 @@ class OmarController /*implements InitializingBean*/
         serverURL: getBaseUrl(),
         openlayers: openLayersConfig,
         params: grailsApplication.config.omar.app,
-        userInfo: [name: userInfoName]
+        userInfo: [name: userInfoName],
+        userPreferences: preferencesService.getPreferences()
       ]
 
   		[
@@ -43,8 +44,7 @@ class OmarController /*implements InitializingBean*/
   		]
 	}
 
-  void afterPropertiesSet() throws Exception
-  {
+  void afterPropertiesSet() throws Exception {
       openlayers = grailsApplication.config.omar.openlayers
 
       //  Collect baseMaps[x] named params as a list and use it to override baseMaps

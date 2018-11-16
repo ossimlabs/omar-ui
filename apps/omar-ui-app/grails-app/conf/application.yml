@@ -114,9 +114,6 @@ omar:
 
       # Used to show/hide the API link on the O2 home page (True or False )
       enabled: false
-    isaApp:
-      # Used to show/hide the export to ISA app link in the UI (True or False)
-      enabled: true
     tlvApp:
       # Used to show/hide the various links to the TLV app in the UI (True or False)
       enabled: true
@@ -321,9 +318,6 @@ omar:
 
           # Optional context path for TLV UI
           # tlvContextPath: /tlv
-
-          # Optional context path for ISA UI
-          # isaContextPath: /isa-ui
 
 # Set the context path for the application.
 #server:

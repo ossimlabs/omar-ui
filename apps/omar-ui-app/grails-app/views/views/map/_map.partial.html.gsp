@@ -1092,7 +1092,6 @@
                       uib-tooltip="(A maximum of 100 of the most recently acquired
                       images can be viewed)"></i>
                   </li>
-                  <li ng-show="{{wfsOutputDownload.isaAppEnabled}}"><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToISA()">ISA</a></li>
                   <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToTLV()">TLV</a></li>
                 </ul>
               </li>
@@ -1181,13 +1180,6 @@
                     ng-class="{'disabled': !list.showSelectedButton}"
                     ng-click="list.viewSelectedImagesApp('tlv')">
                     <a href="">TLV</a>
-                  </li>
-                  <li
-                    ng-show="{{list.isaAppEnabled}}"
-                    role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
-                    ng-click="list.viewSelectedImagesApp('isa')">
-                    <a href="">ISA</a>
                   </li>
                   <li class="divider"></li>
                   <li

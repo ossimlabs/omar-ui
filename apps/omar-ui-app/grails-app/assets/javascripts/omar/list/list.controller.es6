@@ -54,9 +54,6 @@
     var tlvBaseUrl, tlvContextPath, tlvRequestUrl;
     vm.tlvRequestUrl = "";
 
-    var isaBaseUrl, isaContextPath, isaRequestUrl;
-    vm.isaRequestUrl = "";
-
     var kmlBaseUrl, kmlContextPath, kmlRequestUrl;
     vm.kmlRequestUrl = "";
 
@@ -93,11 +90,6 @@
       tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
       tlvRequestUrl = tlvBaseUrl + tlvContextPath;
       vm.tlvRequestUrl = tlvRequestUrl;
-
-      isaBaseUrl = stateService.omarSitesState.url.base;
-      isaContextPath = stateService.omarSitesState.url.isaContextPath;
-      isaRequestUrl = isaBaseUrl + isaContextPath;
-      vm.isaRequestUrl = isaRequestUrl;
 
       kmlBaseUrl = stateService.omarSitesState.url.base;
       kmlContextPath = stateService.omarSitesState.url.kmlContextPath;
@@ -157,8 +149,7 @@
         urlKmlContextPath: vm.selectedOmar.url.kmlContextPath,
         urlJpipContextPath: vm.selectedOmar.url.jpipContextPath,
         urlWmtsContextPath: vm.selectedOmar.url.wmtsContextPath,
-        urlTlvContextPath: vm.selectedOmar.url.tlvContextPath,
-        urlIsaContextPath: vm.selectedOmar.url.isaContextPath
+        urlTlvContextPath: vm.selectedOmar.url.tlvContextPath
       });
       // Clears/resets the selected images, because they will not exist on the
       // federated site
@@ -442,9 +433,6 @@
       return;
     };
 
-    // Shows/Hides the ISA button based on parameters passed down from application.yml
-    vm.isaAppEnabled = AppO2.APP_CONFIG.params.isaApp.enabled;
-
     /**
      * Purpose: Takes an app name parameter that specifies the application
      * to open from the selected set of card images
@@ -482,13 +470,6 @@
           switch (app) {
             case "tlv":
               appUrl = tlvRequestUrl + "/?";
-              break;
-            case "isa":
-              appUrl = isaRequestUrl +
-                "/?bbox=" +
-                bbox +
-                "&location=" +
-                pointLatLon;
               break;
           }
 
@@ -946,7 +927,7 @@
       downloadService.downloadFiles(imageId);
     };
 
-    vm.copyWmsCaps = function(imageId) {        
+    vm.copyWmsCaps = function(imageId) {
       let imageListFilter = "in(" + imageId + ")";
       let url = wfsService.getExport('WMS130', imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");

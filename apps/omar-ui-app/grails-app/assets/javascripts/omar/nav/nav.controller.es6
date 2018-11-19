@@ -111,7 +111,7 @@
             contentType: "application/json",
             data: JSON.stringify({ data }),
             method: "POST",
-            url: "/preferences/updatePreferences"
+            url: AppO2.APP_CONFIG.contextPath + "/preferences/updatePreferences"
         })
         .done( function() {
              toastr.success( "Your preferences have been updated!", "Success" );

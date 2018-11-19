@@ -180,6 +180,7 @@
       var AppO2 = (function () {
 
         var APP_CONFIG = ${raw( clientConfig.encodeAsJSON() as String )};
+        APP_CONFIG.contextPath = "${request.contextPath}";
 
         return {
 

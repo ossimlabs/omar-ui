@@ -45,6 +45,8 @@
     /* jshint validthis: true */
     var vm = this;
 
+    vm.userPreferences = AppO2.APP_CONFIG.userPreferences;
+
     var thumbnailsBaseUrl, thumbnailsContextPath, thumbnailsRequestUrl;
 
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;

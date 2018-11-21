@@ -65,7 +65,7 @@
                     </li>
                     <li class="metrics-row">
                       <!-- User area -->
-                      <a class="btn btn-success btn-block btn-metrics" ng-click="nav.updateUserPreferences()" role="button">Update Preferences</a>
+                      <a class="btn btn-success btn-block btn-metrics" ng-href="{{nav.preferencesUrl}}" role="button">Update Preferences</a>
                     </li>
                   </ul>
                 </li>
@@ -180,7 +180,7 @@
       var AppO2 = (function () {
 
         var APP_CONFIG = ${raw( clientConfig.encodeAsJSON() as String )};
-        APP_CONFIG.contextPath = "${request.contextPath}";
+        APP_CONFIG.contextPath = "${ request.contextPath }";
 
         return {
 

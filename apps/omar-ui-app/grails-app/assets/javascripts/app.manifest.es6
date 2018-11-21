@@ -3,7 +3,7 @@
 // removed this webjars/jquery/2.1.4/jquery.min.js for it is in conflict with spring-security-ui
 /// spring security ui includes jquery
 
-//= require jquery.js
+//=require webjars/jquery/2.2.0/jquery.min.js
 
 //= require omar-openlayers.js
 //= require webjars/bootstrap/3.3.5/js/bootstrap.js

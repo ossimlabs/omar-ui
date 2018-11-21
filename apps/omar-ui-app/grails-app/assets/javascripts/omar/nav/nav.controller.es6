@@ -1,29 +1,31 @@
-(function(){
-  'use strict';
+(function() {
+  "use strict";
   angular
-    .module('omarApp')
-    .controller('NavController', ['$log', 'mapService', 'stateService', '$scope', NavController]);
+    .module("omarApp")
+    .controller("NavController", [
+      "$log",
+      "stateService",
+      "$scope",
+      NavController
+    ]);
 
-  function NavController($log, mapService, stateService, $scope) {
-
+  function NavController($log, stateService, $scope) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    $log.debug('AppO2.APP_CONFIG in NavController: ', AppO2.APP_CONFIG);
+    $log.debug("AppO2.APP_CONFIG in NavController: ", AppO2.APP_CONFIG);
 
-      var vm = this;
-      /* jshint validthis: true */
+    var vm = this;
+    /* jshint validthis: true */
 
-    $scope.$on('navState.updated', function(event, params) {
-
+    $scope.$on("navState.updated", function(event, params) {
       vm.titleLeft = params.titleLeft;
 
-      if ( params.userGuideUrl && vm.userGuideEnabled ) {
+      if (params.userGuideUrl && vm.userGuideEnabled) {
         var base = AppO2.APP_CONFIG.params.userGuide.baseUrl;
         vm.userGuideLink = base + params.userGuideUrl;
       }
-
     });
 
     vm.preferencesUrl = AppO2.APP_CONFIG.contextPath + "/preferences";
@@ -39,25 +41,35 @@
     vm.metricsUserShow = AppO2.APP_CONFIG.params.misc.metrics.user.enabled;
 
     // Metrics dropdown menu User settings
-    vm.metricsEurekaUrl = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.baseUrl;
-    vm.metricsEurekaEnabled = AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
+    vm.metricsEurekaUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.user.eureka.baseUrl;
+    vm.metricsEurekaEnabled =
+      AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
 
     // Show/hide the Admin section of the Metrics dropdown menu
     // TODO: Show/Hide with Spring Security instead of through application.yaml
     vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
 
     // Metrics dropdown menu Admin settings
-    vm.metricsHystrixTurbineUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
-    vm.metricsHystrixTurbineEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
+    vm.metricsHystrixTurbineUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
+    vm.metricsHystrixTurbineEnabled =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
 
-    vm.metricsSleuthZipkinUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
-    vm.metricsSleuthZipkinEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
+    vm.metricsSleuthZipkinUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
+    vm.metricsSleuthZipkinEnabled =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
 
-    vm.metricsKibanaUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
-    vm.metricsKibanaEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.enabled;
+    vm.metricsKibanaUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
+    vm.metricsKibanaEnabled =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.enabled;
 
-    vm.metricsSpringBootAdminUrl = AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.baseUrl;
-    vm.metricsSpringBootAdminEnabled = AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.enabled;
+    vm.metricsSpringBootAdminUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.baseUrl;
+    vm.metricsSpringBootAdminEnabled =
+      AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.enabled;
 
     // Show/hide the About dropdown menu
     vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
@@ -89,9 +101,9 @@
 
     vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;
     if (vm.tlvAppEnabled) {
-        var tlvBaseUrl =stateService.omarSitesState.url.base;
-        var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-        vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
+      var tlvBaseUrl = stateService.omarSitesState.url.base;
+      var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
     }
 
     vm.userGuideEnabled = AppO2.APP_CONFIG.params.userGuide.enabled;

@@ -47,7 +47,6 @@ ext {
 assets {
   minifyJs = true
   minifyCss = true
-  includes = ["**/fonts/**"]
   excludes = [
     //"**/application.js",
     "**/i18n/**",
@@ -60,6 +59,10 @@ assets {
     "**/*.gz",
     "**/*.html",
     "**/*.txt",
+  ]
+  includes = [
+    "**/fonts/**",
+    "**/webjars/**/bootstrap.min.css"
   ]
 }
 
@@ -134,20 +137,8 @@ dependencies {
   // Font stuff
   compile "org.webjars:font-awesome:4.4.0"
 
-  // Dark .css themes
-  compile "org.webjars:bootswatch-darkly:3.3.5+4"
-  compile "org.webjars:bootswatch-slate:3.3.5+4"
-  compile "org.webjars:bootswatch-superhero:3.3.5+4"
-
-  // Light .css themes
-  compile "org.webjars:bootswatch-spacelab:3.3.5+4"
-  compile "org.webjars:bootswatch-cosmo:3.3.5+4"
-  compile "org.webjars:bootswatch-flatly:3.3.5+4"
-  compile "org.webjars:bootswatch-default:3.3.5+4"
-
   compile "org.springframework.cloud:spring-cloud-starter-config"
   compile "org.springframework.cloud:spring-cloud-starter-eureka"
-  //compile "org.springframework.cloud:spring-cloud-starter-zipkin"
 
   compile "net.errbuddy.plugins:babel-asset-pipeline:${babelAssetPipelineV}"
 

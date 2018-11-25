@@ -1,8 +1,3 @@
-
-// Vendor
-// removed this webjars/jquery/2.1.4/jquery.min.js for it is in conflict with spring-security-ui
-/// spring security ui includes jquery
-
 //=require webjars/jquery/2.2.0/jquery.min.js
 
 //= require omar-openlayers.js
@@ -11,7 +6,7 @@
 //= require webjars/angular-ui-router/0.2.15/angular-ui-router.js
 //= require webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js
 //= require webjars/angular-deferred-bootstrap/0.1.5/angular-deferred-bootstrap.js
-//= require webjars/bootstrap-select/1.7.5/dist/js/bootstrap-select.js
+//= require webjars/bootstrap-select/2.0.0-beta1/dist/js/bootstrap-select.js
 //= require webjars/devbridge-autocomplete/1.2.21/dist/jquery.autocomplete.js
 //= require webjars/spin-js/2.1.0/spin.js
 //= require webjars/angular-spinner/0.7.0/angular-spinner.js

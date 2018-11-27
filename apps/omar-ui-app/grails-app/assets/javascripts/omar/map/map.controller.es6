@@ -30,7 +30,7 @@
     // Set defaults if not passed in from configuration
     const {
       header = " - O2 -",
-      message = "Welcome to the Map Search",
+      message = "<p>Welcome to the Map Search</p>",
       timeOut = 20000,
       extendedTimeOut = 15000,
       progressBar = true,
@@ -39,7 +39,7 @@
 
     // Check to see if we need to display the mapInfoMessage
     if (enabled) {
-      toastr.info(`<p>${message}</p>`, `${header}`, {
+      toastr.info(`${message}`, `${header}`, {
         closeButton: true,
         timeOut: timeOut,
         extendedTimeOut: extendedTimeOut,

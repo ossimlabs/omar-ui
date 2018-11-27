@@ -156,6 +156,26 @@ omar:
         # Used to enable/disable the splash modal from displaying
         enabled: true
 
+      # Configurable message that opens when accessing the map
+      mapInfoMessage:
+        # Map information header text
+        header: "<h4>Check out what's new!</h4>"
+
+        # Map information body text.  You can embed HTML in the message for formatting.
+        message: "<h5>Auto-mosaic layer</h5><ol><li>Zoom in to an area of the map (scale should be 5km or less)</li>  <li>Hover over the layer selector button in the map (top-right hand corner)</li> <li>Choose 'Auto' under mosaics</li>"
+
+        # The timeout before the mapInfo message disappears
+        timeOut: 20000
+
+        # A progress bar to see the mapInfo message timeout in real time
+        progressBar: true
+
+        # The timeout after you hover the mapInfoMessage
+        extendedTimeOut: 15000
+
+        # Used to enable/disable the map info message from displaying
+        enabled: true
+
       # Enable BE number lookups in the search field.
       beLookupEnabled: false
 

@@ -1139,3 +1139,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .classified-text {
   text-shadow: none !important;
 }
+
+.toast-message ol {
+  padding-left: 15px;
+}

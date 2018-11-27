@@ -208,29 +208,38 @@
 
     vm.initKeywords = function(reset) {
       // Keywords
-      vm.countryCodeCheck = false;
-      vm.countryCode = [];
+      vm.countryCodeCheck = AppO2.APP_CONFIG.userPreferences.o2SearchCountryCodeEnabled || false;
+      var countryCodePreference = AppO2.APP_CONFIG.userPreferences.o2SearchCountryCode;
+      if ( countryCodePreference ) {
+        countryCodePreference = countryCodePreference.split( "," );
+        countryCodePreference.forEach( function( countryCode, index ) {
+            countryCodePreference[ index ] = { iso_a2: countryCode };
+        });
+      }
+      vm.countryCode = countryCodePreference || [];
 
-      vm.imageIdCheck = false;
-      vm.imageId = "";
+      vm.imageIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled || false;
+      vm.imageId = AppO2.APP_CONFIG.userPreferences.o2SearchImageId || "";
 
-      vm.missionIdCheck = false;
-      vm.missionId = [];
+      vm.missionIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchMissionIdEnabled || false;
+      var missionIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchMissionId;
+      vm.missionId = missionIdPreference ? missionIdPreference.split( "," ) : [];
 
-      vm.sensorIdCheck = false;
-      vm.sensorId = [];
+      vm.sensorIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchSensorIdEnabled || false;
+      var sensorIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchSensorId;
+      vm.sensorId = sensorIdPreference ? sensorIdPreference.split( "," ) : [];
 
-      vm.beNumberCheck = false;
-      vm.beNumber = "";
+      vm.beNumberCheck = AppO2.APP_CONFIG.userPreferences.o2SearchBeEnabled || false;
+      vm.beNumber = AppO2.APP_CONFIG.userPreferences.o2SearchBe || "";
 
-      vm.targetIdCheck = false;
-      vm.targetId = "";
+      vm.targetIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled || false;
+      vm.targetId = AppO2.APP_CONFIG.userPreferences.o2SearchImageId || "";
 
-      vm.wacNumberCheck = false;
-      vm.wacNumber = "";
+      vm.wacNumberCheck = AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCodeEnabled || false;
+      vm.wacNumber = AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCode || "";
 
-      vm.filenameCheck = false;
-      vm.filename = "";
+      vm.filenameCheck = AppO2.APP_CONFIG.userPreferences.o2SearchFilenameEnabled || false;
+      vm.filename = AppO2.APP_CONFIG.userPreferences.o2SearchFilename || "";
 
       // Clears out the current filter
       if (reset) {
@@ -240,33 +249,33 @@
 
     vm.initRanges = function(reset) {
       // Ranges
-      vm.predNiirsCheck = false;
-      vm.predNiirsMin = 0;
-      vm.predNiirsMax = 9;
+      vm.predNiirsCheck = AppO2.APP_CONFIG.userPreferences.o2SearchNiirsEnabled || false;
+      vm.predNiirsMin = AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMin || 0;
+      vm.predNiirsMax = AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMax || 9;
       vm.predNiirsCheckNull = false;
 
-      vm.azimuthCheck = false;
-      vm.azimuthMin = 0;
-      vm.azimuthMax = 360;
+      vm.azimuthCheck = AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleEnabled || false;
+      vm.azimuthMin = AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMin || 0;
+      vm.azimuthMax = AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMax || 360;
       vm.azimuthCheckNull = false;
 
-      vm.grazeElevCheck = false;
-      vm.grazeElevMin = 0;
-      vm.grazeElevMax = 90;
+      vm.grazeElevCheck = AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleEnabled || false;
+      vm.grazeElevMin = AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMin || 0;
+      vm.grazeElevMax = AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMax || 90;
       vm.grazeElevCheckNull = false;
 
-      vm.sunAzimuthCheck = false;
-      vm.sunAzimuthMin = 0;
-      vm.sunAzimuthMax = 360;
+      vm.sunAzimuthCheck = AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleEnabled || false;
+      vm.sunAzimuthMin = AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMin || 0;
+      vm.sunAzimuthMax = AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMax || 360;
       vm.sunAzimuthCheckNull = false;
 
-      vm.sunElevationCheck = false;
-      vm.sunElevationMin = -90;
-      vm.sunElevationMax = 90;
+      vm.sunElevationCheck = AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleEnabled || false;
+      vm.sunElevationMin = AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMin || -90;
+      vm.sunElevationMax = AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMax || 90;
       vm.sunElevationCheckNull = false;
 
-      vm.cloudCoverCheck = false;
-      vm.cloudCover = 0;
+      vm.cloudCoverCheck = AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverEnabled || false;
+      vm.cloudCover = AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverMax || 0;
       vm.cloudCoverCheckNull = false;
 
       if (reset) {

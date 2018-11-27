@@ -171,7 +171,7 @@ omar:
         progressBar: true
 
         # The timeout after you hover the mapInfoMessage
-        extendedTimeOut: 95000
+        extendedTimeOut: 15000
 
         # Used to enable/disable the map info message from displaying
         enabled: true

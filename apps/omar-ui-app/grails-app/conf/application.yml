@@ -173,8 +173,8 @@ omar:
         # The timeout after you hover the mapInfoMessage
         extendedTimeOut: 15000
 
-        # Used to enable/disable the map info message from displaying
-        enabled: true
+        # Used to enable/disable the map info message from displaying (default = false)
+        enabled: false
 
       # Enable BE number lookups in the search field.
       beLookupEnabled: false

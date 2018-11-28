@@ -25,28 +25,28 @@
     /* jshint validthis: true */
     var vm = this;
 
-    vm.suppressInfoMessage = function() {
-      console.log("Suppressing Yo!");
-    };
+    const mapInfoMessageParams = AppO2.APP_CONFIG.params.misc.mapInfoMessage;
 
-    console.log("AppO2.APP_CONFIG", AppO2.APP_CONFIG);
+    // Set defaults if not passed in from configuration
+    const {
+      header = " - O2 -",
+      message = "<p>Welcome to the Map Search</p>",
+      timeOut = 20000,
+      extendedTimeOut = 15000,
+      progressBar = true,
+      enabled = false
+    } = mapInfoMessageParams;
 
-    // We need to check to see if we need to display the mapInfoMessage
-    if (AppO2.APP_CONFIG.params.misc.mapInfoMessage.enabled) {
-      toastr.info(
-        `<p>${AppO2.APP_CONFIG.params.misc.mapInfoMessage.message}</p>`,
-        `${AppO2.APP_CONFIG.params.misc.mapInfoMessage.header}`,
-        {
-          positionClass: "toast-bottom-right",
-          closeButton: true,
-          timeOut: AppO2.APP_CONFIG.params.misc.mapInfoMessage.timeOut,
-          extendedTimeOut:
-            AppO2.APP_CONFIG.params.misc.mapInfoMessage.extendedTimeOut,
-          progressBar: AppO2.APP_CONFIG.params.misc.mapInfoMessage.progressBar,
-          allowHtml: true,
-          tapToDismiss: false
-        }
-      );
+    // Check to see if we need to display the mapInfoMessage
+    if (enabled) {
+      toastr.info(`${message}`, `${header}`, {
+        closeButton: true,
+        timeOut: timeOut,
+        extendedTimeOut: extendedTimeOut,
+        progressBar: progressBar,
+        allowHtml: true,
+        tapToDismiss: false
+      });
     }
 
     vm.legendTitle = "Legend";

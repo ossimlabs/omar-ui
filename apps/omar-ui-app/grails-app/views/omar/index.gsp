@@ -66,7 +66,7 @@
                     </li>
                     <li class="metrics-row">
                       <!-- User area -->
-                      <a class="btn btn-success btn-block btn-metrics" ng-href="{{nav.preferencesUrl}}" role="button">Update Preferences</a>
+                      <a class="btn btn-success btn-block btn-metrics" ng-href="{{nav.preferencesUrl}}" role="button" target = "_blank">Update Preferences</a>
                     </li>
                   </ul>
                 </li>

@@ -208,7 +208,7 @@
 
     vm.initKeywords = function(reset) {
       // Keywords
-      vm.countryCodeCheck = AppO2.APP_CONFIG.userPreferences.o2SearchCountryCodeEnabled || false;
+      vm.countryCodeCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchCountryCodeEnabled;
       var countryCodePreference = AppO2.APP_CONFIG.userPreferences.o2SearchCountryCode;
       if ( countryCodePreference ) {
         countryCodePreference = countryCodePreference.split( "," );
@@ -216,72 +216,68 @@
             countryCodePreference[ index ] = { iso_a2: countryCode };
         });
       }
-      vm.countryCode = countryCodePreference || [];
+      vm.countryCode = reset ? [] : countryCodePreference;
 
-      vm.imageIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled || false;
-      vm.imageId = AppO2.APP_CONFIG.userPreferences.o2SearchImageId || "";
+      vm.imageIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled;
+      vm.imageId = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchImageId;
 
-      vm.missionIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchMissionIdEnabled || false;
+      vm.missionIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchMissionIdEnabled;
       var missionIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchMissionId;
-      vm.missionId = missionIdPreference ? missionIdPreference.split( "," ) : [];
-
-      vm.sensorIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchSensorIdEnabled || false;
-      var sensorIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchSensorId;
-      vm.sensorId = sensorIdPreference ? sensorIdPreference.split( "," ) : [];
-
-      vm.beNumberCheck = AppO2.APP_CONFIG.userPreferences.o2SearchBeEnabled || false;
-      vm.beNumber = AppO2.APP_CONFIG.userPreferences.o2SearchBe || "";
-
-      vm.targetIdCheck = AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled || false;
-      vm.targetId = AppO2.APP_CONFIG.userPreferences.o2SearchImageId || "";
-
-      vm.wacNumberCheck = AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCodeEnabled || false;
-      vm.wacNumber = AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCode || "";
-
-      vm.filenameCheck = AppO2.APP_CONFIG.userPreferences.o2SearchFilenameEnabled || false;
-      vm.filename = AppO2.APP_CONFIG.userPreferences.o2SearchFilename || "";
-
-      // Clears out the current filter
-      if (reset) {
-        vm.updateFilterString();
+      if ( missionIdPreference ) {
+        missionIdPreference = missionIdPreference.split( "," );
       }
+      vm.missionId = reset ? [] : missionIdPreference;
+
+      vm.sensorIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchSensorIdEnabled;
+      var sensorIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchSensorId;
+      if ( sensorIdPreference ) {
+        sensorIdPreference  = sensorIdPreference.split( "," );
+      }
+      vm.sensorId = reset ? [] : sensorIdPreference;
+
+      vm.beNumberCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchBeEnabled;
+      vm.beNumber = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchBe;
+
+      vm.targetIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled;
+      vm.targetId = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchImageId;
+
+      vm.wacNumberCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCodeEnabled;
+      vm.wacNumber = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCode;
+
+      vm.filenameCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchFilenameEnabled;
+      vm.filename = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchFilename;
     };
 
     vm.initRanges = function(reset) {
       // Ranges
-      vm.predNiirsCheck = AppO2.APP_CONFIG.userPreferences.o2SearchNiirsEnabled || false;
-      vm.predNiirsMin = AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMin || 0;
-      vm.predNiirsMax = AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMax || 9;
+      vm.predNiirsCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchNiirsEnabled;
+      vm.predNiirsMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMin;
+      vm.predNiirsMax = reset ? 9 : AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMax;
       vm.predNiirsCheckNull = false;
 
-      vm.azimuthCheck = AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleEnabled || false;
-      vm.azimuthMin = AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMin || 0;
-      vm.azimuthMax = AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMax || 360;
+      vm.azimuthCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleEnabled;
+      vm.azimuthMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMin;
+      vm.azimuthMax = reset ? 360 : AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMax;
       vm.azimuthCheckNull = false;
 
-      vm.grazeElevCheck = AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleEnabled || false;
-      vm.grazeElevMin = AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMin || 0;
-      vm.grazeElevMax = AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMax || 90;
+      vm.grazeElevCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleEnabled;
+      vm.grazeElevMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMin;
+      vm.grazeElevMax = reset ? 90 : AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMax;
       vm.grazeElevCheckNull = false;
 
-      vm.sunAzimuthCheck = AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleEnabled || false;
-      vm.sunAzimuthMin = AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMin || 0;
-      vm.sunAzimuthMax = AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMax || 360;
+      vm.sunAzimuthCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleEnabled;
+      vm.sunAzimuthMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMin;
+      vm.sunAzimuthMax = reset ? 360 : AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMax;
       vm.sunAzimuthCheckNull = false;
 
-      vm.sunElevationCheck = AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleEnabled || false;
-      vm.sunElevationMin = AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMin || -90;
-      vm.sunElevationMax = AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMax || 90;
+      vm.sunElevationCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleEnabled;
+      vm.sunElevationMin = reset ? -90 : AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMin;
+      vm.sunElevationMax = reset ? 90 : AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMax;
       vm.sunElevationCheckNull = false;
 
-      vm.cloudCoverCheck = AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverEnabled || false;
-      vm.cloudCover = AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverMax || 0;
+      vm.cloudCoverCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverEnabled;
+      vm.cloudCover = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverMax;
       vm.cloudCoverCheckNull = false;
-
-      if (reset) {
-        // Clears out the current filter
-        vm.updateFilterString();
-      }
     };
 
     vm.initTemporal = reset => {
@@ -291,11 +287,6 @@
 
       vm.setInitialCustomStartDate();
       vm.setInitialCustomEndDate();
-
-      if (reset) {
-        // Clears out the current filter
-        vm.updateFilterString();
-      }
     };
 
     vm.dateTypes = [
@@ -923,6 +914,8 @@
     vm.setInitialCustomStartDate();
     vm.setInitialCustomEndDate();
 
+    vm.updateFilterString();
+
     let clearAllSpatialFilter = () => {
       vm.viewPortSpatial = false;
       vm.pointSpatial = false;
@@ -933,8 +926,8 @@
 
     vm.clearFilters = () => {
       clearAllSpatialFilter();
-      vm.initKeywords();
-      vm.initRanges();
+      vm.initKeywords( true );
+      vm.initRanges( true );
       vm.initTemporal();
 
       // Reset the temporal filters and it's menu

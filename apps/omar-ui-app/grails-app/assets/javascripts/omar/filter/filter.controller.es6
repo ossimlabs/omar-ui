@@ -26,6 +26,7 @@
   ) {
     /* jshint validthis: true */
     var vm = this;
+    vm.userPreferences = AppO2.APP_CONFIG.userPreferences;
 
     vm.getCountryListing = function() {
         var baseUrl = stateService.omarSitesState.url.base;
@@ -208,81 +209,96 @@
 
     vm.initKeywords = function(reset) {
       // Keywords
-      vm.countryCodeCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchCountryCodeEnabled;
-      var countryCodePreference = AppO2.APP_CONFIG.userPreferences.o2SearchCountryCode;
+      vm.countryCodeCheck = reset ? false : vm.userPreferences.o2SearchCountryCodeEnabled;
+      var countryCodePreference = vm.userPreferences.o2SearchCountryCode;
       if ( countryCodePreference ) {
         countryCodePreference = countryCodePreference.split( "," );
         countryCodePreference.forEach( function( countryCode, index ) {
             countryCodePreference[ index ] = { iso_a2: countryCode };
         });
       }
+      else {
+        countryCodePreference = [];
+      }
       vm.countryCode = reset ? [] : countryCodePreference;
 
-      vm.imageIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled;
-      vm.imageId = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchImageId;
+      vm.imageIdCheck = reset ? false : vm.userPreferences.o2SearchImageIdEnabled;
+      vm.imageId = reset ? "" : vm.userPreferences.o2SearchImageId;
 
-      vm.missionIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchMissionIdEnabled;
-      var missionIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchMissionId;
+      vm.missionIdCheck = reset ? false : vm.userPreferences.o2SearchMissionIdEnabled;
+      var missionIdPreference = vm.userPreferences.o2SearchMissionId;
       if ( missionIdPreference ) {
         missionIdPreference = missionIdPreference.split( "," );
       }
       vm.missionId = reset ? [] : missionIdPreference;
 
-      vm.sensorIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchSensorIdEnabled;
-      var sensorIdPreference = AppO2.APP_CONFIG.userPreferences.o2SearchSensorId;
+      vm.sensorIdCheck = reset ? false : vm.userPreferences.o2SearchSensorIdEnabled;
+      var sensorIdPreference = vm.userPreferences.o2SearchSensorId;
       if ( sensorIdPreference ) {
         sensorIdPreference  = sensorIdPreference.split( "," );
       }
       vm.sensorId = reset ? [] : sensorIdPreference;
 
-      vm.beNumberCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchBeEnabled;
-      vm.beNumber = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchBe;
+      vm.beNumberCheck = reset ? false : vm.userPreferences.o2SearchBeEnabled;
+      vm.beNumber = reset ? "" : vm.userPreferences.o2SearchBe;
 
-      vm.targetIdCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchImageIdEnabled;
-      vm.targetId = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchImageId;
+      vm.targetIdCheck = reset ? false : vm.userPreferences.o2SearchImageIdEnabled;
+      vm.targetId = reset ? "" : vm.userPreferences.o2SearchImageId;
 
-      vm.wacNumberCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCodeEnabled;
-      vm.wacNumber = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchWorldAreaCode;
+      vm.wacNumberCheck = reset ? false : vm.userPreferences.o2SearchWorldAreaCodeEnabled;
+      vm.wacNumber = reset ? "" : vm.userPreferences.o2SearchWorldAreaCode;
 
-      vm.filenameCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchFilenameEnabled;
-      vm.filename = reset ? "" : AppO2.APP_CONFIG.userPreferences.o2SearchFilename;
+      vm.filenameCheck = reset ? false : vm.userPreferences.o2SearchFilenameEnabled;
+      vm.filename = reset ? "" : vm.userPreferences.o2SearchFilename;
     };
 
     vm.initRanges = function(reset) {
       // Ranges
-      vm.predNiirsCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchNiirsEnabled;
-      vm.predNiirsMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMin;
-      vm.predNiirsMax = reset ? 9 : AppO2.APP_CONFIG.userPreferences.o2SearchNiirsMax;
+      vm.predNiirsCheck = reset ? false : vm.userPreferences.o2SearchNiirsEnabled;
+      vm.predNiirsMin = reset ? 0 : vm.userPreferences.o2SearchNiirsMin;
+      vm.predNiirsMax = reset ? 9 : vm.userPreferences.o2SearchNiirsMax;
       vm.predNiirsCheckNull = false;
 
-      vm.azimuthCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleEnabled;
-      vm.azimuthMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMin;
-      vm.azimuthMax = reset ? 360 : AppO2.APP_CONFIG.userPreferences.o2SearchAzimuthAngleMax;
+      vm.azimuthCheck = reset ? false : vm.userPreferences.o2SearchAzimuthAngleEnabled;
+      vm.azimuthMin = reset ? 0 : vm.userPreferences.o2SearchAzimuthAngleMin;
+      vm.azimuthMax = reset ? 360 : vm.userPreferences.o2SearchAzimuthAngleMax;
       vm.azimuthCheckNull = false;
 
-      vm.grazeElevCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleEnabled;
-      vm.grazeElevMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMin;
-      vm.grazeElevMax = reset ? 90 : AppO2.APP_CONFIG.userPreferences.o2SearchElevationAngleMax;
+      vm.grazeElevCheck = reset ? false : vm.userPreferences.o2SearchElevationAngleEnabled;
+      vm.grazeElevMin = reset ? 0 : vm.userPreferences.o2SearchElevationAngleMin;
+      vm.grazeElevMax = reset ? 90 : vm.userPreferences.o2SearchElevationAngleMax;
       vm.grazeElevCheckNull = false;
 
-      vm.sunAzimuthCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleEnabled;
-      vm.sunAzimuthMin = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMin;
-      vm.sunAzimuthMax = reset ? 360 : AppO2.APP_CONFIG.userPreferences.o2SearchSunAzimuthAngleMax;
+      vm.sunAzimuthCheck = reset ? false : vm.userPreferences.o2SearchSunAzimuthAngleEnabled;
+      vm.sunAzimuthMin = reset ? 0 : vm.userPreferences.o2SearchSunAzimuthAngleMin;
+      vm.sunAzimuthMax = reset ? 360 : vm.userPreferences.o2SearchSunAzimuthAngleMax;
       vm.sunAzimuthCheckNull = false;
 
-      vm.sunElevationCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleEnabled;
-      vm.sunElevationMin = reset ? -90 : AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMin;
-      vm.sunElevationMax = reset ? 90 : AppO2.APP_CONFIG.userPreferences.o2SearchSunElevationAngleMax;
+      vm.sunElevationCheck = reset ? false : vm.userPreferences.o2SearchSunElevationAngleEnabled;
+      vm.sunElevationMin = reset ? -90 : vm.userPreferences.o2SearchSunElevationAngleMin;
+      vm.sunElevationMax = reset ? 90 : vm.userPreferences.o2SearchSunElevationAngleMax;
       vm.sunElevationCheckNull = false;
 
-      vm.cloudCoverCheck = reset ? false : AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverEnabled;
-      vm.cloudCover = reset ? 0 : AppO2.APP_CONFIG.userPreferences.o2SearchCloudCoverMax;
+      vm.cloudCoverCheck = reset ? false : vm.userPreferences.o2SearchCloudCoverEnabled;
+      vm.cloudCover = reset ? 0 : vm.userPreferences.o2SearchCloudCoverMax;
       vm.cloudCoverCheckNull = false;
     };
 
     vm.initTemporal = reset => {
-      vm.currentDateType = vm.dateTypes[0]; // TODO: Make this configurable
-      vm.currentTemporalDuration = vm.temporalDurations[0]; // TODO: Make this configurable
+        if ( vm.userPreferences.o2SearchDateType ) {
+            var dateType = vm.dateTypes.find( function( element ) {
+                return element.value == vm.userPreferences.o2SearchDateType;
+            });
+            vm.currentDateType = dateType || vm.dateTypes[ 0 ];
+        }
+
+        if ( vm.userPreferences.o2SearchDuration ) {
+            var duration = vm.temporalDurations.find( function( element ) {
+                return element.value == vm.userPreferences.o2SearchDuration;
+            });
+            vm.currentTemporalDuration = duration || vm.temporalDurations[ 0 ];
+        }
+
       vm.customDateRangeVisible = false;
 
       vm.setInitialCustomStartDate();
@@ -346,11 +362,21 @@
     };
 
     vm.setInitialCustomStartDate = function() {
-      vm.startDate = moment().startOf("day");
+        if ( vm.userPreferences.o2SearchCustomStartDateTime && vm.userPreferences.o2SearchDuration == "customDateRange" ) {
+            vm.startDate = moment( vm.userPreferences.o2SearchCustomStartDateTime );
+        }
+        else {
+            vm.startDate = moment().startOf("day");
+        }
     };
 
     vm.setInitialCustomEndDate = function() {
-      vm.endDate = moment().endOf("day");
+        if ( vm.userPreferences.o2SearchCustomEndDateTime && vm.userPreferences.o2SearchDuration == "customDateRange" ) {
+            vm.endDate = moment( vm.userPreferences.o2SearchCustomEndDateTime );
+        }
+        else {
+            vm.endDate = moment().endOf("day");
+        }
     };
 
     vm.getCustomStartDate = function() {

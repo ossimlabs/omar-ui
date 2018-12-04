@@ -289,14 +289,14 @@
             var dateType = vm.dateTypes.find( function( element ) {
                 return element.value == vm.userPreferences.o2SearchDateType;
             });
-            vm.currentDateType = dateType || vm.dateTypes[ 0 ];
+            vm.currentDateType = reset ? vm.dateTypes[ 0 ] : dateType;
         }
 
         if ( vm.userPreferences.o2SearchDuration ) {
             var duration = vm.temporalDurations.find( function( element ) {
                 return element.value == vm.userPreferences.o2SearchDuration;
             });
-            vm.currentTemporalDuration = duration || vm.temporalDurations[ 0 ];
+            vm.currentTemporalDuration = reset ? vm.temporalDurations[ 0 ] : duration;
         }
 
       vm.customDateRangeVisible = false;
@@ -954,7 +954,7 @@
       clearAllSpatialFilter();
       vm.initKeywords( true );
       vm.initRanges( true );
-      vm.initTemporal();
+      vm.initTemporal( true );
 
       // Reset the temporal filters and it's menu
       //vm.currentTemporalDuration = vm.temporalDurations[0];

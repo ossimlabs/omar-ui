@@ -16,7 +16,6 @@
     // #################################################################################
     $log.debug("AppO2.APP_CONFIG in mapService: ", AppO2.APP_CONFIG);
 
-    var zoomToLevel = 16;
     var map,
       mapView,
       footPrints,
@@ -148,18 +147,19 @@
     });
 
     this.mapInit = function() {
-        var initialCenter = [
-            AppO2.APP_CONFIG.userPreferences.initialCenterX || 0,
-            AppO2.APP_CONFIG.userPreferences.initialCenterY || 0
-        ];
       mapView = new ol.View({
-        center: initialCenter,
+        center: [
+            AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapCenterX,
+            AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapCenterY
+        ],
         extent: [-180, -90, 180, 90],
-        projection: "EPSG:4326",
-        zoom: AppO2.APP_CONFIG.userPreferences.initialZoom || 3,
+        maxZoom: 20,
         minZoom: 2,
-        maxZoom: 20
+        projection: "EPSG:4326",
+        rotation: AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapRotation * Math.PI / 180,
+        zoom: AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapZoom
       });
+
 
       if (AppO2.APP_CONFIG.params.footprints.params != undefined) {
         if (AppO2.APP_CONFIG.params.footprints.params.version != undefined) {

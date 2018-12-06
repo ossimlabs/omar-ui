@@ -45,7 +45,7 @@
     /* jshint validthis: true */
     var vm = this;
 
-    vm.userPreferences = AppO2.APP_CONFIG.userPreferences;
+    vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
 
     var thumbnailsBaseUrl, thumbnailsContextPath, thumbnailsRequestUrl;
 

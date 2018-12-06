@@ -1,5 +1,6 @@
 package omar.app
 
+import groovy.json.JsonSlurper
 import omar.openlayers.OmarOpenlayersUtils
 import omar.openlayers.OpenLayersConfig
 import org.springframework.beans.factory.InitializingBean
@@ -31,12 +32,17 @@ class OmarController {
 
     grailsApplication.config.omar.app.sites = omarSitesConfig.sites
 
+      def preferences
+      JSON.use( "deep" ) {
+        def json = preferencesService.getPreferences() as JSON
+        preferences = new JsonSlurper().parseText( json.toString() )
+      }
       def clientConfig = [
         serverURL: getBaseUrl(),
         openlayers: openLayersConfig,
         params: grailsApplication.config.omar.app,
         userInfo: [name: userInfoName],
-        userPreferences: preferencesService.getPreferences()
+        userPreferences: preferences
       ]
 
   		[

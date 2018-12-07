@@ -1246,11 +1246,13 @@
               ng-mouseleave="list.removeFootprint();">
               <div class="media">
                 <div class="media-left" style="position: relative">
-                  <a href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false">
+                  <a 
+                    href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
+                    target="_blank">
                   <img
                     class="media-object"
                     tooltip-placement="right"
-                    uib-tooltip="Click the thumbnail or the Image ID to view the metadata"
+                    uib-tooltip="Click the thumbnail or the image ID to view the raw image"
                     height="114"
                     width="114"
                     ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
@@ -1344,11 +1346,10 @@
                         type="button"
                         class="btn btn-default"
                         ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
-                        target="_blank"
                         ng-show = "list.userPreferences.viewRawImageButton">
-                        <i class="fa fa-desktop text-default"
+                        <i class="fa fa-table text-default"
                           tooltip-placement="pull-right"
-                          uib-tooltip="View raw image"></i>
+                          uib-tooltip="View image metadata"></i>
                       </a>
                       <a
                         type="button"

@@ -543,7 +543,7 @@
       //wfsService.updateAttrFilter(undefined, field, type);
       wfsService.updateAttrFilter(wfsService.attrObj.filter, field, type);
     };
-    var sortPreference = AppO2.APP_CONFIG.userPreferences.o2SearchResultsSort;
+    var sortPreference = vm.userPreferences.resultsSort;
     if ( sortPreference ) {
         var sortFields = sortPreference.split( "," );
         vm.sortWfs( sortFields[ 0 ], sortFields[ 1 ], sortFields[ 2 ] );

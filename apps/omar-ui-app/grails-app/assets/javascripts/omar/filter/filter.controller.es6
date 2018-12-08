@@ -8,6 +8,7 @@
       "$scope",
       "wfsService",
       "mapService",
+      "$stateParams",
       "$window",
       "toastr",
       "$log",
@@ -20,6 +21,7 @@
     $scope,
     wfsService,
     mapService,
+    $stateParams,
     $window,
     toastr,
     $log
@@ -27,6 +29,7 @@
     /* jshint validthis: true */
     var vm = this;
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
+    vm.urlParams = $stateParams;
 
     vm.getCountryListing = function() {
         var baseUrl = stateService.omarSitesState.url.base;
@@ -207,152 +210,146 @@
       checkNoSpatialFilter();
     };
 
-    vm.initKeywords = function(reset) {
-      // Keywords
-      vm.countryCodeCheck = reset ? false : vm.userPreferences.countryCodeEnabled;
-      var countryCodePreference = vm.userPreferences.countryCode;
-      if ( countryCodePreference ) {
-        countryCodePreference = countryCodePreference.split( "," );
-        countryCodePreference.forEach( function( countryCode, index ) {
-            countryCodePreference[ index ] = { iso_a2: countryCode };
+    vm.initKeywords = function( reset ) {
+        vm.countryCodeCheck = vm.userPreferences.countryCodeEnabled;
+        var countryCode = vm.userPreferences.countryCode;
+        if ( vm.urlParams.countryCode ) {
+            vm.countryCodeCheck = true;
+            countryCode = vm.urlParams.countryCode;
+        }
+        if ( reset ) {
+            vm.countryCodeCheck = false;
+            countryCode = null;
+        }
+        if ( countryCode ) {
+            countryCode = countryCode.split( "," );
+            countryCode.forEach( function( cc, index ) {
+                countryCode[ index ] = { iso_a2: cc };
+            });
+        }
+        vm.countryCode = countryCode || [];
+
+        var arrays = [
+            { key: "missionId", urlParam: "mission" },
+            { key: "sensorId", urlParam: "sensor" }
+        ];
+        $.each( arrays, function( index, keyword ) {
+            vm[ keyword.key + "Check" ] = vm.userPreferences[ keyword.key + "Enabled" ];
+            var value = vm.userPreferences[ keyword.key ];
+            if ( vm.urlParams[ keyword.urlParam ] ) {
+                vm[ keyword.key + "Check" ] = true;
+                value = vm.urlParams[ keyword.urlParam ];
+            }
+            if ( reset ) {
+                vm[ keyword.key + "Check" ] = false;
+                value = null;
+            }
+            vm[ keyword.key ] = value ? value.split( "," ) : [];
         });
-      }
-      else {
-        countryCodePreference = [];
-      }
-      vm.countryCode = reset ? [] : countryCodePreference;
 
-      vm.imageIdCheck = reset ? false : vm.userPreferences.imageIdEnabled;
-      vm.imageId = reset ? "" : vm.userPreferences.imageId;
-
-      vm.missionIdCheck = reset ? false : vm.userPreferences.missionIdEnabled;
-      var missionIdPreference = vm.userPreferences.missionId;
-      if ( missionIdPreference ) {
-        missionIdPreference = missionIdPreference.split( "," );
-      }
-      vm.missionId = reset ? [] : missionIdPreference;
-
-      vm.sensorIdCheck = reset ? false : vm.userPreferences.sensorIdEnabled;
-      var sensorIdPreference = vm.userPreferences.sensorId;
-      if ( sensorIdPreference ) {
-        sensorIdPreference  = sensorIdPreference.split( "," );
-      }
-      vm.sensorId = reset ? [] : sensorIdPreference;
-
-      vm.beNumberCheck = reset ? false : vm.userPreferences.beEnabled;
-      vm.beNumber = reset ? "" : vm.userPreferences.be;
-
-      vm.targetIdCheck = reset ? false : vm.userPreferences.imageIdEnabled;
-      vm.targetId = reset ? "" : vm.userPreferences.imageId;
-
-      vm.wacNumberCheck = reset ? false : vm.userPreferences.worldAreaCodeEnabled;
-      vm.wacNumber = reset ? "" : vm.userPreferences.worldAreaCode;
-
-      vm.filenameCheck = reset ? false : vm.userPreferences.filenameEnabled;
-      vm.filename = reset ? "" : vm.userPreferences.filename;
+        var strings = [
+            { key: "beNumber", urlParam: "be" },
+            { key: "filename", urlParam: "filename" },
+            { key: "imageId", urlParam: "imageId" },
+            { key: "targetId", urlParam: "target" },
+            { key: "wacNumber", urlParam: "wac" }
+        ];
+        $.each( strings, function( index, keyword ) {
+            vm[ keyword.key + "Check" ] = vm.userPreferences[ keyword.urlParam + "Enabled" ];
+            vm[ keyword.key ] = vm.userPreferences[ keyword.urlParam ];
+            if ( vm.urlParams[ keyword.urlParam ] ) {
+                vm[ keyword.key + "Check" ] = true;
+                vm[ keyword.key ] = vm.urlParams[ keyword.urlParam ];
+            }
+            if ( reset ) {
+                vm[ keyword.key + "Check" ] = false;
+                vm[ keyword.key ] = "";
+            }
+        });
     };
 
-    vm.initRanges = function(reset) {
-      // Ranges
-      vm.predNiirsCheck = reset ? false : vm.userPreferences.niirsEnabled;
-      vm.predNiirsMin = reset ? 0 : vm.userPreferences.niirsMin;
-      vm.predNiirsMax = reset ? 9 : vm.userPreferences.niirsMax;
-      vm.predNiirsCheckNull = false;
+    vm.initRanges = function( reset ) {
+        var ranges = [
+            { key: "azimuth", max: 360, min: 0, urlParam: "azimuth" },
+            { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
+            { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
+            { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
+            { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
+        ];
+        $.each( ranges, function( index, range ) {
+            vm[ range.key + "Check" ] = vm.userPreferences[ range.urlParam + "Enabled" ];
+            vm[ range.key + "Min" ] = vm.userPreferences[ range.urlParam + "Min" ];
+            vm[ range.key + "Max" ] = vm.userPreferences[ range.urlParam + "Max" ];
+            if ( vm.urlParams[ range.urlParam ] ) {
+                vm[ range.key + "Check" ] = true;
+                var values = vm.urlParams[ range.urlParam ].split( ":" ); console.dir(values);
+                vm[ range.key + "Min" ] = values[ 0 ];
+                vm[ range.key + "Max" ] = values[ 1 ];
+            }
+            if ( reset ) {
+                vm[ range.key + "Check" ] = false;
+                vm[ range.key + "Min" ] = range.emin;
+                vm[ range.key + "Max" ] = range.max;
+            }
+        });
 
-      vm.azimuthCheck = reset ? false : vm.userPreferences.azimuthAngleEnabled;
-      vm.azimuthMin = reset ? 0 : vm.userPreferences.azimuthAngleMin;
-      vm.azimuthMax = reset ? 360 : vm.userPreferences.azimuthAngleMax;
-      vm.azimuthCheckNull = false;
-
-      vm.grazeElevCheck = reset ? false : vm.userPreferences.elevationAngleEnabled;
-      vm.grazeElevMin = reset ? 0 : vm.userPreferences.elevationAngleMin;
-      vm.grazeElevMax = reset ? 90 : vm.userPreferences.elevationAngleMax;
-      vm.grazeElevCheckNull = false;
-
-      vm.sunAzimuthCheck = reset ? false : vm.userPreferences.sunAzimuthAngleEnabled;
-      vm.sunAzimuthMin = reset ? 0 : vm.userPreferences.sunAzimuthAngleMin;
-      vm.sunAzimuthMax = reset ? 360 : vm.userPreferences.sunAzimuthAngleMax;
-      vm.sunAzimuthCheckNull = false;
-
-      vm.sunElevationCheck = reset ? false : vm.userPreferences.sunElevationAngleEnabled;
-      vm.sunElevationMin = reset ? -90 : vm.userPreferences.sunElevationAngleMin;
-      vm.sunElevationMax = reset ? 90 : vm.userPreferences.sunElevationAngleMax;
-      vm.sunElevationCheckNull = false;
-
-      vm.cloudCoverCheck = reset ? false : vm.userPreferences.cloudCoverEnabled;
-      vm.cloudCover = reset ? 0 : vm.userPreferences.cloudCoverMax;
-      vm.cloudCoverCheckNull = false;
+        vm.cloudCoverCheck = vm.userPreferences.cloudCoverEnabled;
+        vm.cloudCover = vm.userPreferences.cloudCoverMax;
+        if ( vm.urlParams.cloudCover ) {
+            vm.cloudCoverCheck = true;
+            vm.cloudCover = vm.urlParams.cloudCover;
+        }
+        if ( reset ) {
+            vm.cloudCoverCheck = false;
+            vm.cloudCover = 100;
+        }
+        vm.cloudCoverCheckNull = false;
     };
 
     vm.initTemporal = reset => {
-        if ( vm.userPreferences.dateType ) {
-            var dateType = vm.dateTypes.find( function( element ) {
-                return element.value == vm.userPreferences.dateType;
-            });
-            vm.currentDateType = reset ? vm.dateTypes[ 0 ] : dateType;
+        var dateType = vm.dateTypes.find( function( element ) {
+            return element.value == vm.userPreferences.dateType;
+        });
+        vm.currentDateType = dateType;
+        if ( vm.urlParams.dateType ) {
+            vm.currentDateType = vm.urlParams.dateType;
+        }
+        if ( reset ) {
+            vm.currentDateType = vm.dateTypes[ 0 ];
         }
 
-        if ( vm.userPreferences.duration ) {
-            var duration = vm.temporalDurations.find( function( element ) {
-                return element.value == vm.userPreferences.duration;
-            });
-            vm.currentTemporalDuration = reset ? vm.temporalDurations[ 0 ] : duration;
+        var duration = vm.temporalDurations.find( function( element ) {
+            return element.value == vm.userPreferences.duration;
+        });
+        vm.currentTemporalDuration = duration;
+        if ( vm.urlParams.duration ) {
+            vm.currentTemporalDuration = vm.urlParams.duration;
+        }
+        if ( reset ) {
+            vm.currentTemporalDuration = vm.temporalDurations[ 0 ];
         }
 
-      vm.customDateRangeVisible = false;
+        vm.customDateRangeVisible = false;
 
-      vm.setInitialCustomStartDate();
-      vm.setInitialCustomEndDate();
+        vm.setInitialCustomStartDate();
+        vm.setInitialCustomEndDate();
     };
 
     vm.dateTypes = [
-      {
-        value: "acquisition_date",
-        label: "Acquisition Date"
-      },
-      {
-        value: "ingest_date",
-        label: "Ingest Date"
-      }
+        { label: "Acquisition Date", value: "acquisition_date" },
+        { label: "Ingest Date", value: "ingest_date" }
     ];
 
     vm.temporalDurations = [
-      {
-        value: "none",
-        label: "None"
-      },
-      {
-        value: "lastDay",
-        label: "Today"
-      },
-      {
-        value: "yesterday",
-        label: "Yesterday"
-      },
-      {
-        value: "last3Days",
-        label: "Last 3 Days"
-      },
-      {
-        value: "last7Days",
-        label: "Last Week"
-      },
-      {
-        value: "lastMonth",
-        label: "Last Month"
-      },
-      {
-        value: "last3Months",
-        label: "Last 3 Months"
-      },
-      {
-        value: "last6Months",
-        label: "Last 6 Months"
-      },
-      {
-        value: "customDateRange",
-        label: "Custom Date Range"
-      }
+        { label: "None", value: "none" },
+        { label: "Today", value: "lastDay" },
+        { label: "Yesterday", value: "yesterday" },
+        { label: "Last 3 Days", value: "last3Days" },
+        { label: "Last Week", value: "last7Days" },
+        { label: "Last Month", value: "lastMonth" },
+        { label: "Last 3 Months", value: "last3Months" },
+        { label: "Last 6 Months", value: "last6Months" },
+        { label: "Custom Date Range", value: "customDateRange" }
     ];
 
     vm.customDateRangeVisible = false;
@@ -368,6 +365,12 @@
         else {
             vm.startDate = moment().startOf("day");
         }
+        if ( vm.urlParams.startDate ) {
+            vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
+                return element.value == "customDateRange";
+            });
+            vm.startDate = moment( vm.urlParams.startDate );
+        }
     };
 
     vm.setInitialCustomEndDate = function() {
@@ -376,6 +379,12 @@
         }
         else {
             vm.endDate = moment().endOf("day");
+        }
+        if ( vm.urlParams.endDate ) {
+            vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
+                return element.value == "customDateRange";
+            });
+            vm.endDate = moment( vm.urlParams.endDate );
         }
     };
 

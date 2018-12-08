@@ -54,7 +54,30 @@
               AppO2.APP_CONFIG.serverURL + "/views/home/home.partial.html"
           })
           .state("map", {
-            url: "/map",
+            url: "/map?" +
+            [
+                "azimuth",
+                "be",
+                "cloudCover",
+                "countryCode",
+                "dateType",
+                "duration",
+                "elevation",
+                "endDate",
+                "filename",
+                "imageId",
+                "mapCenter",
+                "mapRotation",
+                "mapZoom",
+                "mission",
+                "niirs",
+                "sensor",
+                "startDate",
+                "sunAzimuth",
+                "sunElevation",
+                "target",
+                "wac"
+            ].join( "," ),
             templateUrl:
               AppO2.APP_CONFIG.serverURL + "/views/map/map.partial.html"
           })

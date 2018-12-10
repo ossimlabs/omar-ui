@@ -307,23 +307,25 @@
     };
 
     vm.initTemporal = reset => {
-        var dateType = vm.dateTypes.find( function( element ) {
+        vm.currentDateType = vm.dateTypes.find( function( element ) {
             return element.value == vm.userPreferences.dateType;
         });
-        vm.currentDateType = dateType;
         if ( vm.urlParams.dateType ) {
-            vm.currentDateType = vm.urlParams.dateType;
+            vm.currentDateType = vm.dateTypes.find( function( element ) {
+                return element.value == vm.urlParams.dateType;
+            });
         }
         if ( reset ) {
             vm.currentDateType = vm.dateTypes[ 0 ];
         }
 
-        var duration = vm.temporalDurations.find( function( element ) {
+        vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
             return element.value == vm.userPreferences.duration;
         });
-        vm.currentTemporalDuration = duration;
         if ( vm.urlParams.duration ) {
-            vm.currentTemporalDuration = vm.urlParams.duration;
+            vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
+                return element.value == vm.urlParams.duration;
+            });
         }
         if ( reset ) {
             vm.currentTemporalDuration = vm.temporalDurations[ 0 ];

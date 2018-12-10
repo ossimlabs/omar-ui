@@ -4,17 +4,21 @@
     .module("omarApp")
     .service("mapService", [
       "stateService",
+      "$stateParams",
       "wfsService",
       "$timeout",
       "$log",
       mapService
     ]);
-  function mapService(stateService, wfsService, $timeout, $log) {
+  function mapService(stateService, $stateParams, wfsService, $timeout, $log) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
-    $log.debug("AppO2.APP_CONFIG in mapService: ", AppO2.APP_CONFIG);
+
+        var userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
+        var urlParams = $stateParams;
+
 
     var map,
       mapView,
@@ -147,17 +151,26 @@
     });
 
     this.mapInit = function() {
+        var rotation = userPreferences.mapRotation;
+        if ( urlParams.mapRotation ) {
+            rotation = urlParams.mapRotation * Math.PI / 180;
+        }
+        var zoom = userPreferences.mapZoom;
+        if ( urlParams.mapZoom ) {
+            zoom = urlParams.mapZoom;
+        }
+
       mapView = new ol.View({
         center: [
-            AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapCenterX,
-            AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapCenterY
+            userPreferences.mapCenterX,
+            userPreferences.mapCenterY
         ],
         extent: [-180, -90, 180, 90],
         maxZoom: 20,
         minZoom: 2,
         projection: "EPSG:4326",
-        rotation: AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapRotation * Math.PI / 180,
-        zoom: AppO2.APP_CONFIG.userPreferences.o2SearchPreference.mapZoom
+        rotation: rotation,
+        zoom: zoom
       });
 
 

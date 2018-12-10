@@ -8,7 +8,9 @@
       "$state",
       "wfsService",
       "$http",
+      "$stateParams",
       "stateService",
+      "$timeout",
       "toastr",
       SearchController
     ]);
@@ -19,7 +21,9 @@
     $state,
     wfsService,
     $http,
+    $stateParams,
     stateService,
+    $timeout,
     toastr
   ) {
     // #################################################################################
@@ -34,6 +38,7 @@
     });
 
     var vm = this;
+    vm.urlParams = $stateParams;
 
     var searchInput = $("#searchInput");
     searchInput.autocomplete({
@@ -60,6 +65,13 @@
         vm.executeSearch();
       }
     });
+    if ( vm.urlParams.mapCenter ) {
+        vm.searchInput = vm.urlParams.mapCenter;
+        // $timeout needed: http://stackoverflow.com/a/18996042
+        $timeout(function() {
+            vm.executeSearch();
+        });
+    }
 
     function formatTwoFishesResponse(response) {
       return {

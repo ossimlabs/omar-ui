@@ -185,3 +185,30 @@ Sorts the list in reverse alphabetical order sensor to image ID.
 
 ### Search Box
 There is an input box located above the map all the way to the right. The box is meant to take in various kinds of input and will automatically determine if a BE, coordinate, image ID or placename is entered. In all cases, if a match is found, the map will zoom to the appropriate area.
+
+## API
+Want to share your awesome searches with friends? Use the table below to construct a URL that will automatically set search values for anyone who clicks on it!
+
+Parameter | Description
+- | -
+azimuth | The image's azimuth angle. A range can bet set with a semi-colon.
+be | A basic encyclopedia number
+cloudCover | The maximum cloud cover percentage
+countryCode | An image's country code. Multiple can be set separated by a comma.
+dateType | Either acquisition_date or ingest_date
+duration | Simple, predefined date ranges. e.g. last3Days
+elevation | The image's elevation angle. A range can be set with a semi-colon.
+endDate | The end date for a custom date range.
+filename | The image's filename.
+imageId | The image's image ID.
+mapCenter | Where the map should center, can be DD, DMS, MGRS, Image ID or Placename where supported.
+mapRotation | How many degrees to rotate the map.
+mapZoom | What level to zoom the map to.
+mission | The image's mission ID. Multiple can be set separated by a comma.
+niirs | The image's NIIRS rating. A range can bet set with a semi-colon.
+sensor | The image's sensor ID. Multiple can be set separated by a comma.
+startDate | The start date for a custom date range.
+sunAzimuth | The image's sun aximuth angle. A range can be set with a semi-colon.
+sunElevation | The image's sun elevation angle. A range can be set with a semi-colon.
+target | The image's target ID.
+wac | The image's World Area Code.

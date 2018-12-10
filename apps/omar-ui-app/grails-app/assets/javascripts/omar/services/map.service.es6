@@ -151,6 +151,14 @@
     });
 
     this.mapInit = function() {
+        var mapCenterX = userPreferences.mapCenterX;
+        if ( urlParams.mapCenterX ) {
+            mapCenterX = urlParams.mapCenterX;
+        }
+        var mapCenterY = userPreferences.mapCenterY;
+        if ( urlParams.mapCenterY ) {
+            mapCenterY = urlParams.mapCenterY;
+        }
         var rotation = userPreferences.mapRotation;
         if ( urlParams.mapRotation ) {
             rotation = urlParams.mapRotation * Math.PI / 180;
@@ -161,10 +169,7 @@
         }
 
       mapView = new ol.View({
-        center: [
-            userPreferences.mapCenterX,
-            userPreferences.mapCenterY
-        ],
+        center: [ mapCenterX, mapCenterY ],
         extent: [-180, -90, 180, 90],
         maxZoom: 20,
         minZoom: 2,

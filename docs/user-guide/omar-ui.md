@@ -201,8 +201,10 @@ Want to share your awesome searches with friends? Use the table below to constru
 | endDate | The end date for a custom date range. |
 | filename | The image's filename. |
 | imageId | The image's image ID. |
-| mapCenter | Where the map should center, can be DD, DMS, MGRS, Image ID or Placename where supported. |
+| mapCenterX | The map center's longitude. |
+| mapCenterY | The map center's latitude. |
 | mapRotation | How many degrees to rotate the map. |
+| mapSearch | Where the map should center in on, can be DD, DMS, MGRS, Image ID or Placename where supported. |
 | mapZoom | What level to zoom the map to. |
 | mission | The image's mission ID. Multiple can be set separated by a comma. |
 | niirs | The image's NIIRS rating. A range can bet set with a semi-colon. |

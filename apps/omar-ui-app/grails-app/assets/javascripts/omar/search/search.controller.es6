@@ -65,8 +65,8 @@
         vm.executeSearch();
       }
     });
-    if ( vm.urlParams.mapCenter ) {
-        vm.searchInput = vm.urlParams.mapCenter;
+    if ( vm.urlParams.mapSearch ) {
+        vm.searchInput = vm.urlParams.mapSearch;
         // $timeout needed: http://stackoverflow.com/a/18996042
         $timeout(function() {
             vm.executeSearch();

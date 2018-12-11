@@ -213,9 +213,9 @@
     vm.initKeywords = function( reset ) {
         vm.countryCodeCheck = vm.userPreferences.countryCodeEnabled;
         var countryCode = vm.userPreferences.countryCode;
-        if ( vm.urlParams.countryCode ) {
+        if ( vm.urlParams.countryCodes ) {
             vm.countryCodeCheck = true;
-            countryCode = vm.urlParams.countryCode;
+            countryCode = vm.urlParams.countryCodes;
         }
         if ( reset ) {
             vm.countryCodeCheck = false;
@@ -230,8 +230,8 @@
         vm.countryCode = countryCode || [];
 
         var arrays = [
-            { key: "missionId", urlParam: "mission" },
-            { key: "sensorId", urlParam: "sensor" }
+            { key: "missionId", urlParam: "missions" },
+            { key: "sensorId", urlParam: "sensors" }
         ];
         $.each( arrays, function( index, keyword ) {
             vm[ keyword.key + "Check" ] = vm.userPreferences[ keyword.key + "Enabled" ];
@@ -282,7 +282,7 @@
             vm[ range.key + "Max" ] = vm.userPreferences[ range.urlParam + "Max" ];
             if ( vm.urlParams[ range.urlParam ] ) {
                 vm[ range.key + "Check" ] = true;
-                var values = vm.urlParams[ range.urlParam ].split( ":" ); console.dir(values);
+                var values = vm.urlParams[ range.urlParam ].split( ":" );
                 vm[ range.key + "Min" ] = values[ 0 ];
                 vm[ range.key + "Max" ] = values[ 1 ];
             }
@@ -985,5 +985,69 @@
 
       $(elem).dropdown("toggle");
     };
+
+    vm.saveSearch = function() {
+        var searchString = {};
+
+        if ( vm.countryCodeCheck ) {
+            searchString.countryCodes = vm.countryCode.map( function( cc ) {
+                return cc.iso_a2;
+            }).join( "," );
+        }
+        var keywords = [
+            { key: "beNumber", urlParam: "be" },
+            { key: "filename", urlParam: "filename" },
+            { key: "imageId", urlParam: "imageId" },
+            { key: "missionId", urlParam: "missions" },
+            { key: "sensorId", urlParam: "sensors" },
+            { key: "targetId", urlParam: "target" },
+            { key: "wacNumber", urlParam: "wac" }
+        ];
+
+        $.each( keywords, function( index, keyword ) {
+            if ( vm[ keyword.key + "Check" ] ) {
+                var value = vm[ keyword.key ];
+                searchString[ keyword.urlParam ] = typeof value == "object" ? value.join( "," ) : value;
+            }
+        });
+
+
+        var ranges = [
+            { key: "azimuth", max: true, min: true, urlParam: "azimuth" },
+            { key: "cloudCover", max: true, urlParam: "cloudCover" },
+            { key: "grazeElev", max: true, min: true, urlParam: "elevation" },
+            { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
+            { key: "sunAzimuth", max: true, min: true, urlParam: "sunAzimuth" },
+            { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" }
+        ];
+        $.each( ranges, function( index, range ) {
+            if ( vm[ range.key + "Check" ] ) {
+                var max, min;
+                [ max, min ] = [ range.max, range.min ];
+                if ( max && min ) {
+                    searchString[ range.urlParam ] = vm[ range.key + "Min" ] + ":" + vm[ range.key + "Max" ];
+                }
+                else if ( max ) {
+                    searchString[ range.urlParam ] = vm[ range.key ];
+                }
+            }
+        });
+
+        if ( vm.currentTemporalDuration.value != "none" ) {
+            searchString.dateType = vm.currentDateType.value;
+
+            if ( vm.currentTemporalDuration.value == "customDateRange" ) {
+                searchString.endDate = vm.endDate.toJSON().replace( /[.].*$/, "" );
+                searchString.startDate = vm.startDate.toJSON().replace( /[.].*$/, "" );
+            }
+            else {
+                searchString.duration = vm.currentTemporalDuration.value;
+            }
+        }
+        //console.dir(searchString);
+
+
+
+    }
   }
 })();

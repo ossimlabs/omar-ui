@@ -1,82 +1,100 @@
-<div ng-controller="FilterController as filter">
-  <div class="container-fluid" ng-show="filter.showCurrentFilter">
-    <div class="row"
-    style="
-      margin-top: -16px;
-      margin-bottom: 18px;">
-      <div class="col-sm-12">
-        <button class="btn btn-default btn btn-xs" ng-click="filter.clearFilters()">Clear Filters</button>
-        <span class="tag label label-info cursor-default">{{filter.currentSpatialFilter}}</span>
-        <span ng-repeat="filter in filter.currentAttrFilterArray">
-          <span class="tag label label-primary cursor-default">
-            {{filter}}
-            <!-- <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a> -->
-          </span>
-        </span>
-      </div>
+<div ng-controller = "FilterController as filter">
+    <div class="container-fluid" ng-show="filter.showCurrentFilter">
+        <div class = "row" style = "margin-top: -16px; margin-bottom: 18px;">
+            <div class = "col-sm-12">
+                <button class = "btn btn-default btn btn-xs" ng-click = "filter.clearFilters()">Clear Filters</button>
+                <span class = "tag label label-info cursor-default">{{filter.currentSpatialFilter}}</span>
+                <span ng-repeat = "filter in filter.currentAttrFilterArray">
+                    <span class = "tag label label-primary cursor-default">
+                        {{filter}}
+                    </span>
+                </span>
+            </div>
+        </div>
     </div>
-  </div>
-  <nav style="margin-top: -15px; margin-bottom: 5px;" class="navbar yamm navbar-default">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-        data-target="#map-navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="collapse navbar-collapse" id="map-navbar-collapse">
-          <div class="col-sm-9">
-            <ul class="nav navbar-nav">
-              <p class="navbar-text">Filters:</p>
-              <li class="dropdown mega-dropdown">
-                <a class="dropdown-toggle keyword-filter-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false"><span class="fa fa-key" aria-hidden="true"></span>
-                  &nbsp;Keyword
-                  <span
-                    class="text-info filter-indicator"
-                    ng-show="filter.filterKeywordIndicator"
-                    uib-tooltip="Indicates a keyword filter is being applied"
-                    tooltip-placement="right">&#9679;</span>
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
-                  <li class="col-sm-12">
-                    <ul>
-                      <li class="dropdown-header text-center">Keyword Filters</li>
-                      <li class="text-center">
-                        <p>Click in the input boxes or use the checkboxes next to the keyword parameters to use them
-                        as filters</p>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="col-sm-12">
-                    <table style="border-spacing: 0 5" width = "100%">
-                      <tr>
-                        <td class="filter-row">
-                          <div class="input-group input-group-sm">
-                            <span class="input-group-addon">
-                              <input
-                                type="checkbox"
-                                ng-model="filter.beNumberCheck"
-                                ng-change="filter.updateFilterString()">
-                            </span>
-                            <span class="input-group-addon name">BE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <input
-                              focus-input
-                              ng-model="filter.beNumber"
-                              class="form-control"
-                              ng-enter="filter.updateFilterString()"
-                              ng-blur="filter.updateFilterString()"
-                              ng-change="filter.beNumberCheck = filter.beNumber === '' ? false: true;"
-                              id="beNumberInput"
-                              placeholder="Basic Encyclopedia Number"
-                              value="filter.beNumber">
-                          </div>
-                        </td>
-                        <td class="filter-row">
+    <nav style = "margin-top: -15px; margin-bottom: 5px;" class = "navbar yamm navbar-default">
+        <div class = "navbar-header">
+            <button type = "button" class = "navbar-toggle collapsed" data-toggle = "collapse" data-target = "#map-navbar-collapse" aria-expanded = "false">
+                <span class = "sr-only">Toggle navigation</span>
+                <span class = "icon-bar"></span>
+                <span class = "icon-bar"></span>
+                <span class = "icon-bar"></span>
+            </button>
+        </div>
+        <div class = "container-fluid">
+            <div class = "row">
+                <div class = "collapse navbar-collapse" id = "map-navbar-collapse">
+                    <div class = "col-sm-9">
+                        <ul class = "nav navbar-nav">
+                            <li class = "dropdown mega-dropdown" tooltip-placement = "bottom" uib-tooltip = "Save/Load Searches">
+                                <a class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false">
+                                    <span class = "glyphicon glyphicon-floppy-disk" aria-hidden = "true"></span>
+                                    &nbsp;
+                                    <span class = "caret"></span>
+                                </a>
+                                <ul class = "dropdown-menu mega-dropdown-menu row" ng-click = "$event.stopPropagation();">
+                                    <li class = "col-sm-12">
+                                        <ul>
+                                            <li class = "dropdown-header text-center">
+                                                <p class = "text-center">Save/Load Searches</p>
+                                            </li>
+                                            <li class = "metrics-row">
+                                                <a class = "btn btn-success btn-block btn-metrics" ng-click = "filter.loadSearch()" role = "button" target = "_blank">Load</a>
+                                            </li>
+                                            <li class = "metrics-row">
+                                                <a class = "btn btn-success btn-block btn-metrics" ng-click="filter.saveSearch()" role = "button" target = "_blank">Save</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <p class = "navbar-text">Filters:</p>
+                            <li class = "dropdown mega-dropdown">
+                                <a class = "dropdown-toggle keyword-filter-dropdown" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false">
+                                    <span class = "fa fa-key" aria-hidden = "true"></span>
+                                    &nbsp;Keyword
+                                    <span
+                                        class = "text-info filter-indicator"
+                                        ng-show = "filter.filterKeywordIndicator"
+                                        uib-tooltip = "Indicates a keyword filter is being applied"
+                                        tooltip-placement = "right">
+                                        &#9679;
+                                    </span>
+                                    <span class = "caret"></span>
+                                </a>
+                                <ul class = "dropdown-menu mega-dropdown-menu row" ng-click = "$event.stopPropagation();">
+                                    <li class = "col-sm-12">
+                                        <ul>
+                                            <li class = "dropdown-header text-center">Keyword Filters</li>
+                                            <li class = "text-center">
+                                                <p>Click in the input boxes or use the checkboxes next to the keyword parameters to use them as filters</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class = "col-sm-12">
+                                        <table style = "border-spacing: 0 5" width = "100%">
+                                            <tr>
+                                                <td class = "filter-row">
+                                                    <div class = "input-group input-group-sm">
+                                                        <span class = "input-group-addon">
+                                                            <input
+                                                                type = "checkbox"
+                                                                ng-model = "filter.beNumberCheck"
+                                                                ng-change = "filter.updateFilterString()">
+                                                        </span>
+                                                        <span class = "input-group-addon name">BE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                        <input focus-input
+                                                            ng-model = "filter.beNumber"
+                                                            class = "form-control"
+                                                            ng-enter = "filter.updateFilterString()"
+                                                            ng-blur = "filter.updateFilterString()"
+                                                            ng-change = "filter.beNumberCheck = filter.beNumber === '' ? false: true;"
+                                                            id = "beNumberInput"
+                                                            placeholder = "Basic Encyclopedia Number"
+                                                            value = "filter.beNumber">
+                                                    </div>
+                                                </td>
+                                                <td class = "filter-row">
                           <div class="input-group input-group-sm">
                             <span class="input-group-addon">
                               <input

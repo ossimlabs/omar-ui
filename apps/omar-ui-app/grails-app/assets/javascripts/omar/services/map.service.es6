@@ -950,6 +950,10 @@
       return map.getView().getCenter();
     };
 
+    this.getRotation = function() {
+      return map.getView().getRotation();
+    };
+
     this.getZoom = function() {
       return map.getView().getZoom();
     };

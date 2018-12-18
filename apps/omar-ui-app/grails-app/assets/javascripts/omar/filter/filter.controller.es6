@@ -986,6 +986,10 @@
       $(elem).dropdown("toggle");
     };
 
+    vm.loadSearch = function() {
+        window.open( AppO2.APP_CONFIG.contextPath + "/savedLink/list", "_blank" );
+    }
+
     vm.saveSearch = function() {
         var searchString = {};
 
@@ -1003,14 +1007,12 @@
             { key: "targetId", urlParam: "target" },
             { key: "wacNumber", urlParam: "wac" }
         ];
-
         $.each( keywords, function( index, keyword ) {
             if ( vm[ keyword.key + "Check" ] ) {
                 var value = vm[ keyword.key ];
                 searchString[ keyword.urlParam ] = typeof value == "object" ? value.join( "," ) : value;
             }
         });
-
 
         var ranges = [
             { key: "azimuth", max: true, min: true, urlParam: "azimuth" },
@@ -1044,10 +1046,34 @@
                 searchString.duration = vm.currentTemporalDuration.value;
             }
         }
-        //console.dir(searchString);
 
+        var searchInput = $("#searchInput").val();
+        if ( searchInput != "" ) {
+            searchString.mapSearch = searchInput;
+        }
+        else if ( vm.viewPortSpatial ) {
+            [ searchString.mapCenterX, searchString.mapCenterY ] = mapService.getCenter();
+            searchString.mapZoom = mapService.getZoom();
+        }
 
+        if ( mapService.getRotation() != 0 ) {
+            searchString.mapRotation = parseInt( mapService.getRotation() * 180 / Math.PI );
+        }
 
+        var form = document.createElement( "form" );
+        form.action = AppO2.APP_CONFIG.contextPath + "/savedLink";
+        form.method = "post";
+        form.target = "_blank";
+        $( "body" ).append( form );
+
+        var input = document.createElement( "input" );
+        input.type = "hidden";
+        input.name = "saveLink";
+        var url = document.location;
+        input.value = url.origin + url.pathname + url.hash.split( "?" )[ 0 ] + "?" + $.param( searchString );
+        form.appendChild( input );
+
+        form.submit();
     }
   }
 })();

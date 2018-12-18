@@ -1,4 +1,64 @@
 ---
+defaultUsername: Anonymous
+
+requestHeaderUsername: username
+
+securityClassification:
+    backgroundColor: green
+    classification: Unclassified
+    color: white
+
+serverProtocol: https
+serverName: omar-dev.ossim.io
+
+---
+grails:
+    plugin:
+        springsecurity:
+            userLookup:
+                userDomainClassName: 'omar.security.SecUser'
+                authorityJoinClassName: 'omar.security.SecUserSecRole'
+            authority:
+                className: 'omar.security.SecRole'
+            controllerAnnotations:
+                staticRules:
+                    - pattern: '/**'
+                      access: [ 'permitAll' ]
+                    - pattern: '/error'
+                      access: [ 'permitAll' ]
+                    - pattern: '/index'
+                      access: [ 'permitAll' ]
+                    - pattern: '/index.gsp'
+                      access: [ 'permitAll' ]
+                    - pattern: '/shutdown'
+                      access: [ 'permitAll' ]
+                    - pattern: '/assets/**'
+                      access: [ 'permitAll' ]
+                    - pattern: '/**/js/**'
+                      access: [ 'permitAll' ]
+                    - pattern: '/**/css/**'
+                      access: [ 'permitAll' ]
+                    - pattern: '/**/images/**'
+                      access: [ 'permitAll' ]
+                    - pattern: '/**/favicon.ico'
+                      access: [ 'permitAll' ]
+            filterChain:
+                chainMap:
+                    - pattern: '/assets/**'
+                      filters: 'none'
+                    - pattern: '/**/js/**'
+                      filters: 'none'
+                    - pattern: '/**/css/**'
+                      filters: 'none'
+                    - pattern: '/**/images/**'
+                      filters: 'none'
+                    - pattern: '/**/favicon.ico'
+                      filters: 'none'
+                    - pattern: '/**'
+                      filters: 'JOINED_FILTERS'
+
+
+---
 # If there a page banner is needed, set it here
 #banner:
 #   backgroundColor: darkgray
@@ -7,7 +67,7 @@
 #   textColor: white
 #   enabled: true
 
-securityClassificationBanner:
+securityClassification:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
   # For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
   backgroundColor: green
@@ -17,7 +77,7 @@ securityClassificationBanner:
   classification: Unclassified
 
   # The actual HTML style color for the classification text
-  textColor: white
+  color: white
 
 logging:
   config: classpath:logback.groovy
@@ -31,7 +91,7 @@ omar:
       -
         layerType: "tilewms"
         title: "OSM Basic"
-        url: "${serverProtocol}://${serverName}/omar-mapproxy/service"
+        url: "https://omar-dev.ossim.io/omar-mapproxy/service"
         params:
           layers: "o2-basemap-basic"
           format: "image/jpeg"
@@ -298,7 +358,8 @@ omar:
           description: OMAR Development Server (Unclassified)
         url:
           # Base URL for the federated site
-          base: ${serverProtocol}://${serverName}
+          #base: ${serverProtocol}://${serverName}
+          base: https://omar-dev.ossim.io
 
           # Optional context path for the UI
           # uiContextPath: /omar-ui

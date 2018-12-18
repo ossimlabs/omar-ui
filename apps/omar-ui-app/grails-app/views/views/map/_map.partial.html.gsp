@@ -1069,56 +1069,56 @@
                   <li ng-click="list.sortWfs('mission_id', '+D', 'Mission (Desc)');"><a>Misson (Desc)</a></li>
                 </ul>
               </li>
-              <li class="dropdown nav-download">
-                <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Export
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">
-                  <li class="dropdown-header">Export the images in the following formats   <i
-                      class="fa fa-info-circle text-info"
-                      aria-hidden="true"
-                      tooltip-placement="left-bottom"
-                      uib-tooltip="(A maximum of 1000 of the most recently acquired
-                      images will be exported)"></i>
-                  </li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('CSV')">CSV</a></li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML2')">GML2</a></li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML3')">GML3</a></li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML32')">GML32</a></li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('JSON')">JSON</a></li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('KML')">KML</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Create a GeoRSS feed of the images
-                      <i
-                        class="fa fa-info-circle text-info"
-                        aria-hidden="true"
-                        tooltip-placement="left-bottom"
-                        uib-tooltip="A browser
-                        extension is required for Internet Explorer and
-                          Chrome.  Firefox has built in support
-                          for RSS feeds."></i>
-                    </li>
-                  <li>
-                    <a ng-href="" target="_blank" ng-click="wfsOutputDownload.getGeoRss()">GeoRSS</a>
-                  </li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">View the images in the following applications
-                    <i
-                      class="fa fa-info-circle text-info"
-                      aria-hidden="true"
-                      tooltip-placement="left-bottom"
-                      uib-tooltip="(A maximum of 100 of the most recently acquired
-                      images can be viewed)"></i>
-                  </li>
-                  <li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToTLV()">TLV</a></li>
-                </ul>
-              </li>
+              %{--<li class="dropdown nav-download">--}%
+                %{--<a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Export--}%
+                  %{--<span class="caret"></span>--}%
+                %{--</a>--}%
+                %{--<ul class="dropdown-menu" ng-controller="WFSOutputDlController as wfsOutputDownload">--}%
+                  %{--<li class="dropdown-header">Export the images in the following formats   <i--}%
+                      %{--class="fa fa-info-circle text-info"--}%
+                      %{--aria-hidden="true"--}%
+                      %{--tooltip-placement="left-bottom"--}%
+                      %{--uib-tooltip="(A maximum of 1000 of the most recently acquired--}%
+                      %{--images will be exported)"></i>--}%
+                  %{--</li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('CSV')">CSV</a></li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML2')">GML2</a></li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML3')">GML3</a></li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('GML32')">GML32</a></li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('JSON')">JSON</a></li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.getDownloadURL('KML')">KML</a></li>--}%
+                  %{--<li role="separator" class="divider"></li>--}%
+                  %{--<li class="dropdown-header">Create a GeoRSS feed of the images--}%
+                      %{--<i--}%
+                        %{--class="fa fa-info-circle text-info"--}%
+                        %{--aria-hidden="true"--}%
+                        %{--tooltip-placement="left-bottom"--}%
+                        %{--uib-tooltip="A browser--}%
+                        %{--extension is required for Internet Explorer and--}%
+                          %{--Chrome.  Firefox has built in support--}%
+                          %{--for RSS feeds."></i>--}%
+                    %{--</li>--}%
+                  %{--<li>--}%
+                    %{--<a ng-href="" target="_blank" ng-click="wfsOutputDownload.getGeoRss()">GeoRSS</a>--}%
+                  %{--</li>--}%
+                  %{--<li role="separator" class="divider"></li>--}%
+                  %{--<li class="dropdown-header">View the images in the following applications--}%
+                    %{--<i--}%
+                      %{--class="fa fa-info-circle text-info"--}%
+                      %{--aria-hidden="true"--}%
+                      %{--tooltip-placement="left-bottom"--}%
+                      %{--uib-tooltip="(A maximum of 100 of the most recently acquired--}%
+                      %{--images can be viewed)"></i>--}%
+                  %{--</li>--}%
+                  %{--<li><a ng-href="" target="_blank" ng-click="wfsOutputDownload.goToTLV()">TLV</a></li>--}%
+                %{--</ul>--}%
+              %{--</li>--}%
               <li class="dropdown">
                 <a class="dropdown-toggle navbar-sort-dropdown-toggle"
                   data-toggle="dropdown"
                   role="button"
                   aria-haspopup="true"
-                  aria-expanded="false">Selected ({{list.selectedCards.length}})
+                  aria-expanded="false">{{list.exportSelectedButtonText}}
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
@@ -1126,11 +1126,12 @@
                   <li class="dropdown-header">select individual images. They can then be</li>
                   <li class="dropdown-header"> downloaded, exported, or viewed in</li>
                   <li class="dropdown-header">applications</li>
-                  <li class="divider"></li>
+                  <li class="divider" ng-if="list.showSelectedButton"></li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
-                    ng-click="list.downloadSelectedImages()">
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
+                    ng-click="list.downloadSelectedImages()"
+                    ng-if="list.showSelectedButton">
                     <a href="">Download
                       <i
                         class="fa fa-info-circle text-info"
@@ -1151,39 +1152,53 @@
                   </li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.exportSelectedImages('CSV')">
                     <a href="">CSV</a>
                   </li><li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.exportSelectedImages('GML2')">
                     <a href="">GML2</a>
                   </li>
                   </li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.exportSelectedImages('GML3')">
                     <a href="">GML3</a>
                   </li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.exportSelectedImages('GML32')">
                     <a href="">GML32</a>
                   </li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.exportSelectedImages('JSON')">
                     <a href="">JSON</a>
                   </li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.exportSelectedImages('KML')">
                     <a href="">KML</a>
+                  </li>
+                  <li role="separator" class="divider" ng-if="!list.showSelectedButton"></li>
+                  <li class="dropdown-header" ng-if="!list.showSelectedButton">Create a GeoRSS feed of the images
+                    <i
+                            class="fa fa-info-circle text-info"
+                            aria-hidden="true"
+                            tooltip-placement="left-bottom"
+                            uib-tooltip="A browser
+                        extension is required for Internet Explorer and
+                          Chrome.  Firefox has built in support
+                          for RSS feeds."></i>
+                  </li>
+                  <li>
+                    <a ng-href="" target="_blank" ng-click="list.getGeoRss()" ng-if="!list.showSelectedButton">GeoRSS</a>
                   </li>
                   <li class="divider"></li>
                   <li class="dropdown-header">Applications
@@ -1195,7 +1210,7 @@
                     </li>
                   <li
                     role="menuitem"
-                    ng-class="{'disabled': !list.showSelectedButton}"
+                    %{--ng-class="{'disabled': !list.showSelectedButton}"--}%
                     ng-click="list.viewSelectedImagesApp('tlv')">
                     <a href="">TLV</a>
                   </li>

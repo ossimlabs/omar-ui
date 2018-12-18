@@ -317,6 +317,8 @@
     // selected.
     vm.showSelectedButton = false;
 
+    vm.exportSelectedButtonText = "Export All";
+
     // This method add or removes selected items from the
     // selectedCards array.
     vm.addRemoveCards = imageId => {
@@ -337,6 +339,7 @@
         }
         // We also need to remove the image from the map
         mapService.removeSelectedImageLayer(imageId, vm.selectedCards);
+
       } else {
         // Restrict the number of selected cards to 10
         if (vm.selectedCards.length >= 10) {
@@ -364,12 +367,18 @@
         mapService.addSelectedImageAsLayer(imageId);
       }
 
+      if (vm.selectedCards.length >= 1){
+      } else {
+      }
+
       // We need to enable the selected menu options if we have one
       // or more image cards selected
       if (vm.selectedCards.length >= 1) {
+        vm.exportSelectedButtonText = "Selected (" + vm.selectedCards.length + ")";
         vm.showSelectedButton = true;
       } else {
         vm.showSelectedButton = false;
+        vm.exportSelectedButtonText = "Export All";
       }
     };
 
@@ -386,6 +395,7 @@
     vm.clearSelectedImages = () => {
       vm.selectedCards = [];
       vm.showSelectedButton = false;
+      vm.exportSelectedButtonText = "Export All";
     };
 
     // Removes the selected images from the mosaic layer.  It is wired up
@@ -433,6 +443,8 @@
         return;
       }
       return;
+
+      //TODO: Add functionality to download all when none are selected
     };
 
     /**
@@ -502,6 +514,8 @@
 
         $log.debug(`vm.url: ${vm.url}`);
         window.open(vm.url.toString(), "_blank");
+      } else{
+        vm.getDownloadURL(outputFormat);
       }
     };
 
@@ -691,6 +705,115 @@
       var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
       window.open(tlvUrl, "_blank");
+    };
+
+
+
+
+
+
+
+    var tlvBaseUrl, tlvContextPath;
+    vm.tlvRequestUrl = "";
+
+    var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
+
+    function setWFSOutputDlControllerUrlProps() {
+        tlvBaseUrl = stateService.omarSitesState.url.base;
+        tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+        tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+        vm.tlvRequestUrl = tlvRequestUrl;
+
+        geoscriptBaseUrl = stateService.omarSitesState.url.base;
+        geoscriptContextPath =
+            stateService.omarSitesState.url.geoscriptContextPath;
+        geoscriptRequestUrl = geoscriptBaseUrl + geoscriptContextPath;
+    }
+
+    $scope.$on("omarSitesState.updated", function(event, params) {
+        setWFSOutputDlControllerUrlProps();
+    });
+
+    vm.attrFilter = "";
+
+    vm.getDownloadURL = function(outputFormat) {
+        vm.url = wfsService.getExport(outputFormat);
+        $window.open(vm.url.toString(), "_blank");
+    };
+
+    $scope.$on("attrObj.updated", function(event, response) {
+        vm.attrFilter = response;
+    });
+
+    vm.goToTLV = function() {
+        var filter = wfsService.spatialObj.filter;
+        if (filter == "") {
+            toastr.error("A spatial filter needs to be enabled.");
+        } else {
+            var pointLatLon;
+            mapService.mapPointLatLon();
+            if (mapService.pointLatLon) {
+                pointLatLon = mapService.pointLatLon;
+            } else {
+                var center = mapService.getCenter();
+                pointLatLon = center
+                    .slice()
+                    .reverse()
+                    .join(",");
+            }
+
+            if (vm.attrFilter) {
+                filter += " AND " + vm.attrFilter;
+            }
+
+            var tlvURL =
+                tlvRequestUrl +
+                "/?filter=" +
+                encodeURIComponent(filter) +
+                "&maxResults=100";
+            $window.open(tlvURL, "_blank");
+        }
+    };
+
+    vm.getGeoRss = () => {
+        vm.geoRssAppLink = geoscriptRequestUrl + "/georss?filter=";
+        let wfsFilter = "";
+
+        // Checking here for the spatial filter.
+        if (
+            wfsService.spatialObj.filter ||
+            wfsService.spatialObj.filter.length >= 1
+        ) {
+            wfsFilter = wfsService.spatialObj.filter;
+        }
+
+        // Checking here for the attributes filter.
+        if (wfsService.attrObj.filter || wfsService.attrObj.filter.length >= 1) {
+            // Check to see if we already have a spatial filter in the
+            // wfsFilter.  If so we will combine them as a filter.
+            if (wfsFilter !== "") {
+                wfsFilter += " AND " + wfsService.attrObj.filter;
+                return $window.open(
+                    vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+                    "_blank"
+                );
+            }
+
+            // We don't have a spatial filter so we will just make the filter with
+            // the attrObj filter.
+            wfsFilter = wfsService.attrObj.filter;
+            return $window.open(
+                vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+                "_blank"
+            );
+        }
+        // There isn't a spatial OR a attribute filter.  We will just create an empty filter.
+        return $window.open(
+            vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+            "_blank"
+        );
+
+        // TODO: Figure out if selections are possible
     };
   }
 
@@ -948,6 +1071,7 @@
         vm.beData = data;
       });
     });
+
   }
 
 })();

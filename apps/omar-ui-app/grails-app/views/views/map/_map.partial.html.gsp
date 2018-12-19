@@ -1333,8 +1333,7 @@
                           <span class = "text-success">Valid Model</span>
                         </span>
                         <span ng-show="!image.properties.valid_model">
-                          <span class = "glyphicon glyphicon-ban-circle text-danger"></span>
-                          <span class = "text-danger">Invalid Model</span>
+                          <span class = "text-info">Model: N/A</span>
                         </span>
                     </div>
                   </div>

@@ -16,7 +16,7 @@
     // provides access to various client params in application.yml
     // #################################################################################
 
-        var userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
+        var userPreferences = AppO2.APP_CONFIG.userPreferences;
         var urlParams = $stateParams;
 
 
@@ -151,19 +151,19 @@
     });
 
     this.mapInit = function() {
-        var mapCenterX = userPreferences.mapCenterX;
+        var mapCenterX = userPreferences.o2SearchPreference.mapCenterX;
         if ( urlParams.mapCenterX ) {
             mapCenterX = urlParams.mapCenterX;
         }
-        var mapCenterY = userPreferences.mapCenterY;
+        var mapCenterY = userPreferences.o2SearchPreference.mapCenterY;
         if ( urlParams.mapCenterY ) {
             mapCenterY = urlParams.mapCenterY;
         }
-        var rotation = userPreferences.mapRotation;
+        var rotation = userPreferences.o2SearchPreference.mapRotation;
         if ( urlParams.mapRotation ) {
             rotation = urlParams.mapRotation * Math.PI / 180;
         }
-        var zoom = userPreferences.mapZoom;
+        var zoom = userPreferences.o2SearchPreference.mapZoom;
         if ( urlParams.mapZoom ) {
             zoom = urlParams.mapZoom;
         }
@@ -1130,15 +1130,15 @@
             html = coord[1].toFixed(6) + ", " + coord[0].toFixed(6);
             break;
           // dms w/cardinal direction
-          case 1:
-            html = point.getLatDegCard() + ", " + point.getLonDegCard();
-            break;
+          //case 1:
+            //html = point.getLatDegCard() + ", " + point.getLonDegCard();
+            //break;
           // dms w/o cardinal direction
-          case 2:
+          case 1:
             html = point.getLatDeg() + ", " + point.getLonDeg();
             break;
           // mgrs
-          case 3:
+          case 2:
             html = mgrs.forward(coord, 5);
             break;
         }
@@ -1155,12 +1155,14 @@
       undefinedHTML: "&nbsp;"
     });
 
-    mousePositionControl.coordFormat = 0;
-    $("#mouseCoords").click(function() {
-      mousePositionControl.coordFormat =
-        mousePositionControl.coordFormat >= 3
-          ? 0
-          : mousePositionControl.coordFormat + 1;
+    switch ( userPreferences.coordinateFormat ) {
+        case "dd": mousePositionControl.coordFormat = 0; break;
+        case "dms": mousePositionControl.coordFormat = 1; break;
+        case "mgrs": mousePositionControl.coordFormat = 2; break;
+    }
+    $( "#mouseCoords" ).click( function() {
+        var currentCount = mousePositionControl.coordFormat;
+        mousePositionControl.coordFormat = currentCount >= 3 ? 0 : currentCount + 1;
     });
 
     /**

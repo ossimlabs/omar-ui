@@ -53,7 +53,6 @@
     vm.legendUrl = "";
 
     mapService.mapInit();
-    mapService.setIntialMapSpatialFilter();
 
     $scope.$on("attrObj.updated", function(event, filter) {
       mapService.updateFootPrintLayer(filter);

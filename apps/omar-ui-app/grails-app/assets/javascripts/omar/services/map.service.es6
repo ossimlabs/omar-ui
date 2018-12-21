@@ -1,16 +1,16 @@
-(function() {
-  "use strict";
-  angular
-    .module("omarApp")
-    .service("mapService", [
-      "stateService",
-      "$stateParams",
-      "wfsService",
-      "$timeout",
-      "$log",
-      mapService
+( function() {
+    "use strict";
+    angular
+    .module( "omarApp" )
+    .service( "mapService", [
+        "stateService",
+        "$stateParams",
+        "wfsService",
+        "$timeout",
+        "$log",
+        mapService
     ]);
-  function mapService(stateService, $stateParams, wfsService, $timeout, $log) {
+    function mapService( stateService, $stateParams, wfsService, $timeout, $log ) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -18,244 +18,238 @@
 
         var userPreferences = AppO2.APP_CONFIG.userPreferences;
         var urlParams = $stateParams;
+        var vm = this;
 
+        var map,
+        mapView,
+        footPrints,
+        autoMosaic,
+        searchLayerVector, // Used for visualizing the search items map markers polygon boundaries
+        filterLayerVector, // Used for visualizing the filter markers and polygon AOI's
+        wktFormat,
+        searchFeatureWkt,
+        iconStyle,
+        wktStyle,
+        filterStyle,
+        footprintStyle,
+        dragBox,
+        pointLatLon,
+        overlayGroup,
+        mosaicGroup;
 
-    var map,
-      mapView,
-      footPrints,
-      autoMosaic,
-      searchLayerVector, // Used for visualizing the search items map markers polygon boundaries
-      filterLayerVector, // Used for visualizing the filter markers and polygon AOI's
-      geomField,
-      wktFormat,
-      searchFeatureWkt,
-      iconStyle,
-      wktStyle,
-      filterStyle,
-      footprintStyle,
-      dragBox,
-      pointLatLon,
-      overlayGroup,
-      mosaicGroup;
+        var version = "1.1.1";
+        var layers = "omar:raster_entry";
+        var styles = "byFileType";
+        var format = "image/gif";
+        var name = "Image Footprints";
+        var mapObj = {};
 
-    var version = "1.1.1";
-    var layers = "omar:raster_entry";
-    var styles = "byFileType";
-    var format = "image/gif";
-    var name = "Image Footprints";
-    var mapObj = {};
+        var baseServerUrl = AppO2.APP_CONFIG.serverURL;
+        var markerUrl = baseServerUrl + "/" + AppO2.APP_CONFIG.params.misc.icons.greenMarker;
 
-    var baseServerUrl = AppO2.APP_CONFIG.serverURL;
-    var markerUrl =
-      baseServerUrl + "/" + AppO2.APP_CONFIG.params.misc.icons.greenMarker;
+        // Sets the intial url values for the footprints (geoscript) service
+        var footprintsBaseUrl = stateService.omarSitesState.url.base;
+        var footprintsContextPath = stateService.omarSitesState.url.geoscriptContextPath;
+        var footprintsRequestUrl = footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
 
-    // Sets the intial url values for the footprints (geoscript) service
-    var footprintsBaseUrl = stateService.omarSitesState.url.base;
-    var footprintsContextPath =
-      stateService.omarSitesState.url.geoscriptContextPath;
-    var footprintsRequestUrl =
-      footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
+        // Sets the initial url values for the thumbnails (oms) service
+        var thumbnailsBaseUrl = stateService.omarSitesState.url.base;
+        var thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
+        var thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
-    // Sets the initial url values for the thumbnails (oms) service
-    var thumbnailsBaseUrl = stateService.omarSitesState.url.base;
-    var thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-    var thumbnailsRequestUrl =
-      thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+        var wmsBaseUrl = stateService.omarSitesState.url.base;
+        var wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
+        var wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+        var autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
 
-    var wmsBaseUrl = stateService.omarSitesState.url.base;
-    var wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
-    var wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
-    var autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
+        /**
+        * Description: Called from the mapController so that the $on. event that subscribes to the $broadcast
+        * can update the Geoscript and Thumbnails url and context path(s).
+        */
+        vm.setMapServiceUrlProps = function() {
+            footprintsBaseUrl = stateService.omarSitesState.url.base;
+            footprintsContextPath = stateService.omarSitesState.url.geoscriptContextPath;
+            footprintsRequestUrl = footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
 
-    /**
-     * Description: Called from the mapController so that the $on. event that subscribes to the $broadcast
-     * can update the Geoscript and Thumbnails url and context path(s).
-     */
-    this.setMapServiceUrlProps = function() {
-      footprintsBaseUrl = stateService.omarSitesState.url.base;
-      footprintsContextPath =
-        stateService.omarSitesState.url.geoscriptContextPath;
-      footprintsRequestUrl =
-        footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
+            thumbnailsBaseUrl = stateService.omarSitesState.url.base;
+            thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
+            thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
-      thumbnailsBaseUrl = stateService.omarSitesState.url.base;
-      thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-      thumbnailsRequestUrl =
-        thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+            wmsBaseUrl = stateService.omarSitesState.url.base;
+            wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
+            wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
+            autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
 
-      wmsBaseUrl = stateService.omarSitesState.url.base;
-      wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
-      wmsRequestUrl = wmsBaseUrl + wmsContextPath + "/wms";
-      autoMosaicRequestUrl = wmsBaseUrl + wmsContextPath + "/mosaic";
+            clearSelectedMosaicImages();
+        };
 
-      clearSelectedMosaicImages();
-    };
+        iconStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 46],
+                anchorXUnits: "fraction",
+                anchorYUnits: "pixels",
+                src: markerUrl
+            })
+        });
 
-    iconStyle = new ol.style.Style({
-      image: new ol.style.Icon({
-        anchor: [0.5, 46],
-        anchorXUnits: "fraction",
-        anchorYUnits: "pixels",
-        src: markerUrl
-      })
-    });
+        wktStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: "rgba(255, 100, 50, 0.2)"
+            }),
+            stroke: new ol.style.Stroke({
+                width: 1.5,
+                color: "rgba(255, 100, 50, 0.6)"
+            })
+        });
 
-    wktStyle = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: "rgba(255, 100, 50, 0.2)"
-      }),
-      stroke: new ol.style.Stroke({
-        width: 1.5,
-        color: "rgba(255, 100, 50, 0.6)"
-      })
-    });
+        filterStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: "rgba(255, 100, 50, 0.2)"
+            }),
+            stroke: new ol.style.Stroke({
+                width: 5.0,
+                color: "rgba(255, 100, 50, 0.6)"
+            })
+        });
 
-    filterStyle = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: "rgba(255, 100, 50, 0.2)"
-      }),
-      stroke: new ol.style.Stroke({
-        width: 5.0,
-        color: "rgba(255, 100, 50, 0.6)"
-      })
-    });
+        footprintStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: "rgba(255, 100, 50, 0.6)"
+            }),
+            stroke: new ol.style.Stroke({
+                width: 5.5
+            })
+        });
 
-    footprintStyle = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: "rgba(255, 100, 50, 0.6)"
-      }),
-      stroke: new ol.style.Stroke({
-        width: 5.5
-      })
-    });
+        searchLayerVector = new ol.layer.Vector({
+            source: new ol.source.Vector({ wrapX: false })
+        });
 
-    searchLayerVector = new ol.layer.Vector({
-      source: new ol.source.Vector({ wrapX: false })
-    });
-
-    filterLayerVector = new ol.layer.Vector({
-      source: new ol.source.Vector({ wrapX: false })
-    });
-
-    /**
-     * Elements that make up the popup.
-     */
-    var container = document.getElementById("popup");
-    var content = document.getElementById("popup-content");
-
-    /**
-     * Create an overlay to anchor the popup to the map.
-     */
-    var overlay = new ol.Overlay({
-      element: container
-    });
-
-    this.mapInit = function() {
-        var mapCenterX = userPreferences.o2SearchPreference.mapCenterX;
-        if ( urlParams.mapCenterX ) {
-            mapCenterX = urlParams.mapCenterX;
-        }
-        var mapCenterY = userPreferences.o2SearchPreference.mapCenterY;
-        if ( urlParams.mapCenterY ) {
-            mapCenterY = urlParams.mapCenterY;
-        }
-        var rotation = userPreferences.o2SearchPreference.mapRotation;
-        if ( urlParams.mapRotation ) {
-            rotation = urlParams.mapRotation * Math.PI / 180;
-        }
-        var zoom = userPreferences.o2SearchPreference.mapZoom;
-        if ( urlParams.mapZoom ) {
-            zoom = urlParams.mapZoom;
+        filterLayerVector = new ol.layer.Vector({
+            source: new ol.source.Vector({ wrapX: false })
+        });
+        vm.getFilterVectorGeometry = function() {
+            return filterLayerVector.getSource().getFeatures()[ 0 ].getGeometry();
         }
 
-      mapView = new ol.View({
-        center: [ mapCenterX, mapCenterY ],
-        extent: [-180, -90, 180, 90],
-        maxZoom: 20,
-        minZoom: 2,
-        projection: "EPSG:4326",
-        rotation: rotation,
-        zoom: zoom
-      });
+        /**
+        * Elements that make up the popup.
+        */
+        var container = document.getElementById("popup");
+        var content = document.getElementById("popup-content");
 
+        /**
+        * Create an overlay to anchor the popup to the map.
+        */
+        var overlay = new ol.Overlay({
+            element: container
+        });
 
-      if (AppO2.APP_CONFIG.params.footprints.params != undefined) {
-        if (AppO2.APP_CONFIG.params.footprints.params.version != undefined) {
-          version = AppO2.APP_CONFIG.params.footprints.params.version;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.layers != undefined) {
-          layers = AppO2.APP_CONFIG.params.footprints.params.layers;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.styles != undefined) {
-          styles = AppO2.APP_CONFIG.params.footprints.params.styles;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.format != undefined) {
-          format = AppO2.APP_CONFIG.params.footprints.params.format;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.name != undefined) {
-          name = AppO2.APP_CONFIG.params.footprints.params.name;
-        }
-      }
+        vm.mapInit = function() {
+            var mapCenterX = userPreferences.o2SearchPreference.mapCenterX;
+            if ( urlParams.mapCenterX ) {
+                mapCenterX = parseFloat( urlParams.mapCenterX );
+            }
+            var mapCenterY = userPreferences.o2SearchPreference.mapCenterY;
+            if ( urlParams.mapCenterY ) {
+                mapCenterY = parseFloat( urlParams.mapCenterY );
+            }
+            var rotation = userPreferences.o2SearchPreference.mapRotation;
+            if ( urlParams.mapRotation ) {
+                rotation = parseFloat( urlParams.mapRotation ) * Math.PI / 180;
+            }
+            var zoom = userPreferences.o2SearchPreference.mapZoom;
+            if ( urlParams.mapZoom ) {
+                zoom = parseInt( urlParams.mapZoom );
+            }
 
-      footPrints = new ol.layer.Tile({
-        title: name,
-        source: new ol.source.TileWMS({
-          url: footprintsRequestUrl,
-          params: {
-            FILTER: "",
-            VERSION: version,
-            LAYERS: layers,
-            STYLES: styles,
-            FORMAT: format
-          },
-          wrapX: false
-        }),
-        name: "Image Footprints"
-      });
+            mapView = new ol.View({
+                center: [ mapCenterX, mapCenterY ],
+                extent: [-180, -90, 180, 90],
+                maxZoom: 20,
+                minZoom: 2,
+                projection: "EPSG:4326",
+                rotation: rotation,
+                zoom: zoom
+            });
 
-      var footprintsSource = footPrints.getSource();
+            if ( AppO2.APP_CONFIG.params.footprints.params != undefined ) {
+                if ( AppO2.APP_CONFIG.params.footprints.params.version != undefined ) {
+                    version = AppO2.APP_CONFIG.params.footprints.params.version;
+                }
+                if ( AppO2.APP_CONFIG.params.footprints.params.layers != undefined ) {
+                    layers = AppO2.APP_CONFIG.params.footprints.params.layers;
+                }
+                if ( AppO2.APP_CONFIG.params.footprints.params.styles != undefined ) {
+                    styles = AppO2.APP_CONFIG.params.footprints.params.styles;
+                }
+                if ( AppO2.APP_CONFIG.params.footprints.params.format != undefined ) {
+                    format = AppO2.APP_CONFIG.params.footprints.params.format;
+                }
+                if ( AppO2.APP_CONFIG.params.footprints.params.name != undefined ) {
+                    name = AppO2.APP_CONFIG.params.footprints.params.name;
+                }
+            }
 
-      /* Adding Auto Mosaic */
-      autoMosaic = new ol.layer.Tile({
-        title: "Auto",
-        source: new ol.source.TileWMS({
-          url: autoMosaicRequestUrl,
-          params: {
-            FILTER: "",
-            VERSION: version,
-            LAYERS: layers,
-            STYLES: styles,
-            FORMAT: format
-          },
-          wrapX: false
-        }),
-        name: "Auto",
-        visible: false
-      });
+            footPrints = new ol.layer.Tile({
+                title: name,
+                source: new ol.source.TileWMS({
+                    url: footprintsRequestUrl,
+                    params: {
+                        FILTER: "",
+                        VERSION: version,
+                        LAYERS: layers,
+                        STYLES: styles,
+                        FORMAT: format
+                    },
+                    wrapX: false
+                }),
+                name: "Image Footprints"
+            });
 
-      var autoMosaicSource = autoMosaic.getSource();
+            var footprintsSource = footPrints.getSource();
 
-      /**
-       * Renders a progress icon.
-       * @param {Element} el The target element.
-       * @constructor
-       */
-      function Progress(el) {
-        this.el = el;
-        this.loading = 0;
-        this.loaded = 0;
-      }
+            /* Adding Auto Mosaic */
+            autoMosaic = new ol.layer.Tile({
+                title: "Auto",
+                source: new ol.source.TileWMS({
+                    url: autoMosaicRequestUrl,
+                    params: {
+                        FILTER: "",
+                        VERSION: version,
+                        LAYERS: layers,
+                        STYLES: styles,
+                        FORMAT: format
+                    },
+                    wrapX: false
+                }),
+                name: "Auto",
+                visible: false
+            });
 
-      /**
-       * Increment the count of loading tiles.
-       */
-      Progress.prototype.addLoading = function() {
-        if (this.loading === 0) {
-          this.show();
-        }
-        ++this.loading;
-        this.update();
-      };
+            var autoMosaicSource = autoMosaic.getSource();
+
+            /**
+            * Renders a progress icon.
+            * @param {Element} el The target element.
+            * @constructor
+            */
+            function Progress(el) {
+                this.el = el;
+                this.loading = 0;
+                this.loaded = 0;
+            }
+
+            /**
+            * Increment the count of loading tiles.
+            */
+            Progress.prototype.addLoading = function() {
+                if (this.loading === 0) {
+                    this.show();
+                }
+                ++this.loading;
+                this.update();
+            };
 
       /**
        * Increment the count of loaded tiles.
@@ -500,28 +494,22 @@
       map.addLayer(searchLayerVector);
       map.addLayer(filterLayerVector);
 
-      geomField = "ground_geom";
-
-      // needed to avoid two WFS requests from happening when the page loads
-      map.once("moveend", function() {
-        map.on("moveend", filterByViewPort);
-      });
-
       dragBox = new ol.interaction.DragBox({
         condition: ol.events.condition.altKeyOnly
       });
 
-      dragBox.on("boxend", function() {
-        clearLayerSource(filterLayerVector);
+        dragBox.on( "boxend", function() {
+            var dragBoxGeometry = dragBox.getGeometry();
+            vm.dragBoxEnd( dragBoxGeometry );
+        });
+    };
 
-        var dragBoxExtent = dragBox.getGeometry().getExtent();
+    vm.dragBoxEnd = function( geometry ) {
+        clearLayerSource( filterLayerVector );
 
-        mapObj.cql =
-          "INTERSECTS(" +
-          geomField +
-          "," +
-          convertToWktPolygon(dragBoxExtent) +
-          ")";
+        var extent = geometry.getExtent();
+
+        mapObj.cql = "INTERSECTS(ground_geom," + convertToWktPolygon( extent ) + ")";
 
         // Update the image cards in the list via spatial click coordinates
         wfsService.updateSpatialFilter(mapObj.cql);
@@ -531,12 +519,11 @@
         wfsService.updateAttrFilter(wfsService.attrObj.filter);
 
         var searchPolygon = new ol.Feature({
-          geometry: new ol.geom.Polygon.fromExtent(dragBoxExtent)
+          geometry: new ol.geom.Polygon.fromExtent( extent )
         });
 
-        searchPolygon.setStyle(filterStyle);
-        filterLayerVector.getSource().addFeatures([searchPolygon]);
-      });
+        searchPolygon.setStyle( filterStyle );
+        filterLayerVector.getSource().addFeatures( [ searchPolygon ] );
     };
 
     let selectedImagesArray = [];
@@ -567,12 +554,7 @@
      * @param id
      */
     const addSelectedImageAsLayer = id => {
-      let mosaicCql =
-        "INTERSECTS(" +
-        geomField +
-        "," +
-        convertToWktPolygon(getMapBbox()) +
-        ")";
+      let mosaicCql = "INTERSECTS(ground_geom," + convertToWktPolygon( getMapBbox() ) + ")";
 
       // Check to see if imageLayer exists as an OL layer yet
       if (imageLayer === undefined) {
@@ -605,7 +587,7 @@
       }
     };
 
-    this.addSelectedImageAsLayer = id => {
+    vm.addSelectedImageAsLayer = id => {
       addSelectedImageAsLayer(id);
     };
 
@@ -652,7 +634,7 @@
       }
     };
 
-    this.removeSelectedImageLayer = id => {
+    vm.removeSelectedImageLayer = id => {
       removeSelectedImageLayer(id);
     };
 
@@ -692,7 +674,7 @@
       });
     };
 
-    this.zoomToSelectedImages = ids => {
+    vm.zoomToSelectedImages = ids => {
       zoomToSelectedImages(ids);
     };
 
@@ -718,11 +700,11 @@
       }
     };
 
-    this.clearSelectedMosaicImages = () => {
+    vm.clearSelectedMosaicImages = () => {
       clearSelectedMosaicImages();
     };
 
-    this.clearSelectedImages = this.zoomMap = function(params) {
+    vm.clearSelectedImages = vm.zoomMap = function(params) {
       if (params.feature.wkt !== undefined) {
         zoomToExt(params);
       } else {
@@ -739,7 +721,7 @@
         .setTileLoadFunction(footPrints.getSource().getTileLoadFunction());
     }
 
-    this.updateFootPrintLayer = function(filter) {
+    vm.updateFootPrintLayer = function(filter) {
       updateFootPrints(filter);
     };
 
@@ -747,7 +729,7 @@
       footPrints.getSource().setUrl(footprintsRequestUrl);
     }
 
-    this.updateFootprintsUrl = function() {
+    vm.updateFootprintsUrl = function() {
       updateFootprintsUrl();
     };
 
@@ -760,7 +742,7 @@
         .setTileLoadFunction(autoMosaic.getSource().getTileLoadFunction());
     }
 
-    this.updateAutoMosaicLayer = function(filter) {
+    vm.updateAutoMosaicLayer = function(filter) {
       updateAutoMosaic(filter);
     };
 
@@ -768,22 +750,8 @@
       autoMosaic.getSource().setUrl(autoMosaicRequestUrl);
     }
 
-    this.autoMosaicRequestUrl = function() {
+    vm.autoMosaicRequestUrl = function() {
       updateAutoMosaicRequestUrl();
-    };
-
-    /**
-     * We need this to set the intial spatial filter for
-     * the WFS spatialObj's filter property.
-     */
-    this.setIntialMapSpatialFilter = function() {
-      mapObj.cql =
-        "INTERSECTS(" +
-        geomField +
-        "," +
-        convertToWktPolygon(getMapBbox()) +
-        ")";
-      wfsService.spatialObj.filter = mapObj.cql;
     };
 
     /**
@@ -794,18 +762,13 @@
     function filterByViewPort() {
       clearLayerSource(filterLayerVector);
 
-      mapObj.cql =
-        "INTERSECTS(" +
-        geomField +
-        "," +
-        convertToWktPolygon(getMapBbox()) +
-        ")";
+      mapObj.cql = "INTERSECTS(ground_geom," + convertToWktPolygon( getMapBbox() ) + ")";
 
       // Update the image cards in the list via spatial bounds
       wfsService.updateSpatialFilter(mapObj.cql);
     }
 
-    this.viewPortFilter = function(status) {
+    vm.viewPortFilter = function(status) {
       if (status) {
         map.on("moveend", filterByViewPort);
         filterByViewPort();
@@ -823,7 +786,7 @@
      * the map and sending the XY (point) to the wfs service to update the card
      * list
      */
-    function filterByPoint(event) {
+    this.filterByPoint = function( event ) {
       clearLayerSource(filterLayerVector);
 
       var coordinate = event.coordinate;
@@ -832,8 +795,7 @@
 
       pointLatLon = coordinate[1] + "," + coordinate[0];
 
-      mapObj.cql =
-        "INTERSECTS(" + geomField + ",POINT(" + clickCoordinates + "))";
+      mapObj.cql = "INTERSECTS(ground_geom,POINT(" + clickCoordinates + "))";
 
       // Update the image cards in the list via spatial click coordinates
       wfsService.updateSpatialFilter(mapObj.cql);
@@ -853,10 +815,10 @@
 
     this.pointFilter = function(status) {
       if (status) {
-        map.on("singleclick", filterByPoint);
+        map.on("singleclick", this.filterByPoint);
       } else {
         // https://groups.google.com/d/msg/ol3-dev/Z4JoCBs-iEY/HSpihl8bcVIJ
-        map.un("singleclick", filterByPoint);
+        map.un("singleclick", this.filterByPoint);
         clearLayerSource(searchLayerVector);
         wfsService.updateAttrFilter(wfsService.attrObj.filter);
       }
@@ -948,6 +910,10 @@
 
     this.getCenter = function() {
       return map.getView().getCenter();
+    };
+
+    this.getMap = function() {
+        return map;
     };
 
     this.getRotation = function() {

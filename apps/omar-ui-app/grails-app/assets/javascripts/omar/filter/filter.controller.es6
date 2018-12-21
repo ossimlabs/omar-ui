@@ -99,15 +99,6 @@
 
     var stagerBaseUrl, stagerContextPath, stagerRequestUrl;
 
-    // Initial state of the filter indicators
-    function setInitialfilterIndicators() {
-      vm.filterKeywordIndicator = false;
-      vm.filterRangeIndicator = false;
-      vm.filterSpatialIndicator = true;
-      vm.filterTemporalIndicator = false;
-    }
-    setInitialfilterIndicators();
-
     function setfilterControllerUrlProps() {
       stagerBaseUrl = stateService.omarSitesState.url.base;
       stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
@@ -128,9 +119,27 @@
     vm.currentSpatialFilter = "";
 
     vm.initSpatial = function() {
-      vm.viewPortSpatial = true;
-      vm.pointSpatial = false;
-      vm.polygonSpatial = false;
+        vm.viewPortSpatial = false;
+        vm.pointSpatial = false;
+        vm.polygonSpatial = false;
+
+        var spatial = vm.urlParams.spatial || vm.userPreferences.spatial;
+        if ( spatial.toLowerCase() == "mapview" ) {
+            vm.viewPortSpatial = true;
+            setSpatialIndicator( true, "View Port" );
+        }
+        else if ( spatial.toLowerCase().includes( "point" ) ) {
+            vm.pointSpatial = true;
+            setSpatialIndicator( true, "Point" );
+            var point = new ol.format.WKT().readGeometry( spatial );
+            mapService.filterByPoint({ coordinate: point.getCoordinates() });
+        }
+        else if ( spatial.toLowerCase().includes( "polygon" ) ) {
+            vm.polygonSpatial = true;
+            setSpatialIndicator( true, "Polygon" );
+            var polygon = new ol.format.WKT().readGeometry( spatial );
+            mapService.dragBoxEnd( polygon );
+        }
     };
 
     $scope["missionIdTypes"] = [];
@@ -174,9 +183,6 @@
       setSpatialIndicator(true, "View Port");
       checkNoSpatialFilter();
     };
-
-    // Inital spatial filter is the View Port
-    setSpatialIndicator(true, "View Port");
 
     this.byPointer = function(status) {
       // Turn on point
@@ -437,27 +443,13 @@
 
       var dateToday = moment().format("MM-DD-YYYY 00:00+0000");
       var dateTodayEnd = moment().format("MM-DD-YYYY 23:59+0000");
-      var dateYesterday = moment()
-        .subtract(1, "days")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateYesterdayEnd = moment()
-        .subtract(1, "days")
-        .format("MM-DD-YYYY 23:59+0000");
-      var dateLast3Days = moment()
-        .subtract(2, "days")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateLast7Days = moment()
-        .subtract(7, "days")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateThisMonth = moment()
-        .subtract(1, "months")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateLast3Months = moment()
-        .subtract(3, "months")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateLast6Months = moment()
-        .subtract(6, "months")
-        .format("MM-DD-YYYY 00:00+0000");
+      var dateYesterday = moment().subtract(1, "days").format("MM-DD-YYYY 00:00+0000");
+      var dateYesterdayEnd = moment().subtract(1, "days").format("MM-DD-YYYY 23:59+0000");
+      var dateLast3Days = moment().subtract(2, "days").format("MM-DD-YYYY 00:00+0000");
+      var dateLast7Days = moment().subtract(7, "days").format("MM-DD-YYYY 00:00+0000");
+      var dateThisMonth = moment().subtract(1, "months").format("MM-DD-YYYY 00:00+0000");
+      var dateLast3Months = moment().subtract(3, "months").format("MM-DD-YYYY 00:00+0000");
+      var dateLast6Months = moment().subtract(6, "months").format("MM-DD-YYYY 00:00+0000");
 
       var dbName = vm.currentDateType.value; //"acquisition_date";
       var temporalParam = vm.currentTemporalDuration.value;
@@ -476,16 +468,7 @@
           vm.currentAttrFilterArray.push(`${dateField}: Today`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateToday,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateToday, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
           );
           break;
         case "yesterday":
@@ -493,16 +476,7 @@
           vm.currentAttrFilterArray.push(`${dateField}: Yesterday`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateYesterday,
-              "'AND",
-              dbName,
-              "<='",
-              dateYesterdayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateYesterday, "'AND", dbName, "<='", dateYesterdayEnd, "'" ].join(" ")
           );
           break;
         case "last3Days":
@@ -510,16 +484,7 @@
           vm.customDateRangeVisible = false;
           vm.currentAttrFilterArray.push(`${dateField}: Last 3 Days`);
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast3Days,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateLast3Days, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
           );
           break;
         case "last7Days":
@@ -527,16 +492,7 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last 7 Days`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast7Days,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateLast7Days, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
           );
           break;
         case "lastMonth":
@@ -544,16 +500,7 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last Month`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateThisMonth,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateThisMonth, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
           );
           break;
         case "last3Months":
@@ -561,16 +508,7 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last 3 Months`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast3Months,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateLast3Months, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
           );
           break;
         case "last6Months":
@@ -578,16 +516,7 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last Six Months`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast6Months,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
+            [ dbName, ">='", dateLast6Months, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
           );
           break;
         case "customDateRange":
@@ -601,16 +530,7 @@
           );
           vm.customDateRangeVisible = true;
           filterArray.push(
-            [
-              dbName,
-              ">='",
-              vm.getCustomStartDate(),
-              "'AND",
-              dbName,
-              "<='",
-              vm.getCustomEndDate(),
-              "'"
-            ].join(" ")
+            [ dbName, ">='", vm.getCustomStartDate(), "'AND", dbName, "<='", vm.getCustomEndDate(), "'" ].join(" ")
           );
           break;
         default:
@@ -1046,6 +966,29 @@
                 searchString.duration = vm.currentTemporalDuration.value;
             }
         }
+
+        if ( vm.viewPortSpatial ) {
+            searchString.spatial = "ampView";
+        }
+        else if ( vm.pointSpatial ) {
+            var point = mapService.getFilterVectorGeometry();
+            var wkt = new ol.format.WKT().writeGeometry( point );
+            searchString.spatial = wkt;
+        }
+        else if ( vm.polygonSpatial ) {
+            var extent = mapService.getFilterVectorGeometry().getExtent();
+            $.each( extent, function( index, degrees ) {
+                extent[ index ] = degrees.toFixed( 6 );
+            });
+            var wkt = "POLYGON((" +
+                extent[ 0 ] + " " + extent[ 1 ] + "," +
+                extent[ 2 ] + " " + extent[ 1 ] + "," +
+                extent[ 2 ] + " " + extent[ 3 ] + "," +
+                extent[ 0 ] + " " + extent[ 3 ] +
+            "))";
+            searchString.spatial = wkt;
+        }
+
 
         var searchInput = $("#searchInput").val();
         if ( searchInput != "" ) {

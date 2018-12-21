@@ -209,6 +209,7 @@ Want to share your awesome searches with friends? Use the table below to constru
 | missions | The image's mission ID. Multiple can be set separated by a comma. |
 | niirs | The image's NIIRS rating. A range can bet set with a semi-colon. |
 | sensors | The image's sensor ID. Multiple can be set separated by a comma. |
+| spatial | The map's spatial filter. "mapView", or either a POINT/POLYGON WKT.
 | startDate | The start date for a custom date range. |
 | sunAzimuth | The image's sun aximuth angle. A range can be set with a semi-colon. |
 | sunElevation | The image's sun elevation angle. A range can be set with a semi-colon. |

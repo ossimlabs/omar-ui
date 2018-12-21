@@ -74,6 +74,7 @@
                 "missions",
                 "niirs",
                 "sensors",
+                "spatial",
                 "startDate",
                 "sunAzimuth",
                 "sunElevation",

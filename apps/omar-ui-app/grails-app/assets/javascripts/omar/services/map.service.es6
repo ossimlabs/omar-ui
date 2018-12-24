@@ -8,9 +8,10 @@
         "wfsService",
         "$timeout",
         "$log",
+        "$rootScope",
         mapService
     ]);
-    function mapService( stateService, $stateParams, wfsService, $timeout, $log ) {
+    function mapService( stateService, $stateParams, wfsService, $timeout, $log, $rootScope ) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -55,7 +56,7 @@
         // Sets the initial url values for the thumbnails (oms) service
         var thumbnailsBaseUrl = stateService.omarSitesState.url.base;
         var thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-        var thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+        var thumbnailUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
         var wmsBaseUrl = stateService.omarSitesState.url.base;
         var wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
@@ -73,7 +74,7 @@
 
             thumbnailsBaseUrl = stateService.omarSitesState.url.base;
             thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-            thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+            thumbnailUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
             wmsBaseUrl = stateService.omarSitesState.url.base;
             wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
@@ -463,6 +464,33 @@
         view: mapView
       });
 
+        var featureSelectLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({ wrapX: false })
+        });
+        map.addLayer( featureSelectLayer );
+        map.on( "click", function( event ) {
+             wfsService.executeWfsPointQuery( event.coordinate );
+        });
+        $rootScope.$on( "wfs point: updated", function( event, data, coordinate ) {
+            if ( data.length > 0 ) {
+                var geoJsonReader = new ol.format.GeoJSON();
+                var features= [];
+                $.each( data, function( index, feature ) {
+                    var feature = geoJsonReader.readFeature( feature );
+                    features.push( feature );
+                });
+                var vectorSource = new ol.source.Vector({
+                    features: features
+                });
+
+                var closestFeature = vectorSource.getClosestFeatureToCoordinate( coordinate );
+                vm.mapShowImageFootprint( closestFeature );
+            }
+            else {
+                vm.mapRemoveImageFootprint();
+            }
+        });
+
       setupContextDialog();
 
       function setupContextDialog() {
@@ -502,6 +530,11 @@
             var dragBoxGeometry = dragBox.getGeometry();
             vm.dragBoxEnd( dragBoxGeometry );
         });
+
+        var spatial = urlParams.spatial || userPreferences.o2SearchPreference.spatial;
+        if ( spatial.toLowerCase() == "mapview" ) {
+            vm.viewPortFilter( true );
+        }
     };
 
     vm.dragBoxEnd = function( geometry ) {
@@ -835,71 +868,73 @@
     };
 
     this.mapShowImageFootprint = function(imageObj) {
-      clearLayerSource(searchLayerVector);
+        clearLayerSource(searchLayerVector);
 
-      var footprintFeature = new ol.Feature({
-        geometry: new ol.geom.MultiPolygon(imageObj.geometry.coordinates)
-      });
+        var coordinates = imageObj.geometry ? imageObj.geometry.coordinates : imageObj.getGeometry().getCoordinates();
+        var properties = imageObj.properties || imageObj.getProperties();
+        if ( properties.acquisition_date ) {
+            var date = properties.acquisition_date;
+            properties.acquisition_date = moment( date ).format( "MM/DD/YYYY HH:mm:ss" );
+        }
 
-      var color = setFootprintColors(imageObj.properties.file_type);
+        var footprintFeature = new ol.Feature({
+            geometry: new ol.geom.MultiPolygon( coordinates )
+        });
 
-      footprintStyle.getFill().setColor(color);
-      footprintStyle.getStroke().setColor(color);
+        var color = setFootprintColors( properties.file_type );
+        footprintStyle.getFill().setColor( color );
+        footprintStyle.getStroke().setColor( color );
+        footprintFeature.setStyle( footprintStyle );
 
-      footprintFeature.setStyle(footprintStyle);
+        searchLayerVector.getSource().addFeature( footprintFeature );
 
-      searchLayerVector.getSource().addFeature(footprintFeature);
+        var div = document.createElement( "div" );
+        $( div ).addClass( "media" );
 
-      var featureExtent = footprintFeature.getGeometry().getExtent();
+        var leftDiv = document.createElement( "div" );
+        $( leftDiv ).addClass( "media-left" );
+        var image = document.createElement( "img" );
+        var thumbnailParams = {
+            entry: properties.entry_id,
+            filename: properties.filename,
+            format: "jpeg",
+            id: properties.id,
+            size: 50
+        };
+        $( image ).attr( "src", thumbnailUrl + '?' + $.param( thumbnailParams ) );
+        $( leftDiv ).append( image );
+        $( div ).append( leftDiv );
 
-      var featureExtentCenter = new ol.extent.getCenter(featureExtent);
+        var bodyDiv = document.createElement( "div" );
+        $( bodyDiv ).addClass( "media-body" );
+        $.each([
+            { key: "title", label: "Image ID:&nbsp;" },
+            { key: "acquisition_date", label: "Acq. Date:&nbsp;" },
+            { key: "sensor_id", label: "Sensr:&nbsp;" },
+        ], function( index, value ) {
+            var small = document.createElement( "small" );
 
-      var missionID = "Unknown";
-      var sensorID = "Unknown";
-      var acquisition_date = "Unknown";
+            var span = document.createElement( "span" );
+            $( span ).html( value.label );
+            $( small ).append( span );
 
-      if (imageObj.properties.mission_id != undefined) {
-        missionID = imageObj.properties.mission_id;
-      }
-      if (imageObj.properties.sensor_id != undefined) {
-        sensorID = imageObj.properties.sensor_id;
-      }
-      if (imageObj.properties.acquisition_date != undefined) {
-        acquisition_date = moment(imageObj.properties.acquisition_date).format(
-          "MM/DD/YYYY HH:mm:ss"
-        );
-      }
+            var span = document.createElement( "span" );
+            $( span ).addClass( "text-success" );
+            $( span ).html( properties[ value.key ] || "N/A" );
+            $( small ).append( span );
 
-      content.innerHTML =
-        '<div class="media">' +
-        '<div class="media-left">' +
-        '<img class="media-object" ' +
-        'src="' +
-        thumbnailsRequestUrl +
-        "?id=" +
-        imageObj.properties.id +
-        "&filename=" +
-        imageObj.properties.filename +
-        "&entry=" +
-        imageObj.properties.entry_id +
-        "&size=50" +
-        '&format=jpeg">' +
-        "</div>" +
-        '<div class="media-body">' +
-        '<small><span class="text-primary">Mission:&nbsp; </span><span class="text-success">' +
-        missionID +
-        "</span></small><br>" +
-        '<small><span class="text-primary">Sensor:&nbsp; </span><span class="text-success">' +
-        sensorID +
-        "</span></small><br>" +
-        '<small><span class="text-primary">Acquisition:&nbsp; </span><span class="text-success">' +
-        acquisition_date +
-        "</span></small>" +
-        "</div>" +
-        "</div>";
+            $( bodyDiv ).append( small );
+            $( bodyDiv ).append( "<br>" );
+        });
 
-      overlay.setPosition(featureExtentCenter);
-      container.style.display = "block";
+        $( div ).append( bodyDiv );
+        $( content ).html( div );
+
+        var extent = footprintFeature.getGeometry().getExtent();
+        var center = new ol.extent.getCenter( extent );
+        overlay.setPosition( center );
+        //$( container ).css( "background-color", $( "body" ).css( "background-color" ) );
+        $( container ).css( "display", "block" );
     };
 
     this.mapRemoveImageFootprint = function() {

@@ -41,7 +41,8 @@
       sortField: "acquisition_date",
       sortType: "+D",
       startIndex: "0",
-      maxFeatures: "1000"
+      maxFeatures: "1000",
+        service: "WFS"
     };
 
     // When this changes it needs to be passed to the executeWfsQuery method
@@ -110,6 +111,32 @@
       if (boolUpdate) {
         $rootScope.$broadcast("pagination.updated", this.attrObj.filter);
       }
+    };
+
+    this.executeWfsPointQuery = function( coordinate ) {
+        var params = {
+            filter:  "INTERSECTS(ground_geom,POINT(" + coordinate.join( " " ) + "))",
+            maxFeatures:  wfsRequest.maxFeatures,
+            outputFormat: "JSON",
+            request: "GetFeature",
+            service: wfsRequest.service,
+            typeName: wfsRequest.typeName,
+            version: wfsRequest.version
+        };
+
+        $http({
+            method: "GET",
+            url: wfsRequestUrl + $.param( params )
+        })
+        .then( function( response ) {
+            var data = response.data.features;
+            console.dir(data);
+
+            // $timeout needed: http://stackoverflow.com/a/18996042
+            $timeout( function() {
+                $rootScope.$broadcast( "wfs point: updated", data, coordinate );
+            });
+        });
     };
 
     this.executeWfsQuery = function( requestHits ) {

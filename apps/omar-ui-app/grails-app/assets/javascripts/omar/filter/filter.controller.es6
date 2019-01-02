@@ -968,7 +968,7 @@
         }
 
         if ( vm.viewPortSpatial ) {
-            searchString.spatial = "ampView";
+            searchString.spatial = "mapView";
         }
         else if ( vm.pointSpatial ) {
             var point = mapService.getFilterVectorGeometry();

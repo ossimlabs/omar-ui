@@ -864,7 +864,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .ol-popup:after,
 .ol-popup:before {
   top: 100%;
-  border: solid transparent;
   content: " ";
   height: 0;
   width: 0;

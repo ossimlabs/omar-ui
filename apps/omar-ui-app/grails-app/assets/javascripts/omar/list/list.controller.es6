@@ -697,14 +697,15 @@
       // );
     };
 
-    vm.viewOrtho = function(image, location) {
-      var feature = new ol.format.GeoJSON().readFeature(image);
-
+    $scope.$on( "viewOrtho", function( event, image ) {
+        vm.viewOrtho( image );
+    });
+    vm.viewOrtho = function( image ) {
+      var feature = new ol.format.GeoJSON().readFeature( image );
       var filter = "in(" + feature.getProperties().id + ")";
-
       var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
-      window.open(tlvUrl, "_blank");
+      window.open( tlvUrl, "_blank" );
     };
 
 
@@ -1055,14 +1056,12 @@
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
     };
 
-    vm.viewOrtho = function(image, location) {
-      var feature = new ol.format.GeoJSON().readFeature(image);
-
+    vm.viewOrtho = function( image ) {
+      var feature = new ol.format.GeoJSON().readFeature( image );
       var filter = "in(" + feature.getProperties().id + ")";
-
       var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
-      window.open(tlvUrl, "_blank");
+      window.open( tlvUrl, "_blank" );
     };
 
     $scope.$on("placemarks: updated", function(event, data) {

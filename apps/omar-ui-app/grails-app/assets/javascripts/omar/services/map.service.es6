@@ -867,11 +867,15 @@
       }
     };
 
-    this.mapShowImageFootprint = function(imageObj) {
-        clearLayerSource(searchLayerVector);
+    this.mapShowImageFootprint = function( imageObj ) {
+        clearLayerSource( searchLayerVector );
 
-        var coordinates = imageObj.geometry ? imageObj.geometry.coordinates : imageObj.getGeometry().getCoordinates();
-        var properties = imageObj.properties || imageObj.getProperties();
+        if ( imageObj.getProperties ) {
+            imageObj = JSON.parse( new ol.format.GeoJSON().writeFeature( imageObj ) );
+        }
+
+        var coordinates = imageObj.geometry.coordinates;
+        var properties = imageObj.properties;
         if ( properties.acquisition_date ) {
             var date = properties.acquisition_date;
             properties.acquisition_date = moment( date ).format( "MM/DD/YYYY HH:mm:ss" );
@@ -888,8 +892,8 @@
 
         searchLayerVector.getSource().addFeature( footprintFeature );
 
-        var div = document.createElement( "div" );
-        $( div ).addClass( "media" );
+        var mediaDiv = document.createElement( "div" );
+        $( mediaDiv ).addClass( "media" );
 
         var leftDiv = document.createElement( "div" );
         $( leftDiv ).addClass( "media-left" );
@@ -899,11 +903,11 @@
             filename: properties.filename,
             format: "jpeg",
             id: properties.id,
-            size: 50
+            size: 114
         };
         $( image ).attr( "src", thumbnailUrl + '?' + $.param( thumbnailParams ) );
         $( leftDiv ).append( image );
-        $( div ).append( leftDiv );
+        $( mediaDiv ).append( leftDiv );
 
         var bodyDiv = document.createElement( "div" );
         $( bodyDiv ).addClass( "media-body" );
@@ -927,13 +931,23 @@
             $( bodyDiv ).append( "<br>" );
         });
 
-        $( div ).append( bodyDiv );
-        $( content ).html( div );
+        $( mediaDiv ).append( bodyDiv );
+        $( content ).html( mediaDiv );
+        $( content ).append( "<br>" );
+
+        var button = document.createElement( "button" );
+        $( button ).addClass( "btn btn-default" );
+        $( button ).click( function() {
+            $rootScope.$broadcast( "viewOrtho", imageObj );
+        });
+        $( button ).html( "<span class = 'fa fa-history text-default'></span>" );
+        $( content ).append( button );
+
 
         var extent = footprintFeature.getGeometry().getExtent();
         var center = new ol.extent.getCenter( extent );
         overlay.setPosition( center );
-        //$( container ).css( "background-color", $( "body" ).css( "background-color" ) );
+        $( container ).css( "background-color", $( "body" ).css( "background-color" ) );
         $( container ).css( "display", "block" );
     };
 

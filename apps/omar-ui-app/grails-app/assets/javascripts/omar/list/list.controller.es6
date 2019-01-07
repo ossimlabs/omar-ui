@@ -71,8 +71,7 @@
     function setlistControllerUrlProps() {
       thumbnailsBaseUrl = stateService.omarSitesState.url.base;
       thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-      thumbnailsRequestUrl =
-        thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+      thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
       uiBaseUrl = stateService.omarSitesState.url.base;
       uiContextPath = stateService.omarSitesState.url.uiContextPath;
@@ -206,68 +205,32 @@
     vm.padThumbnail = "false";
 
     vm.getImageSpaceUrl = function(image) {
-      var defaults = imageSpaceDefaults;
-      var properties = image.properties;
+        var defaults = imageSpaceDefaults;
+        var properties = image.properties;
+        var params = {
+            bands: defaults.bands,
+            brightness: defaults.brightness,
+            contrast: defaults.contrast,
+            entry_id: properties.entry_id,
+            filename: properties.filename,
+            height: properties.height,
+            histOp: defaults.histOp,
+            histCenterTile: defaults.histCenterTile,
+            imageId: properties.id,
+            imageSpaceRequestUrl: imageSpaceRequestUrl,
+            mensaRequestUrl: mensaRequestUrl,
+            numOfBands: properties.number_of_bands,
+            numResLevels: properties.number_of_res_levels,
+            resamplerFilter: defaults.resamplerFilter,
+            sharpenMode: defaults.sharpenMode,
+            showModalSplash: true,
+            uiRequestUrl: uiRequestUrl,
+            wfsRequestUrl: wfsRequestUrl,
+            width: properties.width
+        };
 
-      return (
-        AppO2.APP_CONFIG.serverURL +
-        "/omar/#/mapImage?" +
-        "bands=" +
-        defaults.bands +
-        "&" +
-        "brightness=" +
-        defaults.brightness +
-        "&" +
-        "contrast=" +
-        defaults.contrast +
-        "&" +
-        "entry_id=" +
-        properties.entry_id +
-        "&" +
-        "filename=" +
-        properties.filename +
-        "&" +
-        "height=" +
-        properties.height +
-        "&" +
-        "histOp=" +
-        defaults.histOp +
-        "&" +
-        "histCenterTile=" +
-        defaults.histCenterTile +
-        "&" +
-        "imageId=" +
-        properties.id +
-        "&" +
-        "numOfBands=" +
-        properties.number_of_bands +
-        "&" +
-        "numResLevels=" +
-        properties.number_of_res_levels +
-        "&" +
-        "resamplerFilter=" +
-        defaults.resamplerFilter +
-        "&" +
-        "sharpenMode=" +
-        defaults.sharpenMode +
-        "&" +
-        "width=" +
-        properties.width +
-        "&" +
-        "imageSpaceRequestUrl=" +
-        imageSpaceRequestUrl +
-        "&" +
-        "uiRequestUrl=" +
-        uiRequestUrl +
-        "&" +
-        "mensaRequestUrl=" +
-        mensaRequestUrl +
-        "&" +
-        "wfsRequestUrl=" +
-        wfsRequestUrl +
-        "&" +
-        "showModalSplash=true"
-      );
+
+        return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param( params );
     };
 
     // Shows/Hides the KML SuperOverlay button based on parameters passed down
@@ -519,7 +482,7 @@
       }
     };
 
-    vm.getJpipStream = function($event, file, entry, projCode, index, type) {
+    vm.getJpipStream = function( $event, file, entry, projCode, index, type ) {
       vm.showProcessInfo[index] = true;
       vm.processType = `Creating JPIP     `;
 
@@ -624,6 +587,18 @@
       });
     });
 
+    $scope.$on( "viewImageMetadata", function( event, image ) {
+        vm.showImageModal(
+            image,
+            vm.imageSpaceDefaults,
+            vm.imageSpaceRequestUrl,
+            vm.uiRequestUrl,
+            vm.mensaRequestUrl,
+            vm.wfsRequestUrl,
+            vm.tlvRequestUrl,
+            vm.kmlRequestUrl
+        );
+    });
     vm.showImageModal = function(
       imageObj,
       imageSpaceDefaults,
@@ -659,42 +634,17 @@
         ],
         controllerAs: "vm",
         resolve: {
-          imageObj: function() {
-            return imageObj;
-          },
-          imageSpaceDefaults: function() {
-            return imageSpaceDefaults;
-          },
-          imageSpaceRequestUrl: function() {
-            return imageSpaceRequestUrl;
-          },
-          uiRequestUrl: function() {
-            return uiRequestUrl;
-          },
-          mensaRequestUrl: function() {
-            return mensaRequestUrl;
-          },
-          wmsRequestUrl: function() {
-            return wmsRequestUrl;
-          },
-          wfsRequestUrl: function() {
-            return wfsRequestUrl;
-          },
-          tlvRequestUrl: function() {
-            return tlvRequestUrl;
-          },
-          kmlRequestUrl: function() {
-            return kmlRequestUrl;
-          }
+          imageObj: function() { return imageObj; },
+          imageSpaceDefaults: function() { return imageSpaceDefaults; },
+          imageSpaceRequestUrl: function() { return imageSpaceRequestUrl; },
+          uiRequestUrl: function() { return uiRequestUrl; },
+          mensaRequestUrl: function() { return mensaRequestUrl; },
+          wmsRequestUrl: function() { return wmsRequestUrl; },
+          wfsRequestUrl: function() { return wfsRequestUrl; },
+          tlvRequestUrl: function() { return tlvRequestUrl; },
+          kmlRequestUrl: function() { return kmlRequestUrl; }
         }
       });
-
-      // modalInstance.result.then(
-      //   function() {},
-      //   function() {
-      //     //console.log('Modal dismissed at: ' + new Date());
-      //   }
-      // );
     };
 
     $scope.$on( "viewOrtho", function( event, image ) {
@@ -708,10 +658,29 @@
       window.open( tlvUrl, "_blank" );
     };
 
+    $scope.$on( "copyWms", function( event, image ) {
+        vm.copyWmsCaps( image.properties.id );
+    });
 
+    $scope.$on( "download", function( event, image ) {
+        vm.archiveDownload( image.properties.id );
+    });
 
+    $scope.$on( "downloadKml", function( event, image ) {
+        window.open( vm.kmlRequestUrl + image.properties.id );
+    });
 
+    $scope.$on( "jpipImage", function( event, image ) {
+        vm.getJpipStream( event, image.properties.filename, image.properties.entry_id, 'chip', 0, 'stream' );
+    });
 
+    $scope.$on( "jpipOrtho", function( event, image ) {
+        vm.getJpipStream( event, image.properties.filename, image.properties.entry_id, '4326', 0, 'ortho' );
+    });
+
+    $scope.$on( "shareLink", function( event, image ) {
+        vm.shareModal( vm.getImageSpaceUrl( image ) );
+    });
 
 
     var tlvBaseUrl, tlvContextPath;
@@ -882,71 +851,33 @@
     };
 
     vm.getImageSpaceUrl = function(image) {
-      var defaults = imageSpaceDefaults;
-      var properties = image.properties;
+        var defaults = imageSpaceDefaults;
+        var properties = image.properties;
+        var params = {
+            bands: defaults.bands,
+            brightness: defaults.brightness,
+            contrast: defaults.contrast,
+            entry_id: properties.entry_id,
+            filename: properties.filename,
+            height: properties.height,
+            histOp: defaults.histOp,
+            histCenterTile: defaults.histCenterTile,
+            imageId: properties.id,
+            imageSpaceRequestUrl: imageSpaceRequestUrl,
+            mensaRequestUrl: mensaRequestUrl,
+            numOfBands: properties.number_of_bands,
+            numResLevels: properties.number_of_res_levels,
+            resamplerFilter: defaults.resamplerFilter,
+            sharpenMode: defaults.sharpenMode,
+            showModalSplash: false,
+            uiRequestUrl: uiRequestUrl,
+            wfsRequestUrl: wfsRequestUrl,
+            width: properties.width,
+            wmsRequestUrl: wmsRequestUrl
+        };
 
-      return (
-        AppO2.APP_CONFIG.serverURL +
-        "/omar/#/mapImage?" +
-        "bands=" +
-        defaults.bands +
-        "&" +
-        "brightness=" +
-        defaults.brightness +
-        "&" +
-        "contrast=" +
-        defaults.contrast +
-        "&" +
-        "entry_id=" +
-        properties.entry_id +
-        "&" +
-        "filename=" +
-        properties.filename +
-        "&" +
-        "height=" +
-        properties.height +
-        "&" +
-        "histOp=" +
-        defaults.histOp +
-        "&" +
-        "histCenterTile=" +
-        defaults.histCenterTile +
-        "&" +
-        "imageId=" +
-        properties.id +
-        "&" +
-        "numOfBands=" +
-        properties.number_of_bands +
-        "&" +
-        "numResLevels=" +
-        properties.number_of_res_levels +
-        "&" +
-        "resamplerFilter=" +
-        defaults.resamplerFilter +
-        "&" +
-        "sharpenMode=" +
-        defaults.sharpenMode +
-        "&" +
-        "width=" +
-        properties.width +
-        "&" +
-        "imageSpaceRequestUrl=" +
-        imageSpaceRequestUrl +
-        "&" +
-        "uiRequestUrl=" +
-        uiRequestUrl +
-        "&" +
-        "mensaRequestUrl=" +
-        mensaRequestUrl +
-        "&" +
-        "wmsRequestUrl=" +
-        wmsRequestUrl +
-        "&" +
-        "wfsRequestUrl=" +
-        wfsRequestUrl +
-        "&" +
-        "showModalSplash=false"
-      );
+
+        return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param( params );
     };
 
     // Used to show/hide the 'Image not found message'
@@ -1063,6 +994,7 @@
 
       window.open( tlvUrl, "_blank" );
     };
+
 
     $scope.$on("placemarks: updated", function(event, data) {
       // Update the DOM (card list)

@@ -707,6 +707,9 @@
       });
     };
 
+    $rootScope.$on( "zoomExtent", function( event, image ) { console.dir("cheese");
+        zoomToSelectedImages( image.properties.id )
+    });
     vm.zoomToSelectedImages = ids => {
       zoomToSelectedImages(ids);
     };
@@ -914,7 +917,8 @@
         $.each([
             { key: "title", label: "Image ID:&nbsp;" },
             { key: "acquisition_date", label: "Acq. Date:&nbsp;" },
-            { key: "sensor_id", label: "Sensr:&nbsp;" },
+            { key: "niirs", label: "NIIRS:&nbsp;" },
+            { key: "sensor_id", label: "Sensor:&nbsp;" }
         ], function( index, value ) {
             var small = document.createElement( "small" );
 
@@ -923,8 +927,8 @@
             $( small ).append( span );
 
             var span = document.createElement( "span" );
-            $( span ).addClass( "text-success" );
-            $( span ).html( properties[ value.key ] || "N/A" );
+            $( span ).addClass( properties[ value.key ] ? "text-success" : "text-info" );
+            $( span ).html( properties[ value.key ] || "Unkown" );
             $( small ).append( span );
 
             $( bodyDiv ).append( small );
@@ -935,14 +939,27 @@
         $( content ).html( mediaDiv );
         $( content ).append( "<br>" );
 
-        var button = document.createElement( "button" );
-        $( button ).addClass( "btn btn-default" );
-        $( button ).click( function() {
-            $rootScope.$broadcast( "viewOrtho", imageObj );
+        $.each([
+            { broadcast: "zoomExtent", icon: "fa fa-arrows", preference: "zoomToImageExtentButton" },
+            { broadcast: "viewImageMetadata", icon: "fa fa-table", preference: "viewMetadataButton" },
+            { broadcast: "viewOrtho", icon: "fa fa-history", preference: "viewOrthoImageButton" },
+            { broadcast: "downloadKml", icon: "fa fa-map", preference: "downloadKmlButton" },
+            { broadcast: "shareLink", icon: "fa fa-share-alt", preference: "shareLinkButton" },
+            { broadcast: "download", icon: "fa fa-download", preference: "downloadImageButton" },
+            { broadcast: "jpipImage", icon: "fa fa-file-image-o", preference: "jpipImageButton" },
+            { broadcast: "jpipOrtho", icon: "fa fa-image", preference: "jpipOrthoButton" },
+            { broadcast: "copyWms", icon: "fa fa-clipboard", preference: "copyWmsButton" }
+        ], function( index, value ) {
+            if ( userPreferences.o2SearchPreference[ value.preference ] ) {
+                var button = document.createElement( "button" );
+                $( button ).addClass( "btn btn-default btn-sm" );
+                $( button ).click( function() {
+                    $rootScope.$broadcast( value.broadcast, imageObj );
+                });
+                $( button ).html( "<span class = '" + value.icon + " text-default'></span>" );
+                $( content ).append( button );
+            }
         });
-        $( button ).html( "<span class = 'fa fa-history text-default'></span>" );
-        $( content ).append( button );
-
 
         var extent = footprintFeature.getGeometry().getExtent();
         var center = new ol.extent.getCenter( extent );
@@ -989,27 +1006,12 @@
       var maxX = extent[2];
       var maxY = extent[3];
 
-      var wkt =
-        "POLYGON((" +
-        minX +
-        " " +
-        minY +
-        ", " +
-        minX +
-        " " +
-        maxY +
-        ", " +
-        maxX +
-        " " +
-        maxY +
-        ", " +
-        maxX +
-        " " +
-        minY +
-        ", " +
-        minX +
-        " " +
-        minY +
+      var wkt = "POLYGON((" +
+        minX + " " + minY + ", " +
+        minX + " " + maxY + ", " +
+        maxX + " " + maxY + ", " +
+        maxX + " " + minY + ", " +
+        minX + " " + minY +
         "))";
 
       return wkt;

@@ -469,7 +469,8 @@
         });
         map.addLayer( featureSelectLayer );
         map.on( "click", function( event ) {
-             wfsService.executeWfsPointQuery( event.coordinate );
+            overlay.setPosition( event.coordinate );
+            wfsService.executeWfsPointQuery( event.coordinate );
         });
         $rootScope.$on( "wfs point: updated", function( event, data, coordinate ) {
             if ( data.length > 0 ) {
@@ -962,8 +963,11 @@
         });
 
         var extent = footprintFeature.getGeometry().getExtent();
-        var center = new ol.extent.getCenter( extent );
-        overlay.setPosition( center );
+        var position = overlay.getPosition();
+        if ( !position || !ol.extent.containsCoordinate( extent, position ) ) {
+            var center = new ol.extent.getCenter( extent );
+            overlay.setPosition( center );
+        }
         $( container ).css( "background-color", $( "body" ).css( "background-color" ) );
         $( container ).css( "display", "block" );
     };

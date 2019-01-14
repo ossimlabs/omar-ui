@@ -905,7 +905,7 @@
 
               pqeErrorArray.forEach(function(el) {
                 pqeModErrorArray.push(el.x);
-                pqeModErrorArray.push(-el.y);
+                pqeModErrorArray.push(imgHeight - el.y);
               });
 
               var pqeErrorString = pqeModErrorArray

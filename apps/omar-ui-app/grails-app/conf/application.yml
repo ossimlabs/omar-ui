@@ -222,7 +222,7 @@ omar:
         header: "<h4>Check out what's new!</h4>"
 
         # Map information body text.  You can embed HTML in the message for formatting.
-        message: "<h5>Auto-mosaic layer</h5><ol><li>Zoom in to an area of the map (scale should be 5km or less)</li>  <li>Hover over the layer selector button in the map (top-right hand corner)</li> <li>Choose 'Auto' under mosaics</li>"
+        message: "<h5>You can now search by Product Type</h5><ol><li>Click on the Keyword filter</li><li>Select a product type from the available choices (Example: 2CMV)</li></ol>"
 
         # The timeout before the mapInfo message disappears
         timeOut: 20000
@@ -234,7 +234,7 @@ omar:
         extendedTimeOut: 15000
 
         # Used to enable/disable the map info message from displaying (default = false)
-        enabled: false
+        enabled: true
 
       # Enable BE number lookups in the search field.
       beLookupEnabled: false

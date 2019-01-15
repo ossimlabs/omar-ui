@@ -44,7 +44,7 @@
             <i class="fa fa-download text-default"
               uib-tooltip="Download"></i>
           </a>
-          <a 
+          <a
             type="button"
             class="btn btn-default"
             ng-click="vm.copyWmsCaps(vm.selectedImage.properties.id)">
@@ -75,14 +75,14 @@
       <uib-tabset>
         <uib-tab heading="Image">
           <br>
-          <div class="col-md-6">
+          <div class="col-md-6 metadata-ul-list">
             <p>Acquisition Date:&nbsp;&nbsp;<span class="text-success">
               {{vm.selectedImage.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
               <span ng-show="vm.selectedImage.properties.acquisition_date">z</span>
             </p>
-            <h4>Source</h4>
+            <h4 class="text-info">Source</h4>
             <div class="panel panel-primary">
-              <ul>
+              <ul class="list-unstyled metadata-list">
                 <li>DB ID:&nbsp; &nbsp; <span class="text-success">{{vm.selectedImage.properties.id}}</span></li>
                 <li>Mission:&nbsp; &nbsp;
                   <span class="text-success">
@@ -92,6 +92,11 @@
                 <li>Sensor:&nbsp;&nbsp;
                   <span class="text-success">
                     {{vm.selectedImage.properties.sensor_id}}
+                  </span>
+                </li>
+                <li>Product ID:&nbsp;&nbsp;
+                  <span class="text-success">
+                    {{vm.selectedImage.properties.product_id}}
                   </span>
                 </li>
                 <li>Organization:&nbsp;&nbsp;
@@ -116,9 +121,9 @@
                 </li>
               </ul>
             </div>
-            <h4>File</h4>
+            <h4 class="text-info">File</h4>
             <div class="panel panel-primary">
-              <ul>
+              <ul class="list-unstyled metadata-list">
                 <li>Type:&nbsp;&nbsp;<span class="text-success">
                     {{vm.selectedImage.properties.file_type}}
                   </span>
@@ -135,9 +140,9 @@
                 </li>
               </ul>
             </div>
-            <h4>General</h4>
+            <h4 class="text-info">General</h4>
             <div class="panel panel-primary">
-              <ul>
+              <ul class="list-unstyled metadata-list">
                 <li>Description:&nbsp;&nbsp;
                   <span class="text-success">
                     {{vm.selectedImage.properties.description}}
@@ -161,9 +166,9 @@
               {{vm.selectedImage.properties.ingest_date| date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}</span>
               <span ng-show="vm.selectedImage.properties.ingest_date">z</span>
             </p>
-            <h4>Metrics</h4>
+            <h4 class="text-info">Metrics</h4>
             <div class="panel panel-primary">
-              <ul>
+              <ul class="list-unstyled metadata-list">
                 <li>NIIRS:&nbsp;&nbsp;
                   <span class="text-success">
                     {{vm.selectedImage.properties.niirs}}
@@ -211,9 +216,9 @@
                 </li>
               </ul>
             </div>
-            <h4>Dimensions</h4>
+            <h4 class="text-info">Dimensions</h4>
             <div class="panel panel-primary">
-              <ul>
+              <ul class="list-unstyled metadata-list">
                 <li>Image Height:&nbsp;&nbsp;
                   <span class="text-success">
                     {{vm.selectedImage.properties.height}}
@@ -226,9 +231,9 @@
                 </li>
               </ul>
             </div>
-            <h4>Geometry</h4>
+            <h4 class="text-info">Geometry</h4>
             <div class="panel panel-primary">
-              <ul>
+              <ul class="list-unstyled metadata-list">
                 <li>GSD Unit:&nbsp;&nbsp;
                   <span class="text-success">
                     {{vm.selectedImage.properties.gsd_unit}}

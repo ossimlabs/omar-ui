@@ -1,14 +1,20 @@
 .unclassified {
     background-color: green;
     color: white;
+    padding: 2.5px;
+    border-radius: 5px;
 }
 
 .secret {
     background-color: red;
     color: white;
+    padding: 2.5px;
+    border-radius: 5px;
 }
 
 .top-secret {
     background-color: yellow;
     color: black;
+    padding: 2.5px;
+    border-radius: 5px;
 }

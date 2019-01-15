@@ -32,29 +32,28 @@
     vm.urlParams = $stateParams;
 
     vm.getCountryListing = function() {
-        var baseUrl = stateService.omarSitesState.url.base;
-        var contextPath = stateService.omarSitesState.url.wfsContextPath;
-        var url = baseUrl + contextPath + "/wfs//getFeature";
-        var params = {
-            outputFormat: "JSON",
-            resultType: "results",
-            request: "GetFeature",
-            service: "WFS",
-            typeName: "omar:country_code",
-            version: "1.1.0"
-        };
+      var baseUrl = stateService.omarSitesState.url.base;
+      var contextPath = stateService.omarSitesState.url.wfsContextPath;
+      var url = baseUrl + contextPath + "/wfs//getFeature";
+      var params = {
+        outputFormat: "JSON",
+        resultType: "results",
+        request: "GetFeature",
+        service: "WFS",
+        typeName: "omar:country_code",
+        version: "1.1.0"
+      };
 
-        $http({
-          method: "GET",
-          url: url + "?" + $.param( params )
-        }).then(function( response ) {
-            var values = response.data.features.map( function( feature ) {
-                return feature.properties;
-            });
-          $scope[ "countryListing" ] = values;
+      $http({
+        method: "GET",
+        url: url + "?" + $.param(params)
+      }).then(function(response) {
+        var values = response.data.features.map(function(feature) {
+          return feature.properties;
         });
-    }
-
+        $scope["countryListing"] = values;
+      });
+    };
 
     vm.showCurrentFilter = true;
     vm.listRefreshButtonVisible =
@@ -119,37 +118,37 @@
     vm.currentSpatialFilter = "";
 
     vm.initSpatial = function() {
-        vm.viewPortSpatial = false;
-        vm.pointSpatial = false;
-        vm.polygonSpatial = false;
+      vm.viewPortSpatial = false;
+      vm.pointSpatial = false;
+      vm.polygonSpatial = false;
 
-        var spatial = vm.urlParams.spatial || vm.userPreferences.spatial;
-        if ( spatial.toLowerCase() == "mapview" ) {
-            vm.viewPortSpatial = true;
-            setSpatialIndicator( true, "View Port" );
-        }
-        else if ( spatial.toLowerCase().includes( "point" ) ) {
-            vm.pointSpatial = true;
-            setSpatialIndicator( true, "Point" );
-            var point = new ol.format.WKT().readGeometry( spatial );
-            mapService.filterByPoint({ coordinate: point.getCoordinates() });
-        }
-        else if ( spatial.toLowerCase().includes( "polygon" ) ) {
-            vm.polygonSpatial = true;
-            setSpatialIndicator( true, "Polygon" );
-            var polygon = new ol.format.WKT().readGeometry( spatial );
-            mapService.dragBoxEnd( polygon );
-        }
+      var spatial = vm.urlParams.spatial || vm.userPreferences.spatial;
+      if (spatial.toLowerCase() == "mapview") {
+        vm.viewPortSpatial = true;
+        setSpatialIndicator(true, "View Port");
+      } else if (spatial.toLowerCase().includes("point")) {
+        vm.pointSpatial = true;
+        setSpatialIndicator(true, "Point");
+        var point = new ol.format.WKT().readGeometry(spatial);
+        mapService.filterByPoint({ coordinate: point.getCoordinates() });
+      } else if (spatial.toLowerCase().includes("polygon")) {
+        vm.polygonSpatial = true;
+        setSpatialIndicator(true, "Polygon");
+        var polygon = new ol.format.WKT().readGeometry(spatial);
+        mapService.dragBoxEnd(polygon);
+      }
     };
 
     $scope["missionIdTypes"] = [];
     $scope["sensorIdTypes"] = [];
+    $scope["productIdTypes"] = [];
     vm.getDistinctValues = function(property) {
       if (
         !$scope[property + "Types"] ||
         $scope[property + "Types"].length == 0
       ) {
         var url = stagerRequestUrl + property;
+
         $http({
           method: "GET",
           url: url
@@ -216,148 +215,153 @@
       checkNoSpatialFilter();
     };
 
-    vm.initKeywords = function( reset ) {
-        vm.countryCodeCheck = vm.userPreferences.countryCodeEnabled;
-        var countryCode = vm.userPreferences.countryCode;
-        if ( vm.urlParams.countryCodes ) {
-            vm.countryCodeCheck = true;
-            countryCode = vm.urlParams.countryCodes;
-        }
-        if ( reset ) {
-            vm.countryCodeCheck = false;
-            countryCode = null;
-        }
-        if ( countryCode ) {
-            countryCode = countryCode.split( "," );
-            countryCode.forEach( function( cc, index ) {
-                countryCode[ index ] = { iso_a2: cc };
-            });
-        }
-        vm.countryCode = countryCode || [];
-
-        var arrays = [
-            { key: "missionId", urlParam: "missions" },
-            { key: "sensorId", urlParam: "sensors" }
-        ];
-        $.each( arrays, function( index, keyword ) {
-            vm[ keyword.key + "Check" ] = vm.userPreferences[ keyword.key + "Enabled" ];
-            var value = vm.userPreferences[ keyword.key ];
-            if ( vm.urlParams[ keyword.urlParam ] ) {
-                vm[ keyword.key + "Check" ] = true;
-                value = vm.urlParams[ keyword.urlParam ];
-            }
-            if ( reset ) {
-                vm[ keyword.key + "Check" ] = false;
-                value = null;
-            }
-            vm[ keyword.key ] = value ? value.split( "," ) : [];
+    vm.initKeywords = function(reset) {
+      vm.countryCodeCheck = vm.userPreferences.countryCodeEnabled;
+      var countryCode = vm.userPreferences.countryCode;
+      if (vm.urlParams.countryCodes) {
+        vm.countryCodeCheck = true;
+        countryCode = vm.urlParams.countryCodes;
+      }
+      if (reset) {
+        vm.countryCodeCheck = false;
+        countryCode = null;
+      }
+      if (countryCode) {
+        countryCode = countryCode.split(",");
+        countryCode.forEach(function(cc, index) {
+          countryCode[index] = { iso_a2: cc };
         });
+      }
+      vm.countryCode = countryCode || [];
 
-        var strings = [
-            { key: "beNumber", urlParam: "be" },
-            { key: "filename", urlParam: "filename" },
-            { key: "imageId", urlParam: "imageId" },
-            { key: "targetId", urlParam: "target" },
-            { key: "wacNumber", urlParam: "wac" }
-        ];
-        $.each( strings, function( index, keyword ) {
-            vm[ keyword.key + "Check" ] = vm.userPreferences[ keyword.urlParam + "Enabled" ];
-            vm[ keyword.key ] = vm.userPreferences[ keyword.urlParam ];
-            if ( vm.urlParams[ keyword.urlParam ] ) {
-                vm[ keyword.key + "Check" ] = true;
-                vm[ keyword.key ] = vm.urlParams[ keyword.urlParam ];
-            }
-            if ( reset ) {
-                vm[ keyword.key + "Check" ] = false;
-                vm[ keyword.key ] = "";
-            }
-        });
+      var arrays = [
+        { key: "missionId", urlParam: "missions" },
+        { key: "sensorId", urlParam: "sensors" },
+        { key: "productId", urlParam: "product" }
+      ];
+      $.each(arrays, function(index, keyword) {
+        vm[keyword.key + "Check"] = vm.userPreferences[keyword.key + "Enabled"];
+        var value = vm.userPreferences[keyword.key];
+        if (vm.urlParams[keyword.urlParam]) {
+          vm[keyword.key + "Check"] = true;
+          value = vm.urlParams[keyword.urlParam];
+        }
+        if (reset) {
+          vm[keyword.key + "Check"] = false;
+          value = null;
+        }
+        vm[keyword.key] = value ? value.split(",") : [];
+      });
+
+      var strings = [
+        { key: "beNumber", urlParam: "be" },
+        { key: "filename", urlParam: "filename" },
+        { key: "imageId", urlParam: "imageId" },
+        { key: "targetId", urlParam: "target" },
+        { key: "wacNumber", urlParam: "wac" }
+      ];
+      $.each(strings, function(index, keyword) {
+        vm[keyword.key + "Check"] =
+          vm.userPreferences[keyword.urlParam + "Enabled"];
+        vm[keyword.key] = vm.userPreferences[keyword.urlParam];
+        if (vm.urlParams[keyword.urlParam]) {
+          vm[keyword.key + "Check"] = true;
+          vm[keyword.key] = vm.urlParams[keyword.urlParam];
+        }
+        if (reset) {
+          vm[keyword.key + "Check"] = false;
+          vm[keyword.key] = "";
+        }
+      });
     };
 
-    vm.initRanges = function( reset ) {
-        var ranges = [
-            { key: "azimuth", max: 360, min: 0, urlParam: "azimuth" },
-            { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
-            { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
-            { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
-            { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
-        ];
-        $.each( ranges, function( index, range ) {
-            vm[ range.key + "Check" ] = vm.userPreferences[ range.urlParam + "Enabled" ];
-            vm[ range.key + "Min" ] = vm.userPreferences[ range.urlParam + "Min" ];
-            vm[ range.key + "Max" ] = vm.userPreferences[ range.urlParam + "Max" ];
-            if ( vm.urlParams[ range.urlParam ] ) {
-                vm[ range.key + "Check" ] = true;
-                var values = vm.urlParams[ range.urlParam ].split( ":" );
-                vm[ range.key + "Min" ] = values[ 0 ];
-                vm[ range.key + "Max" ] = values[ 1 ];
-            }
-            if ( reset ) {
-                vm[ range.key + "Check" ] = false;
-                vm[ range.key + "Min" ] = range.emin;
-                vm[ range.key + "Max" ] = range.max;
-            }
-        });
+    vm.initRanges = function(reset) {
+      var ranges = [
+        { key: "azimuth", max: 360, min: 0, urlParam: "azimuth" },
+        { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
+        { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
+        { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
+        { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
+      ];
+      $.each(ranges, function(index, range) {
+        vm[range.key + "Check"] =
+          vm.userPreferences[range.urlParam + "Enabled"];
+        vm[range.key + "Min"] = vm.userPreferences[range.urlParam + "Min"];
+        vm[range.key + "Max"] = vm.userPreferences[range.urlParam + "Max"];
+        if (vm.urlParams[range.urlParam]) {
+          vm[range.key + "Check"] = true;
+          var values = vm.urlParams[range.urlParam].split(":");
+          vm[range.key + "Min"] = values[0];
+          vm[range.key + "Max"] = values[1];
+        }
+        if (reset) {
+          vm[range.key + "Check"] = false;
+          vm[range.key + "Min"] = range.emin;
+          vm[range.key + "Max"] = range.max;
+        }
+      });
 
-        vm.cloudCoverCheck = vm.userPreferences.cloudCoverEnabled;
-        vm.cloudCover = vm.userPreferences.cloudCoverMax;
-        if ( vm.urlParams.cloudCover ) {
-            vm.cloudCoverCheck = true;
-            vm.cloudCover = vm.urlParams.cloudCover;
-        }
-        if ( reset ) {
-            vm.cloudCoverCheck = false;
-            vm.cloudCover = 100;
-        }
-        vm.cloudCoverCheckNull = false;
+      vm.cloudCoverCheck = vm.userPreferences.cloudCoverEnabled;
+      vm.cloudCover = vm.userPreferences.cloudCoverMax;
+      if (vm.urlParams.cloudCover) {
+        vm.cloudCoverCheck = true;
+        vm.cloudCover = vm.urlParams.cloudCover;
+      }
+      if (reset) {
+        vm.cloudCoverCheck = false;
+        vm.cloudCover = 100;
+      }
+      vm.cloudCoverCheckNull = false;
     };
 
     vm.initTemporal = reset => {
-        vm.currentDateType = vm.dateTypes.find( function( element ) {
-            return element.value == vm.userPreferences.dateType;
+      vm.currentDateType = vm.dateTypes.find(function(element) {
+        return element.value == vm.userPreferences.dateType;
+      });
+      if (vm.urlParams.dateType) {
+        vm.currentDateType = vm.dateTypes.find(function(element) {
+          return element.value == vm.urlParams.dateType;
         });
-        if ( vm.urlParams.dateType ) {
-            vm.currentDateType = vm.dateTypes.find( function( element ) {
-                return element.value == vm.urlParams.dateType;
-            });
-        }
-        if ( reset ) {
-            vm.currentDateType = vm.dateTypes[ 0 ];
-        }
+      }
+      if (reset) {
+        vm.currentDateType = vm.dateTypes[0];
+      }
 
-        vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
-            return element.value == vm.userPreferences.duration;
+      vm.currentTemporalDuration = vm.temporalDurations.find(function(element) {
+        return element.value == vm.userPreferences.duration;
+      });
+      if (vm.urlParams.duration) {
+        vm.currentTemporalDuration = vm.temporalDurations.find(function(
+          element
+        ) {
+          return element.value == vm.urlParams.duration;
         });
-        if ( vm.urlParams.duration ) {
-            vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
-                return element.value == vm.urlParams.duration;
-            });
-        }
-        if ( reset ) {
-            vm.currentTemporalDuration = vm.temporalDurations[ 0 ];
-        }
+      }
+      if (reset) {
+        vm.currentTemporalDuration = vm.temporalDurations[0];
+      }
 
-        vm.customDateRangeVisible = false;
+      vm.customDateRangeVisible = false;
 
-        vm.setInitialCustomStartDate();
-        vm.setInitialCustomEndDate();
+      vm.setInitialCustomStartDate();
+      vm.setInitialCustomEndDate();
     };
 
     vm.dateTypes = [
-        { label: "Acquisition Date", value: "acquisition_date" },
-        { label: "Ingest Date", value: "ingest_date" }
+      { label: "Acquisition Date", value: "acquisition_date" },
+      { label: "Ingest Date", value: "ingest_date" }
     ];
 
     vm.temporalDurations = [
-        { label: "None", value: "none" },
-        { label: "Today", value: "lastDay" },
-        { label: "Yesterday", value: "yesterday" },
-        { label: "Last 3 Days", value: "last3Days" },
-        { label: "Last Week", value: "last7Days" },
-        { label: "Last Month", value: "lastMonth" },
-        { label: "Last 3 Months", value: "last3Months" },
-        { label: "Last 6 Months", value: "last6Months" },
-        { label: "Custom Date Range", value: "customDateRange" }
+      { label: "None", value: "none" },
+      { label: "Today", value: "lastDay" },
+      { label: "Yesterday", value: "yesterday" },
+      { label: "Last 3 Days", value: "last3Days" },
+      { label: "Last Week", value: "last7Days" },
+      { label: "Last Month", value: "lastMonth" },
+      { label: "Last 3 Months", value: "last3Months" },
+      { label: "Last 6 Months", value: "last6Months" },
+      { label: "Custom Date Range", value: "customDateRange" }
     ];
 
     vm.customDateRangeVisible = false;
@@ -367,33 +371,41 @@
     };
 
     vm.setInitialCustomStartDate = function() {
-        if ( vm.userPreferences.customStartDateTime && vm.userPreferences.duration == "customDateRange" ) {
-            vm.startDate = moment( vm.userPreferences.customStartDateTime );
-        }
-        else {
-            vm.startDate = moment().startOf("day");
-        }
-        if ( vm.urlParams.startDate ) {
-            vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
-                return element.value == "customDateRange";
-            });
-            vm.startDate = moment( vm.urlParams.startDate );
-        }
+      if (
+        vm.userPreferences.customStartDateTime &&
+        vm.userPreferences.duration == "customDateRange"
+      ) {
+        vm.startDate = moment(vm.userPreferences.customStartDateTime);
+      } else {
+        vm.startDate = moment().startOf("day");
+      }
+      if (vm.urlParams.startDate) {
+        vm.currentTemporalDuration = vm.temporalDurations.find(function(
+          element
+        ) {
+          return element.value == "customDateRange";
+        });
+        vm.startDate = moment(vm.urlParams.startDate);
+      }
     };
 
     vm.setInitialCustomEndDate = function() {
-        if ( vm.userPreferences.customEndDateTime && vm.userPreferences.duration == "customDateRange" ) {
-            vm.endDate = moment( vm.userPreferences.customEndDateTime );
-        }
-        else {
-            vm.endDate = moment().endOf("day");
-        }
-        if ( vm.urlParams.endDate ) {
-            vm.currentTemporalDuration = vm.temporalDurations.find( function( element ) {
-                return element.value == "customDateRange";
-            });
-            vm.endDate = moment( vm.urlParams.endDate );
-        }
+      if (
+        vm.userPreferences.customEndDateTime &&
+        vm.userPreferences.duration == "customDateRange"
+      ) {
+        vm.endDate = moment(vm.userPreferences.customEndDateTime);
+      } else {
+        vm.endDate = moment().endOf("day");
+      }
+      if (vm.urlParams.endDate) {
+        vm.currentTemporalDuration = vm.temporalDurations.find(function(
+          element
+        ) {
+          return element.value == "customDateRange";
+        });
+        vm.endDate = moment(vm.urlParams.endDate);
+      }
     };
 
     vm.getCustomStartDate = function() {
@@ -443,13 +455,27 @@
 
       var dateToday = moment().format("MM-DD-YYYY 00:00+0000");
       var dateTodayEnd = moment().format("MM-DD-YYYY 23:59+0000");
-      var dateYesterday = moment().subtract(1, "days").format("MM-DD-YYYY 00:00+0000");
-      var dateYesterdayEnd = moment().subtract(1, "days").format("MM-DD-YYYY 23:59+0000");
-      var dateLast3Days = moment().subtract(2, "days").format("MM-DD-YYYY 00:00+0000");
-      var dateLast7Days = moment().subtract(7, "days").format("MM-DD-YYYY 00:00+0000");
-      var dateThisMonth = moment().subtract(1, "months").format("MM-DD-YYYY 00:00+0000");
-      var dateLast3Months = moment().subtract(3, "months").format("MM-DD-YYYY 00:00+0000");
-      var dateLast6Months = moment().subtract(6, "months").format("MM-DD-YYYY 00:00+0000");
+      var dateYesterday = moment()
+        .subtract(1, "days")
+        .format("MM-DD-YYYY 00:00+0000");
+      var dateYesterdayEnd = moment()
+        .subtract(1, "days")
+        .format("MM-DD-YYYY 23:59+0000");
+      var dateLast3Days = moment()
+        .subtract(2, "days")
+        .format("MM-DD-YYYY 00:00+0000");
+      var dateLast7Days = moment()
+        .subtract(7, "days")
+        .format("MM-DD-YYYY 00:00+0000");
+      var dateThisMonth = moment()
+        .subtract(1, "months")
+        .format("MM-DD-YYYY 00:00+0000");
+      var dateLast3Months = moment()
+        .subtract(3, "months")
+        .format("MM-DD-YYYY 00:00+0000");
+      var dateLast6Months = moment()
+        .subtract(6, "months")
+        .format("MM-DD-YYYY 00:00+0000");
 
       var dbName = vm.currentDateType.value; //"acquisition_date";
       var temporalParam = vm.currentTemporalDuration.value;
@@ -468,7 +494,16 @@
           vm.currentAttrFilterArray.push(`${dateField}: Today`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [ dbName, ">='", dateToday, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateToday,
+              "'AND",
+              dbName,
+              "<='",
+              dateTodayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "yesterday":
@@ -476,7 +511,16 @@
           vm.currentAttrFilterArray.push(`${dateField}: Yesterday`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [ dbName, ">='", dateYesterday, "'AND", dbName, "<='", dateYesterdayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateYesterday,
+              "'AND",
+              dbName,
+              "<='",
+              dateYesterdayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "last3Days":
@@ -484,7 +528,16 @@
           vm.customDateRangeVisible = false;
           vm.currentAttrFilterArray.push(`${dateField}: Last 3 Days`);
           filterArray.push(
-            [ dbName, ">='", dateLast3Days, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateLast3Days,
+              "'AND",
+              dbName,
+              "<='",
+              dateTodayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "last7Days":
@@ -492,7 +545,16 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last 7 Days`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [ dbName, ">='", dateLast7Days, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateLast7Days,
+              "'AND",
+              dbName,
+              "<='",
+              dateTodayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "lastMonth":
@@ -500,7 +562,16 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last Month`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [ dbName, ">='", dateThisMonth, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateThisMonth,
+              "'AND",
+              dbName,
+              "<='",
+              dateTodayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "last3Months":
@@ -508,7 +579,16 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last 3 Months`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [ dbName, ">='", dateLast3Months, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateLast3Months,
+              "'AND",
+              dbName,
+              "<='",
+              dateTodayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "last6Months":
@@ -516,7 +596,16 @@
           vm.currentAttrFilterArray.push(`${dateField}: Last Six Months`);
           vm.customDateRangeVisible = false;
           filterArray.push(
-            [ dbName, ">='", dateLast6Months, "'AND", dbName, "<='", dateTodayEnd, "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              dateLast6Months,
+              "'AND",
+              dbName,
+              "<='",
+              dateTodayEnd,
+              "'"
+            ].join(" ")
           );
           break;
         case "customDateRange":
@@ -530,7 +619,16 @@
           );
           vm.customDateRangeVisible = true;
           filterArray.push(
-            [ dbName, ">='", vm.getCustomStartDate(), "'AND", dbName, "<='", vm.getCustomEndDate(), "'" ].join(" ")
+            [
+              dbName,
+              ">='",
+              vm.getCustomStartDate(),
+              "'AND",
+              dbName,
+              "<='",
+              vm.getCustomEndDate(),
+              "'"
+            ].join(" ")
           );
           break;
         default:
@@ -541,7 +639,12 @@
       function pushKeywordToArray(dbName, formField) {
         $log.debug(`formField value: ${formField}`);
         var clause = "";
-        if (dbName === "country_code" || dbName === "mission_id" || dbName === "sensor_id") {
+        if (
+          dbName === "country_code" ||
+          dbName === "mission_id" ||
+          dbName === "sensor_id" ||
+          dbName === "product_id"
+        ) {
           var clauses = [];
           $.each(formField, function(index, value) {
             clauses.push(dbName + " LIKE '%" + value.trim() + "%'");
@@ -586,8 +689,19 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        vm.currentAttrFilterArray.push(`Country Code: ${vm.countryCode.map( function( country ) { return country.iso_a2 } ).join( "," )}`);
-        pushKeywordToArray("country_code", vm.countryCode.map( function( country ) { return country.iso_a2 } ));
+        vm.currentAttrFilterArray.push(
+          `Country Code: ${vm.countryCode
+            .map(function(country) {
+              return country.iso_a2;
+            })
+            .join(",")}`
+        );
+        pushKeywordToArray(
+          "country_code",
+          vm.countryCode.map(function(country) {
+            return country.iso_a2;
+          })
+        );
         setKeywordIndicator();
       } else if (!vm.countryCodeCheck) {
         vm.filterKeywordIndicator = false;
@@ -645,6 +759,16 @@
         setKeywordIndicator();
       } else if (!vm.wacNumberCheck) {
         vm.filterKeywordIndicator = false;
+      }
+
+      if (vm.productIdCheck && vm.productId.length != 0) {
+        vm.currentAttrFilterArray.push(`Product: ${vm.productId}`);
+        pushKeywordToArray("product_id", vm.productId);
+        setKeywordIndicator();
+      } else if (!vm.productIdCheck) {
+        vm.filterKeywordIndicator = false;
+      } else if (vm.productId.length === 0) {
+        vm.productIdCheck = false;
       }
 
       function pushRangeToArray(dbName, formFieldMin, formFieldMax, showNull) {
@@ -883,9 +1007,9 @@
 
     vm.clearFilters = () => {
       clearAllSpatialFilter();
-      vm.initKeywords( true );
-      vm.initRanges( true );
-      vm.initTemporal( true );
+      vm.initKeywords(true);
+      vm.initRanges(true);
+      vm.initTemporal(true);
 
       // Reset the temporal filters and it's menu
       //vm.currentTemporalDuration = vm.temporalDurations[0];
@@ -907,116 +1031,136 @@
     };
 
     vm.loadSearch = function() {
-        window.open( AppO2.APP_CONFIG.contextPath + "/savedLink/list", "_blank" );
-    }
+      window.open(AppO2.APP_CONFIG.contextPath + "/savedLink/list", "_blank");
+    };
 
     vm.saveSearch = function() {
-        var searchString = {};
+      var searchString = {};
 
-        if ( vm.countryCodeCheck ) {
-            searchString.countryCodes = vm.countryCode.map( function( cc ) {
-                return cc.iso_a2;
-            }).join( "," );
+      if (vm.countryCodeCheck) {
+        searchString.countryCodes = vm.countryCode
+          .map(function(cc) {
+            return cc.iso_a2;
+          })
+          .join(",");
+      }
+      var keywords = [
+        { key: "beNumber", urlParam: "be" },
+        { key: "filename", urlParam: "filename" },
+        { key: "imageId", urlParam: "imageId" },
+        { key: "missionId", urlParam: "missions" },
+        { key: "sensorId", urlParam: "sensors" },
+        { key: "targetId", urlParam: "target" },
+        { key: "wacNumber", urlParam: "wac" }
+      ];
+      $.each(keywords, function(index, keyword) {
+        if (vm[keyword.key + "Check"]) {
+          var value = vm[keyword.key];
+          searchString[keyword.urlParam] =
+            typeof value == "object" ? value.join(",") : value;
         }
-        var keywords = [
-            { key: "beNumber", urlParam: "be" },
-            { key: "filename", urlParam: "filename" },
-            { key: "imageId", urlParam: "imageId" },
-            { key: "missionId", urlParam: "missions" },
-            { key: "sensorId", urlParam: "sensors" },
-            { key: "targetId", urlParam: "target" },
-            { key: "wacNumber", urlParam: "wac" }
-        ];
-        $.each( keywords, function( index, keyword ) {
-            if ( vm[ keyword.key + "Check" ] ) {
-                var value = vm[ keyword.key ];
-                searchString[ keyword.urlParam ] = typeof value == "object" ? value.join( "," ) : value;
-            }
+      });
+
+      var ranges = [
+        { key: "azimuth", max: true, min: true, urlParam: "azimuth" },
+        { key: "cloudCover", max: true, urlParam: "cloudCover" },
+        { key: "grazeElev", max: true, min: true, urlParam: "elevation" },
+        { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
+        { key: "sunAzimuth", max: true, min: true, urlParam: "sunAzimuth" },
+        { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" }
+      ];
+      $.each(ranges, function(index, range) {
+        if (vm[range.key + "Check"]) {
+          var max, min;
+          [max, min] = [range.max, range.min];
+          if (max && min) {
+            searchString[range.urlParam] =
+              vm[range.key + "Min"] + ":" + vm[range.key + "Max"];
+          } else if (max) {
+            searchString[range.urlParam] = vm[range.key];
+          }
+        }
+      });
+
+      if (vm.currentTemporalDuration.value != "none") {
+        searchString.dateType = vm.currentDateType.value;
+
+        if (vm.currentTemporalDuration.value == "customDateRange") {
+          searchString.endDate = vm.endDate.toJSON().replace(/[.].*$/, "");
+          searchString.startDate = vm.startDate.toJSON().replace(/[.].*$/, "");
+        } else {
+          searchString.duration = vm.currentTemporalDuration.value;
+        }
+      }
+
+      if (vm.viewPortSpatial) {
+        searchString.spatial = "mapView";
+      } else if (vm.pointSpatial) {
+        var point = mapService.getFilterVectorGeometry();
+        var wkt = new ol.format.WKT().writeGeometry(point);
+        searchString.spatial = wkt;
+      } else if (vm.polygonSpatial) {
+        var extent = mapService.getFilterVectorGeometry().getExtent();
+        $.each(extent, function(index, degrees) {
+          extent[index] = degrees.toFixed(6);
         });
+        var wkt =
+          "POLYGON((" +
+          extent[0] +
+          " " +
+          extent[1] +
+          "," +
+          extent[2] +
+          " " +
+          extent[1] +
+          "," +
+          extent[2] +
+          " " +
+          extent[3] +
+          "," +
+          extent[0] +
+          " " +
+          extent[3] +
+          "))";
+        searchString.spatial = wkt;
+      }
 
-        var ranges = [
-            { key: "azimuth", max: true, min: true, urlParam: "azimuth" },
-            { key: "cloudCover", max: true, urlParam: "cloudCover" },
-            { key: "grazeElev", max: true, min: true, urlParam: "elevation" },
-            { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
-            { key: "sunAzimuth", max: true, min: true, urlParam: "sunAzimuth" },
-            { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" }
-        ];
-        $.each( ranges, function( index, range ) {
-            if ( vm[ range.key + "Check" ] ) {
-                var max, min;
-                [ max, min ] = [ range.max, range.min ];
-                if ( max && min ) {
-                    searchString[ range.urlParam ] = vm[ range.key + "Min" ] + ":" + vm[ range.key + "Max" ];
-                }
-                else if ( max ) {
-                    searchString[ range.urlParam ] = vm[ range.key ];
-                }
-            }
-        });
+      var searchInput = $("#searchInput").val();
+      if (searchInput != "") {
+        searchString.mapSearch = searchInput;
+      } else if (vm.viewPortSpatial) {
+        [
+          searchString.mapCenterX,
+          searchString.mapCenterY
+        ] = mapService.getCenter();
+        searchString.mapZoom = mapService.getZoom();
+      }
 
-        if ( vm.currentTemporalDuration.value != "none" ) {
-            searchString.dateType = vm.currentDateType.value;
+      if (mapService.getRotation() != 0) {
+        searchString.mapRotation = parseInt(
+          (mapService.getRotation() * 180) / Math.PI
+        );
+      }
 
-            if ( vm.currentTemporalDuration.value == "customDateRange" ) {
-                searchString.endDate = vm.endDate.toJSON().replace( /[.].*$/, "" );
-                searchString.startDate = vm.startDate.toJSON().replace( /[.].*$/, "" );
-            }
-            else {
-                searchString.duration = vm.currentTemporalDuration.value;
-            }
-        }
+      var form = document.createElement("form");
+      form.action = AppO2.APP_CONFIG.contextPath + "/savedLink";
+      form.method = "post";
+      form.target = "_blank";
+      $("body").append(form);
 
-        if ( vm.viewPortSpatial ) {
-            searchString.spatial = "mapView";
-        }
-        else if ( vm.pointSpatial ) {
-            var point = mapService.getFilterVectorGeometry();
-            var wkt = new ol.format.WKT().writeGeometry( point );
-            searchString.spatial = wkt;
-        }
-        else if ( vm.polygonSpatial ) {
-            var extent = mapService.getFilterVectorGeometry().getExtent();
-            $.each( extent, function( index, degrees ) {
-                extent[ index ] = degrees.toFixed( 6 );
-            });
-            var wkt = "POLYGON((" +
-                extent[ 0 ] + " " + extent[ 1 ] + "," +
-                extent[ 2 ] + " " + extent[ 1 ] + "," +
-                extent[ 2 ] + " " + extent[ 3 ] + "," +
-                extent[ 0 ] + " " + extent[ 3 ] +
-            "))";
-            searchString.spatial = wkt;
-        }
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "saveLink";
+      var url = document.location;
+      input.value =
+        url.origin +
+        url.pathname +
+        url.hash.split("?")[0] +
+        "?" +
+        $.param(searchString);
+      form.appendChild(input);
 
-
-        var searchInput = $("#searchInput").val();
-        if ( searchInput != "" ) {
-            searchString.mapSearch = searchInput;
-        }
-        else if ( vm.viewPortSpatial ) {
-            [ searchString.mapCenterX, searchString.mapCenterY ] = mapService.getCenter();
-            searchString.mapZoom = mapService.getZoom();
-        }
-
-        if ( mapService.getRotation() != 0 ) {
-            searchString.mapRotation = parseInt( mapService.getRotation() * 180 / Math.PI );
-        }
-
-        var form = document.createElement( "form" );
-        form.action = AppO2.APP_CONFIG.contextPath + "/savedLink";
-        form.method = "post";
-        form.target = "_blank";
-        $( "body" ).append( form );
-
-        var input = document.createElement( "input" );
-        input.type = "hidden";
-        input.name = "saveLink";
-        var url = document.location;
-        input.value = url.origin + url.pathname + url.hash.split( "?" )[ 0 ] + "?" + $.param( searchString );
-        form.appendChild( input );
-
-        form.submit();
-    }
+      form.submit();
+    };
   }
 })();

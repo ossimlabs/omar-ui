@@ -266,6 +266,35 @@
                           </div>
                         </td>
                       </tr>
+                      <tr>
+                        <td class="filter-row">
+                          <div class="input-group input-group-sm">
+                            <span class="input-group-addon">
+                              <input
+                                type="checkbox"
+                                ng-model="filter.productIdCheck"
+                                ng-change="filter.updateFilterString()">
+                            </span>
+                            <span class="input-group-addon name">Product</span>
+                            <ui-select
+                              multiple
+                              focus-input
+                              close-on-select="true"
+                              id="productIdInput"
+                              ng-change="filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
+                              ng-click="filter.getDistinctValues('productId');"
+                              ng-model="filter.productId"
+                              theme="bootstrap">
+                              <ui-select-match placeholder="Product type">
+                                {{$item}}
+                              </ui-select-match>
+                              <ui-select-choices repeat="val in productIdTypes | filter: $select.search">
+                                {{val}}
+                              </ui-select-choices>
+                            </ui-select>
+                          </div>
+                        </td>
+                      </tr>
                     </table>
                     <br>
                   </li>

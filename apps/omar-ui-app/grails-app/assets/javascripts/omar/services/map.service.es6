@@ -874,10 +874,12 @@
     this.mapShowImageFootprint = function( imageObj ) {
         clearLayerSource( searchLayerVector );
 
+        // If imageObj is not a JS Object in GeoJSON format, parse the imageObj from GeoJSON.
         if ( imageObj.getProperties ) {
             imageObj = JSON.parse( new ol.format.GeoJSON().writeFeature( imageObj ) );
         }
 
+        // Get image coordinates and properties
         var coordinates = imageObj.geometry.coordinates;
         var properties = imageObj.properties;
         if ( properties.acquisition_date ) {
@@ -885,10 +887,12 @@
             properties.acquisition_date = moment( date ).format( "MM/DD/YYYY HH:mm:ss" );
         }
 
+        // Get footprint as type of ol feature
         var footprintFeature = new ol.Feature({
             geometry: new ol.geom.MultiPolygon( coordinates )
         });
 
+        // Highlight selected footprint
         var color = setFootprintColors( properties.file_type );
         footprintStyle.getFill().setColor( color );
         footprintStyle.getStroke().setColor( color );
@@ -896,9 +900,11 @@
 
         searchLayerVector.getSource().addFeature( footprintFeature );
 
+        // Create containing div
         var mediaDiv = document.createElement( "div" );
         $( mediaDiv ).addClass( "media" );
 
+        // Add thumbnail image to image card
         var leftDiv = document.createElement( "div" );
         $( leftDiv ).addClass( "media-left" );
         var image = document.createElement( "img" );
@@ -913,6 +919,7 @@
         $( leftDiv ).append( image );
         $( mediaDiv ).append( leftDiv );
 
+        // Add DIV for metadata to image card
         var bodyDiv = document.createElement( "div" );
         $( bodyDiv ).addClass( "media-body" );
         $.each([
@@ -940,6 +947,7 @@
         $( content ).html( mediaDiv );
         $( content ).append( "<br>" );
 
+        // Add buttons to image card
         $.each([
             { broadcast: "zoomExtent", icon: "fa fa-arrows", preference: "zoomToImageExtentButton" },
             { broadcast: "viewImageMetadata", icon: "fa fa-table", preference: "viewMetadataButton" },
@@ -962,12 +970,15 @@
             }
         });
 
+        // Position image card over footprint
         var extent = footprintFeature.getGeometry().getExtent();
         var position = overlay.getPosition();
         if ( !position || !ol.extent.containsCoordinate( extent, position ) ) {
             var center = new ol.extent.getCenter( extent );
             overlay.setPosition( center );
         }
+
+        // Color container
         $( container ).css( "background-color", $( "body" ).css( "background-color" ) );
         $( container ).css( "display", "block" );
     };

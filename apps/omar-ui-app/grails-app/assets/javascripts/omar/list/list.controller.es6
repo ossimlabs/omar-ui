@@ -71,7 +71,8 @@
     function setlistControllerUrlProps() {
       thumbnailsBaseUrl = stateService.omarSitesState.url.base;
       thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-      thumbnailsRequestUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+      thumbnailsRequestUrl =
+        thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
       uiBaseUrl = stateService.omarSitesState.url.base;
       uiContextPath = stateService.omarSitesState.url.uiContextPath;
@@ -113,9 +114,9 @@
       vm.mensaRequestUrl = mensaRequestUrl;
     }
 
-    vm.getSecurityClassificationClass = function( string ) {
-        return string ? string.toLowerCase().replace( /\s/g, "-" ) : "";
-    }
+    vm.getSecurityClassificationClass = function(string) {
+      return string ? string.toLowerCase().replace(/\s/g, "-") : "";
+    };
 
     vm.selectedOmar = "";
 
@@ -205,32 +206,31 @@
     vm.padThumbnail = "false";
 
     vm.getImageSpaceUrl = function(image) {
-        var defaults = imageSpaceDefaults;
-        var properties = image.properties;
-        var params = {
-            bands: defaults.bands,
-            brightness: defaults.brightness,
-            contrast: defaults.contrast,
-            entry_id: properties.entry_id,
-            filename: properties.filename,
-            height: properties.height,
-            histOp: defaults.histOp,
-            histCenterTile: defaults.histCenterTile,
-            imageId: properties.id,
-            imageSpaceRequestUrl: imageSpaceRequestUrl,
-            mensaRequestUrl: mensaRequestUrl,
-            numOfBands: properties.number_of_bands,
-            numResLevels: properties.number_of_res_levels,
-            resamplerFilter: defaults.resamplerFilter,
-            sharpenMode: defaults.sharpenMode,
-            showModalSplash: true,
-            uiRequestUrl: uiRequestUrl,
-            wfsRequestUrl: wfsRequestUrl,
-            width: properties.width
-        };
+      var defaults = imageSpaceDefaults;
+      var properties = image.properties;
+      var params = {
+        bands: defaults.bands,
+        brightness: defaults.brightness,
+        contrast: defaults.contrast,
+        entry_id: properties.entry_id,
+        filename: properties.filename,
+        height: properties.height,
+        histOp: defaults.histOp,
+        histCenterTile: defaults.histCenterTile,
+        imageId: properties.id,
+        imageSpaceRequestUrl: imageSpaceRequestUrl,
+        mensaRequestUrl: mensaRequestUrl,
+        numOfBands: properties.number_of_bands,
+        numResLevels: properties.number_of_res_levels,
+        resamplerFilter: defaults.resamplerFilter,
+        sharpenMode: defaults.sharpenMode,
+        showModalSplash: true,
+        uiRequestUrl: uiRequestUrl,
+        wfsRequestUrl: wfsRequestUrl,
+        width: properties.width
+      };
 
-
-        return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param( params );
+      return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param(params);
     };
 
     // Shows/Hides the KML SuperOverlay button based on parameters passed down
@@ -265,7 +265,8 @@
     vm.imageSpaceDefaults = imageSpaceDefaults;
 
     vm.displayFootprint = function(obj) {
-      mapService.mapShowImageFootprint(obj);
+      //mapService.mapShowImageFootprint(obj);
+      mapService.displayFootprint(obj);
     };
 
     vm.removeFootprint = function() {
@@ -302,7 +303,6 @@
         }
         // We also need to remove the image from the map
         mapService.removeSelectedImageLayer(imageId, vm.selectedCards);
-
       } else {
         // Restrict the number of selected cards to 10
         if (vm.selectedCards.length >= 10) {
@@ -330,14 +330,15 @@
         mapService.addSelectedImageAsLayer(imageId);
       }
 
-      if (vm.selectedCards.length >= 1){
+      if (vm.selectedCards.length >= 1) {
       } else {
       }
 
       // We need to enable the selected menu options if we have one
       // or more image cards selected
       if (vm.selectedCards.length >= 1) {
-        vm.exportSelectedButtonText = "Selected (" + vm.selectedCards.length + ")";
+        vm.exportSelectedButtonText =
+          "Selected (" + vm.selectedCards.length + ")";
         vm.showSelectedButton = true;
       } else {
         vm.showSelectedButton = false;
@@ -477,12 +478,12 @@
 
         $log.debug(`vm.url: ${vm.url}`);
         window.open(vm.url.toString(), "_blank");
-      } else{
+      } else {
         vm.getDownloadURL(outputFormat);
       }
     };
 
-    vm.getJpipStream = function( $event, file, entry, projCode, index, type ) {
+    vm.getJpipStream = function($event, file, entry, projCode, index, type) {
       vm.showProcessInfo[index] = true;
       vm.processType = `Creating JPIP     `;
 
@@ -521,9 +522,9 @@
       wfsService.updateAttrFilter(wfsService.attrObj.filter, field, type);
     };
     var sortPreference = vm.userPreferences.resultsSort;
-    if ( sortPreference ) {
-        var sortFields = sortPreference.split( "," );
-        vm.sortWfs( sortFields[ 0 ], sortFields[ 1 ], sortFields[ 2 ] );
+    if (sortPreference) {
+      var sortFields = sortPreference.split(",");
+      vm.sortWfs(sortFields[0], sortFields[1], sortFields[2]);
     }
 
     vm.shareModal = function(imageLink) {
@@ -532,7 +533,7 @@
 
     vm.copyWmsCaps = function(imageId) {
       let imageListFilter = "in(" + imageId + ")";
-      let url = wfsService.getExport('WMS130', imageListFilter);
+      let url = wfsService.getExport("WMS130", imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
     };
 
@@ -552,7 +553,7 @@
 
     // need some way of preventing a second hits URL call when pagination changes
     $scope.$on("pagination.updated", function(event, filter) {
-      wfsService.executeWfsQuery( false );
+      wfsService.executeWfsQuery(false);
     });
 
     $scope.$on("wfs: updated", function(event, data) {
@@ -587,17 +588,17 @@
       });
     });
 
-    $scope.$on( "viewImageMetadata", function( event, image ) {
-        vm.showImageModal(
-            image,
-            vm.imageSpaceDefaults,
-            vm.imageSpaceRequestUrl,
-            vm.uiRequestUrl,
-            vm.mensaRequestUrl,
-            vm.wfsRequestUrl,
-            vm.tlvRequestUrl,
-            vm.kmlRequestUrl
-        );
+    $scope.$on("viewImageMetadata", function(event, image) {
+      vm.showImageModal(
+        image,
+        vm.imageSpaceDefaults,
+        vm.imageSpaceRequestUrl,
+        vm.uiRequestUrl,
+        vm.mensaRequestUrl,
+        vm.wfsRequestUrl,
+        vm.tlvRequestUrl,
+        vm.kmlRequestUrl
+      );
     });
     vm.showImageModal = function(
       imageObj,
@@ -634,54 +635,85 @@
         ],
         controllerAs: "vm",
         resolve: {
-          imageObj: function() { return imageObj; },
-          imageSpaceDefaults: function() { return imageSpaceDefaults; },
-          imageSpaceRequestUrl: function() { return imageSpaceRequestUrl; },
-          uiRequestUrl: function() { return uiRequestUrl; },
-          mensaRequestUrl: function() { return mensaRequestUrl; },
-          wmsRequestUrl: function() { return wmsRequestUrl; },
-          wfsRequestUrl: function() { return wfsRequestUrl; },
-          tlvRequestUrl: function() { return tlvRequestUrl; },
-          kmlRequestUrl: function() { return kmlRequestUrl; }
+          imageObj: function() {
+            return imageObj;
+          },
+          imageSpaceDefaults: function() {
+            return imageSpaceDefaults;
+          },
+          imageSpaceRequestUrl: function() {
+            return imageSpaceRequestUrl;
+          },
+          uiRequestUrl: function() {
+            return uiRequestUrl;
+          },
+          mensaRequestUrl: function() {
+            return mensaRequestUrl;
+          },
+          wmsRequestUrl: function() {
+            return wmsRequestUrl;
+          },
+          wfsRequestUrl: function() {
+            return wfsRequestUrl;
+          },
+          tlvRequestUrl: function() {
+            return tlvRequestUrl;
+          },
+          kmlRequestUrl: function() {
+            return kmlRequestUrl;
+          }
         }
       });
     };
 
-    $scope.$on( "viewOrtho", function( event, image ) {
-        vm.viewOrtho( image );
+    $scope.$on("viewOrtho", function(event, image) {
+      vm.viewOrtho(image);
     });
-    vm.viewOrtho = function( image ) {
-      var feature = new ol.format.GeoJSON().readFeature( image );
+    vm.viewOrtho = function(image) {
+      var feature = new ol.format.GeoJSON().readFeature(image);
       var filter = "in(" + feature.getProperties().id + ")";
       var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
-      window.open( tlvUrl, "_blank" );
+      window.open(tlvUrl, "_blank");
     };
 
-    $scope.$on( "copyWms", function( event, image ) {
-        vm.copyWmsCaps( image.properties.id );
+    $scope.$on("copyWms", function(event, image) {
+      vm.copyWmsCaps(image.properties.id);
     });
 
-    $scope.$on( "download", function( event, image ) {
-        vm.archiveDownload( image.properties.id );
+    $scope.$on("download", function(event, image) {
+      vm.archiveDownload(image.properties.id);
     });
 
-    $scope.$on( "downloadKml", function( event, image ) {
-        window.open( vm.kmlRequestUrl + image.properties.id );
+    $scope.$on("downloadKml", function(event, image) {
+      window.open(vm.kmlRequestUrl + image.properties.id);
     });
 
-    $scope.$on( "jpipImage", function( event, image ) {
-        vm.getJpipStream( event, image.properties.filename, image.properties.entry_id, 'chip', 0, 'stream' );
+    $scope.$on("jpipImage", function(event, image) {
+      vm.getJpipStream(
+        event,
+        image.properties.filename,
+        image.properties.entry_id,
+        "chip",
+        0,
+        "stream"
+      );
     });
 
-    $scope.$on( "jpipOrtho", function( event, image ) {
-        vm.getJpipStream( event, image.properties.filename, image.properties.entry_id, '4326', 0, 'ortho' );
+    $scope.$on("jpipOrtho", function(event, image) {
+      vm.getJpipStream(
+        event,
+        image.properties.filename,
+        image.properties.entry_id,
+        "4326",
+        0,
+        "ortho"
+      );
     });
 
-    $scope.$on( "shareLink", function( event, image ) {
-        vm.shareModal( vm.getImageSpaceUrl( image ) );
+    $scope.$on("shareLink", function(event, image) {
+      vm.shareModal(vm.getImageSpaceUrl(image));
     });
-
 
     var tlvBaseUrl, tlvContextPath;
     vm.tlvRequestUrl = "";
@@ -689,101 +721,101 @@
     var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
 
     function setWFSOutputDlControllerUrlProps() {
-        tlvBaseUrl = stateService.omarSitesState.url.base;
-        tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-        tlvRequestUrl = tlvBaseUrl + tlvContextPath;
-        vm.tlvRequestUrl = tlvRequestUrl;
+      tlvBaseUrl = stateService.omarSitesState.url.base;
+      tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+      vm.tlvRequestUrl = tlvRequestUrl;
 
-        geoscriptBaseUrl = stateService.omarSitesState.url.base;
-        geoscriptContextPath =
-            stateService.omarSitesState.url.geoscriptContextPath;
-        geoscriptRequestUrl = geoscriptBaseUrl + geoscriptContextPath;
+      geoscriptBaseUrl = stateService.omarSitesState.url.base;
+      geoscriptContextPath =
+        stateService.omarSitesState.url.geoscriptContextPath;
+      geoscriptRequestUrl = geoscriptBaseUrl + geoscriptContextPath;
     }
 
     $scope.$on("omarSitesState.updated", function(event, params) {
-        setWFSOutputDlControllerUrlProps();
+      setWFSOutputDlControllerUrlProps();
     });
 
     vm.attrFilter = "";
 
     vm.getDownloadURL = function(outputFormat) {
-        vm.url = wfsService.getExport(outputFormat);
-        $window.open(vm.url.toString(), "_blank");
+      vm.url = wfsService.getExport(outputFormat);
+      $window.open(vm.url.toString(), "_blank");
     };
 
     $scope.$on("attrObj.updated", function(event, response) {
-        vm.attrFilter = response;
+      vm.attrFilter = response;
     });
 
     vm.goToTLV = function() {
-        var filter = wfsService.spatialObj.filter;
-        if (filter == "") {
-            toastr.error("A spatial filter needs to be enabled.");
+      var filter = wfsService.spatialObj.filter;
+      if (filter == "") {
+        toastr.error("A spatial filter needs to be enabled.");
+      } else {
+        var pointLatLon;
+        mapService.mapPointLatLon();
+        if (mapService.pointLatLon) {
+          pointLatLon = mapService.pointLatLon;
         } else {
-            var pointLatLon;
-            mapService.mapPointLatLon();
-            if (mapService.pointLatLon) {
-                pointLatLon = mapService.pointLatLon;
-            } else {
-                var center = mapService.getCenter();
-                pointLatLon = center
-                    .slice()
-                    .reverse()
-                    .join(",");
-            }
-
-            if (vm.attrFilter) {
-                filter += " AND " + vm.attrFilter;
-            }
-
-            var tlvURL =
-                tlvRequestUrl +
-                "/?filter=" +
-                encodeURIComponent(filter) +
-                "&maxResults=100";
-            $window.open(tlvURL, "_blank");
+          var center = mapService.getCenter();
+          pointLatLon = center
+            .slice()
+            .reverse()
+            .join(",");
         }
+
+        if (vm.attrFilter) {
+          filter += " AND " + vm.attrFilter;
+        }
+
+        var tlvURL =
+          tlvRequestUrl +
+          "/?filter=" +
+          encodeURIComponent(filter) +
+          "&maxResults=100";
+        $window.open(tlvURL, "_blank");
+      }
     };
 
     vm.getGeoRss = () => {
-        vm.geoRssAppLink = geoscriptRequestUrl + "/georss?filter=";
-        let wfsFilter = "";
+      vm.geoRssAppLink = geoscriptRequestUrl + "/georss?filter=";
+      let wfsFilter = "";
 
-        // Checking here for the spatial filter.
-        if (
-            wfsService.spatialObj.filter ||
-            wfsService.spatialObj.filter.length >= 1
-        ) {
-            wfsFilter = wfsService.spatialObj.filter;
-        }
+      // Checking here for the spatial filter.
+      if (
+        wfsService.spatialObj.filter ||
+        wfsService.spatialObj.filter.length >= 1
+      ) {
+        wfsFilter = wfsService.spatialObj.filter;
+      }
 
-        // Checking here for the attributes filter.
-        if (wfsService.attrObj.filter || wfsService.attrObj.filter.length >= 1) {
-            // Check to see if we already have a spatial filter in the
-            // wfsFilter.  If so we will combine them as a filter.
-            if (wfsFilter !== "") {
-                wfsFilter += " AND " + wfsService.attrObj.filter;
-                return $window.open(
-                    vm.geoRssAppLink + encodeURIComponent(wfsFilter),
-                    "_blank"
-                );
-            }
-
-            // We don't have a spatial filter so we will just make the filter with
-            // the attrObj filter.
-            wfsFilter = wfsService.attrObj.filter;
-            return $window.open(
-                vm.geoRssAppLink + encodeURIComponent(wfsFilter),
-                "_blank"
-            );
-        }
-        // There isn't a spatial OR a attribute filter.  We will just create an empty filter.
-        return $window.open(
+      // Checking here for the attributes filter.
+      if (wfsService.attrObj.filter || wfsService.attrObj.filter.length >= 1) {
+        // Check to see if we already have a spatial filter in the
+        // wfsFilter.  If so we will combine them as a filter.
+        if (wfsFilter !== "") {
+          wfsFilter += " AND " + wfsService.attrObj.filter;
+          return $window.open(
             vm.geoRssAppLink + encodeURIComponent(wfsFilter),
             "_blank"
-        );
+          );
+        }
 
-        // TODO: Figure out if selections are possible
+        // We don't have a spatial filter so we will just make the filter with
+        // the attrObj filter.
+        wfsFilter = wfsService.attrObj.filter;
+        return $window.open(
+          vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+          "_blank"
+        );
+      }
+      // There isn't a spatial OR a attribute filter.  We will just create an empty filter.
+      return $window.open(
+        vm.geoRssAppLink + encodeURIComponent(wfsFilter),
+        "_blank"
+      );
+
+      // TODO: Figure out if selections are possible
     };
   }
 
@@ -851,33 +883,32 @@
     };
 
     vm.getImageSpaceUrl = function(image) {
-        var defaults = imageSpaceDefaults;
-        var properties = image.properties;
-        var params = {
-            bands: defaults.bands,
-            brightness: defaults.brightness,
-            contrast: defaults.contrast,
-            entry_id: properties.entry_id,
-            filename: properties.filename,
-            height: properties.height,
-            histOp: defaults.histOp,
-            histCenterTile: defaults.histCenterTile,
-            imageId: properties.id,
-            imageSpaceRequestUrl: imageSpaceRequestUrl,
-            mensaRequestUrl: mensaRequestUrl,
-            numOfBands: properties.number_of_bands,
-            numResLevels: properties.number_of_res_levels,
-            resamplerFilter: defaults.resamplerFilter,
-            sharpenMode: defaults.sharpenMode,
-            showModalSplash: false,
-            uiRequestUrl: uiRequestUrl,
-            wfsRequestUrl: wfsRequestUrl,
-            width: properties.width,
-            wmsRequestUrl: wmsRequestUrl
-        };
+      var defaults = imageSpaceDefaults;
+      var properties = image.properties;
+      var params = {
+        bands: defaults.bands,
+        brightness: defaults.brightness,
+        contrast: defaults.contrast,
+        entry_id: properties.entry_id,
+        filename: properties.filename,
+        height: properties.height,
+        histOp: defaults.histOp,
+        histCenterTile: defaults.histCenterTile,
+        imageId: properties.id,
+        imageSpaceRequestUrl: imageSpaceRequestUrl,
+        mensaRequestUrl: mensaRequestUrl,
+        numOfBands: properties.number_of_bands,
+        numResLevels: properties.number_of_res_levels,
+        resamplerFilter: defaults.resamplerFilter,
+        sharpenMode: defaults.sharpenMode,
+        showModalSplash: false,
+        uiRequestUrl: uiRequestUrl,
+        wfsRequestUrl: wfsRequestUrl,
+        width: properties.width,
+        wmsRequestUrl: wmsRequestUrl
+      };
 
-
-        return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param( params );
+      return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param(params);
     };
 
     // Used to show/hide the 'Image not found message'
@@ -983,18 +1014,17 @@
 
     vm.copyWmsCaps = function(imageId) {
       let imageListFilter = "in(" + imageId + ")";
-      let url = wfsService.getExport('WMS130', imageListFilter);
+      let url = wfsService.getExport("WMS130", imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
     };
 
-    vm.viewOrtho = function( image ) {
-      var feature = new ol.format.GeoJSON().readFeature( image );
+    vm.viewOrtho = function(image) {
+      var feature = new ol.format.GeoJSON().readFeature(image);
       var filter = "in(" + feature.getProperties().id + ")";
       var tlvUrl = tlvRequestUrl + "?filter=" + filter;
 
-      window.open( tlvUrl, "_blank" );
+      window.open(tlvUrl, "_blank");
     };
-
 
     $scope.$on("placemarks: updated", function(event, data) {
       // Update the DOM (card list)
@@ -1002,7 +1032,5 @@
         vm.beData = data;
       });
     });
-
   }
-
 })();

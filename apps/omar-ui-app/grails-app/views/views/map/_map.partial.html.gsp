@@ -1,4 +1,4 @@
-    <div ng-controller = "FilterController as filter">
+<div ng-controller = "FilterController as filter">
     <div class="container-fluid" ng-show="filter.showCurrentFilter">
         <div class = "row" style = "margin-top: -16px; margin-bottom: 18px;">
             <div class = "col-sm-12">
@@ -191,6 +191,28 @@
                                 </div>
                             </div>
                             <div class = "row">
+                                <div class = "col-md-12">Product</div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div class = "input-group input-group-sm">
+                                        <span class = "input-group-addon">
+                                            <input ng-change="filter.updateFilterString()" ng-model="filter.productIdCheck" type="checkbox">
+                                        </span>
+                                        <ui-select multiple focus-input
+                                            close-on-select="true"
+                                            ng-change="filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
+                                            ng-click="filter.getDistinctValues('productId');"
+                                            ng-model="filter.productId"
+                                            theme="bootstrap">
+                                            <ui-select-match placeholder="Product type">{{$item}}</ui-select-match>
+                                            <ui-select-choices repeat="val in productIdTypes | filter: $select.search">{{val}}</ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class = "row">
                                 <div class = "col-md-12">Sensor</div>
                             </div>
                             <div class = "row">
@@ -275,7 +297,7 @@
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div class = "input-group">
+                                    <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
                                             <span style = "font-family: monospace;"><small>Min</small></span>
                                         </div>
@@ -329,7 +351,7 @@
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div class = "input-group">
+                                    <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
                                             <span style = "font-family: monospace;"><small>Min</small></span>
                                         </div>
@@ -383,7 +405,7 @@
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div class = "input-group">
+                                    <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
                                             <span style = "font-family: monospace;"><small>Min</small></span>
                                         </div>
@@ -437,7 +459,7 @@
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div class = "input-group">
+                                    <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
                                             <span style = "font-family: monospace;"><small>Min</small></span>
                                         </div>
@@ -491,7 +513,7 @@
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div class = "input-group">
+                                    <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
                                             <span style = "font-family: monospace;"><small>Min</small></span>
                                         </div>
@@ -545,7 +567,7 @@
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div class = "input-group">
+                                    <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
                                             <span style = "font-family: monospace;"><small>Min</small></span>
                                         </div>

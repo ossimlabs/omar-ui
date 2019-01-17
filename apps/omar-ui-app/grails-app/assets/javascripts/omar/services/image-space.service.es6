@@ -718,7 +718,7 @@
              */
             pointArray.forEach(function(el) {
               sketchArray.push(el[0]);
-              sketchArray.push(el[1] * -1);
+              sketchArray.push(imgHeight - el[1]);
             });
 
             var sketchString = sketchArray
@@ -866,7 +866,7 @@
            * XY to start in the upper-left.  OL3 starts in the lower-left.
            */
           var pqeModArray = pqeArray.map(function(el, index) {
-            return index % 2 ? el * -1 : el;
+            return index % 2 ? imgHeight - el : el;
           });
 
           var pqeString = pqeModArray
@@ -905,7 +905,7 @@
 
               pqeErrorArray.forEach(function(el) {
                 pqeModErrorArray.push(el.x);
-                pqeModErrorArray.push(-el.y);
+                pqeModErrorArray.push(imgHeight - el.y);
               });
 
               var pqeErrorString = pqeModErrorArray

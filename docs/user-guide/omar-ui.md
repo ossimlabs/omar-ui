@@ -75,6 +75,8 @@ Country Code - Two letters representing a particular country.
 Filename - The filename of an image.
 * **Image:**
 Image ID - The Image ID found in the metadata.
+* **Product:**
+Product Type - The Product type found in the metadata.
 * **Mission:**
 Mission ID - The image's mission ID.
 * **Sensor:**

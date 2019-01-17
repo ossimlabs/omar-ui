@@ -380,6 +380,9 @@
             vm.startDate = moment( vm.urlParams.startDate );
         }
     };
+    vm.openStartDatePopup = function() {
+        vm.startDatePopupOpen = true;
+    }
 
     vm.setInitialCustomEndDate = function() {
         if ( vm.userPreferences.customEndDateTime && vm.userPreferences.duration == "customDateRange" ) {

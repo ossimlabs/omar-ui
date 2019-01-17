@@ -175,7 +175,6 @@
       </div>
 
     </div>
-    <o2:securityClassificationBanner position="bottom" />
     <asset:script>
 
       var AppO2 = (function () {

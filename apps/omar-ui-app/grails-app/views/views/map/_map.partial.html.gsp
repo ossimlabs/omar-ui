@@ -629,9 +629,19 @@
                                 </div>
                             </div></div>
 
-                            <div class = "row" ng-show="filter.customDateRangeVisible"><div class = "col-md-12">
-                                <div>Start Time & Date</div>
-                                <div class = "form-group">
+                            <div class = "row" ng-show="filter.customDateRangeVisible">
+                                <div class = "col-md-12">Start Date & Time</div>
+                                <div class = "col-md-6">
+                                    <input uib-datepicker-popup
+                                        type = "text"
+                                        class = "form-control input-sm"
+                                        ng-change="filter.updateFilterString()"
+                                        ng-click = "filter.openStartDatePopup()"
+                                        ng-model = "filter.startDate"
+                                        is-open="filter.startDatePopupOpen"
+                                        close-text = "Close">
+                                </div>
+                                <div class = "col-md-6">
                                     <input bs-timepicker
                                         type="text"
                                         class="form-control input-sm"
@@ -643,21 +653,22 @@
                                         placeholder="Time"
                                         ng-blur="filter.updateFilterString()">
                                 </div>
-                                <div style="display:float;">
-                                    <uib-datepicker
-                                        ng-model="filter.startDate"
-                                        max-date="filter.endDate"
-                                        show-weeks="false"
-                                        class="well well-sm"
-                                        ng-change="filter.updateFilterString()">
-                                    </uib-datepicker>
-                                </div>
-                            </div></div>
+                            </div>
 
-                            <div class = "row" ng-show="filter.customDateRangeVisible"><div class = "col-md-12">
-                                <div>End Time & Date</div>
-                                <div class="form-group">
-                                        <input bs-timepicker
+                            <div class = "row" ng-show="filter.customDateRangeVisible">
+                                <div class = "col-md-12">End Date & Time</div>
+                                <div class = "col-md-6">
+                                    <input uib-datepicker-popup
+                                        type = "text"
+                                        class = "form-control input-sm"
+                                        ng-change="filter.updateFilterString()"
+                                        ng-click = "filter.openEndDatePopup()"
+                                        ng-model = "filter.endDate"
+                                        is-open="filter.endDatePopupOpen"
+                                        close-text = "Close">
+                                </div>
+                                <div class = "col-md-6">
+                                    <input bs-timepicker
                                         type="text"
                                         size="8"
                                         class="form-control input-sm"
@@ -669,17 +680,7 @@
                                         placeholder="Time"
                                         ng-change="filter.updateFilterString()">
                                 </div>
-                                <div style="display:inline-block;">
-                                    <uib-datepicker
-                                        ng-model="filter.endDate"
-                                        min-date="filter.startDate"
-                                        max-date="filter.maxEndDate"
-                                        show-weeks="false"
-                                        class="well well-sm"
-                                        ng-change="filter.updateFilterString()">
-                                    </uib-datepicker>
-                                </div>
-                            </div></div>
+                            </div>
 
                             <div class = "row">
                                 <div class = "col-md-12" style = "text-align: center"><h4>Map Filters</h4></div>

@@ -381,17 +381,17 @@
         vm.userPreferences.customStartDateTime &&
         vm.userPreferences.duration == "customDateRange"
       ) {
-        vm.startDate = moment(vm.userPreferences.customStartDateTime);
+        vm.startDate = moment( vm.userPreferences.customStartDateTime ).format( "YYYY-MM-DD" );
       } else {
-        vm.startDate = moment().startOf("day");
+        vm.startDate = moment().startOf( "day" ).format( "YYYY-MM-DD" );
       }
-      if (vm.urlParams.startDate) {
+      if ( vm.urlParams.startDate ) {
         vm.currentTemporalDuration = vm.temporalDurations.find(function(
           element
         ) {
           return element.value == "customDateRange";
         });
-        vm.startDate = moment(vm.urlParams.startDate);
+        vm.startDate = moment( vm.urlParams.startDate ).format( "YYYY-MM-DD" );
       }
     };
     vm.openStartDatePopup = function() {
@@ -403,19 +403,22 @@
         vm.userPreferences.customEndDateTime &&
         vm.userPreferences.duration == "customDateRange"
       ) {
-        vm.endDate = moment(vm.userPreferences.customEndDateTime);
+        vm.endDate = moment( vm.userPreferences.customEndDateTime ).format( "YYYY-MM-DD" );
       } else {
-        vm.endDate = moment().endOf("day");
+        vm.endDate = moment().endOf( "day" ).format( "YYYY-MM-DD" );
       }
       if (vm.urlParams.endDate) {
-        vm.currentTemporalDuration = vm.temporalDurations.find(function(
+        vm.currentTemporalDuration = vm.temporalDurations.find( function(
           element
         ) {
           return element.value == "customDateRange";
         });
-        vm.endDate = moment(vm.urlParams.endDate);
+        vm.endDate = moment( vm.urlParams.endDate ).format( "YYYY-MM-DD" );
       }
     };
+    vm.openEndDatePopup = function() {
+        vm.endDatePopupOpen = true;
+    }
 
     vm.getCustomStartDate = function() {
       return moment(vm.startDate).format("MM-DD-YYYY HH:mm:ss+0000");

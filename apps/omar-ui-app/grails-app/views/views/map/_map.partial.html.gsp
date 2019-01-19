@@ -1047,7 +1047,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center" id = "pagination">
             <uib-pagination style="margin: 8px;"
                 total-items="list.wfsFeaturesTotalPaginationCount"
                 items-per-page="list.pageLimit"

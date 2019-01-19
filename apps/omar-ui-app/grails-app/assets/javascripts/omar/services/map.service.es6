@@ -1333,5 +1333,13 @@
       });
     };
     ol.inherits(LegendControl, ol.control.Control);
+
+    vm.mapResize = function() {
+        var mapHeight = window.innerHeight - $( "#map" ).offset().top;
+        $( "#map" ).height( mapHeight );
+    }
+    $( window ).resize( function() {
+        vm.mapResize();
+    });
   }
 })();

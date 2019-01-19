@@ -568,6 +568,14 @@
         );
         vm.refreshSpin = false;
       });
+
+        vm.listResize = function() {
+            var listHeight = window.innerHeight - $( "#list" ).offset().top - $( "#pagination" ).height() - 25;
+            $( "#list" ).height( listHeight );
+        };
+        $( window ).resize( function() { vm.listResize(); });
+        vm.listResize();
+
     });
 
     $scope.$on("wfs features: updated", function(event, features) {

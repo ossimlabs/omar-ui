@@ -257,15 +257,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0.5em #ffffff;
 }
 
-.required-indicator {
-    color: #cc0000;
-    display: inline-block;
-    font-weight: bold;
-    margin-left: 0.3em;
-    position: relative;
-    top: 0.1em;
-}
-
 ul.one-to-many {
     display: inline-block;
     list-style-position: inside;

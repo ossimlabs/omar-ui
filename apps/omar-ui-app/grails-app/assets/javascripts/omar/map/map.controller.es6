@@ -74,5 +74,7 @@
       }`;
       $log.debug(`vm.legendUrl: ${vm.legendUrl}`);
     });
+
+    mapService.mapResize();
   }
 })();

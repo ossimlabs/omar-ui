@@ -996,33 +996,6 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-bottom: 2px;
 }
 
-.filter-indicator {
-  position: absolute;
-  top: 0px;
-  font-size: 1.1em;
-  right: 4px;
-}
-
-.filter-row {
-  margin-bottom: 10px;
-}
-
-.filter-row .name {
-  min-width: 65px;
-  text-align: left;
-}
-
-.filter-row .spatial-name {
-  min-width: 100px;
-  text-align: left;
-}
-
-
-.filter-row .range-name {
-  min-width: 100px;
-  text-align: right;
-}
-
 .tooltip-inner {
   min-width: 100px;
   max-width: 100%;

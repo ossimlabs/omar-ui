@@ -1,17 +1,4 @@
 <div ng-controller = "FilterController as filter">
-    <div class="container-fluid" ng-show="filter.showCurrentFilter">
-        <div class = "row" style = "margin-top: -16px; margin-bottom: 18px;">
-            <div class = "col-sm-12">
-                <button class = "btn btn-default btn btn-xs" ng-click = "filter.clearFilters()">Clear Filters</button>
-                <span class = "tag label label-info cursor-default">{{filter.currentSpatialFilter}}</span>
-                <span ng-repeat = "filter in filter.currentAttrFilterArray">
-                    <span class = "tag label label-primary cursor-default">
-                        {{filter}}
-                    </span>
-                </span>
-            </div>
-        </div>
-    </div>
     <nav style = "margin-top: -15px; margin-bottom: 5px;" class = "navbar yamm navbar-default">
         <div class = "navbar-header">
             <button type = "button" class = "navbar-toggle collapsed" data-toggle = "collapse" data-target = "#map-navbar-collapse" aria-expanded = "false">
@@ -706,6 +693,11 @@
                                     <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Left-click and hold with the ALT key to create a box that will return a potential list of images"></i>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-md-12" style = "text-align: center">
+                            <button class = "btn btn-default" ng-click = "filter.clearFilters()">Clear Filters</button>
                         </div>
                     </div>
                 </div>

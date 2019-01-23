@@ -697,7 +697,7 @@
                     </div>
                     <div class = "row">
                         <div class = "col-md-12" style = "text-align: center">
-                            <button class = "btn btn-default" ng-click = "filter.clearFilters()">Clear Filters</button>
+                            <button class = "btn btn-default btn-sm" ng-click = "filter.clearFilters()">Clear Filters</button>
                         </div>
                     </div>
                 </div>

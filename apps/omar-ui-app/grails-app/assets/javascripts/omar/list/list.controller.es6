@@ -352,6 +352,7 @@
      * @param id
      */
     vm.zoomToSelectedImage = id => {
+        $( "a:contains('Map')" ).trigger( "click" );
       mapService.zoomToSelectedImages(id);
     };
 
@@ -411,56 +412,30 @@
       //TODO: Add functionality to download all when none are selected
     };
 
-    /**
-     * Purpose: Takes an app name parameter that specifies the application
-     * to open from the selected set of card images
-     * @param app
-     */
     vm.viewSelectedImagesApp = app => {
-      if (vm.selectedCards.length >= 1) {
-        $log.debug(
-          `vm.viewSelectedImages selected card set: ${vm.selectedCards}`
-        );
-        $log.debug(`app = ${app}`);
+        let params = { maxResults: 100 };
 
-        let filter = "in(" + vm.selectedCards + ")";
-        let bbox = mapService.calculateExtent().join(",");
-
-        let spatialFilter = wfsService.spatialObj.filter;
-
-        if (spatialFilter == "") {
-          toastr.error("A spatial filter needs to be enabled.");
-        } else {
-          let pointLatLon;
-          mapService.mapPointLatLon();
-          if (mapService.pointLatLon) {
-            pointLatLon = mapService.pointLatLon;
-          } else {
-            let center = mapService.getCenter();
-            pointLatLon = center
-              .slice()
-              .reverse()
-              .join(",");
-          }
-
-          let appUrl;
-
-          switch (app) {
-            case "tlv":
-              appUrl = tlvRequestUrl + "/?";
-              break;
-          }
-
-          let url =
-            appUrl +
-            "&filter=" +
-            encodeURIComponent(filter) +
-            "&maxResults=100";
-          $log.debug(`url: ${url}`);
-
-          $window.open(url, "_blank");
+        if ( vm.selectedCards.length ) {
+            params.filter = 'in(' + vm.selectedCards + ')';
         }
-      }
+        else {
+            let filters = [];
+            if ( wfsService.spatialObj.filter != '' ) {
+                filters.push( wfsService.spatialObj.filter );
+            }
+            if ( wfsService.attrObj.filter != '' ) {
+                filters.push( wfsService.attrObj.filter );
+            }
+
+            if ( filters.length ) {
+                params.filter = filters.join( ' AND ' );
+            }
+            else {
+                params.filter = 'index_id IS NOT NULL';
+            }
+        }
+
+        $window.open( tlvRequestUrl + "?" + $.param( params ), "_blank");
     };
 
     /**
@@ -754,36 +729,6 @@
     $scope.$on("attrObj.updated", function(event, response) {
       vm.attrFilter = response;
     });
-
-    vm.goToTLV = function() {
-      var filter = wfsService.spatialObj.filter;
-      if (filter == "") {
-        toastr.error("A spatial filter needs to be enabled.");
-      } else {
-        var pointLatLon;
-        mapService.mapPointLatLon();
-        if (mapService.pointLatLon) {
-          pointLatLon = mapService.pointLatLon;
-        } else {
-          var center = mapService.getCenter();
-          pointLatLon = center
-            .slice()
-            .reverse()
-            .join(",");
-        }
-
-        if (vm.attrFilter) {
-          filter += " AND " + vm.attrFilter;
-        }
-
-        var tlvURL =
-          tlvRequestUrl +
-          "/?filter=" +
-          encodeURIComponent(filter) +
-          "&maxResults=100";
-        $window.open(tlvURL, "_blank");
-      }
-    };
 
     vm.getGeoRss = () => {
       vm.geoRssAppLink = geoscriptRequestUrl + "/georss?filter=";

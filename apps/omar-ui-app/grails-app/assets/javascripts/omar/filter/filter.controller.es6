@@ -167,6 +167,8 @@
     }
 
     this.byViewPort = function(status) {
+        $( "a:contains('Map')" ).trigger( "click" );
+
       // Turn on viewport
       mapService.viewPortFilter(status);
 
@@ -182,6 +184,8 @@
     };
 
     this.byPointer = function(status) {
+        $( "a:contains('Map')" ).trigger( "click" );
+
       // Turn on point
       mapService.pointFilter(status);
 
@@ -197,6 +201,8 @@
     };
 
     this.byPolygon = function(status) {
+        $( "a:contains('Map')" ).trigger( "click" );
+
       // Turn on polygons
       mapService.polygonFilter(status);
 
@@ -233,7 +239,7 @@
       var arrays = [
         { key: "missionId", urlParam: "missions" },
         { key: "sensorId", urlParam: "sensors" },
-        { key: "productId", urlParam: "product" }
+        { key: "productId", urlParam: "products" }
       ];
       $.each(arrays, function(index, keyword) {
         vm[keyword.key + "Check"] = vm.userPreferences[keyword.key + "Enabled"];
@@ -880,15 +886,15 @@
         { key: "filename", urlParam: "filename" },
         { key: "imageId", urlParam: "imageId" },
         { key: "missionId", urlParam: "missions" },
+        { key: "productId", urlParam: "products" },
         { key: "sensorId", urlParam: "sensors" },
         { key: "targetId", urlParam: "target" },
         { key: "wacNumber", urlParam: "wac" }
       ];
-      $.each(keywords, function(index, keyword) {
-        if (vm[keyword.key + "Check"]) {
-          var value = vm[keyword.key];
-          searchString[keyword.urlParam] =
-            typeof value == "object" ? value.join(",") : value;
+      $.each( keywords, function( index, keyword ) {
+        if ( vm[ keyword.key + "Check" ] ) {
+          var value = vm[ keyword.key ];
+          searchString[ keyword.urlParam ] = typeof value == "object" ? value.join( "," ) : value;
         }
       });
 

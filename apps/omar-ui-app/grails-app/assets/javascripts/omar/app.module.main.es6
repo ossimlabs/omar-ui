@@ -73,6 +73,7 @@
                 "mapZoom",
                 "missions",
                 "niirs",
+                "products",
                 "sensors",
                 "spatial",
                 "startDate",

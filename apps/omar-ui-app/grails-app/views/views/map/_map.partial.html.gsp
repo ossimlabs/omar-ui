@@ -107,11 +107,11 @@
                                         <ui-select multiple focus-input
                                             close-on-select = "true"
                                             ng-change = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
-                                            ng-click = "filter.getCountryListing();"
+                                            ng-click = "filter.getDistinctValues('countryCode');"
                                             ng-model = "filter.countryCode"
                                             theme="bootstrap">
-                                            <ui-select-match placeholder = "Country Code">{{$item.iso_a2}}</ui-select-match>
-                                            <ui-select-choices repeat = "val in countryListing | filter: $select.search">{{val.name}} ({{val.iso_a2}})</ui-select-choices>
+                                            <ui-select-match placeholder = "Country Code">{{$item}}</ui-select-match>
+                                            <ui-select-choices repeat = "val in countryCodeTypes | filter: $select.search">{{val}}</ui-select-choices>
                                         </ui-select>
                                     </div>
                                 </div>

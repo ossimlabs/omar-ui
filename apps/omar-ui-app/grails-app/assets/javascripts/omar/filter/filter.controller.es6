@@ -139,6 +139,7 @@
       }
     };
 
+    $scope["countryCodeTypes"] = [];
     $scope["missionIdTypes"] = [];
     $scope["sensorIdTypes"] = [];
     $scope["productIdTypes"] = [];

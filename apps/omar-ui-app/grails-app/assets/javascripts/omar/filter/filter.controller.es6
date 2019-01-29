@@ -219,25 +219,8 @@
     };
 
     vm.initKeywords = function(reset) {
-      vm.countryCodeCheck = vm.userPreferences.countryCodeEnabled;
-      var countryCode = vm.userPreferences.countryCode;
-      if (vm.urlParams.countryCodes) {
-        vm.countryCodeCheck = true;
-        countryCode = vm.urlParams.countryCodes;
-      }
-      if (reset) {
-        vm.countryCodeCheck = false;
-        countryCode = null;
-      }
-      if (countryCode) {
-        countryCode = countryCode.split(",");
-        countryCode.forEach(function(cc, index) {
-          countryCode[index] = { iso_a2: cc };
-        });
-      }
-      vm.countryCode = countryCode || [];
-
       var arrays = [
+        { key: "countryCode", urlParam: "countries" },
         { key: "missionId", urlParam: "missions" },
         { key: "sensorId", urlParam: "sensors" },
         { key: "productId", urlParam: "products" }
@@ -638,12 +621,7 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        pushKeywordToArray(
-          "country_code",
-          vm.countryCode.map(function(country) {
-            return country.iso_a2;
-          })
-        );
+        pushKeywordToArray( "country_code", vm.countryCode );
       } else if (vm.countryCode.length === 0) {
         vm.countryCodeCheck = false;
       }
@@ -875,15 +853,9 @@
     vm.saveSearch = function() {
       var searchString = {};
 
-      if (vm.countryCodeCheck) {
-        searchString.countryCodes = vm.countryCode
-          .map(function(cc) {
-            return cc.iso_a2;
-          })
-          .join(",");
-      }
       var keywords = [
         { key: "beNumber", urlParam: "be" },
+        { key: "countryCode", urlParam: "countries" },
         { key: "filename", urlParam: "filename" },
         { key: "imageId", urlParam: "imageId" },
         { key: "missionId", urlParam: "missions" },

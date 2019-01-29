@@ -59,7 +59,7 @@
                 "azimuth",
                 "be",
                 "cloudCover",
-                "countryCodes",
+                "countries",
                 "dateType",
                 "duration",
                 "elevation",

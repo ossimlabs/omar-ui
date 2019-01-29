@@ -196,7 +196,7 @@ Want to share your awesome searches with friends? Use the table below to constru
 | azimuth | The image's azimuth angle. A range can bet set with a semi-colon. |
 | be | A basic encyclopedia number. |
 | cloudCover | The maximum cloud cover percentage. |
-| countryCodes | An image's country code. Multiple can be set separated by a comma. |
+| countries | An image's country code. Multiple can be set separated by a comma. |
 | dateType | Either acquisition_date or ingest_date. |
 | duration | Simple, predefined date ranges. e.g. last3Days. |
 | elevation | The image's elevation angle. A range can be set with a semi-colon. |
@@ -208,8 +208,10 @@ Want to share your awesome searches with friends? Use the table below to constru
 | mapRotation | How many degrees to rotate the map. |
 | mapSearch | Where the map should center in on, can be DD, DMS, MGRS, Image ID or Placename where supported. |
 | mapZoom | What level to zoom the map to. |
+| mapVisibility | Whether or not to start off showing the map when the page loads. |
 | missions | The image's mission ID. Multiple can be set separated by a comma. |
 | niirs | The image's NIIRS rating. A range can bet set with a semi-colon. |
+| products | The image's product designator. |
 | sensors | The image's sensor ID. Multiple can be set separated by a comma. |
 | spatial | The map's spatial filter. "mapView", or either a POINT/POLYGON WKT.
 | startDate | The start date for a custom date range. |

@@ -82,27 +82,12 @@ dependencyManagement {
   applyMavenExclusions false
 }
 
-grails {
-  plugins {
-      compile project(':omar-openlayers-plugin')
-      compile project(':omar-core-plugin')
-      compile project(':omar-hibernate-spatial-plugin')
-      compile project(':omar-security-plugin')
-  }
-}
-
 dependencies {
-/*
-  if ( System.getenv('O2_DEV_HOME') ) {
-      compile project(':omar-openlayers-plugin')
-      compile project(':omar-core-plugin')
-      compile project(':omar-hibernate-spatial-plugin')
-  } else {
-    compile(group: "io.ossim.omar.plugins", name: "omar-openlayers-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-core-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-hibernate-spatial-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  }
-*/
+
+  compile "io.ossim.omar.plugins:omar-core-plugin:+"
+  compile "io.ossim.omar.plugins:omar-hibernate-spatial-plugin:+"
+  compile "io.ossim.omar.plugins:omar-openlayers-plugin:+"
+  compile "io.ossim.omar.plugins:omar-security-plugin:+"
 
   compile "de.codecentric:spring-boot-admin-starter-client:${springBootAdminStarterClientV}"
 

@@ -993,7 +993,7 @@
                                             <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                         </a>
                                         <a class="btn btn-default" type="button"
-                                            ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);"
+                                            ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');"
                                             ng-show = "list.userPreferences.viewMetadataButton">
                                             <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                         </a>
@@ -1003,35 +1003,10 @@
                                             <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>
                                         </a>
                                         <a class="btn btn-default" type="button"
-                                            href="{{list.kmlRequestUrl}}{{image.properties.id}}"
-                                            ng-show = "list.userPreferences.downloadKmlButton">
-                                            <i class="fa fa-map text-default cursor-pointer" tooltip-placement="right" uib-tooltip="Download KML"></i>
+                                            ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('toolbox');"
+                                            >
+                                            <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
                                         </a>
-                                        <a class="btn btn-default" type="button"
-                                            ng-click="list.shareModal(list.getImageSpaceUrl(image))"
-                                            ng-show = "list.userPreferences.shareLinkButton">
-                                            <i class="fa fa-share-alt text-default" tooltip-placement="top" uib-tooltip="Share link"></i>
-                                        </a>
-                                        <a class="btn btn-default" type="button"
-                                            ng-click="list.archiveDownload(image.properties.id)"
-                                            ng-show = "list.userPreferences.downloadImageButton">
-                                            <i class="fa fa-download text-default" tooltip-placement="top" uib-tooltip="Download"></i>
-                                        </a>
-                                        <a class="btn btn-default" type="button"
-                                        ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, 'chip', $index, 'stream');"
-                                        ng-show = "list.userPreferences.jpipImageButton">
-                                        <i class="fa fa-file-image-o text-default" tooltip-placement="top" uib-tooltip="JPIP image"></i>
-                                    </a>
-                                    <a class="btn btn-default" type="button"
-                                        ng-click="list.getJpipStream($event, image.properties.filename, image.properties.entry_id, '4326', $index, 'ortho');"
-                                        ng-show = "list.userPreferences.jpipOrthoButton">
-                                        <i class="fa fa-image text-default" tooltip-placement="top" uib-tooltip="JPIP ortho"></i>
-                                    </a>
-                                    <a class="btn btn-default" type="button"
-                                        ng-click="list.copyWmsCaps(image.properties.id)"
-                                        ng-show = "list.userPreferences.copyWmsButton">
-                                        <i class="fa fa-clipboard text-default" tooltip-placement="top" uib-tooltip="Copy WMS"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>

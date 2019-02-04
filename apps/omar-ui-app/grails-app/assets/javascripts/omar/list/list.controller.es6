@@ -352,7 +352,7 @@
      * @param id
      */
     vm.zoomToSelectedImage = id => {
-        $( "a:contains('Map')" ).trigger( "click" );
+      $("a:contains('Map')").trigger("click");
       mapService.zoomToSelectedImages(id);
     };
 
@@ -413,29 +413,27 @@
     };
 
     vm.viewSelectedImagesApp = app => {
-        let params = { maxResults: 100 };
+      let params = { maxResults: 100 };
 
-        if ( vm.selectedCards.length ) {
-            params.filter = 'in(' + vm.selectedCards + ')';
+      if (vm.selectedCards.length) {
+        params.filter = "in(" + vm.selectedCards + ")";
+      } else {
+        let filters = [];
+        if (wfsService.spatialObj.filter != "") {
+          filters.push(wfsService.spatialObj.filter);
         }
-        else {
-            let filters = [];
-            if ( wfsService.spatialObj.filter != '' ) {
-                filters.push( wfsService.spatialObj.filter );
-            }
-            if ( wfsService.attrObj.filter != '' ) {
-                filters.push( wfsService.attrObj.filter );
-            }
-
-            if ( filters.length ) {
-                params.filter = filters.join( ' AND ' );
-            }
-            else {
-                params.filter = 'index_id IS NOT NULL';
-            }
+        if (wfsService.attrObj.filter != "") {
+          filters.push(wfsService.attrObj.filter);
         }
 
-        $window.open( tlvRequestUrl + "?" + $.param( params ), "_blank");
+        if (filters.length) {
+          params.filter = filters.join(" AND ");
+        } else {
+          params.filter = "index_id IS NOT NULL";
+        }
+      }
+
+      $window.open(tlvRequestUrl + "?" + $.param(params), "_blank");
     };
 
     /**
@@ -544,13 +542,18 @@
         vm.refreshSpin = false;
       });
 
-        vm.listResize = function() {
-            var listHeight = window.innerHeight - $( "#list" ).offset().top - $( "#pagination" ).height() - 25;
-            $( "#list" ).height( listHeight );
-        };
-        $( window ).resize( function() { vm.listResize(); });
+      vm.listResize = function() {
+        var listHeight =
+          window.innerHeight -
+          $("#list").offset().top -
+          $("#pagination").height() -
+          25;
+        $("#list").height(listHeight);
+      };
+      $(window).resize(function() {
         vm.listResize();
-
+      });
+      vm.listResize();
     });
 
     $scope.$on("wfs features: updated", function(event, features) {
@@ -570,6 +573,13 @@
           .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       });
     });
+
+    vm.openTab = tab => {
+      setTimeout(function() {
+        $(`[data-target="#${tab}"]`).tab("show");
+        console.log(`openTab firing with ${tab}!`);
+      }, 100);
+    };
 
     $scope.$on("viewImageMetadata", function(event, image) {
       vm.showImageModal(
@@ -649,21 +659,6 @@
       });
     };
 
-    $scope.$on("viewOrtho", function(event, image) {
-      vm.viewOrtho(image);
-    });
-    vm.viewOrtho = function(image) {
-      var feature = new ol.format.GeoJSON().readFeature(image);
-      var filter = "in(" + feature.getProperties().id + ")";
-      var tlvUrl = tlvRequestUrl + "?filter=" + filter;
-
-      window.open(tlvUrl, "_blank");
-    };
-
-    $scope.$on("copyWms", function(event, image) {
-      vm.copyWmsCaps(image.properties.id);
-    });
-
     $scope.$on("download", function(event, image) {
       vm.archiveDownload(image.properties.id);
     });
@@ -672,30 +667,12 @@
       window.open(vm.kmlRequestUrl + image.properties.id);
     });
 
-    $scope.$on("jpipImage", function(event, image) {
-      vm.getJpipStream(
-        event,
-        image.properties.filename,
-        image.properties.entry_id,
-        "chip",
-        0,
-        "stream"
-      );
-    });
-
-    $scope.$on("jpipOrtho", function(event, image) {
-      vm.getJpipStream(
-        event,
-        image.properties.filename,
-        image.properties.entry_id,
-        "4326",
-        0,
-        "ortho"
-      );
-    });
-
     $scope.$on("shareLink", function(event, image) {
       vm.shareModal(vm.getImageSpaceUrl(image));
+    });
+
+    $scope.$on("copyWms", function(event, image) {
+      vm.copyWmsCaps(image.properties.id);
     });
 
     var tlvBaseUrl, tlvContextPath;
@@ -704,10 +681,10 @@
     var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
 
     function setWFSOutputDlControllerUrlProps() {
-      tlvBaseUrl = stateService.omarSitesState.url.base;
-      tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      tlvRequestUrl = tlvBaseUrl + tlvContextPath;
-      vm.tlvRequestUrl = tlvRequestUrl;
+      // tlvBaseUrl = stateService.omarSitesState.url.base;
+      // tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      // tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+      // vm.tlvRequestUrl = tlvRequestUrl;
 
       geoscriptBaseUrl = stateService.omarSitesState.url.base;
       geoscriptContextPath =

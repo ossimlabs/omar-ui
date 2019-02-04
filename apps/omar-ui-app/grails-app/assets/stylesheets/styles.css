@@ -244,10 +244,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 600px) AND (max-height: 699px) {
   #map {
-    height: 64vh;
+    height: 72vh !important;
   }
   #list {
-    height: 42vh;
+    height: 55vh !important;
   }
   #mapOrtho {
     height: 73vh;
@@ -262,10 +262,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 700px) AND (max-height: 799px) {
   #map {
-    height: 69vh;
+    height: 75vh !important;
   }
   #list {
-    height: 51vh;
+    height: 61vh !important;
   }
   #mapOrtho {
     height: 77vh;
@@ -280,10 +280,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 800px) AND (max-height: 899px) {
   #map {
-    height: 73vh;
+    height: 78vh !important;
   }
   #list {
-    height: 56vh;
+    height: 65vh !important;
   }
   #mapOrtho {
     height: 80vh;
@@ -298,10 +298,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 900px) AND (max-height: 999px) {
   #map {
-    height: 76vh;
+    height: 80vh !important;
   }
   #list {
-    height: 61vh;
+    height: 69vh !important;
   }
   #mapOrtho {
     height: 82vh;
@@ -316,10 +316,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 1000px) AND (max-height: 1099px) {
   #map {
-    height: 78vh;
+    height: 82vh !important;
   }
   #list {
-    height: 65vh;
+    height: 72vh !important;
   }
   #mapOrtho {
     height: 83vh;
@@ -334,10 +334,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 1100px) AND (max-height: 1199px) {
   #map {
-    height: 80vh;
+    height: 84vh !important;
   }
   #list {
-    height: 68vh;
+    height: 74vh !important;
   }
   #mapOrtho {
     height: 85vh;
@@ -352,10 +352,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 @media screen and (min-height: 1200px) {
   #map {
-    height: 82vh;
+    height: 86vh !important;
   }
   #list {
-    height: 70vh;
+    height: 76vh !important;
   }
   #mapOrtho {
     height: 86vh;

@@ -988,18 +988,15 @@
                                     </div>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
                                         <a class="btn btn-default" type="button"
-                                            ng-click="list.zoomToSelectedImage(image.properties.id);"
-                                            ng-show = "list.userPreferences.zoomToImageExtentButton">
+                                            ng-click="list.zoomToSelectedImage(image.properties.id);">
                                             <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                         </a>
                                         <a class="btn btn-default" type="button"
-                                            ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');"
-                                            ng-show = "list.userPreferences.viewMetadataButton">
+                                            ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">
                                             <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                         </a>
                                         <a class="btn btn-default" type="button"
-                                            ng-click="list.viewOrtho(image)"
-                                            ng-show = "list.userPreferences.viewOrthoImageButton">
+                                            ng-click="list.viewOrtho(image)">
                                             <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>
                                         </a>
                                         <a class="btn btn-default" type="button"

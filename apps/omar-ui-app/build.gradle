@@ -80,7 +80,8 @@ dependencies {
   compile "io.ossim.omar.plugins:omar-core-plugin:+"
   compile "io.ossim.omar.plugins:omar-hibernate-spatial-plugin:+"
   compile "io.ossim.omar.plugins:omar-openlayers-plugin:+"
-  compile "io.ossim.omar.plugins:omar-security-plugin:+"
+//  compile "io.ossim.omar.plugins:omar-security-plugin:+"
+  compile "io.ossim.omar.plugins:omar-security-plugin:1.1.0-SNAPSHOT"
 
   compile "de.codecentric:spring-boot-admin-starter-client:${springBootAdminStarterClientV}"
 

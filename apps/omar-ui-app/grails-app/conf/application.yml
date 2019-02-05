@@ -97,47 +97,28 @@ omar:
           format: "image/jpeg"
         options:
           visible: true
-    # Uncomment the example below, and modify to add a custom overlay layer.
-    overlayLayers:
-      -
-        layerType: "imagewms"
-        title: "Last 24 Hours Imagery Access"
-        url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
-        params:
-          end_date: 0 days #ago
-          start_date: 1 days #ago
-          VERSION: 1.1.0
-          LAYERS: omar:heatmap
-          STYLES: x
-          FORMAT: image/png
-        options:
-          visible: false
-      #-
-        #layerType: "tilewms"
-        #title: "Last 3 Days Imagery Access"
-        #url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
-        #params:
-          #end_date: 0 days #ago
-          #start_date: 3 days #ago
-          #VERSION: 1.1.0
-          #LAYERS: omar:heatmap
-          #STYLES: x
-          #FORMAT: image/png
-        #options:
-          #visible: false
-      #-
-        #layerType: "tilewms"
-        #title: "Last 7 Days Imagery Access"
-        #url: "https://omar-dev.ossim.io/omar-geoscript/heatMap/GetTile"
-        #params:
-          #end_date: 0 days #ago
-          #start_date: 7 days #ago
-          #VERSION: 1.1.0
-          #LAYERS: omar:heatmap
-          #STYLES: x
-          #FORMAT: image/png
-        #options:
-          #visible: false
+    # Uncomment the example(s) below, and *modify* accordingly to
+    # add a custom overlay layer.
+
+    # overlayLayers:
+    #   -
+    #     layerType: "tilewms"
+    #     title: "Tile WMS Example"
+    #     url: "https://ahocevar.com/geoserver/wms"
+    #     params:
+    #       layers: 'ne:NE1_HR_LC_SR_W_DR'
+    #       tiled: true
+    #     options:
+    #       visible: false
+    #   -
+    #     layerType: "imagewms"
+    #     title: "Image WMS Example"
+    #     url: "https://ahocevar.com/geoserver/wms"
+    #     params:
+    #       layers: 'topp:states'
+    #     options:
+    #       visible: false
+
     # if you would like to differentiate things on a specific zoom level, set it here
     zoomFilterChangeLevel: 10
 

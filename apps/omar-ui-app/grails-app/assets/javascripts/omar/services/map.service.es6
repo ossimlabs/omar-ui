@@ -417,43 +417,32 @@
       // Takes a layer obj, and adds
       // the layer to the overlay layers array.
       function addOverlayLayers(layerObj) {
-        var params = {};
-        $.each(layerObj.params, function(key, value) {
-          // identify heat map layer
-          if (
-            key.toLowerCase().search(/date/) > -1 &&
-            value.search(/\d/) > -1
-          ) {
-            var time = value.split(" ")[0];
-            var interval = value.split(" ")[1];
-            value = moment()
-              .subtract(time, interval)
-              .format("YYYY-MM-DDTHH:mm:ss.SSS");
-          }
-          params[key] = value;
-        });
-
         var overlayMapLayer;
+
         if (layerObj.layerType.toLowerCase() == "imagewms") {
           overlayMapLayer = new ol.layer.Image({
             title: layerObj.title,
             visible: layerObj.options.visible,
             source: new ol.source.ImageWMS({
               url: layerObj.url,
-              params: params
+              params: {
+                layers: layerObj.params.layers
+              }
             })
           });
-        } else {
+        } else if (layerObj.layerType.toLowerCase() == "tilewms") {
           overlayMapLayer = new ol.layer.Tile({
             title: layerObj.title,
             visible: layerObj.options.visible,
             source: new ol.source.TileWMS({
               url: layerObj.url,
-              params: params
+              params: {
+                layers: layerObj.params.layers,
+                tiled: true
+              }
             })
           });
         }
-
         overlayGroup.getLayers().push(overlayMapLayer);
       }
 
@@ -461,6 +450,7 @@
         // Map over each map item in the baseMaps array
         AppO2.APP_CONFIG.openlayers.baseMaps.map(addBaseMapLayers);
       }
+
       if (AppO2.APP_CONFIG.openlayers.overlayLayers != null) {
         // Map over each layer item in the overlayLayers array
         AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
@@ -1335,11 +1325,11 @@
     ol.inherits(LegendControl, ol.control.Control);
 
     vm.mapResize = function() {
-        var mapHeight = window.innerHeight - $( "#map" ).offset().top;
-        $( "#map" ).height( mapHeight );
-    }
-    $( window ).resize( function() {
-        vm.mapResize();
+      var mapHeight = window.innerHeight - $("#map").offset().top;
+      $("#map").height(mapHeight);
+    };
+    $(window).resize(function() {
+      vm.mapResize();
     });
   }
 })();

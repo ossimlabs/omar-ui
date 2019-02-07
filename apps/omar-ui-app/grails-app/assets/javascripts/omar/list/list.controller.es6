@@ -577,8 +577,7 @@
     vm.openTab = tab => {
       setTimeout(function() {
         $(`[data-target="#${tab}"]`).tab("show");
-        console.log(`openTab firing with ${tab}!`);
-      }, 100);
+      }, 150);
     };
 
     $scope.$on("viewImageMetadata", function(event, image) {
@@ -593,6 +592,7 @@
         vm.kmlRequestUrl
       );
     });
+
     vm.showImageModal = function(
       imageObj,
       imageSpaceDefaults,
@@ -659,6 +659,18 @@
       });
     };
 
+    $scope.$on("viewOrtho", function(event, image) {
+      vm.viewOrtho(image);
+    });
+
+    vm.viewOrtho = function(image) {
+      var feature = new ol.format.GeoJSON().readFeature(image);
+      var filter = "in(" + feature.getProperties().id + ")";
+      var tlvUrl = tlvRequestUrl + "?filter=" + filter;
+
+      window.open(tlvUrl, "_blank");
+    };
+
     $scope.$on("download", function(event, image) {
       vm.archiveDownload(image.properties.id);
     });
@@ -681,10 +693,10 @@
     var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
 
     function setWFSOutputDlControllerUrlProps() {
-      // tlvBaseUrl = stateService.omarSitesState.url.base;
-      // tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      // tlvRequestUrl = tlvBaseUrl + tlvContextPath;
-      // vm.tlvRequestUrl = tlvRequestUrl;
+      tlvBaseUrl = stateService.omarSitesState.url.base;
+      tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+      vm.tlvRequestUrl = tlvRequestUrl;
 
       geoscriptBaseUrl = stateService.omarSitesState.url.base;
       geoscriptContextPath =
@@ -946,6 +958,14 @@
       let imageListFilter = "in(" + imageId + ")";
       let url = wfsService.getExport("WMS130", imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
+    };
+
+    vm.shareWms = imageId => {
+      let imageFeature;
+      wfsService.getImagesExtent(imageId).then(function(response) {
+        const imageArray = response.geometry.coordinates[0][0];
+        console.log(imageArray);
+      });
     };
 
     vm.viewOrtho = function(image) {

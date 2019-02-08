@@ -9,7 +9,7 @@ include 'omar-ui-app'
 
 project(':omar-ui-app').projectDir = "${rootProject.projectDir}/apps/omar-ui-app" as File
 
-if ( System.getenv('O2_DEV_HOME')) {
+if ( System.getenv('O2_INLINE_BUILD')) {
   def modules = [
       "omar-core",
       "omar-hibernate-spatial",

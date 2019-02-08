@@ -960,11 +960,18 @@
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
     };
 
-    vm.shareWms = imageId => {
-      let imageFeature;
+    vm.shareWmsGetMap = imageId => {
       wfsService.getImagesExtent(imageId).then(function(response) {
-        const imageArray = response.geometry.coordinates[0][0];
-        console.log(imageArray);
+        const polygonExtent = new ol.geom.Polygon([
+          response.geometry.coordinates[0][0]
+        ]).getExtent();
+        const extent3857 = ol.proj.transformExtent(
+          polygonExtent,
+          "EPSG:4326",
+          "EPSG:3857"
+        );
+        const url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&bbox=${extent3857}&width=1024&height=1024&format=image/jpeg`;
+        shareService.imageLinkModal(url, "Copy WMS GetMap");
       });
     };
 

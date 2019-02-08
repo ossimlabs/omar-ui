@@ -8,3 +8,19 @@ pluginManagement {
 include 'omar-ui-app'
 
 project(':omar-ui-app').projectDir = "${rootProject.projectDir}/apps/omar-ui-app" as File
+
+if ( System.getenv('O2_INLINE_BUILD')) {
+  def modules = [
+      "omar-core",
+      "omar-hibernate-spatial",
+      "omar-openlayers",
+      "omar-security"
+  ]
+
+  modules.each { module ->
+    include "${module}-plugin"
+
+    project(":${module}-plugin").projectDir = "${rootProject.projectDir}/../${module}/plugins/${module}-plugin" as File
+  }
+}
+

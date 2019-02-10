@@ -1,18 +1,14 @@
 (function() {
     'use strict';
-    angular.module('omarApp').service('omarMlService', ['stateService', '$uibModal', omarMlService]);
+    angular.module('omarApp').service('omarMlService', ['stateService', '$uibModal', '$http', omarMlService]);
 
-    function omarMlService(stateService, $uibModal) {
+    function omarMlService(stateService, $uibModal, $http) {
 
         this.submitMlJobModal = function(imageId) {
-            var http = new XMLHttpRequest();
-            http.open("GET", omarMlRequestUrl + "/model/list");
-            http.send();
-            this.models = http.requestText;
             var modalInstance = $uibModal.open({
                 templateUrl: AppO2.APP_CONFIG.serverURL + '/views/omarml/submit.job.partial.html',
                 controller: [
-                    '$uibModalInstance', 'imageId', SubmitMlJobModalController
+                    '$uibModalInstance', 'imageId', '$http', SubmitMlJobModalController
                 ],
                 controllerAs: 'vm',
                 resolve: {
@@ -34,11 +30,20 @@
           omarMlRequestUrl = omarMlBaseUrl + omarMlContextPath;
         };
         this.setOmarMlUrlProps();
+
     }
 
-    function SubmitMlJobModalController($uibModalInstance, imageId) {
+    function SubmitMlJobModalController($uibModalInstance, imageId, $http) {
 
         this.imageId = imageId;
+
+        $http({
+          method: 'GET',
+          url: omarMlRequestUrl + '/model/list'
+        }).then(function successCallback(response) {
+            this.models = response;
+          }, function errorCallback(response) {
+          });
 
         this.close = function() {
             $uibModalInstance.close();

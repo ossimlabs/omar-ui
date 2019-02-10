@@ -183,6 +183,13 @@
         ? objParams.IsaContextPath
         : "/isa-ui"
 
+      _this.omarSitesState.url.omarMlContextPath = checkForValidObjProp(
+        _this.omarSitesState.url.omarMlContextPath,
+        objParams.urlOmarMlContextPath
+      )
+        ? objParams.OmarMlContextPath
+        : "/omar-ml"
+
       // $timeout needed: http://stackoverflow.com/a/18996042
       $timeout(function() {
         $rootScope.$broadcast("omarSitesState.updated", _this.omarSitesState);

@@ -14,15 +14,10 @@
                 resolve: {
                     imageId: function() {
                         return imageId;
-                    },
-                    models: function() {
-                        return models;
                     }
                 }
             });
         };
-
-        var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
 
         this.setOmarMlUrlProps = function() {
           omarMlBaseUrl = stateService.omarSitesState.url.base;
@@ -32,6 +27,8 @@
         this.setOmarMlUrlProps();
 
     }
+
+    var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
 
     function SubmitMlJobModalController($uibModalInstance, imageId, $http) {
 

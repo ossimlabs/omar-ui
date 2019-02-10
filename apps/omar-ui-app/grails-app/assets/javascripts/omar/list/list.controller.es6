@@ -589,8 +589,7 @@
     vm.openTab = tab => {
       setTimeout(function() {
         $(`[data-target="#${tab}"]`).tab("show");
-        console.log(`openTab firing with ${tab}!`);
-      }, 100);
+      }, 150);
     };
 
     $scope.$on("viewImageMetadata", function(event, image) {
@@ -605,6 +604,7 @@
         vm.kmlRequestUrl
       );
     });
+
     vm.showImageModal = function(
       imageObj,
       imageSpaceDefaults,
@@ -676,6 +676,18 @@
       });
     };
 
+    $scope.$on("viewOrtho", function(event, image) {
+      vm.viewOrtho(image);
+    });
+
+    vm.viewOrtho = function(image) {
+      var feature = new ol.format.GeoJSON().readFeature(image);
+      var filter = "in(" + feature.getProperties().id + ")";
+      var tlvUrl = tlvRequestUrl + "?filter=" + filter;
+
+      window.open(tlvUrl, "_blank");
+    };
+
     $scope.$on("download", function(event, image) {
       vm.archiveDownload(image.properties.id);
     });
@@ -702,10 +714,10 @@
     var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
 
     function setWFSOutputDlControllerUrlProps() {
-      // tlvBaseUrl = stateService.omarSitesState.url.base;
-      // tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      // tlvRequestUrl = tlvBaseUrl + tlvContextPath;
-      // vm.tlvRequestUrl = tlvRequestUrl;
+      tlvBaseUrl = stateService.omarSitesState.url.base;
+      tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+      vm.tlvRequestUrl = tlvRequestUrl;
 
       geoscriptBaseUrl = stateService.omarSitesState.url.base;
       geoscriptContextPath =
@@ -973,6 +985,21 @@
 
     vm.submitMlJob = function(imageId) {
       omarMlService.submitMlJobModal(imageId);
+    }
+
+    vm.shareWmsGetMap = imageId => {
+      wfsService.getImagesExtent(imageId).then(function(response) {
+        const polygonExtent = new ol.geom.Polygon([
+          response.geometry.coordinates[0][0]
+        ]).getExtent();
+        const extent3857 = ol.proj.transformExtent(
+          polygonExtent,
+          "EPSG:4326",
+          "EPSG:3857"
+        );
+        const url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&bbox=${extent3857}&width=1024&height=1024&format=image/jpeg`;
+        shareService.imageLinkModal(url, "Copy WMS GetMap");
+      });
     };
 
     vm.viewOrtho = function(image) {

@@ -314,6 +314,7 @@
               </div>
             </div>
             <div class="row">
+<<<<<<< HEAD
               <div class="col-md-6">
                   <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.submitMlJob(vm.selectedImage.properties.id)" role = "button" target = "_blank">Run Detections</a>
               </div>
@@ -322,13 +323,15 @@
               </div>
             </div>
             <!-- <div class="row">
+=======
+>>>>>>> 295ba5590a7e0f2dcde9351263531e987af3082d
               <div class="col-md-6">
-                  <a class = "btn btn-default btn-block btn-metrics" ng-click="filter.saveSearch()" role = "button" target = "_blank">WMS Get Map</a>
+                  <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareWmsGetMap(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Map</a>
               </div>
               <div class="col-md-6">
                   Share a link to the GetMap for image
               </div>
-            </div> -->
+            </div>
             <br>
           </div>
         </div>

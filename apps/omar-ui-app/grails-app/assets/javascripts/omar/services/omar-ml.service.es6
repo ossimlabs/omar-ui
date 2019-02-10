@@ -40,9 +40,8 @@
         $http({
           method: 'GET',
           url: omarMlRequestUrl + '/model/list'
-        }).then(function successCallback(response) {
+        }).then(function(response) {
             this.models = response;
-          }, function errorCallback(response) {
           });
 
         this.close = function() {

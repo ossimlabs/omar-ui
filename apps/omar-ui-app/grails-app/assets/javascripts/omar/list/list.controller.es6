@@ -8,6 +8,7 @@
       "shareService",
       "downloadService",
       "jpipService",
+      "omarMlService",
       "$stateParams",
       "toastr",
       "$uibModal",
@@ -26,6 +27,7 @@
     shareService,
     downloadService,
     jpipService,
+    omarMlService,
     $stateParams,
     toastr,
     $uibModal,
@@ -67,6 +69,9 @@
 
     var mensaBaseUrl, mensaContextPath, mensaRequestUrl;
     vm.mensaRequestUrl = "";
+
+    var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
+    vm.omarMlRequestUrl = "";
 
     function setlistControllerUrlProps() {
       thumbnailsBaseUrl = stateService.omarSitesState.url.base;
@@ -112,6 +117,11 @@
       mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
       mensaRequestUrl = mensaBaseUrl + mensaContextPath;
       vm.mensaRequestUrl = mensaRequestUrl;
+
+      omarMlBaseUrl = stateService.omarSitesState.url.base;
+      omarMlContextPath = stateService.omarSitesState.url.omarMlContextPath;
+      omarMlRequestUrl = omarMlBaseUrl + omarMlContextPath;
+      vm.omarMlRequestUrl = omarMlRequestUrl;
     }
 
     vm.getSecurityClassificationClass = function(string) {
@@ -151,7 +161,8 @@
         urlKmlContextPath: vm.selectedOmar.url.kmlContextPath,
         urlJpipContextPath: vm.selectedOmar.url.jpipContextPath,
         urlWmtsContextPath: vm.selectedOmar.url.wmtsContextPath,
-        urlTlvContextPath: vm.selectedOmar.url.tlvContextPath
+        urlTlvContextPath: vm.selectedOmar.url.tlvContextPath,
+        urlOmarMlContextPath: vm.selectedOmar.url.omarMlContextPath
       });
       // Clears/resets the selected images, because they will not exist on the
       // federated site
@@ -171,6 +182,7 @@
       mapService.updateFootprintsUrl();
       avroMetadataService.setAvroMetadataUrlProps();
       jpipService.setJpipUrlProps();
+      omarMlService.setOmarMlUrlProps();
 
       $scope.$apply(function() {
         thumbnailsBaseUrl = stateService.omarSitesState.url.base;
@@ -614,6 +626,7 @@
           "$uibModalInstance",
           "wfsService",
           "avroMetadataService",
+          "omarMlService",
           "$scope",
           "imageObj",
           "imageSpaceDefaults",
@@ -624,6 +637,7 @@
           "wfsRequestUrl",
           "tlvRequestUrl",
           "kmlRequestUrl",
+          "omarMlRequestUrl",
           ImageModalController
         ],
         controllerAs: "vm",
@@ -654,6 +668,9 @@
           },
           kmlRequestUrl: function() {
             return kmlRequestUrl;
+          },
+          omarMlRequestUrl: function() {
+            return omarMlRequestUrl;
           }
         }
       });
@@ -673,6 +690,10 @@
 
     $scope.$on("copyWms", function(event, image) {
       vm.copyWmsCaps(image.properties.id);
+    });
+
+    $scope.$on("runDetections", function(event, image) {
+      vm.submitMLJob(image.properties.id);
     });
 
     var tlvBaseUrl, tlvContextPath;
@@ -756,6 +777,7 @@
     $uibModalInstance,
     wfsService,
     avroMetadataService,
+    omarMlService,
     $scope,
     imageObj,
     imageSpaceDefaults,
@@ -765,7 +787,8 @@
     wmsRequestUrl,
     wfsRequestUrl,
     tlvRequestUrl,
-    kmlRequestUrl
+    kmlRequestUrl,
+    omarMlRequestUrl
   ) {
     var vm = this;
 
@@ -946,6 +969,10 @@
       let imageListFilter = "in(" + imageId + ")";
       let url = wfsService.getExport("WMS130", imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
+    };
+
+    vm.submitMlJob = function(imageId) {
+      omarMlService.submitMlJobModal(imageId);
     };
 
     vm.viewOrtho = function(image) {

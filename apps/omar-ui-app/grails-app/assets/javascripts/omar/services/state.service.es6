@@ -38,7 +38,8 @@
         jpipContextPath: "/omar-jpip",
         wmtsContextPath: "/omar-wmts",
         tlvContextPath: "/tlv",
-        isaContextPath: "/isa-ui"
+        isaContextPath: "/isa-ui",
+        omarMlContextPath: "/omar-ml"
       }
     };
 

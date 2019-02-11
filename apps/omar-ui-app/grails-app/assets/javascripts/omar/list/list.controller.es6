@@ -984,7 +984,7 @@
     };
 
     vm.submitMlJob = function(imageId) {
-      omarMlService.submitMlJobModal(imageId);
+      omarMlService.submitMlJobModal(imageId, imageObj.properties.filename);
     }
 
     vm.shareWmsGetMap = imageId => {

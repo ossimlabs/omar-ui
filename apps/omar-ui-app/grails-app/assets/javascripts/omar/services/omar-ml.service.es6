@@ -67,7 +67,7 @@
 
         this.runJob = function() {
           console.log(this.imageId);
-          console.log(this.model);
+          console.log(this.model.name);
           console.log(this.confidence);
           console.log(this.nms);
           console.log(this.imageFilename);
@@ -82,7 +82,7 @@
                 imageDbid: this.imageId,
                 confidence: this.confidence,
                 nms: this.nms,
-                jobModel: this.model.name
+                model: this.model.name
               }
             });
         }

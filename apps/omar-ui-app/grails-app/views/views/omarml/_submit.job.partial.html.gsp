@@ -27,6 +27,7 @@
 </div>
 
 <div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="vm.viewJobs()">View Previous Jobs</button>
   <button class="btn btn-warning" type="button" ng-click="vm.runJob()">Run Job</button>
   <button class="btn btn-warning" type="button" ng-click="vm.close()">Close</button>
 </div>

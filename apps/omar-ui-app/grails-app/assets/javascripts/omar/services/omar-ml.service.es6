@@ -4,55 +4,72 @@
 
     function omarMlService(stateService, $uibModal, $http) {
 
-        this.submitMlJobModal = function(imageId, imageFilename, models) {
-            console.log(imageFilename);
-            $http({
-              method: 'GET',
-              url: omarMlRequestUrl + '/model/list'
-            }).then((response) => {
-                models = response.data;
-            });
-            var modalInstance = $uibModal.open({
-                templateUrl: AppO2.APP_CONFIG.serverURL + '/views/omarml/submit.job.partial.html',
-                controller: [
-                    '$uibModalInstance', 'imageId', 'imageFilename', 'models', '$http', SubmitMlJobModalController
-                ],
-                controllerAs: 'vm',
-                resolve: {
-                    imageId: function() {
-                        return imageId;
-                    },
-                    imageFilename: function() {
-                        return imageFilename;
-                    },
-                    models:  function() {
-                      return $http({
-                        method: 'GET',
-                        url: omarMlRequestUrl + '/model/list'
-                      });
-                    }
-                }
-            });
-        };
+        this.submitMlJobModal = function(imageId, imageFilename) {
+          var modalInstance = $uibModal.open({
+              templateUrl: AppO2.APP_CONFIG.serverURL + '/views/omarml/submit.job.partial.html',
+              controller: [
+                  '$uibModalInstance', 'imageId', 'imageFilename', 'models', 'omarMlService', '$http', SubmitMlJobModalController
+              ],
+              controllerAs: 'vm',
+              resolve: {
+                  omarMlService: () => {
+                    return this;
+                  },
+                  imageId: function() {
+                      return imageId;
+                  },
+                  imageFilename: function() {
+                      return imageFilename;
+                  },
+                  models:  function() {
+                    return $http({
+                      method: 'GET',
+                      url: omarMlRequestUrl + '/model/list'
+                    });
+                  }
+              }
+          });
+        }; // this.submitMlJobModal
 
-        this.getModels = function() {
-            return $http({method:"GET", url:omarMlRequestUrl + '/model/list'}).then(function(result){
-                return result.data;
-            });
-        };
+        this.viewJobsModal = function(imageId, imageFilename) {
+          var modalInstance = $uibModal.open({
+              templateUrl: AppO2.APP_CONFIG.serverURL + '/views/omarml/view.job.partial.html',
+              controller: [
+                  '$uibModalInstance', 'imageId', 'imageFilename', 'jobs', 'omarMlService', '$http', ViewJobsModalController
+              ],
+              controllerAs: 'vm',
+              resolve: {
+                  omarMlService: () => {
+                    return this;
+                  },
+                  imageId: function() {
+                      return imageId;
+                  },
+                  imageFilename: function() {
+                      return imageFilename;
+                  },
+                  jobs:  function() {
+                    return $http({
+                      method: 'GET',
+                      url: omarMlRequestUrl + '/job/query/' + imageId
+                    });
+                  }
+              }
+          });
+        }; // this.viewJobsModal
 
         this.setOmarMlUrlProps = function() {
           omarMlBaseUrl = stateService.omarSitesState.url.base;
           omarMlContextPath = stateService.omarSitesState.url.omarMlContextPath;
           omarMlRequestUrl = omarMlBaseUrl + omarMlContextPath;
-        };
+        }; // this.setOmarMlUrlProps
         this.setOmarMlUrlProps();
 
-    }
+    } // omarMlService
 
     var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
 
-    function SubmitMlJobModalController($uibModalInstance, imageId, imageFilename, models, $http) {
+    function SubmitMlJobModalController($uibModalInstance, imageId, imageFilename, models, omarMlService, $http) {
 
         this.imageId = imageId;
         this.imageFilename = imageFilename;
@@ -63,14 +80,9 @@
 
         this.close = function() {
             $uibModalInstance.close();
-        };
+        }; // this.close
 
         this.runJob = function() {
-          console.log(this.imageId);
-          console.log(this.model.name);
-          console.log(this.confidence);
-          console.log(this.nms);
-          console.log(this.imageFilename);
           if(typeof this.model !== 'undefined' &&
              typeof this.confidence !== 'undefined' &&
              typeof this.nms !== 'undefined') {
@@ -85,7 +97,29 @@
                 model: this.model.name
               }
             });
-        }
-      }
-    }
+          } // if block typeof this.model ...
+        } // this.runJob
+
+        this.viewJobs = function() {
+          omarMlService.viewJobsModal(this.imageId, this.imageFilename);
+          this.close();
+        } // this.viewJobs
+    } // SubmitMlJobModalController
+
+    function ViewJobsModalController($uibModalInstance, imageId, imageFilename, jobs, omarMlService, $http) {
+
+        this.imageId = imageId;
+        this.imageFilename = imageFilename;
+        this.jobs = jobs;
+
+        this.close = function() {
+            $uibModalInstance.close();
+        }; // this.close
+
+        this.backToSubmitJobs = function() {
+          omarMlService.submitMlJobModal(this.imageId, this.imageFilename);
+          this.close();
+        } // this.backToSubmitJobs
+    } // ViewJobsModalController
+
 }());

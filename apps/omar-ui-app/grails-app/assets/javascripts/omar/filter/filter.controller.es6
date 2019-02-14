@@ -31,10 +31,11 @@
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
     vm.urlParams = $stateParams;
 
-    if (vm.userPreferences.mapVisibility == false) {
-      setTimeout(function() {
-        $("a:contains('Filters')").trigger("click");
-      }, 10);
+    var mapVisibility = vm.urlParams.mapVisibility == "true" || vm.userPreferences.mapVisibility;
+    if ( !mapVisibility ) {
+        setTimeout( function() {
+            $( "a:contains('Filters')" ).trigger("click");
+        }, 10 );
     }
 
     vm.getCountryListing = function() {

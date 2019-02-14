@@ -70,6 +70,7 @@
                 "mapCenterY",
                 "mapRotation",
                 "mapSearch",
+                "mapVisibility",
                 "mapZoom",
                 "missions",
                 "niirs",

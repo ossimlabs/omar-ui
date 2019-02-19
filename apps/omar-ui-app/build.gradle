@@ -83,6 +83,7 @@ dependencies {
   compile "de.codecentric:spring-boot-admin-starter-client:${springBootAdminStarterClientV}"
   compile "io.swagger:swagger-models:1.5.15"
   compile "org.grails.plugins:actuator-ui:1.1"
+  compile 'org.postgresql:postgresql:42.2.1'
 
   compile "org.grails.plugins:browser-detection:3.3.0"
 

@@ -77,11 +77,11 @@ dependencies {
   compile "io.ossim.omar.plugins:omar-core-plugin:${latestGradleIdentifier}"
   compile "io.ossim.omar.plugins:omar-hibernate-spatial-plugin:latest.integration"
   compile "io.ossim.omar.plugins:omar-openlayers-plugin:${latestGradleIdentifier}"
-//  compile "io.ossim.omar.plugins:omar-security-plugin:${latestGradleIdentifier}"
   compile "io.ossim.omar.plugins:omar-security-plugin:${latestGradleIdentifier}"
 
   compile "org.grails.plugins:spring-security-core:3.2.3"
   compile "de.codecentric:spring-boot-admin-starter-client:${springBootAdminStarterClientV}"
+  compile "io.swagger:swagger-models:1.5.15"
 
   compile "org.grails.plugins:browser-detection:3.3.0"
 

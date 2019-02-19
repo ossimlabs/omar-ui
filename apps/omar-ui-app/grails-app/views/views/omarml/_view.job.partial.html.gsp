@@ -13,7 +13,7 @@
     </tr>
     <tr ng-repeat="job in vm.jobs.data">
       <td>{{job.jobModel}}</td>
-      <td>{{job.jobID}}</td>
+      <td>{{job.jobid}}</td>
       <td>{{job.confidence}}</td>
       <td>{{job.nms}}</td>
       <td>{{job.jobStatus}}</td>

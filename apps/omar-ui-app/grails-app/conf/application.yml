@@ -162,9 +162,6 @@ omar:
       # URL of Twofishes search service.
       # Used for geocoding place names
       baseUrl: ${serverProtocol}://${serverName}/twofishes
-
-      # Context for the Twofishes search service
-      proxy: /twoFishesProxy
     kmlApp:
       enabled: true
     jpipApp:

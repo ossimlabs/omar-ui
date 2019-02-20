@@ -313,14 +313,22 @@
                 Share a link to the GetCapabilities for image
               </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
               <div class="col-md-6">
-                  <a class = "btn btn-default btn-block btn-metrics" ng-click="filter.saveSearch()" role = "button" target = "_blank">WMS Get Map</a>
+                  <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareWmsGetMap(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Map</a>
               </div>
               <div class="col-md-6">
                   Share a link to the GetMap for image
               </div>
-            </div> -->
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.submitMlJob(vm.selectedImage.properties.id)" role = "button" target = "_blank">Run Detections</a>
+              </div>
+              <div class="col-md-6">
+                Runs machine learning workflow on image
+              </div>
+            </div>
             <br>
           </div>
         </div>

@@ -31,7 +31,8 @@
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
     vm.urlParams = $stateParams;
 
-    if ( vm.userPreferences.mapVisibility == false ) {
+    var mapVisibility = vm.urlParams.mapVisibility == "true" || vm.userPreferences.mapVisibility;
+    if ( !mapVisibility ) {
         setTimeout( function() {
             $( "a:contains('Filters')" ).trigger("click");
         }, 10 );
@@ -168,7 +169,7 @@
     }
 
     this.byViewPort = function(status) {
-        $( "a:contains('Map')" ).trigger( "click" );
+      $("a:contains('Map')").trigger("click");
 
       // Turn on viewport
       mapService.viewPortFilter(status);
@@ -185,7 +186,7 @@
     };
 
     this.byPointer = function(status) {
-        $( "a:contains('Map')" ).trigger( "click" );
+      $("a:contains('Map')").trigger("click");
 
       // Turn on point
       mapService.pointFilter(status);
@@ -202,7 +203,7 @@
     };
 
     this.byPolygon = function(status) {
-        $( "a:contains('Map')" ).trigger( "click" );
+      $("a:contains('Map')").trigger("click");
 
       // Turn on polygons
       mapService.polygonFilter(status);
@@ -361,44 +362,52 @@
         vm.userPreferences.customStartDateTime &&
         vm.userPreferences.duration == "customDateRange"
       ) {
-        vm.startDate = moment( vm.userPreferences.customStartDateTime ).format( "YYYY-MM-DD" );
+        vm.startDate = moment(vm.userPreferences.customStartDateTime).format(
+          "YYYY-MM-DD"
+        );
       } else {
-        vm.startDate = moment().startOf( "day" ).format( "YYYY-MM-DD" );
+        vm.startDate = moment()
+          .startOf("day")
+          .format("YYYY-MM-DD");
       }
-      if ( vm.urlParams.startDate ) {
+      if (vm.urlParams.startDate) {
         vm.currentTemporalDuration = vm.temporalDurations.find(function(
           element
         ) {
           return element.value == "customDateRange";
         });
-        vm.startDate = moment( vm.urlParams.startDate ).format( "YYYY-MM-DD" );
+        vm.startDate = moment(vm.urlParams.startDate).format("YYYY-MM-DD");
       }
     };
     vm.openStartDatePopup = function() {
-        vm.startDatePopupOpen = true;
-    }
+      vm.startDatePopupOpen = true;
+    };
 
     vm.setInitialCustomEndDate = function() {
       if (
         vm.userPreferences.customEndDateTime &&
         vm.userPreferences.duration == "customDateRange"
       ) {
-        vm.endDate = moment( vm.userPreferences.customEndDateTime ).format( "YYYY-MM-DD" );
+        vm.endDate = moment(vm.userPreferences.customEndDateTime).format(
+          "YYYY-MM-DD"
+        );
       } else {
-        vm.endDate = moment().endOf( "day" ).format( "YYYY-MM-DD" );
+        vm.endDate = moment()
+          .endOf("day")
+          .format("YYYY-MM-DD");
       }
       if (vm.urlParams.endDate) {
-        vm.currentTemporalDuration = vm.temporalDurations.find( function(
+        vm.currentTemporalDuration = vm.temporalDurations.find(function(
           element
         ) {
           return element.value == "customDateRange";
         });
-        vm.endDate = moment( vm.urlParams.endDate ).format( "YYYY-MM-DD" );
+        vm.endDate = moment(vm.urlParams.endDate).format("YYYY-MM-DD");
       }
     };
     vm.openEndDatePopup = function() {
-        vm.endDatePopupOpen = true;
-    }
+      vm.endDatePopupOpen = true;
+    };
 
     vm.getCustomStartDate = function() {
       return moment(vm.startDate).format("MM-DD-YYYY HH:mm:ss+0000");
@@ -621,7 +630,7 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        pushKeywordToArray( "country_code", vm.countryCode );
+        pushKeywordToArray("country_code", vm.countryCode);
       } else if (vm.countryCode.length === 0) {
         vm.countryCodeCheck = false;
       }
@@ -729,9 +738,7 @@
         } else {
           pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
         }
-
       } else if (!vm.predNiirsCheck) {
-
       }
 
       if (vm.azimuthCheck) {
@@ -864,10 +871,11 @@
         { key: "targetId", urlParam: "target" },
         { key: "wacNumber", urlParam: "wac" }
       ];
-      $.each( keywords, function( index, keyword ) {
-        if ( vm[ keyword.key + "Check" ] ) {
-          var value = vm[ keyword.key ];
-          searchString[ keyword.urlParam ] = typeof value == "object" ? value.join( "," ) : value;
+      $.each(keywords, function(index, keyword) {
+        if (vm[keyword.key + "Check"]) {
+          var value = vm[keyword.key];
+          searchString[keyword.urlParam] =
+            typeof value == "object" ? value.join(",") : value;
         }
       });
 

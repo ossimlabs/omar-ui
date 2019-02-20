@@ -8,6 +8,7 @@
       "shareService",
       "downloadService",
       "jpipService",
+      "omarMlService",
       "$stateParams",
       "toastr",
       "$uibModal",
@@ -26,6 +27,7 @@
     shareService,
     downloadService,
     jpipService,
+    omarMlService,
     $stateParams,
     toastr,
     $uibModal,
@@ -67,6 +69,9 @@
 
     var mensaBaseUrl, mensaContextPath, mensaRequestUrl;
     vm.mensaRequestUrl = "";
+
+    var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
+    vm.omarMlRequestUrl = "";
 
     function setlistControllerUrlProps() {
       thumbnailsBaseUrl = stateService.omarSitesState.url.base;
@@ -112,6 +117,11 @@
       mensaContextPath = stateService.omarSitesState.url.mensaContextPath;
       mensaRequestUrl = mensaBaseUrl + mensaContextPath;
       vm.mensaRequestUrl = mensaRequestUrl;
+
+      omarMlBaseUrl = stateService.omarSitesState.url.base;
+      omarMlContextPath = stateService.omarSitesState.url.omarMlContextPath;
+      omarMlRequestUrl = omarMlBaseUrl + omarMlContextPath;
+      vm.omarMlRequestUrl = omarMlRequestUrl;
     }
 
     vm.getSecurityClassificationClass = function(string) {
@@ -151,7 +161,8 @@
         urlKmlContextPath: vm.selectedOmar.url.kmlContextPath,
         urlJpipContextPath: vm.selectedOmar.url.jpipContextPath,
         urlWmtsContextPath: vm.selectedOmar.url.wmtsContextPath,
-        urlTlvContextPath: vm.selectedOmar.url.tlvContextPath
+        urlTlvContextPath: vm.selectedOmar.url.tlvContextPath,
+        urlOmarMlContextPath: vm.selectedOmar.url.omarMlContextPath
       });
       // Clears/resets the selected images, because they will not exist on the
       // federated site
@@ -171,6 +182,7 @@
       mapService.updateFootprintsUrl();
       avroMetadataService.setAvroMetadataUrlProps();
       jpipService.setJpipUrlProps();
+      omarMlService.setOmarMlUrlProps();
 
       $scope.$apply(function() {
         thumbnailsBaseUrl = stateService.omarSitesState.url.base;
@@ -577,8 +589,7 @@
     vm.openTab = tab => {
       setTimeout(function() {
         $(`[data-target="#${tab}"]`).tab("show");
-        console.log(`openTab firing with ${tab}!`);
-      }, 100);
+      }, 150);
     };
 
     $scope.$on("viewImageMetadata", function(event, image) {
@@ -593,6 +604,7 @@
         vm.kmlRequestUrl
       );
     });
+
     vm.showImageModal = function(
       imageObj,
       imageSpaceDefaults,
@@ -614,6 +626,7 @@
           "$uibModalInstance",
           "wfsService",
           "avroMetadataService",
+          "omarMlService",
           "$scope",
           "imageObj",
           "imageSpaceDefaults",
@@ -624,6 +637,7 @@
           "wfsRequestUrl",
           "tlvRequestUrl",
           "kmlRequestUrl",
+          "omarMlRequestUrl",
           ImageModalController
         ],
         controllerAs: "vm",
@@ -654,9 +668,24 @@
           },
           kmlRequestUrl: function() {
             return kmlRequestUrl;
+          },
+          omarMlRequestUrl: function() {
+            return omarMlRequestUrl;
           }
         }
       });
+    };
+
+    $scope.$on("viewOrtho", function(event, image) {
+      vm.viewOrtho(image);
+    });
+
+    vm.viewOrtho = function(image) {
+      var feature = new ol.format.GeoJSON().readFeature(image);
+      var filter = "in(" + feature.getProperties().id + ")";
+      var tlvUrl = tlvRequestUrl + "?filter=" + filter;
+
+      window.open(tlvUrl, "_blank");
     };
 
     $scope.$on("download", function(event, image) {
@@ -675,16 +704,20 @@
       vm.copyWmsCaps(image.properties.id);
     });
 
+    $scope.$on("runDetections", function(event, image) {
+      vm.submitMLJob(image.properties.id);
+    });
+
     var tlvBaseUrl, tlvContextPath;
     vm.tlvRequestUrl = "";
 
     var geoscriptBaseUrl, geoscriptContextPath, geoscriptRequestUrl;
 
     function setWFSOutputDlControllerUrlProps() {
-      // tlvBaseUrl = stateService.omarSitesState.url.base;
-      // tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      // tlvRequestUrl = tlvBaseUrl + tlvContextPath;
-      // vm.tlvRequestUrl = tlvRequestUrl;
+      tlvBaseUrl = stateService.omarSitesState.url.base;
+      tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+      tlvRequestUrl = tlvBaseUrl + tlvContextPath;
+      vm.tlvRequestUrl = tlvRequestUrl;
 
       geoscriptBaseUrl = stateService.omarSitesState.url.base;
       geoscriptContextPath =
@@ -756,6 +789,7 @@
     $uibModalInstance,
     wfsService,
     avroMetadataService,
+    omarMlService,
     $scope,
     imageObj,
     imageSpaceDefaults,
@@ -765,7 +799,8 @@
     wmsRequestUrl,
     wfsRequestUrl,
     tlvRequestUrl,
-    kmlRequestUrl
+    kmlRequestUrl,
+    omarMlRequestUrl
   ) {
     var vm = this;
 
@@ -946,6 +981,25 @@
       let imageListFilter = "in(" + imageId + ")";
       let url = wfsService.getExport("WMS130", imageListFilter);
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
+    };
+
+    vm.submitMlJob = function(imageId) {
+      omarMlService.submitMlJobModal(imageId, imageObj.properties.filename);
+    }
+
+    vm.shareWmsGetMap = imageId => {
+      wfsService.getImagesExtent(imageId).then(function(response) {
+        const polygonExtent = new ol.geom.Polygon([
+          response.geometry.coordinates[0][0]
+        ]).getExtent();
+        const extent3857 = ol.proj.transformExtent(
+          polygonExtent,
+          "EPSG:4326",
+          "EPSG:3857"
+        );
+        const url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&bbox=${extent3857}&width=1024&height=1024&format=image/jpeg`;
+        shareService.imageLinkModal(url, "Copy WMS GetMap");
+      });
     };
 
     vm.viewOrtho = function(image) {

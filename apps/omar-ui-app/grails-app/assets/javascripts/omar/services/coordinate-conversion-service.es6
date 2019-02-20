@@ -70,9 +70,7 @@
                     });
                 }
                 else {
-                    var baseUrl = AppO2.APP_CONFIG.serverURL;
-                    var twoFishesProxy = AppO2.APP_CONFIG.params.twofishes.proxy;
-                    var twoFishesUrl = baseUrl + twoFishesProxy + "?" +
+                    var twoFishesUrl = AppO2.APP_CONFIG.params.twofishes.baseUrl + "?" +
                         "autocompleteBias=BALANCED&" +
                         "maxInterpretations=1&" +
                         "query=" + encodeURIComponent( location ) + "&" +

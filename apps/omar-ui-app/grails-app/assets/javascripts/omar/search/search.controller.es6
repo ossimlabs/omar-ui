@@ -48,8 +48,7 @@
         vm.executeSearch();
       },
       serviceUrl:
-        AppO2.APP_CONFIG.serverURL +
-        AppO2.APP_CONFIG.params.twofishes.proxy +
+        AppO2.APP_CONFIG.params.twofishes.baseUrl +
         "/?responseIncludes=WKT_GEOMETRY_SIMPLIFIED" +
         "&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED",
       transformResult: function(response) {

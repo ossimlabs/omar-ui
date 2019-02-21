@@ -125,6 +125,7 @@ dependencies {
   compile "org.webjars:selectize.js:${selectizeV}"
   compile "org.webjars.bower:seiyria-bootstrap-slider:${seiyriaBootstrapSliderV}"
   compile "org.webjars:bootswatch:3.3.5+4"
+  compile 'org.webjars:openlayers:4.5.0'
 
   // Font stuff
   compile "org.webjars:font-awesome:4.4.0"

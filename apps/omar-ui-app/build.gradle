@@ -26,7 +26,6 @@ apply plugin: "asset-pipeline"
 
 apply plugin: "java"
 apply plugin: "maven-publish"
-apply plugin: "maven"
 
 assets {
   minifyJs = true
@@ -46,7 +45,9 @@ assets {
   ]
   includes = [
     "**/fonts/**",
-    "**/webjars/**/bootstrap.min.css"
+    "**/webjars/**/bootstrap.min.css",
+    "**/webjars/**/ol.css",
+    "**/webjars/**/ol.js",
   ]
 }
 

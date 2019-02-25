@@ -285,7 +285,7 @@
               <div class="col-md-6">
                 <a class = "btn btn-default btn-block btn-metrics" href="{{vm.kmlRequestUrl}}{{vm.selectedImage.properties.id}}" role = "button" target = "_blank">KML Export</a>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 toolbox-description-text">
                 Download KML document for this image
               </div>
             </div>
@@ -293,7 +293,7 @@
               <div class="col-md-6">
                 <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.archiveDownload(vm.selectedImage.properties.id)" role = "button" target = "_blank">Download</a>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 toolbox-description-text">
                 Download raw image file
               </div>
             </div>
@@ -301,7 +301,7 @@
               <div class="col-md-6">
                   <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareModal(vm.getImageSpaceUrl(vm.selectedImage))" role = "button" target = "_blank">Share</a>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 toolbox-description-text">
                 Share image link
               </div>
             </div>
@@ -309,7 +309,7 @@
               <div class="col-md-6">
                   <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.copyWmsCaps(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Capabilities</a>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 toolbox-description-text">
                 Share a link to the GetCapabilities for image
               </div>
             </div>
@@ -318,14 +318,18 @@
                   <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareWmsGetMap(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Map</a>
               </div>
               <div class="col-md-6">
-                  Share a link to the GetMap for image
+                  Share a link to the GetCapabilities for image
+                  <br>
+                  <small>Include BBox:</small>
+                  <input ng-model = "vm.bBoxCheck" type = "checkbox">
+                  <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Check the box to include the BBox of the image (default behaviour). Otherwise, a variable of {bbox} will be used"></i>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
                   <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.submitMlJob(vm.selectedImage.properties.id)" role = "button" target = "_blank">Run Detections</a>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 toolbox-description-text">
                 Runs machine learning workflow on image
               </div>
             </div>

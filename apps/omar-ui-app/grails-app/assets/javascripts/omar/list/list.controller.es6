@@ -985,21 +985,36 @@
 
     vm.submitMlJob = function(imageId) {
       omarMlService.submitMlJobModal(imageId, imageObj.properties.filename);
-    }
+    };
+
+    vm.bBoxCheck = true;
 
     vm.shareWmsGetMap = imageId => {
-      wfsService.getImagesExtent(imageId).then(function(response) {
-        const polygonExtent = new ol.geom.Polygon([
-          response.geometry.coordinates[0][0]
-        ]).getExtent();
-        const extent3857 = ol.proj.transformExtent(
-          polygonExtent,
-          "EPSG:4326",
-          "EPSG:3857"
-        );
-        const url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&bbox=${extent3857}&width=1024&height=1024&format=image/jpeg`;
+      let bBox;
+      let url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&width=1024&height=1024&transparent=true&format=image/png&bbox=`;
+
+      if (vm.bBoxCheck) {
+        wfsService.getImagesExtent(imageId).then(function(response) {
+          const polygonExtent = new ol.geom.Polygon([
+            response.geometry.coordinates[0][0]
+          ]).getExtent();
+
+          bBox = ol.proj.transformExtent(
+            polygonExtent,
+            "EPSG:4326",
+            "EPSG:3857"
+          );
+
+          url += bBox;
+
+          shareService.imageLinkModal(url, "Copy WMS GetMap");
+        });
+      } else {
+        // This "{bbox}" variable is used in the NOME/rMaps UI as a Custom Overlay
+        url += "{bbox}";
+
         shareService.imageLinkModal(url, "Copy WMS GetMap");
-      });
+      }
     };
 
     vm.viewOrtho = function(image) {

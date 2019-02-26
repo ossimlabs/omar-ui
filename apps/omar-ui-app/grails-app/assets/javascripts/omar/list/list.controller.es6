@@ -589,7 +589,7 @@
     vm.openTab = tab => {
       setTimeout(function() {
         $(`[data-target="#${tab}"]`).tab("show");
-      }, 150);
+      }, 250);
     };
 
     $scope.$on("viewImageMetadata", function(event, image) {
@@ -991,7 +991,7 @@
 
     vm.shareWmsGetMap = imageId => {
       let bBox;
-      let url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&width=1024&height=1024&transparent=true&format=image/png&bbox=`;
+      let url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs=epsg:3857&width=256&height=256&transparent=true&format=image/png&bbox=`;
 
       if (vm.bBoxCheck) {
         wfsService.getImagesExtent(imageId).then(function(response) {
@@ -1010,7 +1010,7 @@
           shareService.imageLinkModal(url, "Copy WMS GetMap");
         });
       } else {
-        // This "{bbox}" variable is used in the NOME/rMaps UI as a Custom Overlay
+        // This "{bbox}" string is used in the NOME/rMaps UI as a Custom Overlay
         url += "{bbox}";
 
         shareService.imageLinkModal(url, "Copy WMS GetMap");

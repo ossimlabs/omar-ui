@@ -318,11 +318,11 @@
                   <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareWmsGetMap(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Map</a>
               </div>
               <div class="col-md-6">
-                  Share a link to the GetCapabilities for image
+                  Share a link to the GetMap for image
                   <br>
                   <small>Include BBox:</small>
                   <input ng-model = "vm.bBoxCheck" type = "checkbox">
-                  <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Check the box to include the BBox of the image (default behaviour). Otherwise, a variable of {bbox} will be used"></i>
+                  <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Check the box to include the BBox of the image (default behavior). Otherwise, a variable of {bbox} will be used (rMaps)"></i>
               </div>
             </div>
             <div class="row">

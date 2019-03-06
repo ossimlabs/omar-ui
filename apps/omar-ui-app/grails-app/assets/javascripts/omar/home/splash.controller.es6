@@ -23,7 +23,6 @@
 
       var modalInstance = $uibModal.open({
         animation: true,
-        backdrop: 'static',
         windowClass: 'center-modal',
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',

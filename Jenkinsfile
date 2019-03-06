@@ -4,9 +4,9 @@ properties([
         booleanParam(name: 'CLEAN_WORKSPACE', defaultValue: true, description: 'Clean the workspace at the end of the run')
     ]),
     pipelineTriggers([
-            [$class: "GitHubPushTrigger"],
-            pollSCM('H/2 * * * *')
-    ])
+            [$class: "GitHubPushTrigger"]
+    ]),
+    disableConcurrentBuilds()
 ])
 
 node("${BUILD_NODE}"){
@@ -32,20 +32,6 @@ node("${BUILD_NODE}"){
             -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
         """
         archiveArtifacts "apps/*/build/libs/*.jar"
-    }
-
-    stage ("Publish Nexus")
-    {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: 'nexusCredentials',
-                        usernameVariable: 'MAVEN_REPO_USERNAME',
-                        passwordVariable: 'MAVEN_REPO_PASSWORD']])
-        {
-            sh """
-            gradle publish \
-                -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
-            """
-        }
     }
 
     stage ("Publish Docker App")

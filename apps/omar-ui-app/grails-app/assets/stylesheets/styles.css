@@ -1120,3 +1120,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .toast-message ol {
   padding-left: 15px;
 }
+
+.toolbox-description-text {
+ margin-top: .7em;
+}

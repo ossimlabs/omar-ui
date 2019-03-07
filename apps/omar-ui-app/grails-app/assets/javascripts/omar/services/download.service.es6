@@ -66,7 +66,6 @@
         idList = imageLayerIds;
       } else {
         idList = imageId;
-        data.zipFileName = imageId
       }
 
       let dm = downloadManager + "/archive/download";
@@ -74,6 +73,7 @@
       data.ids = idList;
       $log.debug(`Download idList: `, idList);
 
+      data.zipFileName = imageId
       $.fileDownload(dm, {
         httpMethod: "POST",
         dataType: "text",

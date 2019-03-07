@@ -522,10 +522,8 @@
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
     };
 
-    vm.archiveDownload = function(imageId, imageFilename) {
-      // Remove extension from filename to rename zip it.
-      zipFileName = imageFilename.split(".")[0] + ".zip";
-      downloadService.downloadFiles(imageId, zipFileName);
+    vm.archiveDownload = function(imageId) {
+      downloadService.downloadFiles(imageId);
     };
 
     // We need an $on event here to listen for changes to the
@@ -975,8 +973,11 @@
       shareService.imageLinkModal(imageLink);
     };
 
-    vm.archiveDownload = function(imageId) {
-      downloadService.downloadFiles(imageId);
+    vm.archiveDownload = function(imageId, imageFilename) {
+      // Remove the file extension and replace with zip.
+      var path = imageFilename.split('/');
+      var zipFileName = path[path.length-1].split('.')[0] + ".zip";
+      downloadService.downloadFiles(imageId, zipFileName);
     };
 
     vm.copyWmsCaps = function(imageId) {

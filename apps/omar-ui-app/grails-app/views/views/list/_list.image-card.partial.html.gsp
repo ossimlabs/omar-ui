@@ -291,7 +291,7 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.archiveDownload(vm.selectedImage.properties.id)" role = "button" target = "_blank">Download</a>
+                <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.archiveDownload(vm.selectedImage.properties.id, vm.selectedImage.properties.filename | fileNameTrim)" role = "button" target = "_blank">Download</a>
               </div>
               <div class="col-md-6 toolbox-description-text">
                 Download raw image file

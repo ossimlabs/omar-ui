@@ -43,7 +43,7 @@
       ids: []
     };
 
-    this.downloadFiles = function(imageId) {
+    this.downloadFiles = function(imageId, zipFileName) {
       $log.debug("Download imageId:", imageId);
       let type = typeof imageId;
       $log.debug("imageId is typeof: ", type);
@@ -73,7 +73,7 @@
       data.ids = idList;
       $log.debug(`Download idList: `, idList);
 
-      data.zipFileName = imageId + ".zip"
+      data.zipFileName = zipFileName;
       $.fileDownload(dm, {
         httpMethod: "POST",
         dataType: "text",

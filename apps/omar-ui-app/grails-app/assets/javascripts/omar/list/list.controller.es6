@@ -522,8 +522,10 @@
       shareService.imageLinkModal(url, "Copy WMS Capabilities");
     };
 
-    vm.archiveDownload = function(imageId) {
-      downloadService.downloadFiles(imageId);
+    vm.archiveDownload = function(imageId, imageFilename) {
+      // Remove extension from filename to rename zip it.
+      zipFileName = imageFilename.split(".")[0] + ".zip";
+      downloadService.downloadFiles(imageId, zipFileName);
     };
 
     // We need an $on event here to listen for changes to the

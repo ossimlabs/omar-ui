@@ -66,6 +66,7 @@
         idList = imageLayerIds;
       } else {
         idList = imageId;
+        data.zipFileName = imageId
       }
 
       let dm = downloadManager + "/archive/download";

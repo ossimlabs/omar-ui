@@ -73,7 +73,7 @@
       data.ids = idList;
       $log.debug(`Download idList: `, idList);
 
-      data.zipFileName = imageId
+      data.zipFileName = imageId + ".zip"
       $.fileDownload(dm, {
         httpMethod: "POST",
         dataType: "text",

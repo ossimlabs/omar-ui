@@ -165,6 +165,8 @@ dependencies {
   testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:${seleniumHtmlUnitDriverV}"
   testRuntime "net.sourceforge.htmlunit:htmlunit:${htmlUnitV}"
 
+    compile 'org.webjars:swagger-ui:3.20.5'
+
 }
 
 bootRun {

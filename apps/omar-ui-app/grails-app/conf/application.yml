@@ -11,6 +11,11 @@ securityClassification:
 serverProtocol: https
 serverName: omar-dev.ossim.io
 
+swagger:
+    schemes:
+        - HTTPS
+        - HTTP
+
 ---
 grails:
     plugin:

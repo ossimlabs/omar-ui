@@ -187,35 +187,3 @@ Sorts the list in reverse alphabetical order sensor to image ID.
 
 ### Search Box
 There is an input box located above the map all the way to the right. The box is meant to take in various kinds of input and will automatically determine if a BE, coordinate, image ID or placename is entered. In all cases, if a match is found, the map will zoom to the appropriate area.
-
-## API
-Want to share your awesome searches with friends? Use the table below to construct a URL that will automatically set search values for anyone who clicks on it!
-
-| Parameter | Description |
-| - | - |
-| azimuth | The image's azimuth angle. A range can bet set with a semi-colon. |
-| be | A basic encyclopedia number. |
-| cloudCover | The maximum cloud cover percentage. |
-| countries | An image's country code. Multiple can be set separated by a comma. |
-| dateType | Either acquisition_date or ingest_date. |
-| duration | Simple, predefined date ranges. e.g. last3Days. |
-| elevation | The image's elevation angle. A range can be set with a semi-colon. |
-| endDate | The end date for a custom date range. |
-| filename | The image's filename. |
-| imageId | The image's image ID. |
-| mapCenterX | The map center's longitude. |
-| mapCenterY | The map center's latitude. |
-| mapRotation | How many degrees to rotate the map. |
-| mapSearch | Where the map should center in on, can be DD, DMS, MGRS, Image ID or Placename where supported. |
-| mapZoom | What level to zoom the map to. |
-| mapVisibility | Whether or not to start off showing the map when the page loads. |
-| missions | The image's mission ID. Multiple can be set separated by a comma. |
-| niirs | The image's NIIRS rating. A range can bet set with a semi-colon. |
-| products | The image's product designator. |
-| sensors | The image's sensor ID. Multiple can be set separated by a comma. |
-| spatial | The map's spatial filter. "mapView", or either a POINT/POLYGON WKT.
-| startDate | The start date for a custom date range. |
-| sunAzimuth | The image's sun aximuth angle. A range can be set with a semi-colon. |
-| sunElevation | The image's sun elevation angle. A range can be set with a semi-colon. |
-| target | The image's target ID. |
-| wac | The image's World Area Code. |

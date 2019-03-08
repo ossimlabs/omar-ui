@@ -31,7 +31,7 @@ class OmarController {
     )
     @ApiImplicitParams([
         @ApiImplicitParam(
-            dataType = 'integer',
+            dataType = 'string',
             defaultValue = '',
             name = 'azimuth',
             paramType = 'query',
@@ -75,7 +75,7 @@ class OmarController {
             value = 'Simple, predefined date ranges.'
         ),
         @ApiImplicitParam(
-            dataType = 'integer',
+            dataType = 'string',
             defaultValue = '',
             name = 'elevation',
             paramType = 'query',
@@ -152,7 +152,7 @@ class OmarController {
             value = 'The image\'s mission ID. Multiple can be set separated by a comma.'
         ),
         @ApiImplicitParam(
-            dataType = 'integer',
+            dataType = 'string',
             defaultValue = '',
             name = 'niirs',
             paramType = 'query',
@@ -187,14 +187,14 @@ class OmarController {
             value = 'The start date for a custom date range.'
         ),
         @ApiImplicitParam(
-            dataType = 'integer',
+            dataType = 'string',
             defaultValue = '',
             name = 'sunAzimuth',
             paramType = 'query',
             value = 'The image\'s sun aximuth angle. A range can be set with a semi-colon.'
         ),
         @ApiImplicitParam(
-            dataType = 'integer',
+            dataType = 'string',
             defaultValue = '',
             name = 'sunElevation',
             paramType = 'query',

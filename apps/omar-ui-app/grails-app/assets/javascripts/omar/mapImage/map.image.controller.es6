@@ -46,42 +46,12 @@
 
     vm.baseServerUrl = AppO2.APP_CONFIG.serverURL;
 
-    var geoJumpInput = $("#geoJumpInput");
-    geoJumpInput.keypress(function(event) {
-      if (event.keyCode == 13) {
-        // pressing Return or Enter
+    $scope.$on( 'magic search function', function() {
         vm.geoJump();
-      }
-    });
-    geoJumpInput.autocomplete({
-      dataType: "json",
-      minChars: 3,
-      onSelect: function(suggestion) {
-        vm.geoJump();
-      },
-      serviceUrl:
-        AppO2.APP_CONFIG.params.twofishes.baseUrl +
-        "/?responseIncludes=WKT_GEOMETRY_SIMPLIFIED&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED",
-      transformResult: function(response) {
-        return {
-          suggestions: $.map(response.interpretations, function(dataItem) {
-            return {
-              bounds: dataItem.feature.geometry.bounds,
-              data: dataItem.feature.displayName,
-              lat: dataItem.feature.geometry.center.lat,
-              lng: dataItem.feature.geometry.center.lng,
-              value: dataItem.feature.displayName,
-              wkt: dataItem.feature.geometry.wktGeometrySimplified
-            };
-          })
-        };
-      },
-      type: "GET"
-    });
-    geoJumpInput.autocomplete("enable");
+    } );
 
     vm.geoJump = function() {
-      var location = geoJumpInput.val().trim();
+      var location = $( '#magicSearchInput' ).val().trim();
       var coords = coordinateConversionService.convert(location);
     };
 

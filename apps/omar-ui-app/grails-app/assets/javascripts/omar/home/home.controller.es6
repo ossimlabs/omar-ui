@@ -19,7 +19,6 @@
 
     // set header title
     stateService.navStateUpdate({
-      titleLeft: "<h3>Welcome!</h3>",
       userGuideUrl: " "
     });
 

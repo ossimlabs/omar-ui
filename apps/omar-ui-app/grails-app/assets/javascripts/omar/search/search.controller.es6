@@ -33,62 +33,27 @@
 
     // set header title
     stateService.navStateUpdate({
-      titleLeft: "<h3>Map</h3>",
       userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#search"
     });
 
     var vm = this;
     vm.urlParams = $stateParams;
 
-    var searchInput = $("#searchInput");
-    searchInput.autocomplete({
-      dataType: "json",
-      minChars: 3,
-      onSelect: function(suggestion) {
+    $scope.$on( 'magic search function', function() {
+        $( "a:contains('Map')" ).trigger( 'click' );
         vm.executeSearch();
-      },
-      serviceUrl:
-        AppO2.APP_CONFIG.params.twofishes.baseUrl +
-        "/?responseIncludes=WKT_GEOMETRY_SIMPLIFIED" +
-        "&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED",
-      transformResult: function(response) {
-        return formatTwoFishesResponse(response);
-      },
-      type: "GET"
-    });
-    searchInput.autocomplete("enable");
-
-    searchInput.keypress(function(event) {
-      if (event.keyCode == 13) {
-        // pressing Return or Enter
-        vm.executeSearch();
-      }
-    });
+    } );
     if ( vm.urlParams.mapSearch ) {
-        vm.searchInput = vm.urlParams.mapSearch;
+        $( "a:contains('Map')" ).trigger( 'click' );
+        $( '#magicSearchInput' ).val( vm.urlParams.mapSearch );
         // $timeout needed: http://stackoverflow.com/a/18996042
         $timeout(function() {
             vm.executeSearch();
         });
     }
 
-    function formatTwoFishesResponse(response) {
-      return {
-        suggestions: $.map(response.interpretations, function(dataItem) {
-          return {
-            bounds: dataItem.feature.geometry.bounds,
-            data: dataItem.feature.displayName,
-            lat: dataItem.feature.geometry.center.lat,
-            lng: dataItem.feature.geometry.center.lng,
-            value: dataItem.feature.displayName,
-            wkt: dataItem.feature.geometry.wktGeometrySimplified
-          };
-        })
-      };
-    }
-
     vm.executeSearch = function() {
-      var input = searchInput.val().trim();
+      var input = $( '#magicSearchInput' ).val().trim();
 
       wfsService.search(input).then(function(response) {
         if (response && response.length > 0) {
@@ -97,10 +62,6 @@
           coordinateConversionService.convert(input);
         }
       });
-    };
-
-    vm.resetSearchInput = function() {
-      vm.searchInput = "";
     };
 
     $scope.$on("coordService: updated", function(event, response) {

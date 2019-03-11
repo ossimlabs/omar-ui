@@ -44,7 +44,21 @@
                 <li ng-show="{{nav.apiAppEnabled}}"><a ng-href="{{nav.apiAppLink}}" target="_blank">&nbsp;API</a></li>
               </ul>
             </li>
-            <li class="nav-title-left" ng-bind-html="nav.titleLeft" style="cursor:default"></li>
+            <li class = "nav-title-left">
+                <form id = "searchForm" class = "searchForm">
+                    <div class = "input-group input-group-sm">
+                        <input id = "magicSearchInput" type = "text" class = "form-control" placeholder = "BE, Coordinate, Image ID or Placename" autofocus>
+                        <span class = "input-group-btn">
+                            <button class = "btn btn-info" type = "button" ng-click = "nav.magicSearchFunction()">
+                                <span class = "glyphicon glyphicon-search"></span>
+                            </button>
+                            <button class = "btn btn-default" type = "button" onclick = "javascript: $( '#magicSearchInput' ).val( '' )">
+                                <span class = "glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </li>
           </ul>
           <ul class="nav navbar-nav" ng-show="${grailsApplication.config.banner.enabled}" style = "cursor: text;">
             <div class="release-field" uib-tooltip="${grailsApplication.config.banner.description}">${grailsApplication.config.banner.text}</div>

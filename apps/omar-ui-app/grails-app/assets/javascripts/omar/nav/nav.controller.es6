@@ -4,12 +4,13 @@
     .module("omarApp")
     .controller("NavController", [
       "$log",
+      '$rootScope',
       "stateService",
       "$scope",
       NavController
     ]);
 
-  function NavController($log, stateService, $scope) {
+  function NavController($log, $rootScope, stateService, $scope) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -19,9 +20,44 @@
     var vm = this;
     /* jshint validthis: true */
 
-    $scope.$on("navState.updated", function(event, params) {
-      vm.titleLeft = params.titleLeft;
 
+    var magicSearchInput = $( '#magicSearchInput' );
+    magicSearchInput.keypress( function( event ) {
+        if ( event.keyCode == 13 ) {
+            // pressing Return or Enter
+            $rootScope.$broadcast( 'magic search function' );
+        }
+    } );
+    magicSearchInput.autocomplete({
+        dataType: 'json',
+        minChars: 3,
+        onSelect: function( suggestion ) {
+            $rootScope.$broadcast( 'magic search function' );
+        },
+        serviceUrl: AppO2.APP_CONFIG.params.twofishes.baseUrl +
+        "/?responseIncludes=WKT_GEOMETRY_SIMPLIFIED&autocomplete=true&maxInterpretations=10&autocompleteBias=BALANCED",
+        transformResult: function( response ) {
+            return {
+                suggestions: $.map( response.interpretations, function( dataItem ) {
+                    return {
+                        bounds: dataItem.feature.geometry.bounds,
+                        data: dataItem.feature.displayName,
+                        lat: dataItem.feature.geometry.center.lat,
+                        lng: dataItem.feature.geometry.center.lng,
+                        value: dataItem.feature.displayName,
+                        wkt: dataItem.feature.geometry.wktGeometrySimplified
+                    };
+                } )
+            };
+        },
+        type: 'GET'
+    });
+    magicSearchInput.autocomplete( 'enable' );
+    vm.magicSearchFunction = function() {
+        $rootScope.$broadcast( 'magic search function' );
+    };
+
+    $scope.$on("navState.updated", function(event, params) {
       if (params.userGuideUrl && vm.userGuideEnabled) {
         var base = AppO2.APP_CONFIG.params.userGuide.baseUrl;
         vm.userGuideLink = base + params.userGuideUrl;

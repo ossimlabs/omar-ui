@@ -32,7 +32,7 @@
     vm.urlParams = $stateParams;
 
     var mapVisibility = vm.urlParams.mapVisibility == "true" || vm.userPreferences.mapVisibility;
-    if ( !mapVisibility ) {
+    if ( !mapVisibility && !vm.urlParams.mapSearch ) {
         setTimeout( function() {
             $( "a:contains('Filters')" ).trigger("click");
         }, 10 );

@@ -108,44 +108,9 @@ body {
 }
 
 .searchForm {
+  left: 30px;
   padding-top: 10px;
-  position: absolute;
-  left: 60px;
-  top: -3px;
   width: 320px;
-}
-
-.searchForm .input-group-btn .glyphicon {
-  padding-top: 3px;
-  padding-bottom: 3px;
-}
-
-#searchInput {
-  border-left-width: 3px;
-  border-top-width: 3px;
-  border-bottom-width: 3px;
-  border-color: #f5f1f1;
-  opacity: 0.9;
-}
-
-#searchButton {
-  opacity: 0.9;
-  border-left-width: 0px;
-  border-top-width: 3px;
-  border-bottom-width: 3px;
-  border-right-width: 0px;
-  border-color: #f5f1f1;
-  padding-top: 3px;
-}
-
-#searchClearButton {
-  opacity: 0.9;
-  border-left-width: 0px;
-  border-top-width: 3px;
-  border-bottom-width: 3px;
-  border-right-width: 3px;
-  border-color: #f5f1f1;
-  padding-top: 3px;
 }
 
 .release-field {
@@ -1123,4 +1088,10 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 .toolbox-description-text {
  margin-top: .7em;
+}
+
+.custom-map-control {
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+    position: absolute;
 }

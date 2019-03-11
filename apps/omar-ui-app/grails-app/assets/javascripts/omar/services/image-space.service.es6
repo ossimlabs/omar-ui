@@ -422,13 +422,20 @@
       span.className = "glyphicon glyphicon-fullscreen";
       var fullScreenControl = new ol.control.FullScreen({ label: span });
 
+      var acquisitionDateControl = new ol.control.Control({ element: $( '#acquisitionDateControl')[ 0 ] });
+      var imageIdControl = new ol.control.Control({ element: $( '#imageIdControl')[ 0 ] });
+      var serverControl = new ol.control.Control({ element: $( '#serverControl')[ 0 ] });
+
       const map = new ol.Map({
         controls: ol.control
           .defaults({ attribution: false })
           .extend([
             new RotateNorthControl(),
             new RotateUpControl(),
-            fullScreenControl
+            fullScreenControl,
+            acquisitionDateControl,
+            imageIdControl,
+            serverControl
           ]),
         interactions: interactions,
         layers: layers,

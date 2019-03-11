@@ -236,32 +236,22 @@
           }
         }
 
-        var imageIdText =
-          imageData.properties.title ||
-          getFileName(imageData.properties.filename);
-        var acquisitionDateText = imageData.properties.acquisition_date || "";
+        var imageIdText = imageData.properties.title || getFileName(imageData.properties.filename);
+        $( '#imageIdControl' ).children().html( imageIdText );
 
+        var acquisitionDateText = imageData.properties.acquisition_date || "";
         if (acquisitionDateText != "") {
-          acquisitionDateText =
-            moment.utc(acquisitionDateText).format("MM-DD-YYYY HH:mm:ss") +
-            " z";
+          acquisitionDateText = moment.utc(acquisitionDateText).format("MM-DD-YYYY HH:mm:ss") + " z";
         } else {
           acquisitionDateText = "Unknown";
         }
+        $( '#acquisitionDateControl' ).html( acquisitionDateText );
+
+        $( '#serverControl' ).html( parser.hostname );
 
         // TODO: We need to modify the way this information is bound to the DOM.  It should
         //       be using an Angular model.
         stateService.navStateUpdate({
-          titleLeft:
-            '<p><span class="text-info">Server: </span>' +
-            parser.hostname +
-            " </p> " +
-            '<p><span class="text-info">Image ID: </span>' +
-            imageIdText +
-            " </p> " +
-            '<p><span class="text-info">Acquisition Date: </span>' +
-            acquisitionDateText +
-            " </p> ",
           userGuideUrl: "omar-ui/docs/user-guide/omar-ui/#image-space"
         });
 

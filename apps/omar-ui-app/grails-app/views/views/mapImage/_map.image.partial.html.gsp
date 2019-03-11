@@ -10,7 +10,7 @@
       </button>
     </div>
     <div class="collapse navbar-collapse" id="map-navbar-collapse">
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <ul class="nav navbar-nav">
           <li
             ng-click="image.archiveDownload(image.imageId)"
@@ -63,21 +63,6 @@
             </ul>
           </li>
         </ul>
-      </div>
-      <div class="col-sm-4">
-        <form id="searchForm" class="searchForm">
-          <div class="input-group input-group-sm">
-            <input id="geoJumpInput" type="text" class="form-control" ng-model="image.geoJumpInput" placeholder="BE, Coordinate or Placename" autofocus>
-            <span class="input-group-btn">
-              <button class="btn btn-info" type="button" ng-click="image.geoJump()">
-                <span class="glyphicon glyphicon-search"></span>
-              </button>
-              <button class="btn btn-default" type="button" ng-click="image.geoJumpInput=''">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-            </span>
-          </div>
-        </form>
       </div>
     </div>
   </nav>
@@ -440,6 +425,11 @@
           <div id="progress" class="text-info">
             <i class="fa fa-spinner fa-spin fa-4x"></i>
           </div>
+          <div class = "custom-map-control" id = "acquisitionDateControl" style = "bottom: 0.5em; right: 0.5em; text-align: right;"></div>
+          <div class = "custom-map-control" id = "imageIdControl" style = "background-color: rgba(0, 0, 0, 0); pointer-events: none; text-align: center; top: 0.5em; width: 100%;">
+            <div style = "background-color: rgba(0, 0, 0, 0.5); display: inline-block; text-align: left"></div>
+          </div>
+          <div class = "custom-map-control" id = "serverControl" style = "bottom: 0.5em; left: 0.5em;"></div>
         </div>
       </div>
     </div>

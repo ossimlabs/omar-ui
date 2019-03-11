@@ -4,13 +4,20 @@
     .module("omarApp")
     .controller("HomeController", [
       "$log",
+      '$scope',
       "stateService",
       "$window",
       "toastr",
       HomeController
     ]);
 
-  function HomeController($log, stateService, $window, toastr) {
+  function HomeController(
+    $log,
+    $scope,
+    stateService,
+    $window,
+    toastr
+  ) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -30,6 +37,10 @@
     vm.showMotd = AppO2.APP_CONFIG.params.misc.motd.enabled;
 
     vm.baseUrl = AppO2.APP_CONFIG.serverURL;
+
+    $scope.$on( 'magic search function', function() {
+        document.location.href = "#/map?mapSearch=" + $( '#magicSearchInput' ).val();
+    } );
 
     vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
     if (vm.apiAppEnabled) {

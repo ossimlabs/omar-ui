@@ -703,21 +703,10 @@
                 </div>
 
                 <div role = "tabpanel" class = "tab-pane active" id = "mapSearch">
+                    <!-- Just activating the search controller --!>
+                    <div ng-controller = "SearchController as search" style = "display: none;"></div>
                     <div ng-controller = "MapController as map">
                         <div id = "map" class = "map" params = "map.mapParams" map>
-                            <form id = "searchForm" class="searchForm">
-                                <div class = "input-group input-group-sm" ng-controller = "SearchController as search">
-                                    <input class = "form-control" id = "searchInput" ng-model="search.searchInput" placeholder = "BE, Coordinate, Image ID or Placename" type = "text">
-                                    <span class = "input-group-btn">
-                                        <button class = "btn btn-info" ng-click = "search.executeSearch()" ng-disabled = "search.searchButtonDisabled" id = "searchButton" type = "button">
-                                            <span class = "glyphicon glyphicon-search"></span>
-                                        </button>
-                                        <button class = "btn btn-default" id = "searchClearButton" ng-click = "search.resetSearchInput()" type = "button">
-                                            <span class = "glyphicon glyphicon-remove"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
                             <div id = "legend" style = "background-color: white; border: 1px solid white; border-radius: 5px; color: black;">
                                 <div class = "text-center"><b>{{map.legendTitle}}</b></div>
                                 <img alt = "{{map.legendTitle}}" src = "{{map.legendUrl}}">

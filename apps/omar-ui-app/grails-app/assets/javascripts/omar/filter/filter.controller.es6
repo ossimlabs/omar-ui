@@ -112,6 +112,13 @@
         stagerBaseUrl +
         stagerContextPath +
         "/dataManager/getDistinctValues?property=";
+
+        $.each(
+            [ 'countryCode', 'missionId', 'productId', 'sensorId' ],
+            function( index, value ) {
+                getDistinctValues( value );
+            }
+        );
     }
 
     $scope.$on("omarSitesState.updated", function(event, params) {
@@ -140,24 +147,16 @@
       }
     };
 
-    $scope["countryCodeTypes"] = [];
-    $scope["missionIdTypes"] = [];
-    $scope["sensorIdTypes"] = [];
-    $scope["productIdTypes"] = [];
-    vm.getDistinctValues = function(property) {
-      if (
-        !$scope[property + "Types"] ||
-        $scope[property + "Types"].length == 0
-      ) {
-        var url = stagerRequestUrl + property;
+    function getDistinctValues( property ) {
+        $scope[ property + 'Types' ] = [];
 
+        var url = stagerRequestUrl + property;
         $http({
-          method: "GET",
-          url: url
-        }).then(function(response) {
-          $scope[property + "Types"] = response.data;
+            method: 'GET',
+            url: url
+        }).then( function( response ) {
+            $scope[ property + 'Types' ] = response.data;
         });
-      }
     };
 
     function checkNoSpatialFilter() {
@@ -219,6 +218,43 @@
       checkNoSpatialFilter();
     };
 
+    vm.handleDataList = function( inputId ) {
+        var inputElement = $( '#' + inputId );
+
+        var dataList = inputElement.next();
+        var options = inputElement.attr( "data-options" );
+        // if there are no options, store them
+        if ( !options ) {
+            var optionsArray = [];
+            $.each( dataList[ 0 ].options, function( index, option ) {
+                optionsArray.push( $( option ).val() );
+            } );
+            inputElement.attr( "data-options",  optionsArray.join( ',' ) );
+        }
+        else {
+            options = options.split( ',' );
+        }
+
+
+        var prefix = '';
+        var userInput = inputElement.val().replace( /^\s+|\s+$/g, '' );
+        if ( userInput != inputElement.val() ) {
+            var lastCommaIndex = userInput.lastIndexOf( ',' );
+            if ( lastCommaIndex != -1 ) {
+                prefix = userInput.substr( 0, lastCommaIndex ) + ', ';
+            }
+
+            if ( userInput.indexOf( ',' ) > -1 ) {
+                dataList.empty();
+                $.each( options, function( index, option ) {
+                    if ( userInput.indexOf( option ) < 0 ) {
+                        dataList.append( '<option value="' + prefix + option +'">' );
+                    }
+                } );
+            }
+        }
+    }
+
     vm.initKeywords = function(reset) {
       var arrays = [
         { key: "countryCode", urlParam: "countries" },
@@ -237,7 +273,7 @@
           vm[keyword.key + "Check"] = false;
           value = null;
         }
-        vm[keyword.key] = value ? value.split(",") : [];
+        vm[keyword.key] = value ? value : '';
       });
 
       var strings = [
@@ -630,7 +666,7 @@
       }
 
       if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        pushKeywordToArray("country_code", vm.countryCode);
+        pushKeywordToArray("country_code", vm.countryCode.split( ',' ));
       } else if (vm.countryCode.length === 0) {
         vm.countryCodeCheck = false;
       }
@@ -644,13 +680,13 @@
       }
 
       if (vm.missionIdCheck && vm.missionId.length != 0) {
-        pushKeywordToArray("mission_id", vm.missionId);
+        pushKeywordToArray("mission_id", vm.missionId.split( ',' ));
       } else if (vm.missionId.length === 0) {
         vm.missionIdCheck = false;
       }
 
       if (vm.sensorIdCheck && vm.sensorId.length != 0) {
-        pushKeywordToArray("sensor_id", vm.sensorId);
+        pushKeywordToArray("sensor_id", vm.sensorId.split( ',' ));
       } else if (vm.sensorId.length === 0) {
         vm.sensorIdCheck = false;
       }
@@ -664,7 +700,7 @@
       }
 
       if (vm.productIdCheck && vm.productId.length != 0) {
-        pushKeywordToArray("product_id", vm.productId);
+        pushKeywordToArray("product_id", vm.productId.split( ',' ));
       } else if (vm.productId.length === 0) {
         vm.productIdCheck = false;
       }
@@ -943,8 +979,8 @@
         searchString.spatial = wkt;
       }
 
-      var searchInput = $("#searchInput").val();
-      if (searchInput != "") {
+      var searchInput = $( '#magicSearchInput' ).val();
+      if ( searchInput ) {
         searchString.mapSearch = searchInput;
       } else if (vm.viewPortSpatial) {
         [

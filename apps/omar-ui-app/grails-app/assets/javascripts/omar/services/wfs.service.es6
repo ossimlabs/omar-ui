@@ -20,6 +20,7 @@
     //console.log('AppO2.APP_CONFIG in wfsService: ', AppO2.APP_CONFIG);
 
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
+    var wfsAjax = {};
 
     /**
      * Description: Called from the listController so that the $on. event that subscribes to the $broadcast
@@ -130,7 +131,6 @@
         })
         .then( function( response ) {
             var data = response.data.features;
-            console.dir(data);
 
             // $timeout needed: http://stackoverflow.com/a/18996042
             $timeout( function() {
@@ -140,71 +140,77 @@
     };
 
     this.executeWfsQuery = function( requestHits ) {
-      if (this.attrObj.filter === "") {
-        // Only send the spatialObj to filter the results
-        wfsRequest.cql = this.spatialObj.filter;
-      } else if (this.spatialObj.filter === "") {
-        // Only send the attrObj to filter the results
-        wfsRequest.cql = this.attrObj.filter;
-      } else {
-        // Filter the results using the spatialObj and the attrObj
-        wfsRequest.cql = this.spatialObj.filter + " AND " + this.attrObj.filter;
-      }
-
-      wfsRequest.sortField = this.attrObj.sortField;
-      wfsRequest.sortType = this.attrObj.sortType;
-      wfsRequest.startIndex = this.attrObj.startIndex;
-      wfsRequest.pageLimit = this.attrObj.pageLimit;
-
-      var wfsUrl =
-        wfsRequestUrl +
-        "service=WFS" +
-        "&version=" + wfsRequest.version +
-        "&request=GetFeature" +
-        "&typeName=" + wfsRequest.typeName +
-        "&filter=" + encodeURIComponent( this.modifyParamBasedOnZoom( wfsRequest.cql ) ) +
-        "&outputFormat=" + wfsRequest.outputFormat +
-        "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType +
-        "&startIndex=" + wfsRequest.startIndex +
-        "&maxFeatures=" + wfsRequest.pageLimit;
-
-      $http({ method: "GET", url: wfsUrl }).then(function(response) {
-        var data;
-        data = response.data.features;
-
-        // $timeout needed: http://stackoverflow.com/a/18996042
-        $timeout(function() {
-          $rootScope.$broadcast("wfs: updated", data);
-
-          const imageIdArray = data.map(image => image.properties.id);
-
-          stateService.mapState.featureIds = imageIdArray;
-        });
-      });
-
-        if ( requestHits !== false ) {
-            var wfsFeaturesUrl =
-                wfsRequestUrl +
-                "service=WFS" +
-                "&version=" + wfsRequest.version +
-                "&request=GetFeature" +
-                "&typeName=" + wfsRequest.typeName +
-                "&filter=" + encodeURIComponent( this.modifyParamBasedOnZoom( wfsRequest.cql ) ) +
-                "&outputFormat=" + wfsRequest.outputFormat +
-                "&sortBy=" + wfsRequest.sortField + wfsRequest.sortType +
-                "&startIndex=" + wfsRequest.startIndex +
-                "&resultType=hits";
-
-            $http({ method: "GET", url: wfsFeaturesUrl }).then(function(response) {
-                var features;
-                features = response.data.totalFeatures;
-
-                // $timeout needed: http://stackoverflow.com/a/18996042
-                $timeout(function() {
-                    $rootScope.$broadcast("wfs features: updated", features);
-                });
-            });
+        if (this.attrObj.filter === "") {
+            // Only send the spatialObj to filter the results
+            wfsRequest.cql = this.spatialObj.filter;
+        } else if (this.spatialObj.filter === "") {
+            // Only send the attrObj to filter the results
+            wfsRequest.cql = this.attrObj.filter;
+        } else {
+            // Filter the results using the spatialObj and the attrObj
+            wfsRequest.cql = this.spatialObj.filter + " AND " + this.attrObj.filter;
         }
+
+        wfsRequest.sortField = this.attrObj.sortField;
+        wfsRequest.sortType = this.attrObj.sortType;
+        wfsRequest.startIndex = this.attrObj.startIndex;
+        wfsRequest.pageLimit = this.attrObj.pageLimit;
+
+        var params = {
+            filter: this.modifyParamBasedOnZoom( wfsRequest.cql ),
+            outputFormat: wfsRequest.outputFormat,
+            request: 'GetFeature',
+            service: 'WFS',
+            sortBy: wfsRequest.sortField + wfsRequest.sortType,
+            startIndex: wfsRequest.startIndex,
+            typeName: wfsRequest.typeName,
+            version: wfsRequest.version
+        };
+
+        $.each( [ true, requestHits ], function( index, value ) {
+            if ( value !== false ) {
+
+                var wfsQuery = function() {
+                    return $.ajax({
+                        data: $.param( $.extend( extraParam, params ) ),
+                        dataType: 'json',
+                        url: wfsRequestUrl
+                    })
+                    .done( function( data ) {
+                        // $timeout needed: http://stackoverflow.com/a/18996042
+                        $timeout(function() {
+                            if ( index == 0 ) {
+                                $rootScope.$broadcast( 'wfs: updated', data.features );
+
+                                const imageIdArray = data.features.map( image => image.properties.id );
+                                stateService.mapState.featureIds = imageIdArray;
+                            }
+                            else if ( index == 1 ) {
+                                $rootScope.$broadcast( 'wfs features: updated', data.totalFeatures );
+                            }
+                        });
+                    } );
+                };
+
+                var extraParam;
+                if ( index == 0 ) {
+                    extraParam = { maxFeatures: wfsRequest.pageLimit };
+
+                    if ( wfsAjax.features ) {
+                        wfsAjax.features.abort();
+                    }
+                    wfsAjax.features = wfsQuery();
+                }
+                else if ( index == 1 ) {
+                    extraParam = { resultType: 'hits' };
+
+                    if ( wfsAjax.hits ) {
+                        wfsAjax.hits.abort();
+                    }
+                    wfsAjax.hits = wfsQuery();
+                }
+            }
+        } );
     };
 
     this.getImageProperties = function(wfsUrl, filename) {

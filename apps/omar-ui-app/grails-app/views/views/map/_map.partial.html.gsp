@@ -104,15 +104,18 @@
                                         <span class = "input-group-addon">
                                             <input ng-change = "filter.updateFilterString()" ng-model = "filter.countryCodeCheck" type="checkbox">
                                         </span>
-                                        <ui-select multiple focus-input
-                                            close-on-select = "true"
-                                            ng-change = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
-                                            ng-click = "filter.getDistinctValues('countryCode');"
+                                        <input
+                                            class = "form-control"
+                                            id = "countryCodeInput"
+                                            list = "countryCodeList"
+                                            ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
+                                            ng-change = "filter.handleDataList( 'countryCodeInput' )"
+                                            ng-keyup = "filter.handleDataList( 'countryCodeInput' )"
                                             ng-model = "filter.countryCode"
-                                            theme="bootstrap">
-                                            <ui-select-match placeholder = "Country Code">{{$item}}</ui-select-match>
-                                            <ui-select-choices repeat = "val in countryCodeTypes | filter: $select.search">{{val}}</ui-select-choices>
-                                        </ui-select>
+                                            placeholder = "Country Code">
+                                        <datalist id = "countryCodeList">
+                                            <option ng-repeat = "val in countryCodeTypes" value="{{val}}">
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
@@ -165,15 +168,18 @@
                                         <span class = "input-group-addon">
                                             <input ng-change = "filter.updateFilterString()" ng-model = "filter.missionIdCheck" type="checkbox">
                                         </span>
-                                        <ui-select multiple focus-input
-                                            close-on-select = "true"
-                                            ng-change = "filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
-                                            ng-click = "filter.getDistinctValues('missionId');"
+                                        <input
+                                            class = "form-control"
+                                            id = "missionIdInput"
+                                            list = "missionIdList"
+                                            ng-blur = "filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
+                                            ng-change = "filter.handleDataList( 'missionIdInput' )"
+                                            ng-keyup = "filter.handleDataList( 'missionIdInput' )"
                                             ng-model = "filter.missionId"
-                                            theme = "bootstrap">
-                                            <ui-select-match placeholder = "Mission ID">{{$item}}</ui-select-match>
-                                            <ui-select-choices repeat = "val in missionIdTypes | filter: $select.search">{{val}}</ui-select-choices>
-                                        </ui-select>
+                                            placeholder = "Mission ID">
+                                        <datalist id = "missionIdList">
+                                            <option ng-repeat = "val in missionIdTypes" value="{{val}}">
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
@@ -186,15 +192,18 @@
                                         <span class = "input-group-addon">
                                             <input ng-change="filter.updateFilterString()" ng-model="filter.productIdCheck" type="checkbox">
                                         </span>
-                                        <ui-select multiple focus-input
-                                            close-on-select="true"
-                                            ng-change="filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
-                                            ng-click="filter.getDistinctValues('productId');"
-                                            ng-model="filter.productId"
-                                            theme="bootstrap">
-                                            <ui-select-match placeholder="Product type">{{$item}}</ui-select-match>
-                                            <ui-select-choices repeat="val in productIdTypes | filter: $select.search">{{val}}</ui-select-choices>
-                                        </ui-select>
+                                        <input
+                                            class = "form-control"
+                                            id = "productIdInput"
+                                            list = "productIdList"
+                                            ng-blur = "filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
+                                            ng-change = "filter.handleDataList( 'productIdInput' )"
+                                            ng-keyup = "filter.handleDataList( 'productIdInput' )"
+                                            ng-model = "filter.productId"
+                                            placeholder = "Product ID">
+                                        <datalist id = "productIdList">
+                                            <option ng-repeat = "val in productIdTypes" value="{{val}}">
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
@@ -208,15 +217,18 @@
                                         <span class = "input-group-addon">
                                             <input ng-change = "filter.updateFilterString()" ng-model = "filter.sensorIdCheck" type="checkbox">
                                         </span>
-                                        <ui-select multiple focus-input
-                                            close-on-select = "true"
-                                            ng-change = "filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
-                                            ng-click = "filter.getDistinctValues('sensorId');"
+                                        <input
+                                            class = "form-control"
+                                            id = "sensorIdInput"
+                                            list = "sensorIdList"
+                                            ng-blur = "filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
+                                            ng-change = "filter.handleDataList( 'sensorIdInput' )"
+                                            ng-keyup = "filter.handleDataList( 'sensorIdInput' )"
                                             ng-model = "filter.sensorId"
-                                            theme = "bootstrap">
-                                            <ui-select-match placeholder = "Sensor ID">{{$item}}</ui-select-match>
-                                            <ui-select-choices repeat = "val in sensorIdTypes | filter: $select.search">{{val}}</ui-select-choices>
-                                        </ui-select>
+                                            placeholder = "Sensor ID">
+                                        <datalist id = "sensorIdList">
+                                            <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>

@@ -49,7 +49,10 @@
         $stateProvider
 
           .state("home", {
-            url: "/home",
+            url: "/home?" +
+            [
+                "showModalSplash"
+            ].join( "," ),
             templateUrl:
               AppO2.APP_CONFIG.serverURL + "/views/home/home.partial.html"
           })

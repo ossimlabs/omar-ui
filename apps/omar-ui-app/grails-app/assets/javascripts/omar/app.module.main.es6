@@ -76,6 +76,7 @@
                 "niirs",
                 "products",
                 "sensors",
+                "showModalSplash",
                 "spatial",
                 "startDate",
                 "sunAzimuth",

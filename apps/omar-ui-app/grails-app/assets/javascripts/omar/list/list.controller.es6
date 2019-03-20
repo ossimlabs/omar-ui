@@ -128,7 +128,7 @@
       return string ? string.toLowerCase().replace(/\s/g, "-") : "";
     };
 
-    vm.selectedOmar = "";
+    vm.selectedOmar = AppO2.APP_CONFIG.params.sites[0];
 
     // The list of urls we want to iterate over
     vm.sites = AppO2.APP_CONFIG.params.sites;
@@ -501,7 +501,7 @@
 
     vm.sortWfs = function(field, type, text) {
       // Sets the text of the current sort method on the sort navbar
-      vm.currentSortText = text;
+      vm.currentSortText = text + "<span class = 'glyphicon glyphicon-arrow-" + ( type == "+D" ? "down" : "up" ) + "'></span>";
 
       //wfsService.updateAttrFilter(undefined, field, type);
       wfsService.updateAttrFilter(wfsService.attrObj.filter, field, type);
@@ -558,8 +558,7 @@
         var listHeight =
           window.innerHeight -
           $("#list").offset().top -
-          $("#pagination").height() -
-          25;
+          $("#pagination").height();
         $("#list").height(listHeight);
       };
       $(window).resize(function() {

@@ -255,6 +255,19 @@
         }
     }
 
+    vm.initDataTypes = function() {
+        var types = [
+            { key: "imagery", urlParam: "imagery" },
+            { key: "video", urlParam: "video" }
+        ];
+        $.each( types, function( index, value ) {
+            vm[ value.key + "Check"] = vm.userPreferences[ value.key + "Enabled"];
+            if ( vm.urlParams[ value.urlParam ] ) {
+                vm[ value.key + "Check" ] = true;
+            }
+        });
+    }
+
     vm.initKeywords = function(reset) {
       var arrays = [
         { key: "countryCode", urlParam: "countries" },
@@ -454,404 +467,227 @@
     };
 
     vm.updateFilterString = function() {
-      filterArray = [];
+        filterArray = [];
 
-      var dateToday = moment().format("MM-DD-YYYY 00:00+0000");
-      var dateTodayEnd = moment().format("MM-DD-YYYY 23:59+0000");
-      var dateYesterday = moment()
-        .subtract(1, "days")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateYesterdayEnd = moment()
-        .subtract(1, "days")
-        .format("MM-DD-YYYY 23:59+0000");
-      var dateLast3Days = moment()
-        .subtract(2, "days")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateLast7Days = moment()
-        .subtract(7, "days")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateThisMonth = moment()
-        .subtract(1, "months")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateLast3Months = moment()
-        .subtract(3, "months")
-        .format("MM-DD-YYYY 00:00+0000");
-      var dateLast6Months = moment()
-        .subtract(6, "months")
-        .format("MM-DD-YYYY 00:00+0000");
+        var dateToday = moment().format("MM-DD-YYYY 00:00+0000");
+        var dateTodayEnd = moment().format("MM-DD-YYYY 23:59+0000");
+        var dateYesterday = moment().subtract(1, "days").format("MM-DD-YYYY 00:00+0000");
+        var dateYesterdayEnd = moment().subtract(1, "days").format("MM-DD-YYYY 23:59+0000");
+        var dateLast3Days = moment().subtract(2, "days").format("MM-DD-YYYY 00:00+0000");
+        var dateLast7Days = moment().subtract(7, "days").format("MM-DD-YYYY 00:00+0000");
+        var dateThisMonth = moment().subtract(1, "months").format("MM-DD-YYYY 00:00+0000");
+        var dateLast3Months = moment().subtract(3, "months").format("MM-DD-YYYY 00:00+0000");
+        var dateLast6Months = moment().subtract(6, "months").format("MM-DD-YYYY 00:00+0000");
 
-      var dbName = vm.currentDateType.value; //"acquisition_date";
-      var temporalParam = vm.currentTemporalDuration.value;
+        var dbName = vm.currentDateType.value; //"acquisition_date"
+        var temporalParam = vm.currentTemporalDuration.value;
 
-      let dateField =
-        dbName === "ingest_date" ? "Ingest Date" : "Acquisition Date";
+        let dateField = dbName === "ingest_date" ? "Ingest Date" : "Acquisition Date";
 
-      // Feed the switch statement from the value of the currently selected date range
-      switch (temporalParam) {
-        case "none":
-          vm.customDateRangeVisible = false;
-          break;
-        case "lastDay":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateToday,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "yesterday":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateYesterday,
-              "'AND",
-              dbName,
-              "<='",
-              dateYesterdayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "last3Days":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast3Days,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "last7Days":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast7Days,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "lastMonth":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateThisMonth,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "last3Months":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast3Months,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "last6Months":
-          vm.customDateRangeVisible = false;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              dateLast6Months,
-              "'AND",
-              dbName,
-              "<='",
-              dateTodayEnd,
-              "'"
-            ].join(" ")
-          );
-          break;
-        case "customDateRange":
-          vm.maxEndDate = new Date();
-          vm.customDateRangeVisible = true;
-          filterArray.push(
-            [
-              dbName,
-              ">='",
-              vm.getCustomStartDate(),
-              "'AND",
-              dbName,
-              "<='",
-              vm.getCustomEndDate(),
-              "'"
-            ].join(" ")
-          );
-          break;
-        default:
-          vm.customDateRangeVisible = false;
-          break;
-      }
-
-      function pushKeywordToArray(dbName, formField) {
-        $log.debug(`formField value: ${formField}`);
-        var clause = "";
-        if (
-          dbName === "country_code" ||
-          dbName === "mission_id" ||
-          dbName === "sensor_id" ||
-          dbName === "product_id"
-        ) {
-          var clauses = [];
-          $.each(formField, function(index, value) {
-            clauses.push(dbName + " LIKE '%" + value.trim() + "%'");
-          });
-          clause = "(" + clauses.join(" OR ") + ")";
-        } else {
-          clause = [dbName + " LIKE '%", formField.trim(), "%'"].join("");
+        // Feed the switch statement from the value of the currently selected date range
+        switch (temporalParam) {
+            case "none":
+                vm.customDateRangeVisible = false; break;
+            case "lastDay":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateToday + "' AND " + dbName + " <= '" + dateTodayEnd + "'" );
+                break;
+            case "yesterday":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateYesterday + "' AND " + dbName + " <= '" + dateYesterdayEnd + "'" );
+                break;
+            case "last3Days":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateLast3Days + "' AND " + dbName + " <= '" + dateTodayEnd + "'" );
+                break;
+            case "last7Days":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateLast7Days + "' AND " + dbName + " <= '" + dateTodayEnd + "'" );
+                break;
+            case "lastMonth":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateThisMonth + "' AND " + dbName + " <= '" + dateTodayEnd + "'" );
+                break;
+            case "last3Months":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateLast3Months + "' AND " + dbName + " <= '" + dateTodayEnd + "'" );
+                break;
+            case "last6Months":
+                vm.customDateRangeVisible = false;
+                filterArray.push( dbName + " >= '" + dateLast6Months + "' AND " + dbName + " <= '" + dateTodayEnd + "'" );
+                break;
+            case "customDateRange":
+                vm.maxEndDate = new Date();
+                vm.customDateRangeVisible = true;
+                filterArray.push( dbName + " >= '" + vm.getCustomStartDate() + "' AND " + dbName + " <= '" + vm.getCustomEndDate() + "'" );
+                break;
+            default:
+                vm.customDateRangeVisible = false;
+                break;
         }
 
-        var placemarksConfig = AppO2.APP_CONFIG.params.misc.placemarks;
-
-        if (dbName === "be_number" && placemarksConfig) {
-          var subClause = clause.replace(
-            "be_number",
-            placemarksConfig.columnName
-          );
-
-          subClause = subClause.split("'").join("''");
-
-          clause =
-            "(" +
-            clause +
-            " or intersects(ground_geom, collectGeometries(queryCollection('" +
-            placemarksConfig.tableName +
-            "', '" +
-            placemarksConfig.geomName +
-            "', '" +
-            subClause +
-            "'))))";
-        }
-
-        filterArray.push(clause);
-      }
-
-      // Keywords
-      if (vm.beNumberCheck && vm.beNumber != "") {
-        pushKeywordToArray("be_number", vm.beNumber);
-      }
-
-      if (vm.countryCodeCheck && vm.countryCode.length != 0) {
-        pushKeywordToArray("country_code", vm.countryCode.split( ',' ));
-      } else if (vm.countryCode.length === 0) {
-        vm.countryCodeCheck = false;
-      }
-
-      if (vm.filenameCheck && vm.filename != "") {
-        pushKeywordToArray("filename", vm.filename);
-      }
-
-      if (vm.imageIdCheck && vm.imageId != "") {
-        pushKeywordToArray("title", vm.imageId.toUpperCase());
-      }
-
-      if (vm.missionIdCheck && vm.missionId.length != 0) {
-        pushKeywordToArray("mission_id", vm.missionId.split( ',' ));
-      } else if (vm.missionId.length === 0) {
-        vm.missionIdCheck = false;
-      }
-
-      if (vm.sensorIdCheck && vm.sensorId.length != 0) {
-        pushKeywordToArray("sensor_id", vm.sensorId.split( ',' ));
-      } else if (vm.sensorId.length === 0) {
-        vm.sensorIdCheck = false;
-      }
-
-      if (vm.targetIdCheck && vm.targetId != "") {
-        pushKeywordToArray("target_id", vm.targetId);
-      }
-
-      if (vm.wacNumberCheck && vm.wacNumber != "") {
-        pushKeywordToArray("wac_code", vm.wacNumber);
-      }
-
-      if (vm.productIdCheck && vm.productId.length != 0) {
-        pushKeywordToArray("product_id", vm.productId.split( ',' ));
-      } else if (vm.productId.length === 0) {
-        vm.productIdCheck = false;
-      }
-
-      function pushRangeToArray(dbName, formFieldMin, formFieldMax, showNull) {
-        $log.debug(`showNull: ${showNull}`);
-        let min, max, clause;
-
-        min = parseFloat(formFieldMin);
-        max = parseFloat(formFieldMax);
-
-        /**
-         * Check to see if the user has exceeded the min or max ranges of the
-         * current range filter
-         */
-        if (isNaN(min)) {
-          toastr.error(
-            `Please check the allowable ranges, and enter a valid minimum value for the ${dbName.toUpperCase()} range filter.`,
-            "Error",
-            {
-              positionClass: "toast-bottom-left",
-              closeButton: true,
-              timeOut: 5000,
-              extendedTimeOut: 5000,
-              target: "body"
+        function pushKeywordToArray(dbName, formField) {
+            var clause = "";
+            if (
+                dbName === "country_code" ||
+                dbName === "mission_id" ||
+                dbName === "sensor_id" ||
+                dbName === "product_id"
+            ) {
+                var clauses = [];
+                $.each( formField, function( index, value ) {
+                    clauses.push(dbName + " LIKE '%" + value.trim() + "%'");
+                } );
+                clause = "(" + clauses.join(" OR ") + ")";
+            } else {
+                clause = [dbName + " LIKE '%", formField.trim(), "%'"].join("");
             }
-          );
-          return;
-        } else if (isNaN(max)) {
-          toastr.error(
-            `Please check the allowable ranges, and enter a valid maximum value for the ${dbName.toUpperCase()} range filter.`,
-            "Error",
-            {
-              positionClass: "toast-bottom-left",
-              closeButton: true,
-              timeOut: 5000,
-              extendedTimeOut: 5000,
-              target: "body"
+
+            var placemarksConfig = AppO2.APP_CONFIG.params.misc.placemarks;
+            if ( dbName === "be_number" && placemarksConfig ) {
+                var subClause = clause.replace( "be_number", placemarksConfig.columnName );
+                subClause = subClause.split("'").join("''");
+
+                clause = "(" + clause + " or intersects(ground_geom, collectGeometries(queryCollection('" +
+                placemarksConfig.tableName + "', '" + placemarksConfig.geomName + "', '" + subClause + "'))))";
             }
-          );
-        } else if (min > max) {
-          toastr.error(
-            `Please make sure the minimum is less than the maximum for the ${dbName.toUpperCase()} range filter.`,
-            "Error",
-            {
-              positionClass: "toast-bottom-left",
-              closeButton: true,
-              timeOut: 5000,
-              extendedTimeOut: 5000,
-              target: "body"
+
+            filterArray.push(clause);
+        }
+
+        // Keywords
+        if ( vm.beNumberCheck && vm.beNumber != "" && vm.imageryCheck ) {
+            pushKeywordToArray( "be_number", vm.beNumber );
+        }
+
+        if ( vm.countryCodeCheck && vm.countryCode.length != 0 && vm.imageryCheck ) {
+            pushKeywordToArray( "country_code", vm.countryCode.split( ',' ) );
+        } else if ( vm.countryCode.length === 0 ) {
+            vm.countryCodeCheck = false;
+        }
+
+        if ( vm.filenameCheck && vm.filename != "" ) {
+            pushKeywordToArray( "filename", vm.filename );
+        }
+
+        if (vm.imageIdCheck && vm.imageId != "" && vm.imageryCheck ) {
+            pushKeywordToArray( "title", vm.imageId.toUpperCase() );
+        }
+
+        if ( vm.missionIdCheck && vm.missionId.length != 0 ) {
+            pushKeywordToArray( "mission_id", vm.missionId.split( ',' ) );
+        } else if ( vm.missionId.length === 0 ) {
+            vm.missionIdCheck = false;
+        }
+
+        if ( vm.sensorIdCheck && vm.sensorId.length != 0 ) {
+            pushKeywordToArray( "sensor_id", vm.sensorId.split( ',' ) );
+        } else if ( vm.sensorId.length === 0 ) {
+            vm.sensorIdCheck = false;
+        }
+
+        if ( vm.targetIdCheck && vm.targetId != "" && vm.imageryCheck ) {
+            pushKeywordToArray( "target_id", vm.targetId );
+        }
+
+        if ( vm.wacNumberCheck && vm.wacNumber != "" && vm.imageryCheck ) {
+            pushKeywordToArray( "wac_code", vm.wacNumber );
+        }
+
+        if ( vm.productIdCheck && vm.productId.length != 0 && vm.imageryCheck ) {
+            pushKeywordToArray( "product_id", vm.productId.split( ',' ) );
+        } else if ( vm.productId.length === 0 ) {
+            vm.productIdCheck = false;
+        }
+
+        function pushRangeToArray( dbName, formFieldMin, formFieldMax, showNull ) {
+            let min, max, clause;
+            min = parseFloat(formFieldMin);
+            max = parseFloat(formFieldMax);
+
+            /**
+            * Check to see if the user has exceeded the min or max ranges of the
+            * current range filter
+            */
+            var toastErrorOptions =  {
+                positionClass: "toast-bottom-left",
+                closeButton: true,
+                timeOut: 5000,
+                extendedTimeOut: 5000,
+                target: "body"
+            };
+            if ( isNaN( min ) ) {
+                toastr.error( `Please check the allowable ranges, and enter a valid minimum value for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions );
+                return;
+            } else if ( isNaN( max ) ) {
+                toastr.error( `Please check the allowable ranges, and enter a valid maximum value for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions );
+            } else if ( min > max ) {
+                toastr.error( `Please make sure the minimum is less than the maximum for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions );
+            } else if ( showNull === true ) {
+                clause = `(( ${dbName} >= ${min} AND ${dbName} <= ${max} ) OR ${dbName} IS NULL)`;
+                filterArray.push( clause );
+            } else {
+                filterArray.push( dbName + " >= " + min + " AND " + dbName + " <= " + max );
             }
-          );
-        } else if (showNull === true) {
-          clause = `(( ${dbName} >= ${min} AND ${dbName} <= ${max} ) OR ${dbName} IS NULL)`;
-          filterArray.push(clause);
-        } else {
-          $log.debug(
-            "showNull, is not present, filtering without looking for NULL"
-          );
-          filterArray.push(
-            [dbName, ">=", min, "AND", dbName, "<=", max].join(" ")
-          );
         }
-      }
 
-      // Ranges
-      if (vm.predNiirsCheck) {
-        //validateRange(vm.predNiirsMin, vm.predNiirsMax);
-        if (vm.predNiirsCheckNull) {
-          pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax, true);
-        } else {
-          pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
-        }
-      } else if (!vm.predNiirsCheck) {
-      }
-
-      if (vm.azimuthCheck) {
-        if (vm.azimuthCheckNull) {
-          pushRangeToArray("azimuth_angle", vm.azimuthMin, vm.azimuthMax, true);
-        } else {
-          pushRangeToArray("azimuth_angle", vm.azimuthMin, vm.azimuthMax);
-        }
-      }
-
-      if (vm.grazeElevCheck) {
-        if (vm.grazeElevCheckNull) {
-          pushRangeToArray(
-            "grazing_angle",
-            vm.grazeElevMin,
-            vm.grazeElevMax,
-            true
-          );
-        } else {
-          pushRangeToArray("grazing_angle", vm.grazeElevMin, vm.grazeElevMax);
-        }
-      }
-
-      if (vm.sunAzimuthCheck) {
-        if (vm.sunAzimuthCheckNull) {
-          pushRangeToArray(
-            "sun_azimuth",
-            vm.sunAzimuthMin,
-            vm.sunAzimuthMax,
-            true
-          );
-        } else {
-          pushRangeToArray("sun_azimuth", vm.sunAzimuthMin, vm.sunAzimuthMax);
-        }
-      }
-
-      if (vm.sunElevationCheck) {
-        if (vm.sunElevationCheckNull) {
-          pushRangeToArray(
-            "sun_elevation",
-            vm.sunElevationMin,
-            vm.sunElevationMax,
-            true
-          );
-        } else {
-          pushRangeToArray(
-            "sun_elevation",
-            vm.sunElevationMin,
-            vm.sunElevationMax
-          );
-        }
-      }
-
-      if (vm.cloudCoverCheck) {
-        if (isNaN(vm.cloudCover)) {
-          toastr.error(
-            "Please enter a valid number for the range filter.",
-            "Error",
-            {
-              closeButton: true
+        // Ranges
+        if ( vm.predNiirsCheck ) {
+            if ( vm.predNiirsCheckNull ) {
+                pushRangeToArray( "niirs", vm.predNiirsMin, vm.predNiirsMax, true );
+            } else {
+                pushRangeToArray( "niirs", vm.predNiirsMin, vm.predNiirsMax );
             }
-          );
         }
-        if (vm.cloudCoverCheckNull) {
-          filterArray.push(
-            "(cloud_cover <= " + vm.cloudCover + " OR cloud_cover IS NULL)"
-          );
-        } else {
-          filterArray.push("(cloud_cover <= " + vm.cloudCover + ")");
+
+        if ( vm.azimuthCheck ) {
+            if ( vm.azimuthCheckNull ) {
+                pushRangeToArray( "azimuth_angle", vm.azimuthMin, vm.azimuthMax, true );
+            } else {
+                pushRangeToArray( "azimuth_angle", vm.azimuthMin, vm.azimuthMax );
+            }
         }
-      }
 
-      filterString = filterArray.join(" AND ");
-      //vm.filterString = filterString;
+        if ( vm.grazeElevCheck ) {
+            if ( vm.grazeElevCheckNull ) {
+                pushRangeToArray( "grazing_angle", vm.grazeElevMin, vm.grazeElevMax, true );
+            } else {
+                pushRangeToArray( "grazing_angle", vm.grazeElevMin, vm.grazeElevMax );
+            }
+        }
 
-      $log.debug(`filterString: `, filterString);
-      wfsService.updateAttrFilter(filterString);
+        if ( vm.sunAzimuthCheck ) {
+            if ( vm.sunAzimuthCheckNull ) {
+                pushRangeToArray( "sun_azimuth", vm.sunAzimuthMin, vm.sunAzimuthMax, true );
+            } else {
+                pushRangeToArray( "sun_azimuth", vm.sunAzimuthMin, vm.sunAzimuthMax );
+            }
+        }
+
+        if ( vm.sunElevationCheck ) {
+            if ( vm.sunElevationCheckNull ) {
+                pushRangeToArray( "sun_elevation", vm.sunElevationMin, vm.sunElevationMax, true );
+            } else {
+                pushRangeToArray( "sun_elevation", vm.sunElevationMin, vm.sunElevationMax );
+            }
+        }
+
+        if ( vm.cloudCoverCheck ) {
+            if ( isNaN( vm.cloudCover ) ) {
+                toastr.error( "Please enter a valid number for the range filter.", "Error", {
+                    closeButton: true
+                } );
+            }
+            if ( vm.cloudCoverCheckNull ) {
+                filterArray.push( "(cloud_cover <= " + vm.cloudCover + " OR cloud_cover IS NULL)" );
+            } else {
+                filterArray.push( "(cloud_cover <= " + vm.cloudCover + ")" );
+            }
+        }
+
+        filterString = filterArray.join( " AND " );
+
+        wfsService.updateAttrFilter( filterString );
     };
 
     vm.initSpatial();
@@ -861,6 +697,8 @@
 
     vm.setInitialCustomStartDate();
     vm.setInitialCustomEndDate();
+
+    vm.initDataTypes();
 
     vm.updateFilterString();
 

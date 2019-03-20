@@ -69,6 +69,7 @@
                 "endDate",
                 "filename",
                 "imageId",
+                "imagery",
                 "mapCenterX",
                 "mapCenterY",
                 "mapRotation",
@@ -85,6 +86,7 @@
                 "sunAzimuth",
                 "sunElevation",
                 "target",
+                "video",
                 "wac"
             ].join( "," ),
             templateUrl:

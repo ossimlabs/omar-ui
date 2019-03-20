@@ -23,8 +23,8 @@
 
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a data-target="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a></li>
-        <li role="presentation"><a data-target="#avro" aria-controls="avro" role="tab" data-toggle="tab">Avro</a></li>
-        <li role="presentation" ng-show="vm.beLookupEnabled"><a data-target="#be" aria-controls="be" role="tab" data-toggle="tab">BE</a></li>
+        <li role="presentation"><a data-target="#avro" aria-controls="avro" role="tab" data-toggle="tab" ng-click="vm.loadAvroMetadata()">Avro</a></li>
+        <li role="presentation" ng-show="vm.beLookupEnabled"><a data-target="#be" aria-controls="be" role="tab" data-toggle="tab"ng-click="vm.loadBeData()">BE</a></li>
         <li role="presentation"><a data-target="#toolbox" aria-controls="toolbox" role="tab" data-toggle="tab">Toolbox</a></li>
       </ul>
 

@@ -262,8 +262,9 @@
         ];
         $.each( types, function( index, value ) {
             vm[ value.key + "Check"] = vm.userPreferences[ value.key + "Enabled"];
-            if ( vm.urlParams[ value.urlParam ] ) {
-                vm[ value.key + "Check" ] = true;
+            var urlParam = vm.urlParams[ value.urlParam ];
+            if ( urlParam ) {
+                vm[ value.key + "Check" ] = urlParam == "true";
             }
         });
     }

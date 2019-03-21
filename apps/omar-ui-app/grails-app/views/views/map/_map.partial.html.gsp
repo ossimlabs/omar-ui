@@ -40,6 +40,7 @@
                         <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
                 </ul>
+                <%--
                 <ul class = "nav navbar-nav col-md-4" style = "text-align: center">
                     <form class = "navbar-form navbar-center">
                         <div class = "input-group">
@@ -62,6 +63,7 @@
                         </div>
                     </form>
                 </ul>
+                --%>
                 <ul class = "nav navbar-nav navbar-right col-md-4">
                     <li class = "dropdown pull-right" ng-controller = "ListController as list" ng-show = "list.showSitesSelect">
                         <a class = "dropdown-toggle" data-toggle = "dropdown">
@@ -964,7 +966,7 @@
                                     tooltip-placement = "left"
                                     uib-tooltip = "Number of Search Result Images">{{filter.totalWfsFeatures}}
                                 </span>
-
+                                <%--
                                 <span class = "glyphicon glyphicon-film"></span>
                                 <span
                                     class = "label label-primary"
@@ -972,6 +974,7 @@
                                     tooltip-placement = "left"
                                     uib-tooltip = "Number of Search Result Videos">0
                                 </span>
+                                --%>
                             </p>
                             <li class = "dropdown">
                                 <a class = "dropdown-toggle navbar-sort-dropdown-toggle"

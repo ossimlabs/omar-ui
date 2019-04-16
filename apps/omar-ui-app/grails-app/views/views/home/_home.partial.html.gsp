@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-md-3" ui-sref="map">
         <div class="text-center well well-home" style="padding-bottom: 24px">
-          <h2>Map</a></h2>
+          <h2>Search</a></h2>
           <div><span class="fa fa-search fa-3x text-info"></span></div>
           <br>
           <p>Search and discover various types of imagery. Use this as a starting

@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3" ui-sref="map">
-        <div class="text-center well well-home" style="padding-bottom: 24px">
+      <div class="col-md-3">
+        <div class="text-center well" style="padding-bottom: 24px">
           <h2>Map</a></h2>
           <div><span class="fa fa-search fa-3x text-info"></span></div>
           <br>
@@ -22,15 +22,15 @@
           <a type="button" class="btn btn-success" ui-sref="map">View</a>
         </div>
       </div>
-      <div ng-show="{{home.tlvAppEnabled}}" class="col-md-3" ng-click="home.go(home.tlvAppLink);">
-        <div class="text-center well well-home" style="padding-bottom: 24px" ng-href="{{home.tlvAppLink}}" target="_blank">
+      <div ng-show="{{home.tlvAppEnabled}}" class="col-md-3">
+        <div class="text-center well" style="padding-bottom: 24px">
           <h2>Time Lapse Viewer</h2>
           <div><span class="fa fa-history fa-3x text-info"></span></div>
           <br>
           <br>
           <p>An on-demand imagery flipbook</p>
           <br><br>
-          <a type="button" class="btn btn-success" target="_blank">View</a>
+          <a type="button" class="btn btn-success" ng-href="{{home.tlvAppLink}}" target="_blank">View</a>
         </div>
       </div>
       <div ng-init="max=10" ng-show="{{home.kmlAppEnabled}}" class="col-md-3">
@@ -86,6 +86,20 @@
                 target="_blank">Create</a>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div ng-show="{{home.uploadAppEnabled}}" class="col-md-3">
+        <div class="text-center well" style="padding-bottom: 24px">
+          <h2>Image Upload</h2>
+          <div><span class="fa fa-history fa-3x text-info"></span></div>
+          <br>
+          <br>
+          <p>A place to upload images</p>
+          <br><br>
+          <a type="button" class="btn btn-success" ng-href="{{home.uploadAppLink}}" target="_blank">Go</a>
         </div>
       </div>
     </div>

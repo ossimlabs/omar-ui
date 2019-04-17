@@ -829,7 +829,7 @@
                 </div>
 
                 <div role = "tabpanel" class = "tab-pane active" id = "mapSearch">
-                    <!-- Just activating the search controller --!>
+                    <!-- Just activating the search controller -->
                     <div ng-controller = "SearchController as search" style = "display: none;"></div>
                     <div ng-controller = "MapController as map">
                         <div id = "map" class = "map" params = "map.mapParams" map>
@@ -1042,6 +1042,7 @@
                                             uib-tooltip="Click the thumbnail or the image ID to view the raw image"
                                             height="114"
                                             width="114"
+                                            style="border:1px solid black"
                                             ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
                                     </a>
                                     <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">

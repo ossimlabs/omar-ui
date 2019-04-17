@@ -975,7 +975,7 @@
     vm.archiveDownload = function(imageId, imageFilename) {
       // Remove the file extension and replace with zip.
       var path = imageFilename.split('/');
-      var zipFileName = path[path.length-1].split('.')[0] + ".zip";
+      var zipFileName = "omar-images-" + path[path.length-1].split('.')[0] + ".zip";
       downloadService.downloadFiles(imageId, zipFileName);
     };
 

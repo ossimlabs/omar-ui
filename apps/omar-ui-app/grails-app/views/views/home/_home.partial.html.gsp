@@ -15,7 +15,7 @@
       <div class="col-md-4">
         <div class="text-center well">
           <div>
-            <h2>Map</h2>
+            <h2>Search</h2>
             <span class="fa fa-search fa-3x text-info"></span>
           </div>
 
@@ -23,7 +23,7 @@
             <p>Search and discover various types of imagery. Use this as a starting
               point for filtering, sorting, and assembling imagery into a collection</p>
           </div>
-
+          
           <a type="button" class="btn btn-success" ui-sref="map">View</a>
         </div>
       </div>

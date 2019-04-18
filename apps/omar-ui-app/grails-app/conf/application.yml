@@ -164,7 +164,7 @@ omar:
       # Used to show/hide the various links to the TLV app in the UI (True or False)
       enabled: true
     uploadApp:
-      # Used to show/hide the various links to the TLV app in the UI (True or False)
+      # Used to show/hide the various links to the Upload service in the UI (True or False)
       enabled: true
     twofishes:
       # URL of Twofishes search service.

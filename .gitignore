@@ -12,5 +12,5 @@ bin/
 .settings
 .classpath
 .vscode
-
+docker/*.jar
 apps/omar-ui-app/application.yml

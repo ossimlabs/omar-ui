@@ -38,6 +38,7 @@
         jpipContextPath: "/omar-jpip",
         wmtsContextPath: "/omar-wmts",
         tlvContextPath: "/tlv",
+        uploadContextPath: "/omar-upload",
         isaContextPath: "/isa-ui",
         omarMlContextPath: "/omar-ml"
       }
@@ -175,6 +176,13 @@
       )
         ? objParams.urlTlvContextPath
         : "/tlv"
+
+      _this.omarSitesState.url.uploadContextPath = checkForValidObjProp(
+        _this.omarSitesState.url.uploadContextPath,
+        objParams.urlUploadContextPath
+      )
+        ? objParams.urlUploadContextPath
+        : "/omar-upload"
 
       _this.omarSitesState.url.isaContextPath = checkForValidObjProp(
         _this.omarSitesState.url.isaContextPath,

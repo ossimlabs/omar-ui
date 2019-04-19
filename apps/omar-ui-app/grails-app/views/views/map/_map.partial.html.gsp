@@ -1036,16 +1036,8 @@
                                     <a
                                         href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
                                         target="_blank">
-                                        <asset:image
-                                            class="media-object"
-                                            tooltip-placement="right"
-                                            uib-tooltip="Click the thumbnail or the image ID to view the raw image"
-                                            height="114"
-                                            width="114"
-                                            style="position: absolute"
-                                            src="checkerboard.png">&nbsp;
                                         <img
-                                            class="media-object"
+                                            class="media-object thumbnail-background"
                                             tooltip-placement="right"
                                             uib-tooltip="Click the thumbnail or the image ID to view the raw image"
                                             height="114"

@@ -1042,7 +1042,7 @@
                                             uib-tooltip="Click the thumbnail or the image ID to view the raw image"
                                             height="114"
                                             width="114"
-                                            style="position: relative; border:1px solid black"
+                                            style="border:1px solid black"
                                             ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
                                     </a>
                                     <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">

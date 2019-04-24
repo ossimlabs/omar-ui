@@ -104,7 +104,6 @@ omar:
           visible: true
     # Uncomment the example(s) below, and *modify* accordingly to
     # add a custom overlay layer.
-
     # overlayLayers:
     #   -
     #     layerType: "tilewms"
@@ -138,22 +137,28 @@ omar:
     footprints:
       # Misc. params for the wfs request
       params:
-        # Name for the footprint layer.
-        # Shows up in UI's layerswitcher.
-        name: "Image Footprints"
+        - name: "Image Footprints"
+          version: '1.1.1'
+          layers: 'omar:raster_entry'
+          styles: 'byFileType'
+          format: 'image/gif'
 
-        # WFS version number
-        version: '1.1.1'
+          # Name for the footprint layer.
+          # Shows up in UI's layerswitcher.
+        - name: "Video Footprints"
 
-        # Layer name
-        layers: 'omar:raster_entry'
+          # WFS version number
+          version: '1.1.1'
 
-        # Styling for the footprint layer.
-        # Choices are "byFileType", "bySensorType", "byMissionType"
-        styles: 'byFileType'
+          # Layer name
+          layers: 'omar:video_data_set'
 
-        # Image format
-        format: 'image/gif'
+          # Styling for the footprint layer.
+          # Choices are "byFileType", "bySensorType", "byMissionType"
+          styles: 'byFileType'
+
+          # Image format
+          format: 'image/gif'
     apiApp:
       # URL of aggregated API's for O2 services
       baseUrl: http://localhost:8081/api

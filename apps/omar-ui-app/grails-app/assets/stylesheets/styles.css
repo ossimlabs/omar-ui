@@ -413,6 +413,11 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   background-position: center
 }
 
+#list .thumbnail-background {
+  background: #000 url("checkerboard.png") center center;
+  opacity: 0.75;
+}
+
 .jpip-loading-overlay {
   position: absolute;
   top: 45%;left: 45%;

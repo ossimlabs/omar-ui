@@ -138,6 +138,13 @@
       vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
     }
 
+    vm.uploadAppEnabled = AppO2.APP_CONFIG.params.uploadApp.enabled;
+    if (vm.uploadAppEnabled) {
+      var uploadBaseUrl = stateService.omarSitesState.url.base;
+      var uploadContextPath = stateService.omarSitesState.url.uploadContextPath;
+      vm.uploadAppLink = uploadBaseUrl + uploadContextPath;
+    }
+
     var twofishProxy = AppO2.APP_CONFIG.params.twofishes.baseUrl;
 
     vm.go = function(url) {

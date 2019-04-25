@@ -721,7 +721,6 @@
     };
 
     $rootScope.$on("zoomExtent", function(event, image) {
-      console.dir("cheese");
       zoomToSelectedImages(image.properties.id);
     });
     vm.zoomToSelectedImages = ids => {
@@ -1141,7 +1140,7 @@
                         var a = document.createElement( 'a' );
                         a.className = 'btn btn-default';
                         a.onclick = function() {
-                            $rootScope.$broadcast( 'viewImageMetadata', imageObj );
+                            angular.element( $( '#list' ).parent() ).scope().viewImageMetadata( imageObj );
                         };
                         a.type = 'button';
                         buttonGroup.appendChild( a );
@@ -1155,7 +1154,7 @@
                         var a = document.createElement( 'a' );
                         a.className = 'btn btn-default';
                         a.onclick = function() {
-                            $rootScope.$broadcast( 'viewOrtho', imageObj );
+                            angular.element( $( '#list' ).parent() ).scope().viewOrtho( imageObj );
                         };
                         a.type = 'button';
                         buttonGroup.appendChild( a );
@@ -1169,7 +1168,7 @@
                         var a = document.createElement( 'a' );
                         a.className = 'btn btn-default';
                         a.onclick = function() {
-                            $rootScope.$broadcast( 'viewOrtho', imageObj );
+                            angular.element( $( '#list' ).parent() ).scope().viewImageMetadata( imageObj );
                         };
                         a.type = 'button';
                         buttonGroup.appendChild( a );

@@ -1016,7 +1016,7 @@
 
                             var span = document.createElement( 'span' );
                             if ( properties.security_classification ) {
-                                span.className = properties.security_classification.string.toLowerCase().replace( /\s/g, "-" )
+                                span.className = properties.security_classification.toLowerCase().replace( /\s/g, "-" )
                                 span.innerHTML = properties.security_classification;
                             }
                             else {

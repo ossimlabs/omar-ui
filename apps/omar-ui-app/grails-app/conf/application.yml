@@ -140,20 +140,35 @@ omar:
       params:
         # Name for the footprint layer.
         # Shows up in UI's layerswitcher.
-        name: "Image Footprints"
+        - name: "Image Footprints"
 
-        # WFS version number
-        version: '1.1.1'
+          # WFS version number
+          version: '1.1.1'
 
-        # Layer name
-        layers: 'omar:raster_entry'
+          # Layer name
+          layers: 'omar:raster_entry'
 
-        # Styling for the footprint layer.
-        # Choices are "byFileType", "bySensorType", "byMissionType"
-        styles: 'byFileType'
+          # Styling for the footprint layer.
+          # Choices are "byFileType", "bySensorType", "byMissionType"
+          styles: 'byFileType'
 
-        # Image format
-        format: 'image/gif'
+          # Image format
+          format: 'image/gif'
+
+        - name: "Video Footprints"
+
+          # WFS version number
+          version: '1.1.1'
+
+          # Layer name
+          layers: 'omar:video_data_set'
+
+          # Styling for the footprint layer.
+          # Choices are "byFileType", "bySensorType", "byMissionType"
+          styles: 'byFileType'
+
+          # Image format
+          format: 'image/gif'
     apiApp:
       # URL of aggregated API's for O2 services
       baseUrl: http://localhost:8081/api

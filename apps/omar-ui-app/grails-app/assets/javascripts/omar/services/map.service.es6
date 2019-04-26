@@ -193,7 +193,7 @@
       });
 
       footPrints = [];
-      if (AppO2.APP_CONFIG.params.footprints[0].params != undefined) {
+      if (AppO2.APP_CONFIG.params.footprints.params[0] != undefined) {
         AppO2.APP_CONFIG.params.footprints.params.forEach( function(layer) {
           footPrints.push(new ol.layer.Tile({
             title: layer.name,

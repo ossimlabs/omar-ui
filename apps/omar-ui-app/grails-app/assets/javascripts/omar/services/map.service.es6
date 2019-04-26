@@ -192,45 +192,41 @@
         zoom: zoom
       });
 
-      footPrints = [];
       if (AppO2.APP_CONFIG.params.footprints.params != undefined) {
-        AppO2.APP_CONFIG.params.footprints.params.forEach( function(layer) {
-          footPrints.push(new ol.layer.Tile({
-            title: layer.name,
-            source: new ol.source.TileWMS({
-              url: footprintsRequestUrl,
-              params: {
-                FILTER: "",
-                VERSION: layer.version,
-                LAYERS: layer.layers,
-                STYLES: layer.styles,
-                FORMAT: layer.format
-              },
-              wrapX: false
-            }),
-            name: name
-          }));
-        });
-      } else {
-        // Default no configed layers
-        footPrints.push(new ol.layer.Tile({
-          title: name,
-          source: new ol.source.TileWMS({
-            url: footprintsRequestUrl,
-            params: {
-              FILTER: "",
-              VERSION: version,
-              LAYERS: layers,
-              STYLES: styles,
-              FORMAT: format
-            },
-            wrapX: false
-          }),
-          name: name
-        }));
+        if (AppO2.APP_CONFIG.params.footprints.params.version != undefined) {
+          version = AppO2.APP_CONFIG.params.footprints.params.version;
+        }
+        if (AppO2.APP_CONFIG.params.footprints.params.layers != undefined) {
+          layers = AppO2.APP_CONFIG.params.footprints.params.layers;
+        }
+        if (AppO2.APP_CONFIG.params.footprints.params.styles != undefined) {
+          styles = AppO2.APP_CONFIG.params.footprints.params.styles;
+        }
+        if (AppO2.APP_CONFIG.params.footprints.params.format != undefined) {
+          format = AppO2.APP_CONFIG.params.footprints.params.format;
+        }
+        if (AppO2.APP_CONFIG.params.footprints.params.name != undefined) {
+          name = AppO2.APP_CONFIG.params.footprints.params.name;
+        }
       }
 
-      var footprintsSource = footPrints[0].getSource();
+      footPrints = new ol.layer.Tile({
+        title: name,
+        source: new ol.source.TileWMS({
+          url: footprintsRequestUrl,
+          params: {
+            FILTER: "",
+            VERSION: version,
+            LAYERS: layers,
+            STYLES: styles,
+            FORMAT: format
+          },
+          wrapX: false
+        }),
+        name: "Image Footprints"
+      });
+
+      var footprintsSource = footPrints.getSource();
 
       /* Adding Auto Mosaic */
       autoMosaic = new ol.layer.Tile({
@@ -459,10 +455,7 @@
         // Map over each layer item in the overlayLayers array
         AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
       }
-
-      footPrints.forEach( function(footPrintLayer) {
-        overlayGroup.getLayers().push(footPrintLayer);
-      });
+      overlayGroup.getLayers().push(footPrints);
 
       map = new ol.Map({
         layers: [baseMapGroup, mosaicGroup, overlayGroup],
@@ -728,7 +721,6 @@
     };
 
     $rootScope.$on("zoomExtent", function(event, image) {
-      console.dir("cheese");
       zoomToSelectedImages(image.properties.id);
     });
     vm.zoomToSelectedImages = ids => {
@@ -770,12 +762,12 @@
     };
 
     function updateFootPrints(filter) {
-      var params = footPrints[0].getSource().getParams();
+      var params = footPrints.getSource().getParams();
       params.FILTER = filter;
-      footPrints[0].getSource().updateParams(params);
+      footPrints.getSource().updateParams(params);
       footPrints
         .getSource()
-        .setTileLoadFunction(footPrints[0].getSource().getTileLoadFunction());
+        .setTileLoadFunction(footPrints.getSource().getTileLoadFunction());
     }
 
     vm.updateFootPrintLayer = function(filter) {
@@ -783,7 +775,7 @@
     };
 
     function updateFootprintsUrl() {
-      footPrints[0].getSource().setUrl(footprintsRequestUrl);
+      footPrints.getSource().setUrl(footprintsRequestUrl);
     }
 
     vm.updateFootprintsUrl = function() {
@@ -914,141 +906,290 @@
       return extent;
     };
 
-    this.mapShowImageFootprint = function(imageObj) {
-      clearLayerSource(searchLayerVector);
+    this.mapShowImageFootprint = function( imageObj ) {
+        clearLayerSource(searchLayerVector);
 
-      if (imageObj.getProperties) {
-        imageObj = JSON.parse(new ol.format.GeoJSON().writeFeature(imageObj));
-      }
-
-      var properties = imageObj.properties;
-      if (properties.acquisition_date) {
-        var date = properties.acquisition_date;
-        properties.acquisition_date = moment(date).format(
-          "MM/DD/YYYY HH:mm:ss"
-        );
-      }
-
-      var mediaDiv = document.createElement("div");
-      $(mediaDiv).addClass("media");
-
-      var leftDiv = document.createElement("div");
-      $(leftDiv).addClass("media-left");
-      var image = document.createElement("img");
-      var thumbnailParams = {
-        entry: properties.entry_id,
-        filename: properties.filename,
-        format: "jpeg",
-        id: properties.id,
-        size: 114
-      };
-      $(image).attr("src", thumbnailUrl + "?" + $.param(thumbnailParams));
-      $(leftDiv).append(image);
-      $(mediaDiv).append(leftDiv);
-
-      var bodyDiv = document.createElement("div");
-      $(bodyDiv).addClass("media-body");
-      $.each(
-        [
-          { key: "title", label: "Image ID:&nbsp;" },
-          { key: "acquisition_date", label: "Acq. Date:&nbsp;" },
-          { key: "niirs", label: "NIIRS:&nbsp;" },
-          { key: "sensor_id", label: "Sensor:&nbsp;" }
-        ],
-        function(index, value) {
-          var small = document.createElement("small");
-
-          var span = document.createElement("span");
-          $(span).html(value.label);
-          $(small).append(span);
-
-          var span = document.createElement("span");
-          $(span).addClass(
-            properties[value.key] ? "text-success" : "text-info"
-          );
-          $(span).html(properties[value.key] || "Unkown");
-          $(small).append(span);
-
-          $(bodyDiv).append(small);
-          $(bodyDiv).append("<br>");
+        if (imageObj.getProperties) {
+            imageObj = JSON.parse( new ol.format.GeoJSON().writeFeature( imageObj ) );
         }
-      );
 
-      $(mediaDiv).append(bodyDiv);
-      $(content).html(mediaDiv);
-      $(content).append("<br>");
-
-      $.each(
-        [
-          {
-            broadcast: "zoomExtent",
-            icon: "fa fa-arrows",
-            preference: "zoomToImageExtentButton"
-          },
-          {
-            broadcast: "viewImageMetadata",
-            icon: "fa fa-table",
-            preference: "viewMetadataButton"
-          },
-          {
-            broadcast: "viewOrtho",
-            icon: "fa fa-history",
-            preference: "viewOrthoImageButton"
-          },
-          {
-            broadcast: "downloadKml",
-            icon: "fa fa-map",
-            preference: "downloadKmlButton"
-          },
-          {
-            broadcast: "shareLink",
-            icon: "fa fa-share-alt",
-            preference: "shareLinkButton"
-          },
-          {
-            broadcast: "download",
-            icon: "fa fa-download",
-            preference: "downloadImageButton"
-          },
-          {
-            broadcast: "jpipImage",
-            icon: "fa fa-file-image-o",
-            preference: "jpipImageButton"
-          },
-          {
-            broadcast: "jpipOrtho",
-            icon: "fa fa-image",
-            preference: "jpipOrthoButton"
-          },
-          {
-            broadcast: "copyWms",
-            icon: "fa fa-clipboard",
-            preference: "copyWmsButton"
-          }
-        ],
-        function(index, value) {
-          if (userPreferences.o2SearchPreference[value.preference]) {
-            var button = document.createElement("button");
-            $(button).addClass("btn btn-default btn-sm");
-            $(button).click(function() {
-              $rootScope.$broadcast(value.broadcast, imageObj);
-            });
-            $(button).html(
-              "<span class = '" + value.icon + " text-default'></span>"
-            );
-            $(content).append(button);
-          }
+        var properties = imageObj.properties;
+        if ( properties.acquisition_date ) {
+            var date = properties.acquisition_date;
+            properties.acquisition_date = moment( date ).format( 'MM/DD/YYYY HH:mm:ss' );
         }
-      );
 
-      var extent = this.displayFootprint(imageObj);
-      var position = overlay.getPosition();
-      if (!position || !ol.extent.containsCoordinate(extent, position)) {
-        var center = new ol.extent.getCenter(extent);
-        overlay.setPosition(center);
-      }
-      $(container).css("background-color", $("body").css("background-color"));
-      $(container).css("display", "block");
+        var panelBody = document.createElement( 'div' );
+        panelBody.className = 'panel-body';
+
+            var media = document.createElement( 'div' );
+            media.className = 'media';
+            panelBody.appendChild( media );
+
+                var mediaLeft = document.createElement( 'div' );
+                mediaLeft.className = 'media-left';
+                mediaLeft.style = 'position: relative';
+                media.appendChild( mediaLeft );
+
+                    var a = document.createElement( 'a' );
+                    a.href = '/omar-ui/#/mapImage?' + $.param({
+                        bands: 'default',
+                        brightness: 0,
+                        contrast: 1,
+                        entry_id: properties.entry_id,
+                        filename: properties.filename,
+                        height: properties.height,
+                        histCenterTile: false,
+                        histOp: 'auto-minmax',
+                        imageId: properties.id,
+                        imageRenderType: 'tile',
+                        imageSpaceRequestUrl: '/omar-oms',
+                        mensaRequestUrl: '/omar-mensa',
+                        numOfBands: properties.number_of_bands,
+                        numResLevels: properties.number_of_res_levels,
+                        resamplerFilter: 'bilinear',
+                        sharpenMode: 'none',
+                        showModalSplash: false,
+                        uiRequestUrl: '/omar-ui',
+                        wfsRequestUrl: '/omar-wfs',
+                        width: properties.width,
+                        wmsRequestUrl: '/omar-wms'
+                    });
+                    a.target = '_blank';
+                    mediaLeft.appendChild( a );
+
+                        var image = document.createElement( 'img' );
+                        image.className = 'media-object';
+                        image.height = 114;
+                        image.src = '/omar-oms/imageSpace/getThumbnail?' + $.param({
+                            entry: properties.entry_id,
+                            filename: properties.filename,
+                            id: properties.id,
+                            outputFormat: 'png',
+                            padThumbnail: false,
+                            size: 114,
+                            transparent: true
+                        });
+                        image[ 'tooltip-placement' ] = 'right';
+                        image[ 'uib-tooltip' ] = 'Click the thumbnail or the image ID to view the raw image';
+                        image.width = 114;
+                        a.appendChild( image );
+
+                var mediaBody = document.createElement( 'div' );
+                mediaBody.className = 'media-body';
+                media.appendChild( mediaBody );
+
+                    var row = document.createElement( 'div' );
+                    row.className = 'row';
+                    mediaBody.appendChild( row );
+
+                    var row = document.createElement( 'div' );
+                    row.className = 'row';
+                    mediaBody.appendChild( row );
+
+                        var colMd12 = document.createElement( 'div' );
+                        colMd12.className = 'col-md-12';
+                        colMd12.innerHTML = 'Acquisition Date:&nbsp;&nbsp;';
+                        colMd12.style = 'font-size: 13px';
+                        row.appendChild( colMd12 );
+
+                            var span = document.createElement( 'span' );
+                            if ( properties.acquisition_date ) {
+                                span.className = 'text-success';
+                                span.innerHTML = properties.acquisition_date + 'z';
+                            }
+                            else {
+                                span.className = 'text-success';
+                                span.innerHTML = 'Unknown';
+                            }
+                            colMd12.appendChild( span );
+
+                    var row = document.createElement( 'div' );
+                    row.className = 'row';
+                    mediaBody.appendChild( row );
+
+                        var colMd12 = document.createElement( 'div' );
+                        colMd12.className = 'col-md-12';
+                        colMd12.style = 'font-size: 13px';
+                        row.appendChild( colMd12 );
+
+                            var span = document.createElement( 'span' );
+                            if ( properties.security_classification ) {
+                                span.className = properties.security_classification.toLowerCase().replace( /\s/g, "-" )
+                                span.innerHTML = properties.security_classification;
+                            }
+                            else {
+                                span.className = 'text-info';
+                                span.innerHTML = 'Security Classification Unkown';
+                            }
+                            colMd12.appendChild( span );
+
+                    var row = document.createElement( 'div' );
+                    row.className = 'row';
+                    mediaBody.appendChild( row );
+
+                        var colMd12 = document.createElement( 'div' );
+                        colMd12.className = 'col-md-12';
+                        colMd12.innerHTML = 'Sensor:&nbsp;&nbsp;';
+                        colMd12.style = 'font-size: 13px';
+                        row.appendChild( colMd12 );
+
+                            var span = document.createElement( 'span' );console.dir(properties.sensor_id);
+                            if ( properties.sensor_id ) {
+                                span.className = 'text-success';
+                                span.innerHTML = properties.sensor_id;
+                            }
+                            else {
+                                span.className = 'text-success';
+                                span.innerHTML = 'Unknown';
+                            }
+                            colMd12.appendChild( span );
+
+                            colMd12.innerHTML += '&nbsp;&nbsp;';
+
+                            var span = document.createElement( 'span' );
+                            if ( properties.valid_model ) {
+                                span.className = 'text-success';
+
+                                var checkmark = document.createElement( 'span' );
+                                checkmark.className = 'glyphicon glyphicon-ok';
+                                span.appendChild( checkmark );
+
+                                span.innerHTML += 'Valid Model';
+                            }
+                            else {
+                                span.className = 'text-info';
+                                span.innerHTML = 'Model: N/A';
+                            }
+                            colMd12.appendChild( span );
+
+                    var row = document.createElement( 'div' );
+                    row.className = 'row';
+                    mediaBody.appendChild( row );
+
+                        var colMd12 = document.createElement( 'div' );
+                        colMd12.className = 'col-md-12';
+                        colMd12.innerHTML = 'Country Code:&nbsp;&nbsp;';
+                        colMd12.style = 'font-size: 13px';
+                        row.appendChild( colMd12 );
+
+                            var span = document.createElement( 'span' );
+                            if ( properties.country_code ) {
+                                span.className = 'text-success';
+                                span.innerHTML = properties.country_code;
+                            }
+                            else {
+                                span.className = 'text-success';
+                                span.innerHTML = 'Unknown';
+                            }
+                            colMd12.appendChild( span );
+
+                    var row = document.createElement( 'div' );
+                    row.className = 'row';
+                    mediaBody.appendChild( row );
+
+                        var colMd12 = document.createElement( 'div' );
+                        colMd12.className = 'col-md-12';
+                        colMd12.innerHTML = 'NIIRS:&nbsp;&nbsp;';
+                        colMd12.style = 'font-size: 13px';
+                        row.appendChild( colMd12 );
+
+                            var span = document.createElement( 'span' );
+                            if ( properties.niirs ) {
+                                span.className = 'text-success';
+                                span.innerHTML = properties.niirs;
+                            }
+                            else {
+                                span.className = 'text-success';
+                                span.innerHTML = 'Unknown';
+                            }
+                            colMd12.appendChild( span );
+
+                            colMd12.innerHTML += '&nbsp;&nbsp;/&nbsp;&nbsp;';
+
+                            colMd12.innerHTML += 'GSD:&nbsp;&nbsp;';
+                            var span = document.createElement( 'span' );
+                            if ( properties.gsdy ) {
+                                span.className = 'text-success';
+                                span.innerHTML = properties.gsdy.toFixed( 4 ) + 'm';
+                            }
+                            else {
+                                span.className = 'text-success';
+                                span.innerHTML = 'Unknown';
+                            }
+                            colMd12.appendChild( span );
+
+                    var buttonGroup = document.createElement( 'div' );
+                    buttonGroup.className = 'btn-group btn-group-sm';
+                    mediaBody.appendChild( buttonGroup );
+
+                        var a = document.createElement( 'a' );
+                        a.className = 'btn btn-default';
+                        a.onclick = function() {
+                            $rootScope.$broadcast( 'zoomExtent', imageObj );
+                        };
+                        a.type = 'button';
+                        buttonGroup.appendChild( a );
+
+                            var i = document.createElement( 'i' );
+                            i.className = 'fa fa-arrows text-default';
+                            i[ 'tooltip-placement' ] = 'right';
+                            i[ 'ui-tooltip' ] = 'Zoom to the image extent';
+                            a.appendChild( i );
+
+                        var a = document.createElement( 'a' );
+                        a.className = 'btn btn-default';
+                        a.onclick = function() {
+                            angular.element( $( '#list' ).parent() ).scope().viewImageMetadata( imageObj );
+                        };
+                        a.type = 'button';
+                        buttonGroup.appendChild( a );
+
+                            var i = document.createElement( 'i' );
+                            i.className = 'fa fa-table text-default';
+                            i[ 'tooltip-placement' ] = 'right';
+                            i[ 'ui-tooltip' ] = 'View image metadata';
+                            a.appendChild( i );
+
+                        var a = document.createElement( 'a' );
+                        a.className = 'btn btn-default';
+                        a.onclick = function() {
+                            angular.element( $( '#list' ).parent() ).scope().viewOrtho( imageObj );
+                        };
+                        a.type = 'button';
+                        buttonGroup.appendChild( a );
+
+                            var i = document.createElement( 'i' );
+                            i.className = 'fa fa-history text-default';
+                            i[ 'tooltip-placement' ] = 'right';
+                            i[ 'ui-tooltip' ] = 'View rectified image in TLV';
+                            a.appendChild( i );
+
+                        var a = document.createElement( 'a' );
+                        a.className = 'btn btn-default';
+                        a.onclick = function() {
+                            angular.element( $( '#list' ).parent() ).scope().viewImageMetadata( imageObj );
+                        };
+                        a.type = 'button';
+                        buttonGroup.appendChild( a );
+
+                            var i = document.createElement( 'i' );
+                            i.className = 'fa fa-wrench text-default';
+                            i[ 'tooltip-placement' ] = 'right';
+                            i[ 'ui-tooltip' ] = 'View image toolbox';
+                            a.appendChild( i );
+
+
+        var extent = this.displayFootprint( imageObj );
+        var position = overlay.getPosition();
+        if ( !position || !ol.extent.containsCoordinate( extent, position ) ) {
+            var center = new ol.extent.getCenter( extent );
+            overlay.setPosition( center );
+        }
+        $( container ).css( "background-color", $( "body" ).css( "background-color" ) );
+        $( container ).css( "display", "block" );
+        $( container ).html( panelBody );
+        $( container ).width( $( '#list' ).width() );
     };
 
     this.mapRemoveImageFootprint = function() {

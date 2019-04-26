@@ -281,7 +281,7 @@
         var value = vm.userPreferences[keyword.key];
         if (vm.urlParams[keyword.urlParam]) {
           vm[keyword.key + "Check"] = true;
-          value = vm.urlParams[keyword.urlParam];
+          value = decodeURIComponent( vm.urlParams[keyword.urlParam] );
         }
         if (reset) {
           vm[keyword.key + "Check"] = false;

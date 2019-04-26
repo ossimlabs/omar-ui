@@ -102,9 +102,9 @@ omar:
           format: "image/jpeg"
         options:
           visible: true
+
     # Uncomment the example(s) below, and *modify* accordingly to
     # add a custom overlay layer.
-
     # overlayLayers:
     #   -
     #     layerType: "tilewms"

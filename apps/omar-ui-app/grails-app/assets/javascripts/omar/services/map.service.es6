@@ -959,7 +959,7 @@
                     mediaLeft.appendChild( a );
 
                         var image = document.createElement( 'img' );
-                        image.className = 'media-object';
+                        image.className = 'media-object thumbnail-background';
                         image.height = 114;
                         image.src = '/omar-oms/imageSpace/getThumbnail?' + $.param({
                             entry: properties.entry_id,

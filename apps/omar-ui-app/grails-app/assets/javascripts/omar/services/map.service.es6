@@ -192,41 +192,45 @@
         zoom: zoom
       });
 
-      if (AppO2.APP_CONFIG.params.footprints.params != undefined) {
-        if (AppO2.APP_CONFIG.params.footprints.params.version != undefined) {
-          version = AppO2.APP_CONFIG.params.footprints.params.version;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.layers != undefined) {
-          layers = AppO2.APP_CONFIG.params.footprints.params.layers;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.styles != undefined) {
-          styles = AppO2.APP_CONFIG.params.footprints.params.styles;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.format != undefined) {
-          format = AppO2.APP_CONFIG.params.footprints.params.format;
-        }
-        if (AppO2.APP_CONFIG.params.footprints.params.name != undefined) {
-          name = AppO2.APP_CONFIG.params.footprints.params.name;
-        }
+      footPrints = [];
+      if (AppO2.APP_CONFIG.params.footprints.params[0] != undefined) {
+        AppO2.APP_CONFIG.params.footprints.params.forEach( function(layer) {
+          footPrints.push(new ol.layer.Tile({
+            title: layer.name,
+            source: new ol.source.TileWMS({
+              url: footprintsRequestUrl,
+              params: {
+                FILTER: "",
+                VERSION: layer.version,
+                LAYERS: layer.layers,
+                STYLES: layer.styles,
+                FORMAT: layer.format
+              },
+              wrapX: false
+            }),
+            name: name
+          }));
+        });
+      } else {
+        // Default no configed layers
+        footPrints.push(new ol.layer.Tile({
+          title: name,
+          source: new ol.source.TileWMS({
+            url: footprintsRequestUrl,
+            params: {
+              FILTER: "",
+              VERSION: version,
+              LAYERS: layers,
+              STYLES: styles,
+              FORMAT: format
+            },
+            wrapX: false
+          }),
+          name: name
+        }));
       }
 
-      footPrints = new ol.layer.Tile({
-        title: name,
-        source: new ol.source.TileWMS({
-          url: footprintsRequestUrl,
-          params: {
-            FILTER: "",
-            VERSION: version,
-            LAYERS: layers,
-            STYLES: styles,
-            FORMAT: format
-          },
-          wrapX: false
-        }),
-        name: "Image Footprints"
-      });
-
-      var footprintsSource = footPrints.getSource();
+      var footprintsSource = footPrints[0].getSource();
 
       /* Adding Auto Mosaic */
       autoMosaic = new ol.layer.Tile({
@@ -455,7 +459,9 @@
         // Map over each layer item in the overlayLayers array
         AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
       }
-      overlayGroup.getLayers().push(footPrints);
+      footPrints.forEach( function(footPrintLayer) {
+        overlayGroup.getLayers().push(footPrintLayer);
+      });
 
       map = new ol.Map({
         layers: [baseMapGroup, mosaicGroup, overlayGroup],
@@ -762,12 +768,12 @@
     };
 
     function updateFootPrints(filter) {
-      var params = footPrints.getSource().getParams();
+      var params = footPrints[0].getSource().getParams();
       params.FILTER = filter;
-      footPrints.getSource().updateParams(params);
-      footPrints
+      footPrints[0].getSource().updateParams(params);
+      footPrints[0]
         .getSource()
-        .setTileLoadFunction(footPrints.getSource().getTileLoadFunction());
+        .setTileLoadFunction(footPrints[0].getSource().getTileLoadFunction());
     }
 
     vm.updateFootPrintLayer = function(filter) {
@@ -775,7 +781,7 @@
     };
 
     function updateFootprintsUrl() {
-      footPrints.getSource().setUrl(footprintsRequestUrl);
+      footPrints[0].getSource().setUrl(footprintsRequestUrl);
     }
 
     vm.updateFootprintsUrl = function() {

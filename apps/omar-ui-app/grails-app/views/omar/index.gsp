@@ -105,6 +105,7 @@
                         <hr>
                         <div ng-href="" class="metrics-message text-center">User</div>
                         <a ng-href="{{nav.metricsEurekaUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Service Health & Status</a>
+                        <a ng-href="{{nav.metricsServicesMonitorUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Services Monitor</a>
                       </div>
                       <!-- Metrics Admin area -->
                       <div ng-show="nav.metricsAdminShow">

@@ -346,6 +346,13 @@ omar:
             # Used to show/hide the Service Health & Status button
             enabled: true
 
+          servicesMonitor:
+            # URL of the O2 Services Monitor dashboard
+            baseUrl: ${serverProtocol}://${serverName}/omar-services-monitor/
+
+            # Used to show/hide the Services Monitor 
+            enabled: true
+            
 ---
 omar:
   app:

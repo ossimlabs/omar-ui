@@ -82,6 +82,11 @@
     vm.metricsEurekaEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
 
+    vm.metricsServicesMonitorUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.baseUrl;
+    vm.metricsServicesMonitorEnabled = 
+      AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.enabled;
+
     // Show/hide the Admin section of the Metrics dropdown menu
     // TODO: Show/Hide with Spring Security instead of through application.yaml
     vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;

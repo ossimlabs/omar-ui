@@ -97,11 +97,6 @@
     vm.metricsHystrixTurbineEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
 
-    vm.metricsSleuthZipkinUrl =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
-    vm.metricsSleuthZipkinEnabled =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
-
     vm.metricsKibanaUrl =
       AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
     vm.metricsKibanaEnabled =

@@ -115,10 +115,6 @@
                           <!-- <label>Hystrix/Turbine</label> -->
                           <a ng-href="{{nav.metricsHystrixTurbineUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Real-time Insight/System Behavior</a>
                         </div>
-                        <div ng-show="nav.metricsSleuthZipkinEnabled">
-                          <!-- <label>Sleuth/Zipkin</label> -->
-                          <a ng-href="{{nav.metricsSleuthZipkinUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Distributed Tracing</a>
-                        </div>
                         <div ng-show="nav.metricsKibanaEnabled">
                           <!-- <label>Kibana</label> -->
                           <a ng-href="{{nav.metricsKibanaUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Kibana Dashboard</a>

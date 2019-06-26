@@ -311,14 +311,6 @@ omar:
             # Used to show/hide the Real-time Insight/System Behavior button
             enabled: true
 
-          # The baseUrl below is a placeholder until we get Sleuth and Zipkin working
-          sleuthZipkin:
-            # URL of the Sleuth and Zipkin page
-            baseUrl: https://spring.io/blog/2016/02/15/distributed-tracing-with-spring-cloud-sleuth-and-spring-cloud-zipkin
-
-            # Used to show/hide the Distributed Tracing button
-            enabled: true
-
           # Kibana dashboard settings
           kibana:
             # URL of the Kibana dashboard
@@ -346,6 +338,13 @@ omar:
             # Used to show/hide the Service Health & Status button
             enabled: true
 
+          servicesMonitor:
+            # URL of the O2 Services Monitor dashboard
+            baseUrl: ${serverProtocol}://${serverName}/omar-services-monitor/
+
+            # Used to show/hide the Services Monitor 
+            enabled: true
+            
 ---
 omar:
   app:

@@ -105,6 +105,7 @@
                         <hr>
                         <div ng-href="" class="metrics-message text-center">User</div>
                         <a ng-href="{{nav.metricsEurekaUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Service Health & Status</a>
+                        <a ng-href="{{nav.metricsServicesMonitorUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Services Monitor</a>
                       </div>
                       <!-- Metrics Admin area -->
                       <div ng-show="nav.metricsAdminShow">
@@ -113,10 +114,6 @@
                         <div ng-show="nav.metricsHystrixTurbineEnabled">
                           <!-- <label>Hystrix/Turbine</label> -->
                           <a ng-href="{{nav.metricsHystrixTurbineUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Real-time Insight/System Behavior</a>
-                        </div>
-                        <div ng-show="nav.metricsSleuthZipkinEnabled">
-                          <!-- <label>Sleuth/Zipkin</label> -->
-                          <a ng-href="{{nav.metricsSleuthZipkinUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Distributed Tracing</a>
                         </div>
                         <div ng-show="nav.metricsKibanaEnabled">
                           <!-- <label>Kibana</label> -->

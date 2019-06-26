@@ -82,6 +82,11 @@
     vm.metricsEurekaEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
 
+    vm.metricsServicesMonitorUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.baseUrl;
+    vm.metricsServicesMonitorEnabled = 
+      AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.enabled;
+
     // Show/hide the Admin section of the Metrics dropdown menu
     // TODO: Show/Hide with Spring Security instead of through application.yaml
     vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
@@ -91,11 +96,6 @@
       AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
     vm.metricsHystrixTurbineEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
-
-    vm.metricsSleuthZipkinUrl =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
-    vm.metricsSleuthZipkinEnabled =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
 
     vm.metricsKibanaUrl =
       AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;

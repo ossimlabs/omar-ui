@@ -14,14 +14,17 @@ about:
   releaseNumber: Release Number
 
 # If there a page banner is needed, set it here
-#banner:
-#   backgroundColor: darkgray
-#   description: This application is subject to change without notice.
-#   text: BETA
-#   textColor: white
-#   enabled: true
+banner:
+   backgroundColor: darkgray
+   description: This application is subject to change without notice.
+   text: BETA
+   textColor: white
+   enabled: true
 
 baseUrl: https://omar-dev.ossim.io
+
+logging:
+  config: classpath:logback.groovy
 
 omar:
   app:
@@ -56,6 +59,8 @@ omar:
     misc:
       # Enable BE number lookups in the search field.
       beLookupEnabled: false
+      icons:
+        greenMarker: assets/search_marker_green.png
       # Allows logging for javascript
       javascriptDebug: false
       # Configurable message that opens when accessing the map
@@ -103,7 +108,6 @@ omar:
       metrics:
         # Used to show/hide the Metrics dropdown menu in the UI
         enabled: true
-
         # Settings for the Admin section of the metrics dropdown
         admin:
           # hide/show the Metrics Admin section
@@ -112,37 +116,28 @@ omar:
           kibana:
             # URL of the Kibana dashboard
             baseUrl: http://kibana.ossim.io
-
             # Used to show/hide the Dashboard button
             enabled: true
-
           # Spring Boot Admin settings
           springBootAdmin:
             # URL of the Spring Boot Admin
             baseUrl: ${baseUrl}/omar-admin-server/#/
-
             # Used to show/hide the SBA button
             enabled: true
-
         # Settings for the User section of the metrics dropdown
         user:
           # Used to show/hide the User section of the metrics dropdown
           enabled: true
           eureka:
             # URL of the Eureka server used to show system status
-            baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
-
+            baseUrl: ${baseUrl}/omar-eureka-server
             # Used to show/hide the Service Health & Status button
             enabled: true
-
           servicesMonitor:
             # URL of the O2 Services Monitor dashboard
             baseUrl: ${baseUrl}/omar-services-monitor/
-
             # Used to show/hide the Services Monitor
             enabled: true
-
-
     sites:
       -
         info:
@@ -152,7 +147,7 @@ omar:
           description: OMAR Development Server (Unclassified)
         url:
           # Base URL for the federated site
-          base: ${baseUrl}
+          base: https://omar-dev.ossim.io
           # Optional context paths for the apps, e.g.
           # uiContextPath: /omar-ui
     twofishes:
@@ -222,22 +217,12 @@ swagger:
         - HTTPS
         - HTTP
 
-
 userInfo:
   # Configurable request header name parameter
   requestHeaderUserName: username
   # Configurable default name for the request header user (Default: Anonymous).
   # Used if no name is found in PKI cert.
   requestHeaderUserNameDefault: Anonymous
-
-
-logging:
-  config: classpath:logback.groovy
-
----
-omar:
-  app:
-
 
 ---
 grails:

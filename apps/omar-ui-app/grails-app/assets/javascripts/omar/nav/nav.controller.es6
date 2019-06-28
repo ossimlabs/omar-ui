@@ -91,12 +91,6 @@
     // TODO: Show/Hide with Spring Security instead of through application.yaml
     vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
 
-    // Metrics dropdown menu Admin settings
-    vm.metricsHystrixTurbineUrl =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
-    vm.metricsHystrixTurbineEnabled =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
-
     vm.metricsKibanaUrl =
       AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
     vm.metricsKibanaEnabled =
@@ -123,7 +117,7 @@
     var tlvBaseUrl = stateService.omarSitesState.url.base;
     var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
     vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
-    
+
     vm.uploadAppEnabled = AppO2.APP_CONFIG.params.uploadApp.enabled;
     if (vm.uploadAppEnabled) {
       var uploadBaseUrl = stateService.omarSitesState.url.base;

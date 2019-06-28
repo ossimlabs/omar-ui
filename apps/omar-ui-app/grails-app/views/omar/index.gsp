@@ -109,10 +109,6 @@
                       <div ng-show="nav.metricsAdminShow">
                         <hr class="metrics-hr">
                         <div class="metrics-message text-center">System</div>
-                        <div ng-show="nav.metricsHystrixTurbineEnabled">
-                          <!-- <label>Hystrix/Turbine</label> -->
-                          <a ng-href="{{nav.metricsHystrixTurbineUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Real-time Insight/System Behavior</a>
-                        </div>
                         <div ng-show="nav.metricsKibanaEnabled">
                           <!-- <label>Kibana</label> -->
                           <a ng-href="{{nav.metricsKibanaUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Kibana Dashboard</a>

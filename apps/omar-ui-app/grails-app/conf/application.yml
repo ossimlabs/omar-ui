@@ -145,12 +145,6 @@ omar:
 
           # Image format
           format: 'image/gif'
-    apiApp:
-      # URL of aggregated API's for O2 services
-      baseUrl: http://localhost:8081/api
-
-      # Used to show/hide the API link on the O2 home page (True or False )
-      enabled: false
     tlvApp:
       # Used to show/hide the various links to the TLV app in the UI (True or False)
       enabled: true

@@ -112,11 +112,6 @@
     vm.aboutReleaseName = AppO2.APP_CONFIG.about.releaseName;
     vm.aboutReleaseNumber = AppO2.APP_CONFIG.about.releaseNumber;
 
-    vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
-    if (vm.apiAppEnabled) {
-      vm.apiAppLink = AppO2.APP_CONFIG.params.apiApp.baseUrl;
-    }
-
     vm.piwikAppEnabled = AppO2.APP_CONFIG.params.piwikApp.enabled;
     if (vm.piwikAppEnabled) {
       vm.piwikAppLink = AppO2.APP_CONFIG.params.piwikApp.baseUrl;

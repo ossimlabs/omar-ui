@@ -42,11 +42,6 @@
         document.location.href = "#/map?mapSearch=" + $( '#magicSearchInput' ).val();
     } );
 
-    vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
-    if (vm.apiAppEnabled) {
-      vm.apiAppLink = AppO2.APP_CONFIG.params.apiApp.baseUrl;
-    }
-
     vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
     if (vm.kmlAppEnabled) {
       var kmlBaseUrl = stateService.omarSitesState.url.base;

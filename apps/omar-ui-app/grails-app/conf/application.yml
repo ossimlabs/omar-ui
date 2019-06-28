@@ -15,11 +15,11 @@ about:
 
 # If there a page banner is needed, set it here
 banner:
-   backgroundColor: darkgray
-   description: This application is subject to change without notice.
-   text: BETA
-   textColor: white
-   enabled: true
+  backgroundColor: darkgray
+  description: This application is subject to change without notice.
+  enabled: true
+  text: BETA
+  textColor: white
 
 baseUrl: https://omar-dev.ossim.io
 
@@ -33,23 +33,22 @@ omar:
       params:
         # Name for the footprint layer.
         # Shows up in UI's layerswitcher.
-        - name: Image Footprints
-          version: 1.1.1
+        - format: image/gif
           # Layer name
           layers: omar:raster_entry
+          name: Image Footprints
           # Styling for the footprint layer.
           # Choices are "byFileType", "bySensorType", "byMissionType"
           styles: byFileType
-          format: image/gif
-        - name: Video Footprints
           version: 1.1.1
+        - format: image/gif
           # Layer name
           layers: omar:video_data_set
+          name: Video Footprints
           # Styling for the footprint layer.
           # Choices are "byFileType", "bySensorType", "byMissionType"
           styles: byFileType
-          format: image/gif
-
+          version: 1.1.1
     jpipApp:
       # Used to show/hide the JPIP buttons in the UI (True or False)
       enabled: true
@@ -165,15 +164,14 @@ omar:
     # If you do not have this field specified in the application YAML it will use the default layer.
     # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
     baseMaps:
-      -
-        layerType: tilewms
-        title: OSM Basic
-        url: ${baseUrl}/omar-mapproxy/service
-        params:
-          layers: o2-basemap-basic
-          ormat: image/jpeg
+      - layerType: tilewms
         options:
           isible: true
+        params:
+          layers: o2-basemap-basic
+          format: image/jpeg
+        title: OSM Basic
+        url: ${baseUrl}/omar-mapproxy/service
     # Uncomment the example(s) below, and *modify* accordingly to
     # add a custom overlay layer.
     # overlayLayers:

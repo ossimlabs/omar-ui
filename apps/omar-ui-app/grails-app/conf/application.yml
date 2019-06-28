@@ -67,11 +67,17 @@ omar:
         # Map information header text
         header: <h4>Check out what's new!</h4>
         # Map information body text.  You can embed HTML in the message for formatting.
-        message: <h5>You can now search by Product Type</h5><ol><li>Click on the Keyword filter</li><li>Select a product type from the available choices (Example: 2CMV)</li></ol>
+        message: "<h5>You can now search by Product Type</h5><ol><li>Click on the Keyword filter</li><li>Select a product type from the available choices (Example: 2CMV)</li></ol>"
         # A progress bar to see the mapInfo message timeout in real time
         progressBar: true
         # The timeout before the mapInfo message disappears
         timeOut: 10000
+      # Message of The Display Banner settings
+      motd:
+        # Used to show/hide the message of the day banner
+        enabled: true
+        # Text for the message of the day
+        message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
       # The placemarks uses the WFS query engine to query placemark locations based on BE numbers.
       placemarks:
         # The table column with the BE list
@@ -93,15 +99,6 @@ omar:
         header: O2 Notice
         # Splash modal message body text
         message: Welcome to the O2 image discovery and analysis application.
-
-      # Message of The Display Banner settings
-      motd:
-        # Text for the message of the day
-        message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
-
-        # Used to show/hide the message of the day banner
-        enabled: true
-
       # Metrics dropdown menu settings
       metrics:
         # Used to show/hide the Metrics dropdown menu in the UI
@@ -111,15 +108,6 @@ omar:
         admin:
           # hide/show the Metrics Admin section
           enabled: true
-
-          # The baseUrl below is a placeholder until we get Hystrix and Turbine working
-          hystrixTurbine:
-            # URL of the Hystrix and Turbine page
-            baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
-
-            # Used to show/hide the Real-time Insight/System Behavior button
-            enabled: true
-
           # Kibana dashboard settings
           kibana:
             # URL of the Kibana dashboard

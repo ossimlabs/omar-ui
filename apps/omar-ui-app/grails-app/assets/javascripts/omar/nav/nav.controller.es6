@@ -84,7 +84,7 @@
 
     vm.metricsServicesMonitorUrl =
       AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.baseUrl;
-    vm.metricsServicesMonitorEnabled = 
+    vm.metricsServicesMonitorEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.enabled;
 
     // Show/hide the Admin section of the Metrics dropdown menu
@@ -108,9 +108,9 @@
       AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.enabled;
 
     // About dropdown menu settings
-    vm.aboutContactEmail = AppO2.APP_CONFIG.params.about.contactEmail;
-    vm.aboutReleaseName = AppO2.APP_CONFIG.params.about.releaseName;
-    vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.about.releaseNumber;
+    vm.aboutContactEmail = AppO2.APP_CONFIG.about.contactEmail;
+    vm.aboutReleaseName = AppO2.APP_CONFIG.about.releaseName;
+    vm.aboutReleaseNumber = AppO2.APP_CONFIG.about.releaseNumber;
 
     vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
     if (vm.apiAppEnabled) {

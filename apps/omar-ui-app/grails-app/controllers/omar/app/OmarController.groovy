@@ -235,6 +235,7 @@ class OmarController {
             preferences = new JsonSlurper().parseText( json.toString() )
         }
         def clientConfig = [
+			about: grailsApplication.config.about,
             serverURL: getBaseUrl(),
             openlayers: openLayersConfig,
             params: grailsApplication.config.omar.app,

@@ -3,66 +3,6 @@ defaultUsername: Anonymous
 
 requestHeaderUsername: username
 
-securityClassification:
-    backgroundColor: green
-    classification: Unclassified
-    color: white
-
-serverProtocol: https
-serverName: omar-dev.ossim.io
-
-swagger:
-    schemes:
-        - HTTPS
-        - HTTP
-
----
-grails:
-    plugin:
-        springsecurity:
-            userLookup:
-                userDomainClassName: 'omar.security.SecUser'
-                authorityJoinClassName: 'omar.security.SecUserSecRole'
-            authority:
-                className: 'omar.security.SecRole'
-            controllerAnnotations:
-                staticRules:
-                    - pattern: '/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/error'
-                      access: [ 'permitAll' ]
-                    - pattern: '/index'
-                      access: [ 'permitAll' ]
-                    - pattern: '/index.gsp'
-                      access: [ 'permitAll' ]
-                    - pattern: '/shutdown'
-                      access: [ 'permitAll' ]
-                    - pattern: '/assets/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/js/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/css/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/images/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/favicon.ico'
-                      access: [ 'permitAll' ]
-            filterChain:
-                chainMap:
-                    - pattern: '/assets/**'
-                      filters: 'none'
-                    - pattern: '/**/js/**'
-                      filters: 'none'
-                    - pattern: '/**/css/**'
-                      filters: 'none'
-                    - pattern: '/**/images/**'
-                      filters: 'none'
-                    - pattern: '/**/favicon.ico'
-                      filters: 'none'
-                    - pattern: '/**'
-                      filters: 'JOINED_FILTERS'
-
-
 ---
 # About dropdown settings
 about:
@@ -81,17 +21,50 @@ about:
 #   textColor: white
 #   enabled: true
 
+baseUrl: https://omar-dev.ossim.io
+
+omar:
+  app:
+    sites:
+      -
+        info:
+          # Short name for the omar site
+          name: OMAR-DEV
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: OMAR Development Server (Unclassified)
+        url:
+          # Base URL for the federated site
+          base: ${baseUrl}
+          # Optional context paths for the apps, e.g.
+          # uiContextPath: /omar-ui
+
 securityClassification:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
   # For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".
   backgroundColor: green
-
   # This is the string displayed in the banners.
   # So setting to "My Secret Stuff" would print that string at the top and bottom of every page with a background color identified by the "backgroundColor" field
   classification: Unclassified
-
   # The actual HTML style color for the classification text
   color: white
+
+# Set the context path for the application.
+server:
+  contextPath: /omar-ui
+
+swagger:
+    schemes:
+        - HTTPS
+        - HTTP
+
+
+userInfo:
+  # Configurable request header name parameter
+  requestHeaderUserName: username
+  # Configurable default name for the request header user (Default: Anonymous).
+  # Used if no name is found in PKI cert.
+  requestHeaderUserNameDefault: Anonymous
+
 
 logging:
   config: classpath:logback.groovy
@@ -137,13 +110,7 @@ omar:
     zoomFilterChangeLevel: 10
 
   app:
-    userInfo:
-      # Configurable request header name parameter
-      requestHeaderUserName: username
 
-      # Configurable default name for the request header user (Default: Anonymous).
-      # Used if no name is found in PKI cert.
-      requestHeaderUserNameDefault: Anonymous
     footprints:
       # Misc. params for the wfs request
       params:
@@ -193,7 +160,7 @@ omar:
     twofishes:
       # URL of Twofishes search service.
       # Used for geocoding place names
-      baseUrl: ${serverProtocol}://${serverName}/twofishes
+      baseUrl: ${baseUrl}/twofishes
     kmlApp:
       enabled: true
     jpipApp:
@@ -204,7 +171,7 @@ omar:
       enabled: false
     userGuide:
       # URL of the userGuide
-      baseUrl: ${serverProtocol}://${serverName}/omar-docs/
+      baseUrl: ${baseUrl}/omar-docs/
 
       # Used to show/hide the user guide links
       enabled: true
@@ -314,7 +281,7 @@ omar:
           # Spring Boot Admin settings
           springBootAdmin:
             # URL of the Spring Boot Admin
-            baseUrl: ${serverProtocol}://${serverName}/omar-admin-server/#/
+            baseUrl: ${baseUrl}/omar-admin-server/#/
 
             # Used to show/hide the SBA button
             enabled: true
@@ -332,69 +299,12 @@ omar:
 
           servicesMonitor:
             # URL of the O2 Services Monitor dashboard
-            baseUrl: ${serverProtocol}://${serverName}/omar-services-monitor/
+            baseUrl: ${baseUrl}/omar-services-monitor/
 
             # Used to show/hide the Services Monitor
             enabled: true
 
----
-omar:
-  app:
-    sites:
-      -
-        info:
-          # Short name for the omar site
-          name: OMAR-DEV
 
-          # Long name/description of the site.  This is displayed in the dropdown in the UI
-          description: OMAR Development Server (Unclassified)
-        url:
-          # Base URL for the federated site
-          #base: ${serverProtocol}://${serverName}
-          base: https://omar-dev.ossim.io
-
-          # Optional context path for the UI
-          # uiContextPath: /omar-ui
-
-          # Optional context path for the WFS
-          # wfsContextPath: /omar-wfs
-
-          # Optional context path for the WMS
-          # wmsContextPath: /omar-wms
-
-          # Optional context path for OMS
-          # omsContextPath: /omar-oms # Used for imageSpace, thumbnails
-
-          # Optional context path for geoscript
-          # geoscriptContextPath: /omar-geoscript # Used for footprints
-
-          # Optional context path for Avro Metadata
-          # avroMetadataContextPath: /omar-avro-metadata
-
-          # Optional context path for Mensa
-          # mensaContextPath: /omar-mensa
-
-          # Optional context path for Stager
-          # stagerContextPath: /omar-stager
-
-          # Optional context path for Download
-          # downloadContextPath: /omar-download
-
-          # Optional context path for KML Superoverlay
-          # kmlContextPath: /omar-superoverlay
-
-          # Optional context path for JPIP
-          # jpipContextPath: /omar-jpip
-
-          # Optional context path for WMTS
-          # wmtsContextPath: /omar-wmts
-
-          # Optional context path for TLV UI
-          # tlvContextPath: /tlv
-
-# Set the context path for the application.
-server:
-  contextPath: /omar-ui
 
 ---
 grails:

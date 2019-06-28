@@ -217,7 +217,7 @@ class OmarController {
     ])
     def index() {
         // user information parameters coming in from application.yml
-        def userInfo = grailsApplication.config.omar.app.userInfo
+        def userInfo = grailsApplication.config.userInfo
 
         // The value of the request header for the user's name
         def requestHeaderName = request.getHeader(userInfo.requestHeaderUserName)

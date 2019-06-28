@@ -63,8 +63,6 @@
     };
 
     vm.showCurrentFilter = true;
-    vm.listRefreshButtonVisible =
-      AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
     vm.refreshSpin = false;
     vm.refreshList = function() {
       wfsService.executeWfsQuery();
@@ -91,7 +89,7 @@
         vm.wfsFeatures = features;
         if (features != undefined) {
           vm.wfsFeaturesTotalPaginationCount = Math.min(
-            vm.totalPaginationCount,
+            1000,
             vm.wfsFeatures
           );
         }

@@ -197,17 +197,6 @@
       });
     });
 
-    vm.totalPaginationCount = 1000;
-    vm.pageLimit = 10;
-
-    if (AppO2.APP_CONFIG.params.misc.totalPaginationCount != undefined) {
-      vm.totalPaginationCount =
-        AppO2.APP_CONFIG.params.misc.totalPaginationCount;
-    }
-    if (AppO2.APP_CONFIG.params.misc.pageLimit != undefined) {
-      vm.pageLimit = AppO2.APP_CONFIG.params.misc.pageLimit;
-    }
-
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
     vm.thumbId = "&id="; // Parameter provided by image.properties.id
@@ -573,7 +562,7 @@
         vm.wfsFeatures = features;
         if (features != undefined) {
           vm.wfsFeaturesTotalPaginationCount = Math.min(
-            vm.totalPaginationCount,
+            1000,
             vm.wfsFeatures
           );
         }

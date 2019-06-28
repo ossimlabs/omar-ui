@@ -1141,7 +1141,7 @@
         <div class="text-center" id = "pagination">
             <uib-pagination style="margin: 8px;"
                 total-items="list.wfsFeaturesTotalPaginationCount"
-                items-per-page="list.pageLimit"
+                items-per-page="10"
                 ng-model="list.currentStartIndex"
                 ng-change="list.pagingChanged()"
                 max-size="5"

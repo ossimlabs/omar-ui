@@ -30,28 +30,131 @@ omar:
       params:
         # Name for the footprint layer.
         # Shows up in UI's layerswitcher.
-        - name: "Image Footprints"
-          version: '1.1.1'
+        - name: Image Footprints
+          version: 1.1.1
           # Layer name
-          layers: 'omar:raster_entry'
+          layers: omar:raster_entry
           # Styling for the footprint layer.
           # Choices are "byFileType", "bySensorType", "byMissionType"
-          styles: 'byFileType'
-          format: 'image/gif'
-        - name: "Video Footprints"
-          version: '1.1.1'
+          styles: byFileType
+          format: image/gif
+        - name: Video Footprints
+          version: 1.1.1
           # Layer name
-          layers: 'omar:video_data_set'
+          layers: omar:video_data_set
           # Styling for the footprint layer.
           # Choices are "byFileType", "bySensorType", "byMissionType"
-          styles: 'byFileType'
-          format: 'image/gif'
+          styles: byFileType
+          format: image/gif
 
     jpipApp:
       # Used to show/hide the JPIP buttons in the UI (True or False)
       enabled: true
     kmlApp:
       enabled: true
+    # Base settings for the O2 UI general configuration
+    misc:
+      # Enable BE number lookups in the search field.
+      beLookupEnabled: false
+      # Allows logging for javascript
+      javascriptDebug: false
+      # Configurable message that opens when accessing the map
+      mapInfoMessage:
+        # Used to enable/disable the map info message from displaying (default = false)
+        enabled: true
+        # The timeout after you hover the mapInfoMessage
+        extendedTimeOut: 10000
+        # Map information header text
+        header: <h4>Check out what's new!</h4>
+        # Map information body text.  You can embed HTML in the message for formatting.
+        message: <h5>You can now search by Product Type</h5><ol><li>Click on the Keyword filter</li><li>Select a product type from the available choices (Example: 2CMV)</li></ol>
+        # A progress bar to see the mapInfo message timeout in real time
+        progressBar: true
+        # The timeout before the mapInfo message disappears
+        timeOut: 10000
+      # The placemarks uses the WFS query engine to query placemark locations based on BE numbers.
+      placemarks:
+        # The table column with the BE list
+        columnName: be_number
+        # The table column with the display name
+        displayNameColumnName: name
+        # The spatial column in the BE table
+        geomName: geom
+        # The maximum number of BE items to return in a query
+        maxResults: 100
+        # Namespace and table name where the BE's are stored and is a WFS tableId entry.
+        tableName: omar:facility
+      # Configurable splash menu that opens upon application start up
+      splashModal:
+        delay: 1000
+        # Used to enable/disable the splash modal from displaying
+        enabled: true
+        # Splash modal header text
+        header: O2 Notice
+        # Splash modal message body text
+        message: Welcome to the O2 image discovery and analysis application.
+
+      # Message of The Display Banner settings
+      motd:
+        # Text for the message of the day
+        message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
+
+        # Used to show/hide the message of the day banner
+        enabled: true
+
+      # Metrics dropdown menu settings
+      metrics:
+        # Used to show/hide the Metrics dropdown menu in the UI
+        enabled: true
+
+        # Settings for the Admin section of the metrics dropdown
+        admin:
+          # hide/show the Metrics Admin section
+          enabled: true
+
+          # The baseUrl below is a placeholder until we get Hystrix and Turbine working
+          hystrixTurbine:
+            # URL of the Hystrix and Turbine page
+            baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
+
+            # Used to show/hide the Real-time Insight/System Behavior button
+            enabled: true
+
+          # Kibana dashboard settings
+          kibana:
+            # URL of the Kibana dashboard
+            baseUrl: http://kibana.ossim.io
+
+            # Used to show/hide the Dashboard button
+            enabled: true
+
+          # Spring Boot Admin settings
+          springBootAdmin:
+            # URL of the Spring Boot Admin
+            baseUrl: ${baseUrl}/omar-admin-server/#/
+
+            # Used to show/hide the SBA button
+            enabled: true
+
+        # Settings for the User section of the metrics dropdown
+        user:
+          # Used to show/hide the User section of the metrics dropdown
+          enabled: true
+          eureka:
+            # URL of the Eureka server used to show system status
+            baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
+
+            # Used to show/hide the Service Health & Status button
+            enabled: true
+
+          servicesMonitor:
+            # URL of the O2 Services Monitor dashboard
+            baseUrl: ${baseUrl}/omar-services-monitor/
+
+            # Used to show/hide the Services Monitor
+            enabled: true
+
+
     sites:
       -
         info:
@@ -146,134 +249,6 @@ logging:
 ---
 omar:
   app:
-    # Base settings for the O2 UI general configuration
-    misc:
-      # Allows logging for javascript
-      javascriptDebug: false
-
-      # Configurable splash menu that opens upon application start up
-      splashModal:
-        # Splash modal header text
-        header: "O2 Notice"
-
-        # Splash modal message body text
-        message: "Welcome to the O2 image discovery and analysis application."
-        delay: 1000
-
-        # Used to enable/disable the splash modal from displaying
-        enabled: true
-
-      # Configurable message that opens when accessing the map
-      mapInfoMessage:
-        # Map information header text
-        header: "<h4>Check out what's new!</h4>"
-
-        # Map information body text.  You can embed HTML in the message for formatting.
-        message: "<h5>You can now search by Product Type</h5><ol><li>Click on the Keyword filter</li><li>Select a product type from the available choices (Example: 2CMV)</li></ol>"
-
-        # The timeout before the mapInfo message disappears
-        timeOut: 20000
-
-        # A progress bar to see the mapInfo message timeout in real time
-        progressBar: true
-
-        # The timeout after you hover the mapInfoMessage
-        extendedTimeOut: 15000
-
-        # Used to enable/disable the map info message from displaying (default = false)
-        enabled: true
-
-      # Enable BE number lookups in the search field.
-      beLookupEnabled: false
-
-      # The placemarks uses the WFS query engine to query placemark locations based on BE numbers.
-      #placemarks:
-        # Namespace and table name where the BE's are stored and is a WFS tableId entry.
-        #tableName: omar:cities
-
-        # The table column with the BE list
-        #columnName: city_name
-
-        # The table column with the display name
-        #displayNameColumnName: name
-
-        # The spatial column in the BE table
-        #geomName: geom
-
-        # The maximum number of BE items to return in a query
-        #maxResults: 100
-      icons:
-        greenMarker: assets/search_marker_green.png
-
-      # Display or hide the refresh button in the Sort menu.
-      listRefreshButtonVisible: true
-
-      # Used to limit the number of items to paginate through.
-      totalPaginationCount: 1000
-
-      # Used to identify the number of items to show per page.
-      pageLimit: 10
-
-      # Message of The Display Banner settings
-      motd:
-        # Text for the message of the day
-        message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
-
-        # Used to show/hide the message of the day banner
-        enabled: true
-
-      # Metrics dropdown menu settings
-      metrics:
-        # Used to show/hide the Metrics dropdown menu in the UI
-        enabled: true
-
-        # Settings for the Admin section of the metrics dropdown
-        admin:
-          # hide/show the Metrics Admin section
-          enabled: true
-
-          # The baseUrl below is a placeholder until we get Hystrix and Turbine working
-          hystrixTurbine:
-            # URL of the Hystrix and Turbine page
-            baseUrl: https://medium.com/netflix-techblog/hystrix-dashboard-turbine-stream-aggregator-60985a2e51df
-
-            # Used to show/hide the Real-time Insight/System Behavior button
-            enabled: true
-
-          # Kibana dashboard settings
-          kibana:
-            # URL of the Kibana dashboard
-            baseUrl: http://kibana.ossim.io
-
-            # Used to show/hide the Dashboard button
-            enabled: true
-
-          # Spring Boot Admin settings
-          springBootAdmin:
-            # URL of the Spring Boot Admin
-            baseUrl: ${baseUrl}/omar-admin-server/#/
-
-            # Used to show/hide the SBA button
-            enabled: true
-
-        # Settings for the User section of the metrics dropdown
-        user:
-          # Used to show/hide the User section of the metrics dropdown
-          enabled: true
-          eureka:
-            # URL of the Eureka server used to show system status
-            baseUrl: http://eureka.omar-dev.ossim.io/omar-eureka-server
-
-            # Used to show/hide the Service Health & Status button
-            enabled: true
-
-          servicesMonitor:
-            # URL of the O2 Services Monitor dashboard
-            baseUrl: ${baseUrl}/omar-services-monitor/
-
-            # Used to show/hide the Services Monitor
-            enabled: true
-
 
 
 ---

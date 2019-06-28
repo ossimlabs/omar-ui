@@ -112,11 +112,6 @@
     vm.aboutReleaseName = AppO2.APP_CONFIG.about.releaseName;
     vm.aboutReleaseNumber = AppO2.APP_CONFIG.about.releaseNumber;
 
-    vm.piwikAppEnabled = AppO2.APP_CONFIG.params.piwikApp.enabled;
-    if (vm.piwikAppEnabled) {
-      vm.piwikAppLink = AppO2.APP_CONFIG.params.piwikApp.baseUrl;
-    }
-
     vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
     if (vm.kmlAppEnabled) {
       var kmlBaseUrl = stateService.omarSitesState.url.base;

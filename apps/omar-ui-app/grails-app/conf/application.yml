@@ -160,9 +160,6 @@ omar:
     jpipApp:
       # Used to show/hide the JPIP buttons in the UI (True or False)
       enabled: true
-    piwikApp:
-      # Used to show/hide the PIWIK app link on the O2 home page (True or False )
-      enabled: false
     userGuide:
       # URL of the userGuide
       baseUrl: ${baseUrl}/omar-docs/

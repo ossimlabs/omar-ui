@@ -25,41 +25,33 @@ baseUrl: https://omar-dev.ossim.io
 
 omar:
   app:
-    openlayers:
-      # Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app.
-      # If you do not have this field specified in the application YAML it will use the default layer.
-      # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
-      baseMaps:
-        -
-          layerType: "tilewms"
-          title: "OSM Basic"
-          url: "https://omar-dev.ossim.io/omar-mapproxy/service"
-          params:
-            layers: "o2-basemap-basic"
-            format: "image/jpeg"
-          options:
-            visible: true
+    footprints:
+      # Misc. params for the wfs request
+      params:
+        # Name for the footprint layer.
+        # Shows up in UI's layerswitcher.
+        - name: "Image Footprints"
+          version: '1.1.1'
+          # Layer name
+          layers: 'omar:raster_entry'
+          # Styling for the footprint layer.
+          # Choices are "byFileType", "bySensorType", "byMissionType"
+          styles: 'byFileType'
+          format: 'image/gif'
+        - name: "Video Footprints"
+          version: '1.1.1'
+          # Layer name
+          layers: 'omar:video_data_set'
+          # Styling for the footprint layer.
+          # Choices are "byFileType", "bySensorType", "byMissionType"
+          styles: 'byFileType'
+          format: 'image/gif'
 
-      # Uncomment the example(s) below, and *modify* accordingly to
-      # add a custom overlay layer.
-      # overlayLayers:
-      #   -
-      #     layerType: "tilewms"
-      #     title: "Tile WMS Example"
-      #     url: "https://ahocevar.com/geoserver/wms"
-      #     params:
-      #       layers: 'ne:NE1_HR_LC_SR_W_DR'
-      #       tiled: true
-      #     options:
-      #       visible: false
-      #   -
-      #     layerType: "imagewms"
-      #     title: "Image WMS Example"
-      #     url: "https://ahocevar.com/geoserver/wms"
-      #     params:
-      #       layers: 'topp:states'
-      #     options:
-      #       visible: false
+    jpipApp:
+      # Used to show/hide the JPIP buttons in the UI (True or False)
+      enabled: true
+    kmlApp:
+      enabled: true
     sites:
       -
         info:
@@ -72,6 +64,53 @@ omar:
           base: ${baseUrl}
           # Optional context paths for the apps, e.g.
           # uiContextPath: /omar-ui
+    twofishes:
+      # URL of Twofishes search service.
+      # Used for geocoding place names
+      baseUrl: ${baseUrl}/twofishes
+    uploadApp:
+      enabled: true
+    userGuide:
+      # URL of the userGuide
+      baseUrl: ${baseUrl}/omar-docs/
+      # Used to show/hide the user guide links
+      enabled: true
+  openlayers:
+    # Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app.
+    # If you do not have this field specified in the application YAML it will use the default layer.
+    # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
+    baseMaps:
+      -
+        layerType: tilewms
+        title: OSM Basic
+        url: ${baseUrl}/omar-mapproxy/service
+        params:
+          layers: o2-basemap-basic
+          ormat: image/jpeg
+        options:
+          isible: true
+    # Uncomment the example(s) below, and *modify* accordingly to
+    # add a custom overlay layer.
+    # overlayLayers:
+    #   -
+    #     layerType: "tilewms"
+    #     title: "Tile WMS Example"
+    #     url: "https://ahocevar.com/geoserver/wms"
+    #     params:
+    #       layers: 'ne:NE1_HR_LC_SR_W_DR'
+    #       tiled: true
+    #     options:
+    #       visible: false
+    #   -
+    #     layerType: "imagewms"
+    #     title: "Image WMS Example"
+    #     url: "https://ahocevar.com/geoserver/wms"
+    #     params:
+    #       layers: 'topp:states'
+    #     options:
+    #       visible: false
+    # if you would like to differentiate things on a specific zoom level, set it here
+    zoomFilterChangeLevel: 10
 
 securityClassification:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
@@ -104,66 +143,9 @@ userInfo:
 logging:
   config: classpath:logback.groovy
 
+---
 omar:
-
-
-    # if you would like to differentiate things on a specific zoom level, set it here
-    zoomFilterChangeLevel: 10
-
   app:
-
-    footprints:
-      # Misc. params for the wfs request
-      params:
-        # Name for the footprint layer.
-        # Shows up in UI's layerswitcher.
-        - name: "Image Footprints"
-
-          # WFS version number
-          version: '1.1.1'
-
-          # Layer name
-          layers: 'omar:raster_entry'
-
-          # Styling for the footprint layer.
-          # Choices are "byFileType", "bySensorType", "byMissionType"
-          styles: 'byFileType'
-
-          # Image format
-          format: 'image/gif'
-
-        - name: "Video Footprints"
-
-          # WFS version number
-          version: '1.1.1'
-
-          # Layer name
-          layers: 'omar:video_data_set'
-
-          # Styling for the footprint layer.
-          # Choices are "byFileType", "bySensorType", "byMissionType"
-          styles: 'byFileType'
-
-          # Image format
-          format: 'image/gif'
-    uploadApp:
-      # Used to show/hide the various links to the Upload service in the UI (True or False)
-      enabled: true
-    twofishes:
-      # URL of Twofishes search service.
-      # Used for geocoding place names
-      baseUrl: ${baseUrl}/twofishes
-    kmlApp:
-      enabled: true
-    jpipApp:
-      # Used to show/hide the JPIP buttons in the UI (True or False)
-      enabled: true
-    userGuide:
-      # URL of the userGuide
-      baseUrl: ${baseUrl}/omar-docs/
-      # Used to show/hide the user guide links
-      enabled: true
-
     # Base settings for the O2 UI general configuration
     misc:
       # Allows logging for javascript

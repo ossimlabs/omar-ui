@@ -1,9 +1,4 @@
 ---
-defaultUsername: Anonymous
-
-requestHeaderUsername: username
-
----
 # About dropdown settings
 about:
   # Email support
@@ -145,7 +140,7 @@ omar:
           description: OMAR Development Server (Unclassified)
         url:
           # Base URL for the federated site
-          base: https://omar-dev.ossim.io
+          base: ${baseUrl}
           # Optional context paths for the apps, e.g.
           # uiContextPath: /omar-ui
     twofishes:
@@ -166,7 +161,7 @@ omar:
     baseMaps:
       - layerType: tilewms
         options:
-          isible: true
+          visible: true
         params:
           layers: o2-basemap-basic
           format: image/jpeg

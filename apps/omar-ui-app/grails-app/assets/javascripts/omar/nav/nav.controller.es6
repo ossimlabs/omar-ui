@@ -107,15 +107,10 @@
     vm.metricsSpringBootAdminEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.enabled;
 
-    // Show/hide the About dropdown menu
-    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
-
     // About dropdown menu settings
-    vm.aboutContactEmail = AppO2.APP_CONFIG.params.misc.about.contactEmail;
-    vm.aboutMessage = AppO2.APP_CONFIG.params.misc.about.message;
-    vm.aboutReleaseName = AppO2.APP_CONFIG.params.misc.about.releaseName;
-    vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.misc.about.releaseNumber;
-    vm.aboutUiBuildVersion = AppO2.APP_CONFIG.params.misc.about.uiBuildVersion;
+    vm.aboutContactEmail = AppO2.APP_CONFIG.params.about.contactEmail;
+    vm.aboutReleaseName = AppO2.APP_CONFIG.params.about.releaseName;
+    vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.about.releaseNumber;
 
     vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
     if (vm.apiAppEnabled) {

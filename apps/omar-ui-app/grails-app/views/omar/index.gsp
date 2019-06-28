@@ -133,7 +133,7 @@
               </ul>
             </li>
             <!-- About dropdown menu -->
-            <li class="dropdown mega-dropdown" ng-show="nav.aboutShow" tooltip-placement="bottom"
+            <li class="dropdown mega-dropdown" tooltip-placement="bottom"
             uib-tooltip="View installation information regarding the O2 deployment">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false"><span class="fa fa-question-circle" aria-hidden="true"></span>
@@ -146,7 +146,7 @@
                     </li>
                     <li class="about-row">
                       <div class="col-sm-12">
-                        <span class="about-message">{{nav.aboutMessage}}</span>
+                        <span class="about-message">O2 | Image Discovery and Analysis</span>
                         <hr>
                         <p class="small"><span class="text-info">Contact: </span><a href = "mailto:{{nav.aboutContactEmail}}">{{nav.aboutContactEmail}}</a></p>
                         <p class="small"><span class="text-info">Release: </span><span>{{nav.aboutReleaseName}}</span></p>

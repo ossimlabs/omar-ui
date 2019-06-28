@@ -64,6 +64,15 @@ grails:
 
 
 ---
+# About dropdown settings
+about:
+  # Email support
+  contactEmail: Contact Email
+  # O2 release name
+  releaseName: Release Name
+  # O2 release version number
+  releaseNumber: Release Number
+
 # If there a page banner is needed, set it here
 #banner:
 #   backgroundColor: darkgray
@@ -274,23 +283,6 @@ omar:
         message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
 
         # Used to show/hide the message of the day banner
-        enabled: true
-
-      # About dropdown settings
-      about:
-        # Email support
-        contactEmail: O2Support@digitalglobe.com
-
-        # Optional about message
-        message: "O2 | Image Discovery and Analysis"
-
-        # O2 release name
-        releaseName: Islamorada
-
-        # O2 release version number
-        releaseNumber: 2.5.0
-
-        # Used to show/hide the About dropdown
         enabled: true
 
       # Metrics dropdown menu settings

@@ -334,9 +334,9 @@ omar:
             # URL of the O2 Services Monitor dashboard
             baseUrl: ${serverProtocol}://${serverName}/omar-services-monitor/
 
-            # Used to show/hide the Services Monitor 
+            # Used to show/hide the Services Monitor
             enabled: true
-            
+
 ---
 omar:
   app:
@@ -393,8 +393,8 @@ omar:
           # tlvContextPath: /tlv
 
 # Set the context path for the application.
-#server:
-#  contextPath: /omar-ui
+server:
+  contextPath: /omar-ui
 
 ---
 grails:

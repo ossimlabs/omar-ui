@@ -139,8 +139,7 @@ omar:
             # Used to show/hide the Services Monitor
             enabled: true
     sites:
-      -
-        info:
+      - info:
           # Short name for the omar site
           name: OMAR-DEV
           # Long name/description of the site.  This is displayed in the dropdown in the UI

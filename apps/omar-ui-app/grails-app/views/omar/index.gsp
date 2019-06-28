@@ -38,7 +38,7 @@
                 <li><a ui-sref="home">&nbsp;Home</a></li>
                 <li><a title="Search and discover various types of imagery." ui-sref="map">&nbsp;Search</a></li>
                 <li ng-show="{{nav.kmlAppEnabled}}"><a ng-href="{{nav.kmlAppLink}}" title="Download a KML of the last 10 images acquired." target="_blank">&nbsp;KML</a></li>
-                <li ng-show="{{nav.tlvAppEnabled}}"><a ng-href="{{nav.tlvAppLink}}" title="An on-demand imagery flipbook<" target="_blank">&nbsp;TLV</a></li>
+                <li><a ng-href="{{nav.tlvAppLink}}" title="An on-demand imagery flipbook<" target="_blank">&nbsp;TLV</a></li>
                 <li ng-show="{{nav.uploadAppEnabled}}"><a ng-href="{{nav.uploadAppLink}}" title="A service to upload images<" target="_blank">&nbsp;Image Upload</a></li>
                 <li ng-show="{{nav.userGuideEnabled}}"><a ng-href="{{nav.userGuideLink}}" target="_blank">&nbsp;User Guide</a></li>
               </ul>

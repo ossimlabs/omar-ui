@@ -25,6 +25,41 @@ baseUrl: https://omar-dev.ossim.io
 
 omar:
   app:
+    openlayers:
+      # Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app.
+      # If you do not have this field specified in the application YAML it will use the default layer.
+      # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
+      baseMaps:
+        -
+          layerType: "tilewms"
+          title: "OSM Basic"
+          url: "https://omar-dev.ossim.io/omar-mapproxy/service"
+          params:
+            layers: "o2-basemap-basic"
+            format: "image/jpeg"
+          options:
+            visible: true
+
+      # Uncomment the example(s) below, and *modify* accordingly to
+      # add a custom overlay layer.
+      # overlayLayers:
+      #   -
+      #     layerType: "tilewms"
+      #     title: "Tile WMS Example"
+      #     url: "https://ahocevar.com/geoserver/wms"
+      #     params:
+      #       layers: 'ne:NE1_HR_LC_SR_W_DR'
+      #       tiled: true
+      #     options:
+      #       visible: false
+      #   -
+      #     layerType: "imagewms"
+      #     title: "Image WMS Example"
+      #     url: "https://ahocevar.com/geoserver/wms"
+      #     params:
+      #       layers: 'topp:states'
+      #     options:
+      #       visible: false
     sites:
       -
         info:
@@ -70,41 +105,7 @@ logging:
   config: classpath:logback.groovy
 
 omar:
-  openlayers:
-    # Allows one to control the layers added to the base maps section of openlayers on the ortho view and map view pages in the omar-app.
-    # If you do not have this field specified in the application YAML it will use the default layer.
-    # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
-    baseMaps:
-      -
-        layerType: "tilewms"
-        title: "OSM Basic"
-        url: "https://omar-dev.ossim.io/omar-mapproxy/service"
-        params:
-          layers: "o2-basemap-basic"
-          format: "image/jpeg"
-        options:
-          visible: true
 
-    # Uncomment the example(s) below, and *modify* accordingly to
-    # add a custom overlay layer.
-    # overlayLayers:
-    #   -
-    #     layerType: "tilewms"
-    #     title: "Tile WMS Example"
-    #     url: "https://ahocevar.com/geoserver/wms"
-    #     params:
-    #       layers: 'ne:NE1_HR_LC_SR_W_DR'
-    #       tiled: true
-    #     options:
-    #       visible: false
-    #   -
-    #     layerType: "imagewms"
-    #     title: "Image WMS Example"
-    #     url: "https://ahocevar.com/geoserver/wms"
-    #     params:
-    #       layers: 'topp:states'
-    #     options:
-    #       visible: false
 
     # if you would like to differentiate things on a specific zoom level, set it here
     zoomFilterChangeLevel: 10
@@ -145,9 +146,6 @@ omar:
 
           # Image format
           format: 'image/gif'
-    tlvApp:
-      # Used to show/hide the various links to the TLV app in the UI (True or False)
-      enabled: true
     uploadApp:
       # Used to show/hide the various links to the Upload service in the UI (True or False)
       enabled: true
@@ -163,7 +161,6 @@ omar:
     userGuide:
       # URL of the userGuide
       baseUrl: ${baseUrl}/omar-docs/
-
       # Used to show/hide the user guide links
       enabled: true
 

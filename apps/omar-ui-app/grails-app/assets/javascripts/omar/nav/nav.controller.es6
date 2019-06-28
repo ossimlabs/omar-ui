@@ -120,13 +120,10 @@
         kmlBaseUrl + kmlContextPath + "/superOverlay/getLastImagesKml";
     }
 
-    vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;
-    if (vm.tlvAppEnabled) {
-      var tlvBaseUrl = stateService.omarSitesState.url.base;
-      var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
-    }
-
+    var tlvBaseUrl = stateService.omarSitesState.url.base;
+    var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+    vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
+    
     vm.uploadAppEnabled = AppO2.APP_CONFIG.params.uploadApp.enabled;
     if (vm.uploadAppEnabled) {
       var uploadBaseUrl = stateService.omarSitesState.url.base;

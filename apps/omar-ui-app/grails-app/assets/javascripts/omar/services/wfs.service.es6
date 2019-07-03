@@ -139,7 +139,48 @@
         });
     };
 
+    let wfsQueryCnt = 0;
+
+    this.executeWfsVideoQuery = function () {
+        // Not needed yet...
+        // let urlParams = new URLSearchParams(window.location.search)
+        // let filter = urlParams.get('filter')
+
+        const wfsUrl = 'https://omar-dev.ossim.io/omar-wfs/wfs?'
+        const wfsParams = {
+            service: 'WFS',
+            version: '1.1.0',
+            request: 'GetFeature',
+            typeName: 'omar:video_data_set',
+            filter: filter,
+            resultType: 'results',
+            outputFormat: 'JSON'
+        }
+
+        const queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+        console.log('queryString', queryString)
+
+        return $http({
+            method: "GET",
+            url:
+                wfsUrl +
+                "?filter=" +
+                encodeURIComponent("filename LIKE '" + filename + "'") +
+                "&outputFormat=JSON" +
+                "&request=GetFeature" +
+                "&service=WFS" +
+                "&typeName=omar:raster_entry" +
+                "&version=1.1.0"
+        }).then(function(res) {
+            console.log('video response', res)
+        })
+    }
+
     this.executeWfsQuery = function( requestHits ) {
+        console.log('executeWfsQuery RAN')
+        // TODO Esterberg - this returns 5 times on page load and is undefined each time
+        // What is request hits and why is it not passed as a param in filter.controller?
+
         if (this.attrObj.filter === "") {
             // Only send the spatialObj to filter the results
             wfsRequest.cql = this.spatialObj.filter;
@@ -167,10 +208,14 @@
             version: wfsRequest.version
         };
 
-        $.each( [ true, requestHits ], function( index, value ) {
-            if ( value !== false ) {
 
+        $.each( [ true, requestHits ], function( index, value ) {
+            // TODO Esterberg - requestHits is always undefined and somehow runs 10 times...
+            // console.log('index', index, 'value', value, 'requestHits', requestHits)
+            if ( value !== false ) {
+                // TODO Esterberg - undefined = true in js.  This runs every single time...
                 var wfsQuery = function() {
+                    wfsQueryCnt += 1
                     return $.ajax({
                         data: $.param( $.extend( extraParam, params ) ),
                         dataType: 'json',
@@ -181,12 +226,14 @@
                         $timeout(function() {
                             if ( index == 0 ) {
                                 $rootScope.$broadcast( 'wfs: updated', data.features );
-
+                                console.log('wfs: updated', data.features)
                                 const imageIdArray = data.features.map( image => image.properties.id );
                                 stateService.mapState.featureIds = imageIdArray;
+
                             }
                             else if ( index == 1 ) {
                                 $rootScope.$broadcast( 'wfs features: updated', data.totalFeatures );
+                                console.log('wfs features: updated', data.features)
                             }
                         });
                     } );
@@ -197,6 +244,7 @@
                     extraParam = { maxFeatures: wfsRequest.pageLimit };
 
                     if ( wfsAjax.features ) {
+                        // console.log('wfsAjax.features', wfsAjax.features)
                         wfsAjax.features.abort();
                     }
                     wfsAjax.features = wfsQuery();
@@ -210,7 +258,7 @@
                     wfsAjax.hits = wfsQuery();
                 }
             }
-        } );
+        });
     };
 
     this.getImageProperties = function(wfsUrl, filename) {
@@ -360,6 +408,7 @@
 
       return $http({ method: "GET", url: wfsUrl }).then(function(response) {
         var features = response.data.features;
+        console.log('main features', features)
         return features;
       });
     };

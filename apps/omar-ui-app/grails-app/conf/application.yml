@@ -361,6 +361,17 @@ omar:
           # Base URL for the federated site
           #base: ${serverProtocol}://${serverName}
           base: https://omar-dev.ossim.io
+      -
+        info:
+          # Short name for the omar site
+          name: OMAR-Matt
+
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: made this for testing
+        url:
+          # Base URL for the federated site
+          #base: ${serverProtocol}://${serverName}
+          base: http://google.com
 
           # Optional context path for the UI
           # uiContextPath: /omar-ui

@@ -34,10 +34,12 @@
                         </ul>
                     </li>
                     <li role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).show()"  >Filters</a>
+                        <a ng-click="showFilterSearch = true; showMapSearch = false"  >Filters</a>
+%{--                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).show()"  >Filters</a>--}%
                     </li>
                     <li class = "active" role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
+                        <a ng-click="showMapSearch = true; showFilterSearch = false"  >Map</a>
+%{--                        <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>--}%
                     </li>
                 </ul>
                 <%--
@@ -92,762 +94,758 @@
 
     <div class="row">
         <div class = "col-md-8">
-            <div class = "tab-content">
-
-                <div role ="tabpanel" class = "tab-pane" id = "filterSearch">
-                    <div class = "row">
-                        <div class = "col-md-4">
-                            <div class = "row">
-                                <div class = "col-md-12" style = "text-align: center"><h4>Keyword Filters</h4></div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">BE</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-checked = "!filter.imageryCheck ? false : filter.beNumberCheck"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.beNumberCheck"
-                                                type = "checkbox">
-                                        </span>
-                                        <input focus-input
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.beNumber"
-                                            class = "form-control"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()"
-                                            ng-change = "filter.beNumberCheck = filter.beNumber === '' ? false: true;"
-                                            placeholder = "Basic Encyclopedia Number"
-                                            value = "filter.beNumber">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">CC</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-checked = "!filter.imageryCheck ? false : filter.countryCodeCheck"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.countryCodeCheck"
-                                                type="checkbox">
-                                        </span>
+            <div id = "filterSearch" ng-show="showFilterSearch">
+                <div class = "row">
+                    <div class = "col-md-4">
+                        <div class = "row">
+                            <div class = "col-md-12" style = "text-align: center"><h4>Keyword Filters</h4></div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">BE</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
                                         <input
-                                            class = "form-control"
-                                            id = "countryCodeInput"
-                                            list = "countryCodeList"
-                                            ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
-                                            ng-change = "filter.handleDataList( 'countryCodeInput' )"
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-checked = "!filter.imageryCheck ? false : filter.beNumberCheck"
                                             ng-disabled = "!filter.imageryCheck"
-                                            ng-keyup = "filter.handleDataList( 'countryCodeInput' )"
-                                            ng-model = "filter.countryCode"
-                                            placeholder = "Country Code">
-                                        <datalist id = "countryCodeList">
-                                            <option ng-repeat = "val in countryCodeTypes" value="{{val}}">
-                                        </datalist>
-                                    </div>
+                                            ng-model = "filter.beNumberCheck"
+                                            type = "checkbox">
+                                    </span>
+                                    <input focus-input
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.beNumber"
+                                        class = "form-control"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()"
+                                        ng-change = "filter.beNumberCheck = filter.beNumber === '' ? false: true;"
+                                        placeholder = "Basic Encyclopedia Number"
+                                        value = "filter.beNumber">
                                 </div>
                             </div>
-                            <div class = "row">
-                                <div class = "col-md-12">File</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-model = "filter.filenameCheck"
-                                                type="checkbox">
-                                        </span>
-                                        <input focus-input
-                                            ng-model = "filter.filename"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()"
-                                            ng-change = "filter.filenameCheck = filter.filename === '' ? false: true;"
-                                            class = "form-control"
-                                            placeholder = "File name"
-                                            value = "filter.filename">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">Image</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-checked = "!filter.imageryCheck ? false : filter.imageIdCheck"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.imageIdCheck"
-                                                type = "checkbox">
-                                        </span>
-                                        <input focus-input
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.imageId"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()"
-                                            ng-change = "filter.imageIdCheck = filter.imageId === '' ? false: true;"
-                                            class = "form-control"
-                                            placeholder = "Image ID"
-                                            value = "filter.imageId">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">Mission</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input ng-change = "filter.updateFilterString()" ng-model = "filter.missionIdCheck" type="checkbox">
-                                        </span>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">CC</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
                                         <input
-                                            class = "form-control"
-                                            id = "missionIdInput"
-                                            list = "missionIdList"
-                                            ng-blur = "filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
-                                            ng-change = "filter.handleDataList( 'missionIdInput' )"
-                                            ng-keyup = "filter.handleDataList( 'missionIdInput' )"
-                                            ng-model = "filter.missionId"
-                                            placeholder = "Mission ID">
-                                        <datalist id = "missionIdList">
-                                            <option ng-repeat = "val in missionIdTypes" value="{{val}}">
-                                        </datalist>
-                                    </div>
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-checked = "!filter.imageryCheck ? false : filter.countryCodeCheck"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.countryCodeCheck"
+                                            type="checkbox">
+                                    </span>
+                                    <input
+                                        class = "form-control"
+                                        id = "countryCodeInput"
+                                        list = "countryCodeList"
+                                        ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
+                                        ng-change = "filter.handleDataList( 'countryCodeInput' )"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-keyup = "filter.handleDataList( 'countryCodeInput' )"
+                                        ng-model = "filter.countryCode"
+                                        placeholder = "Country Code">
+                                    <datalist id = "countryCodeList">
+                                        <option ng-repeat = "val in countryCodeTypes" value="{{val}}">
+                                    </datalist>
                                 </div>
                             </div>
-                            <div class = "row">
-                                <div class = "col-md-12">Product</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change="filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model="filter.productIdCheck"
-                                                type="checkbox">
-                                        </span>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">File</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
                                         <input
-                                            class = "form-control"
-                                            id = "productIdInput"
-                                            list = "productIdList"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-blur = "filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
-                                            ng-change = "filter.handleDataList( 'productIdInput' )"
-                                            ng-keyup = "filter.handleDataList( 'productIdInput' )"
-                                            ng-model = "filter.productId"
-                                            placeholder = "Product ID">
-                                        <datalist id = "productIdList">
-                                            <option ng-repeat = "val in productIdTypes" value="{{val}}">
-                                        </datalist>
-                                    </div>
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-model = "filter.filenameCheck"
+                                            type="checkbox">
+                                    </span>
+                                    <input focus-input
+                                        ng-model = "filter.filename"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()"
+                                        ng-change = "filter.filenameCheck = filter.filename === '' ? false: true;"
+                                        class = "form-control"
+                                        placeholder = "File name"
+                                        value = "filter.filename">
                                 </div>
                             </div>
-
-                            <div class = "row">
-                                <div class = "col-md-12">Sensor</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-model = "filter.sensorIdCheck"
-                                                type = "checkbox">
-                                        </span>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">Image</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
                                         <input
-                                            class = "form-control"
-                                            id = "sensorIdInput"
-                                            list = "sensorIdList"
-                                            ng-blur = "filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
-                                            ng-change = "filter.handleDataList( 'sensorIdInput' )"
-                                            ng-keyup = "filter.handleDataList( 'sensorIdInput' )"
-                                            ng-model = "filter.sensorId"
-                                            placeholder = "Sensor ID">
-                                        <datalist id = "sensorIdList">
-                                            <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
-                                        </datalist>
-                                    </div>
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-checked = "!filter.imageryCheck ? false : filter.imageIdCheck"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.imageIdCheck"
+                                            type = "checkbox">
+                                    </span>
+                                    <input focus-input
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.imageId"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()"
+                                        ng-change = "filter.imageIdCheck = filter.imageId === '' ? false: true;"
+                                        class = "form-control"
+                                        placeholder = "Image ID"
+                                        value = "filter.imageId">
                                 </div>
                             </div>
-                            <div class = "row">
-                                <div class = "col-md-12">Target</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-checked = "!filter.imageryCheck ? false : filter.targetIdCheck"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.targetIdCheck"
-                                                type = "checkbox">
-                                        </span>
-                                        <input focus-input
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.targetId"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()"
-                                            ng-change = "filter.targetIdCheck = filter.targetId === '' ? false: true;"
-                                            class = "form-control"
-                                            placeholder="Target ID"
-                                            value="filter.targetId">
-                                    </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">Mission</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
+                                        <input ng-change = "filter.updateFilterString()" ng-model = "filter.missionIdCheck" type="checkbox">
+                                    </span>
+                                    <input
+                                        class = "form-control"
+                                        id = "missionIdInput"
+                                        list = "missionIdList"
+                                        ng-blur = "filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
+                                        ng-change = "filter.handleDataList( 'missionIdInput' )"
+                                        ng-keyup = "filter.handleDataList( 'missionIdInput' )"
+                                        ng-model = "filter.missionId"
+                                        placeholder = "Mission ID">
+                                    <datalist id = "missionIdList">
+                                        <option ng-repeat = "val in missionIdTypes" value="{{val}}">
+                                    </datalist>
                                 </div>
                             </div>
-                            <div class = "row">
-                                <div class = "col-md-12">WAC</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                ng-change = "filter.updateFilterString()"
-                                                ng-checked = "!filter.imageryCheck ? false : filter.wacNumberCheck"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.wacNumberCheck"
-                                                type = "checkbox">
-                                        </span>
-                                        <input focus-input
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">Product</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
+                                        <input
+                                            ng-change="filter.updateFilterString()"
                                             ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.wacNumber"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()"
-                                            ng-change = "filter.wacNumberCheck = filter.wacNumber === '' ? false: true;"
-                                            class = "form-control"
-                                            placeholder = "World Area Code"
-                                            value = "filter.wacNumber">
-                                    </div>
+                                            ng-model="filter.productIdCheck"
+                                            type="checkbox">
+                                    </span>
+                                    <input
+                                        class = "form-control"
+                                        id = "productIdInput"
+                                        list = "productIdList"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-blur = "filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
+                                        ng-change = "filter.handleDataList( 'productIdInput' )"
+                                        ng-keyup = "filter.handleDataList( 'productIdInput' )"
+                                        ng-model = "filter.productId"
+                                        placeholder = "Product ID">
+                                    <datalist id = "productIdList">
+                                        <option ng-repeat = "val in productIdTypes" value="{{val}}">
+                                    </datalist>
                                 </div>
                             </div>
                         </div>
 
-                        <div class = "col-md-4">
-                            <div class = "row">
-                                <div class = "col-md-12" style = "text-align: center"><h4>Range Filters</h4></div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    NIIRS
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 9"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
+                        <div class = "row">
+                            <div class = "col-md-12">Sensor</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
+                                        <input
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-model = "filter.sensorIdCheck"
+                                            type = "checkbox">
+                                    </span>
                                     <input
-                                        class = "form-check-input"
-                                        type = "checkbox"
-                                        ng-checked = "!filter.imageryCheck ? false : filter.predNiirsCheckNull"
-                                        ng-disabled = "!filter.predNiirsCheck || !filter.imageryCheck"
-                                        ng-model = "filter.predNiirsCheckNull"
-                                        ng-click = "filter.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "predNiirsCheckNull">UNK</label>
-                                    <i class =  "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the NIIRS metadata field"></i>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.predNiirsMin"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.predNiirsMin}}"
-                                            min = "0" max = "8.9" step = "0.1"
-                                            ng-change = "filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <input
-                                                ng-checked = "!filter.imageryCheck ? false : filter.predNiirsCheck"
-                                                ng-click = "filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.predNiirsCheck"
-                                                type = "checkbox">
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "9"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.predNiirsMax"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.predNiirsMax}}"
-                                            min = "0.1" max = "9" step = "0.1"
-                                            ng-change = "filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    Azimuth
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 360"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
-                                    <input
-                                        class = "form-check-input"
-                                        type = "checkbox"
-                                        ng-checked = "!filter.imageryCheck ? false : filter.azimuthCheckNull"
-                                        ng-disabled = "!filter.azimuthCheck || !filter.imageryCheck"
-                                        ng-model = "filter.azimuthCheckNull"
-                                        ng-click = "filter.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "azimuthCheckNull">UNK</label>
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Azimuth metadata field"></i>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-checked = "!filter.imageryCheck ? false : filter.azimuthCheck"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.azimuthMin"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.azimuthMin}}"
-                                            min = "0" max = "359" step = "1"
-                                            ng-change = "filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <input
-                                                ng-click = "filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.azimuthCheck"
-                                                type = "checkbox">
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "360"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.azimuthMax"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.azimuthMax}}"
-                                            min = "1" max = "360" step = "1"
-                                            ng-change = "filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    Graze/Elev
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range  0 to 90"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
-                                    <input
-                                        class = "form-check-input"
-                                        type = "checkbox"
-                                        ng-checked = "!filter.imageryCheck ? false : filter.grazeElevCheckNull"
-                                        ng-disabled = "!filter.grazeElevCheck || !filter.imageryCheck"
-                                        ng-model = "filter.grazeElevCheckNull"
-                                        ng-click = "filter.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "grazeElevCheckNull">UNK</label>
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Graze/Elev metadata field"></i>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.grazeElevMin"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.grazeElevMin}}"
-                                            min = "0" max = "89.9" step = "0.1"
-                                            ng-change = "filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <input
-                                                ng-checked = "!filter.imageryCheck ? false : filter.grazeElevCheck"
-                                                ng-click = "filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.grazeElevCheck"
-                                                type = "checkbox">
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "90"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.grazeElevMax"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.grazeElevMax}}"
-                                            min = "0.1" max = "90" step = "0.1"
-                                            ng-change = "filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    Sun Azimuth
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 360"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
-                                    <input
-                                        class = "form-check-input"
-                                        type = "checkbox"
-                                        ng-checked = "!filter.imageryCheck ? false : filter.sunAzimuthCheckNull"
-                                        ng-disabled = "!filter.sunAzimuthCheck || !filter.imageryCheck"
-                                        ng-model = "filter.sunAzimuthCheckNull"
-                                        ng-click = "filter.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "sunAzimuthCheckNull">UNK</label>
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Sun Azimuth metadata field"></i>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.sunAzimuthMin"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.sunAzimuthMin}}"
-                                            min = "0" max = "359" step = "1"
-                                            ng-change = "filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <input
-                                                ng-checked = "!filter.imageryCheck ? false : filter.sunAzimuthCheck"
-                                                ng-click = "filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.sunAzimuthCheck"
-                                                type = "checkbox">
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "360"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.sunAzimuthMax"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.sunAzimuthMax}}"
-                                            min = "1" max = "360" step = "1"
-                                            ng-change = "filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    Sun Elevation
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range -90 to 90"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
-                                    <input
-                                        class = "form-check-input"
-                                        type = "checkbox"
-                                        ng-checked = "!filter.imageryCheck ? false : filter.sunElevationCheckNull"
-                                        ng-disabled = "!filter.sunElevationCheck || !filter.imageryCheck"
-                                        ng-model = "filter.sunElevationCheckNull"
-                                        ng-click = "filter.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "sunElevationCheckNull">UNK</label>
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Sun Elevation metadata field"></i>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.sunElevationMin"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.sunElevationMin}}"
-                                            min = "-90" max = "89" step = "1"
-                                            ng-change = "filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <input
-                                                ng-checked = "!filter.imageryCheck ? false : filter.sunElevationCheck"
-                                                ng-click = "filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.sunElevationCheck"
-                                                type = "checkbox">
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.sunElevationMax"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.sunElevationMax}}"
-                                            min = "-89" max = "90" step = "1"
-                                            ng-change = "filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    Cloud Cover
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 100"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
-                                    <input
-                                        class = "form-check-input"
-                                        type = "checkbox"
-                                        ng-checked = "!filter.imageryCheck ? false : filter.cloudCoverCheckNull"
-                                        ng-disabled = "!filter.cloudCoverCheck || !filter.imageryCheck"
-                                        ng-model = "filter.cloudCoverCheckNull"
-                                        ng-click = "filter.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "cloudCoverCheckNull">UNK</label>
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values in the Cloud Cover metadata field"></i>
-                                </div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input readonly
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            class = "form-control input-sm"
-                                            value = "0"
-                                            min = "-89" max = "90">
-                                        <div class = "input-group-addon">
-                                            <input
-                                                ng-checked = "!filter.imageryCheck ? false : filter.cloudCoverCheck"
-                                                ng-click = "filter.updateFilterString()"
-                                                ng-disabled = "!filter.imageryCheck"
-                                                ng-model = "filter.cloudCoverCheck"
-                                                type = "checkbox">
-                                        </div>
-                                        <input focus-input
-                                            style = "text-align: center;"
-                                            type = "number"
-                                            placeholder = "0"
-                                            ng-disabled = "!filter.imageryCheck"
-                                            ng-model = "filter.cloudCover"
-                                            class = "form-control input-sm"
-                                            value = "{{filter.cloudCover}}"
-                                            min = "0" max = "100" step = "1"
-                                            ng-change = "filter.cloudCoverCheck = filter.cloudCover === 20 ? false: true;"
-                                            ng-enter = "filter.updateFilterString()"
-                                            ng-blur = "filter.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
-                                    </div>
+                                        class = "form-control"
+                                        id = "sensorIdInput"
+                                        list = "sensorIdList"
+                                        ng-blur = "filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
+                                        ng-change = "filter.handleDataList( 'sensorIdInput' )"
+                                        ng-keyup = "filter.handleDataList( 'sensorIdInput' )"
+                                        ng-model = "filter.sensorId"
+                                        placeholder = "Sensor ID">
+                                    <datalist id = "sensorIdList">
+                                        <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
+                                    </datalist>
                                 </div>
                             </div>
                         </div>
-
-                        <div class = "col-md-4">
-                            <div class = "row">
-                                <div class = "col-md-12" style = "text-align: center"><h4>Temporal Filters</h4></div>
-                            </div>
-
-                            <div class = "row"><div class = "col-md-12">
-                                <div>Date Type</div>
-                                <div>
-                                    <select
-                                        ng-model="filter.currentDateType"
-                                        ng-options="type.label for type in filter.dateTypes"
-                                        class="form-control input-sm"
-                                        ng-change="filter.updateFilterString()"
-                                        ng-enter="filter.updateFilterString()">
-                                    </select>
-                                </div>
-                            </div></div>
-
-                            <div class = "row"><div class = "col-md-12">
-                                <div>Duration</div>
-                                <div>
-                                    <select
-                                        ng-model="filter.currentTemporalDuration"
-                                        ng-options="duration.label for duration in filter.temporalDurations"
-                                        ng-change="filter.updateFilterString()"
-                                        class="form-control input-sm">
-                                    </select>
-                                </div>
-                            </div></div>
-
-                            <div class = "row" ng-show="filter.customDateRangeVisible">
-                                <div class = "col-md-12">Start Date & Time</div>
-                                <div class = "col-md-6">
-                                    <input uib-datepicker-popup
-                                        type = "text"
-                                        class = "form-control input-sm"
-                                        ng-change="filter.updateFilterString()"
-                                        ng-click = "filter.openStartDatePopup()"
-                                        ng-model = "filter.startDate"
-                                        is-open="filter.startDatePopupOpen"
-                                        close-text = "Close">
-                                </div>
-                                <div class = "col-md-6">
-                                    <input bs-timepicker
-                                        type="text"
-                                        class="form-control input-sm"
-                                        ng-model="filter.startDate"
-                                        data-time-format="HH:mm:ss"
-                                        data-autoclose="false"
-                                        data-minute-step="1"
-                                        data-second-step="1"
-                                        placeholder="Time"
-                                        ng-blur="filter.updateFilterString()">
+                        <div class = "row">
+                            <div class = "col-md-12">Target</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
+                                        <input
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-checked = "!filter.imageryCheck ? false : filter.targetIdCheck"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.targetIdCheck"
+                                            type = "checkbox">
+                                    </span>
+                                    <input focus-input
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.targetId"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()"
+                                        ng-change = "filter.targetIdCheck = filter.targetId === '' ? false: true;"
+                                        class = "form-control"
+                                        placeholder="Target ID"
+                                        value="filter.targetId">
                                 </div>
                             </div>
-
-                            <div class = "row" ng-show="filter.customDateRangeVisible">
-                                <div class = "col-md-12">End Date & Time</div>
-                                <div class = "col-md-6">
-                                    <input uib-datepicker-popup
-                                        type = "text"
-                                        class = "form-control input-sm"
-                                        ng-change="filter.updateFilterString()"
-                                        ng-click = "filter.openEndDatePopup()"
-                                        ng-model = "filter.endDate"
-                                        is-open="filter.endDatePopupOpen"
-                                        close-text = "Close">
-                                </div>
-                                <div class = "col-md-6">
-                                    <input bs-timepicker
-                                        type="text"
-                                        size="8"
-                                        class="form-control input-sm"
-                                        ng-model="filter.endDate"
-                                        data-time-format="HH:mm:ss"
-                                        data-autoclose="0"
-                                        data-minute-step="1"
-                                        data-second-step="1"
-                                        placeholder="Time"
-                                        ng-change="filter.updateFilterString()">
-                                </div>
-                            </div>
-
-                            <div class = "row">
-                                <div class = "col-md-12" style = "text-align: center"><h4>Map Filters</h4></div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12" style = "text-align: center">
-                                    <input type="checkbox"
-                                        ng-model="filter.viewPortSpatial"
-                                        ng-change="filter.byViewPort(filter.viewPortSpatial)">
-                                    Map View
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "This filter is on by default.  It constrains the query to the boundaries of the current map extent"></i>
-                                    &nbsp;&nbsp;
-                                    <input type="checkbox"
-                                        ng-model="filter.pointSpatial"
-                                        ng-change="filter.byPointer(filter.pointSpatial)">
-                                    Point
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Single clicking on the map will return a potential list of images at that location"></i>
-                                    &nbsp;&nbsp;
-                                    <input type="checkbox"
-                                        ng-model="filter.polygonSpatial"
-                                        ng-change="filter.byPolygon(filter.polygonSpatial)">
-                                    Polygon
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Left-click and hold with the ALT key to create a box that will return a potential list of images"></i>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">WAC</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <span class = "input-group-addon">
+                                        <input
+                                            ng-change = "filter.updateFilterString()"
+                                            ng-checked = "!filter.imageryCheck ? false : filter.wacNumberCheck"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.wacNumberCheck"
+                                            type = "checkbox">
+                                    </span>
+                                    <input focus-input
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.wacNumber"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()"
+                                        ng-change = "filter.wacNumberCheck = filter.wacNumber === '' ? false: true;"
+                                        class = "form-control"
+                                        placeholder = "World Area Code"
+                                        value = "filter.wacNumber">
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                    <div class = "row">
-                        <div class = "col-md-12" style = "text-align: center">
-                            <button class = "btn btn-default btn-sm" ng-click = "filter.clearFilters()">Clear Filters</button>
+
+                    <div class = "col-md-4">
+                        <div class = "row">
+                            <div class = "col-md-12" style = "text-align: center"><h4>Range Filters</h4></div>
                         </div>
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                NIIRS
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 9"></i>
+                            </div>
+                            <div align = "right" class = "col-md-6">
+                                <input
+                                    class = "form-check-input"
+                                    type = "checkbox"
+                                    ng-checked = "!filter.imageryCheck ? false : filter.predNiirsCheckNull"
+                                    ng-disabled = "!filter.predNiirsCheck || !filter.imageryCheck"
+                                    ng-model = "filter.predNiirsCheckNull"
+                                    ng-click = "filter.updateFilterString()">
+                                <label class = "form-check-label range-include-unknown-label" for = "predNiirsCheckNull">UNK</label>
+                                <i class =  "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the NIIRS metadata field"></i>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Min</small></span>
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.predNiirsMin"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.predNiirsMin}}"
+                                        min = "0" max = "8.9" step = "0.1"
+                                        ng-change = "filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <input
+                                            ng-checked = "!filter.imageryCheck ? false : filter.predNiirsCheck"
+                                            ng-click = "filter.updateFilterString()"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.predNiirsCheck"
+                                            type = "checkbox">
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "9"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.predNiirsMax"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.predNiirsMax}}"
+                                        min = "0.1" max = "9" step = "0.1"
+                                        ng-change = "filter.predNiirsCheck = (filter.predNiirsMin === 0 && filter.predNiirsMax === 9) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Max</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                Azimuth
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 360"></i>
+                            </div>
+                            <div align = "right" class = "col-md-6">
+                                <input
+                                    class = "form-check-input"
+                                    type = "checkbox"
+                                    ng-checked = "!filter.imageryCheck ? false : filter.azimuthCheckNull"
+                                    ng-disabled = "!filter.azimuthCheck || !filter.imageryCheck"
+                                    ng-model = "filter.azimuthCheckNull"
+                                    ng-click = "filter.updateFilterString()">
+                                <label class = "form-check-label range-include-unknown-label" for = "azimuthCheckNull">UNK</label>
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Azimuth metadata field"></i>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Min</small></span>
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-checked = "!filter.imageryCheck ? false : filter.azimuthCheck"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.azimuthMin"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.azimuthMin}}"
+                                        min = "0" max = "359" step = "1"
+                                        ng-change = "filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <input
+                                            ng-click = "filter.updateFilterString()"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.azimuthCheck"
+                                            type = "checkbox">
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "360"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.azimuthMax"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.azimuthMax}}"
+                                        min = "1" max = "360" step = "1"
+                                        ng-change = "filter.azimuthCheck = (filter.azimuthMin === 0 && filter.azimuthMax === 360) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Max</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                Graze/Elev
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range  0 to 90"></i>
+                            </div>
+                            <div align = "right" class = "col-md-6">
+                                <input
+                                    class = "form-check-input"
+                                    type = "checkbox"
+                                    ng-checked = "!filter.imageryCheck ? false : filter.grazeElevCheckNull"
+                                    ng-disabled = "!filter.grazeElevCheck || !filter.imageryCheck"
+                                    ng-model = "filter.grazeElevCheckNull"
+                                    ng-click = "filter.updateFilterString()">
+                                <label class = "form-check-label range-include-unknown-label" for = "grazeElevCheckNull">UNK</label>
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Graze/Elev metadata field"></i>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Min</small></span>
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.grazeElevMin"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.grazeElevMin}}"
+                                        min = "0" max = "89.9" step = "0.1"
+                                        ng-change = "filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <input
+                                            ng-checked = "!filter.imageryCheck ? false : filter.grazeElevCheck"
+                                            ng-click = "filter.updateFilterString()"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.grazeElevCheck"
+                                            type = "checkbox">
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "90"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.grazeElevMax"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.grazeElevMax}}"
+                                        min = "0.1" max = "90" step = "0.1"
+                                        ng-change = "filter.grazeElevCheck = (filter.grazeElevMin === 0 && filter.grazeElevMax === 90) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Max</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                Sun Azimuth
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 360"></i>
+                            </div>
+                            <div align = "right" class = "col-md-6">
+                                <input
+                                    class = "form-check-input"
+                                    type = "checkbox"
+                                    ng-checked = "!filter.imageryCheck ? false : filter.sunAzimuthCheckNull"
+                                    ng-disabled = "!filter.sunAzimuthCheck || !filter.imageryCheck"
+                                    ng-model = "filter.sunAzimuthCheckNull"
+                                    ng-click = "filter.updateFilterString()">
+                                <label class = "form-check-label range-include-unknown-label" for = "sunAzimuthCheckNull">UNK</label>
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Sun Azimuth metadata field"></i>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Min</small></span>
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.sunAzimuthMin"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.sunAzimuthMin}}"
+                                        min = "0" max = "359" step = "1"
+                                        ng-change = "filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <input
+                                            ng-checked = "!filter.imageryCheck ? false : filter.sunAzimuthCheck"
+                                            ng-click = "filter.updateFilterString()"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.sunAzimuthCheck"
+                                            type = "checkbox">
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "360"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.sunAzimuthMax"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.sunAzimuthMax}}"
+                                        min = "1" max = "360" step = "1"
+                                        ng-change = "filter.sunAzimuthCheck = (filter.sunAzimuthMin === 0 && filter.sunAzimuthMax === 360) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Max</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                Sun Elevation
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range -90 to 90"></i>
+                            </div>
+                            <div align = "right" class = "col-md-6">
+                                <input
+                                    class = "form-check-input"
+                                    type = "checkbox"
+                                    ng-checked = "!filter.imageryCheck ? false : filter.sunElevationCheckNull"
+                                    ng-disabled = "!filter.sunElevationCheck || !filter.imageryCheck"
+                                    ng-model = "filter.sunElevationCheckNull"
+                                    ng-click = "filter.updateFilterString()">
+                                <label class = "form-check-label range-include-unknown-label" for = "sunElevationCheckNull">UNK</label>
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the Sun Elevation metadata field"></i>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Min</small></span>
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.sunElevationMin"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.sunElevationMin}}"
+                                        min = "-90" max = "89" step = "1"
+                                        ng-change = "filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <input
+                                            ng-checked = "!filter.imageryCheck ? false : filter.sunElevationCheck"
+                                            ng-click = "filter.updateFilterString()"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.sunElevationCheck"
+                                            type = "checkbox">
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.sunElevationMax"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.sunElevationMax}}"
+                                        min = "-89" max = "90" step = "1"
+                                        ng-change = "filter.sunElevationCheck = (filter.sunElevationMin === -90 && filter.sunElevationMax === 90) ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Max</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                Cloud Cover
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 100"></i>
+                            </div>
+                            <div align = "right" class = "col-md-6">
+                                <input
+                                    class = "form-check-input"
+                                    type = "checkbox"
+                                    ng-checked = "!filter.imageryCheck ? false : filter.cloudCoverCheckNull"
+                                    ng-disabled = "!filter.cloudCoverCheck || !filter.imageryCheck"
+                                    ng-model = "filter.cloudCoverCheckNull"
+                                    ng-click = "filter.updateFilterString()">
+                                <label class = "form-check-label range-include-unknown-label" for = "cloudCoverCheckNull">UNK</label>
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values in the Cloud Cover metadata field"></i>
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12">
+                                <div class = "input-group input-group-sm">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Min</small></span>
+                                    </div>
+                                    <input readonly
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        class = "form-control input-sm"
+                                        value = "0"
+                                        min = "-89" max = "90">
+                                    <div class = "input-group-addon">
+                                        <input
+                                            ng-checked = "!filter.imageryCheck ? false : filter.cloudCoverCheck"
+                                            ng-click = "filter.updateFilterString()"
+                                            ng-disabled = "!filter.imageryCheck"
+                                            ng-model = "filter.cloudCoverCheck"
+                                            type = "checkbox">
+                                    </div>
+                                    <input focus-input
+                                        style = "text-align: center;"
+                                        type = "number"
+                                        placeholder = "0"
+                                        ng-disabled = "!filter.imageryCheck"
+                                        ng-model = "filter.cloudCover"
+                                        class = "form-control input-sm"
+                                        value = "{{filter.cloudCover}}"
+                                        min = "0" max = "100" step = "1"
+                                        ng-change = "filter.cloudCoverCheck = filter.cloudCover === 20 ? false: true;"
+                                        ng-enter = "filter.updateFilterString()"
+                                        ng-blur = "filter.updateFilterString()">
+                                    <div class = "input-group-addon">
+                                        <span style = "font-family: monospace;"><small>Max</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class = "col-md-4">
+                        <div class = "row">
+                            <div class = "col-md-12" style = "text-align: center"><h4>Temporal Filters</h4></div>
+                        </div>
+
+                        <div class = "row"><div class = "col-md-12">
+                            <div>Date Type</div>
+                            <div>
+                                <select
+                                    ng-model="filter.currentDateType"
+                                    ng-options="type.label for type in filter.dateTypes"
+                                    class="form-control input-sm"
+                                    ng-change="filter.updateFilterString()"
+                                    ng-enter="filter.updateFilterString()">
+                                </select>
+                            </div>
+                        </div></div>
+
+                        <div class = "row"><div class = "col-md-12">
+                            <div>Duration</div>
+                            <div>
+                                <select
+                                    ng-model="filter.currentTemporalDuration"
+                                    ng-options="duration.label for duration in filter.temporalDurations"
+                                    ng-change="filter.updateFilterString()"
+                                    class="form-control input-sm">
+                                </select>
+                            </div>
+                        </div></div>
+
+                        <div class = "row" ng-show="filter.customDateRangeVisible">
+                            <div class = "col-md-12">Start Date & Time</div>
+                            <div class = "col-md-6">
+                                <input uib-datepicker-popup
+                                    type = "text"
+                                    class = "form-control input-sm"
+                                    ng-change="filter.updateFilterString()"
+                                    ng-click = "filter.openStartDatePopup()"
+                                    ng-model = "filter.startDate"
+                                    is-open="filter.startDatePopupOpen"
+                                    close-text = "Close">
+                            </div>
+                            <div class = "col-md-6">
+                                <input bs-timepicker
+                                    type="text"
+                                    class="form-control input-sm"
+                                    ng-model="filter.startDate"
+                                    data-time-format="HH:mm:ss"
+                                    data-autoclose="false"
+                                    data-minute-step="1"
+                                    data-second-step="1"
+                                    placeholder="Time"
+                                    ng-blur="filter.updateFilterString()">
+                            </div>
+                        </div>
+
+                        <div class = "row" ng-show="filter.customDateRangeVisible">
+                            <div class = "col-md-12">End Date & Time</div>
+                            <div class = "col-md-6">
+                                <input uib-datepicker-popup
+                                    type = "text"
+                                    class = "form-control input-sm"
+                                    ng-change="filter.updateFilterString()"
+                                    ng-click = "filter.openEndDatePopup()"
+                                    ng-model = "filter.endDate"
+                                    is-open="filter.endDatePopupOpen"
+                                    close-text = "Close">
+                            </div>
+                            <div class = "col-md-6">
+                                <input bs-timepicker
+                                    type="text"
+                                    size="8"
+                                    class="form-control input-sm"
+                                    ng-model="filter.endDate"
+                                    data-time-format="HH:mm:ss"
+                                    data-autoclose="0"
+                                    data-minute-step="1"
+                                    data-second-step="1"
+                                    placeholder="Time"
+                                    ng-change="filter.updateFilterString()">
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-md-12" style = "text-align: center"><h4>Map Filters</h4></div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-12" style = "text-align: center">
+                                <input type="checkbox"
+                                    ng-model="filter.viewPortSpatial"
+                                    ng-change="filter.byViewPort(filter.viewPortSpatial)">
+                                Map View
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "This filter is on by default.  It constrains the query to the boundaries of the current map extent"></i>
+                                &nbsp;&nbsp;
+                                <input type="checkbox"
+                                    ng-model="filter.pointSpatial"
+                                    ng-change="filter.byPointer(filter.pointSpatial)">
+                                Point
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Single clicking on the map will return a potential list of images at that location"></i>
+                                &nbsp;&nbsp;
+                                <input type="checkbox"
+                                    ng-model="filter.polygonSpatial"
+                                    ng-change="filter.byPolygon(filter.polygonSpatial)">
+                                Polygon
+                                <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Left-click and hold with the ALT key to create a box that will return a potential list of images"></i>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-                <div role = "tabpanel" class = "tab-pane active" id = "mapSearch">
-                    <!-- Just activating the search controller -->
-                    <div ng-controller = "SearchController as search" style = "display: none;"></div>
-                    <div ng-controller = "MapController as map">
-                        <div id = "map" class = "map" params = "map.mapParams" map>
-                            <div id = "legend" style = "background-color: white; border: 1px solid white; border-radius: 5px; color: black;">
-                                <div class = "text-center"><b>{{map.legendTitle}}</b></div>
-                                <img alt = "{{map.legendTitle}}" src = "{{map.legendUrl}}">
-                            </div>
-                        </div>
-                        <div id = "mouseCoords" class = "map-cord-div" tooltip-popup-delay="300" tooltip-placement = "top" uib-tooltip = "Click on the coordinates to change units."></div>
-                        <div id = "popup" class = "ol-popup">
-                            <div id = "popup-content"></div>
-                        </div>
-                        <div id = "progress" class = "text-info">
-                            <i class = "fa fa-spinner fa-spin fa-4x"></i>
-                        </div>
+                <div class = "row">
+                    <div class = "col-md-12" style = "text-align: center">
+                        <button class = "btn btn-default btn-sm" ng-click = "filter.clearFilters()">Clear Filters</button>
                     </div>
                 </div>
+            </div>
 
+            <div id = "mapSearch" ng-show="showMapSearch">
+                <!-- Just activating the search controller -->
+                <div ng-controller = "SearchController as search"></div>
+                <div ng-controller = "MapController as map">
+                    <div id = "map" class = "map" params = "map.mapParams" map>
+                        <div id = "legend" style = "background-color: white; border: 1px solid white; border-radius: 5px; color: black;">
+                            <div class = "text-center"><b>{{map.legendTitle}}</b></div>
+                            <img alt = "{{map.legendTitle}}" src = "{{map.legendUrl}}">
+                        </div>
+                    </div>
+                    <div id = "mouseCoords" class = "map-cord-div" tooltip-popup-delay="300" tooltip-placement = "top" uib-tooltip = "Click on the coordinates to change units."></div>
+                    <div id = "popup" class = "ol-popup">
+                        <div id = "popup-content"></div>
+                    </div>
+                    <div id = "progress" class = "text-info">
+                        <i class = "fa fa-spinner fa-spin fa-4x"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <div class = "col-md-4" ng-controller="ListController as list">
@@ -1153,6 +1151,7 @@
                 class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
             </uib-pagination>
         </div>
+    </div>
     </div>
 </div>
 

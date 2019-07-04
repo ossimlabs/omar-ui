@@ -62,6 +62,13 @@
       });
     };
 
+    vm.getVideos = function(filterVideosToggle) {
+        // Only run this if the toggle (checkbox) is true
+        if (filterVideosToggle) {
+            wfsService.executeWfsVideoQuery()
+        }
+    }
+
     vm.showCurrentFilter = true;
     vm.listRefreshButtonVisible =
       AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;

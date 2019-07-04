@@ -19,6 +19,8 @@
     // #################################################################################
     //console.log('AppO2.APP_CONFIG in wfsService: ', AppO2.APP_CONFIG);
 
+
+
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
     var wfsAjax = {};
 
@@ -141,11 +143,16 @@
 
     let wfsQueryCnt = 0;
 
-    this.executeWfsVideoQuery = function () {
+    this.executeWfsVideoQuery = function (toggle) {
+        console.log('showVideos', toggle)
+        // needed for scopeage
+        let vm = this;
+
         // Not needed yet...
-        // let urlParams = new URLSearchParams(window.location.search)
+        let urlParams = new URLSearchParams(window.location.search)
         // let filter = urlParams.get('filter')
 
+        let filter = '';
         const wfsUrl = 'https://omar-dev.ossim.io/omar-wfs/wfs?'
         const wfsParams = {
             service: 'WFS',
@@ -157,27 +164,35 @@
             outputFormat: 'JSON'
         }
 
-        const queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        console.log('queryString', queryString)
+        const queryString = Object.keys(wfsParams).map(key => key + '=' + wfsParams[key]).join('&');
 
         return $http({
             method: "GET",
-            url:
-                wfsUrl +
-                "?filter=" +
-                encodeURIComponent("filename LIKE '" + filename + "'") +
-                "&outputFormat=JSON" +
-                "&request=GetFeature" +
-                "&service=WFS" +
-                "&typeName=omar:raster_entry" +
-                "&version=1.1.0"
+            url: wfsUrl + queryString
         }).then(function(res) {
-            console.log('video response', res)
+            // Strip everything away leaving filename
+            // Because regex is the devil and this is cleaner
+            // split divides url by /, pop returns last, replace modifies filetype
+            const featureLength = res.data.features.length
+            console.log('featureLength', featureLength)
+
+            for (let i=0; i < res.data.features.length; i++ ){
+                const videoNameMp4 = res.data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
+
+                // Build final url and append to response keeping unified object intact
+                res.data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
+            }
+
+            // Create a short file name (no file extension)
+            // used for screenshot naming
+            // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
+            // vm.videoMetaData = res.data
+            console.log('video response', res.data)
         })
     }
 
     this.executeWfsQuery = function( requestHits ) {
-        console.log('executeWfsQuery RAN')
+        // console.log('executeWfsQuery RAN')
         // TODO Esterberg - this returns 5 times on page load and is undefined each time
         // What is request hits and why is it not passed as a param in filter.controller?
 
@@ -226,14 +241,14 @@
                         $timeout(function() {
                             if ( index == 0 ) {
                                 $rootScope.$broadcast( 'wfs: updated', data.features );
-                                console.log('wfs: updated', data.features)
+                                // console.log('wfs: updated', data.features)
                                 const imageIdArray = data.features.map( image => image.properties.id );
                                 stateService.mapState.featureIds = imageIdArray;
 
                             }
                             else if ( index == 1 ) {
                                 $rootScope.$broadcast( 'wfs features: updated', data.totalFeatures );
-                                console.log('wfs features: updated', data.features)
+                                // console.log('wfs features: updated', data.features)
                             }
                         });
                     } );

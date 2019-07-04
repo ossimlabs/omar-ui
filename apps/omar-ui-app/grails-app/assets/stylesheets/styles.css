@@ -1100,3 +1100,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 	color: white;
     position: absolute;
 }
+
+.videos-checkbox {
+  margin-top: 1em !important;
+}

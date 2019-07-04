@@ -104,6 +104,9 @@
         </div>
     </nav>
 
+    vm.videoData {{ videoData }} <br />
+    vm.videoList {{ filter.videoList }}
+
     <div class="row">
         <!-- Filter / Map Area -->
         <div class = "col-md-8">
@@ -1011,6 +1014,8 @@
                 </div>
             </nav>
 
+
+
             <div id="list" style="border-style: solid; border-width: 1px; padding: 10px; border-radius: 4px;">
                 <!-- Error or empty response area -->
                 <div ng-show="list.wfsData.length === 0">
@@ -1028,7 +1033,7 @@
                 </div>
 
                 <!-- Main tile list area -->
-                <div ng-show="list.wfsFeatures >= 1"
+                <div ng-show="filter.wfsVideos >= 1"
                      ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
                      ng-model="image">
                     <div class="panel panel-default cursor-pointer" >

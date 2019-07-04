@@ -167,7 +167,7 @@
       <div ui-view></div>
 
       <!-- Splash Modal -->
-      <div ng-controller="SplashController as splash">
+      %{--<div ng-controller="SplashController as splash">
         <script type="text/ng-template" id="splashModalContent.html">
           <div class="modal-header">
             <div class="text-center">
@@ -187,7 +187,7 @@
             </div>
           </div>
         </script>
-      </div>
+      </div>--}%
 
     </div>
     <asset:script>

@@ -24,7 +24,7 @@
     $stateParams,
     $window,
     toastr,
-    $log
+    $log,
   ) {
     /* jshint validthis: true */
     var vm = this;
@@ -65,6 +65,14 @@
     vm.getVideos = function(filterVideosToggle) {
         // Only run this if the toggle (checkbox) is true
         if (filterVideosToggle) {
+            /**
+             * generates $rootScope.videoData = res.data
+             * which is available to the app
+             * Better than timeout, and does not need scope.apply
+             * This functions more like actual $state in Vue.
+             * Additionally, because of the use of controllers throughout the app
+             * this allows for the data to easily traverse the DOM.
+             */
             wfsService.executeWfsVideoQuery()
         }
     }

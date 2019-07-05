@@ -1011,9 +1011,7 @@
                 </div>
             </nav>
 
-
-
-            <div id="list" style="border-style: solid; border-width: 1px; padding: 10px; border-radius: 4px;">
+            <div id="" style="border-style: solid; border-width: 1px; padding: 10px; border-radius: 4px;">
                 <!-- Error or empty response area -->
 %{--                {{ videoData.features }}--}%
                 <div ng-show="videoData.features === 0">
@@ -1034,8 +1032,15 @@
                 <div ng-show="videoData.features.length >= 1"
                      ng-repeat="video in videoData.features"
                      >
-                    <span>{{ video.properties.videoUrl }}</span>
-                    <video ng-src="{{ video.properties.videoUrl }}"></video>
+%{--                    <span>{{ video.properties.videoUrl }}</span>--}%
+                    <video
+                        ng-src="{{ video.properties.videoUrl }}"
+                        width="200px"
+                        height="200px"
+                        autoplay
+                        controls
+
+                    ></video>
 
 
 %{--                    <div class="panel panel-default cursor-pointer" >--}%

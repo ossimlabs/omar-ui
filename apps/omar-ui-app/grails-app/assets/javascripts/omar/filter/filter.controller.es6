@@ -13,7 +13,7 @@
       "toastr",
       "$log",
       FilterController
-    ]);
+    ])
 
   function FilterController(
     stateService,
@@ -24,7 +24,8 @@
     $stateParams,
     $window,
     toastr,
-    $log
+    $log,
+    $sce
   ) {
     /* jshint validthis: true */
     var vm = this;

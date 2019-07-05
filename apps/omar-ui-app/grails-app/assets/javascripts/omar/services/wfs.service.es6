@@ -12,7 +12,7 @@
       wfsService
     ]);
 
-  function wfsService(stateService, $http, $injector, $log, $rootScope, $timeout) {
+  function wfsService(stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
@@ -187,6 +187,11 @@
             // Create a short file name (no file extension)
             // used for screenshot naming
             // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
+            /*$scope.trustSrcurl = function(res.data)
+            {
+                return $sce.trustAsResourceUrl(res.data);
+            }*/
+
             $rootScope.videoData = res.data
             console.log('$rootScope.videoData', $rootScope.videoData)
 

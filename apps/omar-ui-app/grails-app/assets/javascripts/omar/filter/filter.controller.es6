@@ -24,7 +24,7 @@
     $stateParams,
     $window,
     toastr,
-    $log,
+    $log
   ) {
     /* jshint validthis: true */
     var vm = this;

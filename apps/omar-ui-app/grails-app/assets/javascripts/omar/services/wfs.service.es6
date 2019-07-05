@@ -188,6 +188,8 @@
             // used for screenshot naming
             // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
             $rootScope.videoData = res.data
+            console.log('$rootScope.videoData', $rootScope.videoData)
+
         })
 
     }

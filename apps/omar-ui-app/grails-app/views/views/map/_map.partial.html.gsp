@@ -1030,20 +1030,62 @@
 
                 <!-- Main tile list area -->
                 <div ng-show="videoData.features.length >= 1"
-                     ng-repeat="video in videoData.features"
-                     >
-%{--                    <span>{{ video.properties.videoUrl }}</span>--}%
-                <!-- link to video player page -->
-                <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
-                   target="_blank"
-                >
-                    <video
-                        ng-src="{{ video.properties.videoUrl }}"
-                        width="175px"
-                        height="175px"
-                        autoplay
-                    ></video>
-                </a>
+                     ng-repeat="video in videoData.features">
+                    <div class="panel panel-default cursor-pointer" >
+                        <!-- Heading -->
+                        <div class="panel-heading"
+                             ng-click="list.addToExportList(video.properties.id)"
+                             style="font-size: 11px; padding: 2px 7px;">
+                            <span>
+                                <i class="fa fa-square-o cursor-pointer"
+%{--                                   ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"--}%
+                                   aria-hidden="true"
+                                   style="padding-right: 5px;"
+                                   tooltip-placement="left-bottom"
+                                   uib-tooltip="Add video to export list">
+                                </i>
+                            </span>
+                            <span class="text-default cursor-pointer">
+                                <span ng-show="!image.properties.title">Unknown</span>
+                                {{image.properties.title}}
+                            </span>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="media">
+                                <div class="media-left" style="position: relative">
+                                    <!-- link to video player page -->
+                                    <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
+                                       target="_blank"
+                                    >
+                                        <video
+                                            ng-src="{{ video.properties.videoUrl }}"
+                                            width="175px"
+                                            height="175px"
+                                            autoplay
+                                        ></video>
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            Acquisition Date:&nbsp;&nbsp;
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.acquisition_date">Unknown</span>
+                                                {{image.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                <span ng-show="image.properties.acquisition_date">z</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
 
 
 

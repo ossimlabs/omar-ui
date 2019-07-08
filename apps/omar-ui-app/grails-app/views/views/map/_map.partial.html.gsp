@@ -1033,147 +1033,151 @@
                      ng-repeat="video in videoData.features"
                      >
 %{--                    <span>{{ video.properties.videoUrl }}</span>--}%
+                <!-- link to video player page -->
+                <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
+                   target="_blank"
+                >
                     <video
                         ng-src="{{ video.properties.videoUrl }}"
-                        width="200px"
-                        height="200px"
+                        width="175px"
+                        height="175px"
                         autoplay
-                        controls
-
                     ></video>
+                </a>
 
 
-%{--                    <div class="panel panel-default cursor-pointer" >--}%
-%{--                        <div class="panel-heading"--}%
-%{--                             ng-click="list.addRemoveCards(image.properties.id)"--}%
-%{--                             style="font-size: 11px; padding: 2px 7px;">--}%
-%{--                            <span>--}%
-%{--                                <i class="fa fa-square-o cursor-pointer"--}%
-%{--                                   ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"--}%
-%{--                                   aria-hidden="true"--}%
-%{--                                   style="padding-right: 5px;"--}%
-%{--                                   tooltip-placement="left-bottom"--}%
-%{--                                   uib-tooltip="Add image to selected list">--}%
-%{--                                </i>--}%
-%{--                            </span>--}%
-%{--                            <span class="text-default cursor-pointer">--}%
-%{--                                <span ng-show="!image.properties.title">Unknown</span>--}%
-%{--                                {{image.properties.title}}--}%
-%{--                            </span>--}%
-%{--                        </div>--}%
-%{--                        <div class="panel-body"--}%
-%{--                             ng-mouseenter="list.displayFootprint(image);"--}%
-%{--                             ng-mouseleave="list.removeFootprint();">--}%
-%{--                            <div class="media">--}%
-%{--                                <div class="media-left" style="position: relative">--}%
-%{--                                    <a--}%
-%{--                                            href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"--}%
-%{--                                            target="_blank">--}%
-%{--                                        <img--}%
-%{--                                                class="media-object thumbnail-background"--}%
-%{--                                                tooltip-placement="right"--}%
-%{--                                                uib-tooltip="Click the thumbnail or the image ID to view the raw image"--}%
-%{--                                                height="114"--}%
-%{--                                                width="114"--}%
-%{--                                                style="border:1px solid black"--}%
-%{--                                                ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;--}%
-%{--                                    </a>--}%
-%{--                                    <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">--}%
-%{--                                        <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>--}%
-%{--                                    </div>--}%
-%{--                                </div>--}%
-%{--                                <div class="media-body">--}%
-%{--                                    <div class="row"></div>--}%
-%{--                                    <div class="row">--}%
-%{--                                        <div class="col-md-12" style="font-size: 13px;">--}%
-%{--                                            Acquisition Date:&nbsp;&nbsp;--}%
-%{--                                            <span class="text-success">--}%
-%{--                                                <span ng-show="!image.properties.acquisition_date">Unknown</span>--}%
-%{--                                                {{image.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}--}%
-%{--                                                <span ng-show="image.properties.acquisition_date">z</span>--}%
-%{--                                            </span>--}%
-%{--                                        </div>--}%
-%{--                                    </div>--}%
-%{--                                    <div class="row">--}%
-%{--                                        <div class="col-md-12" style="font-size: 13px;">--}%
-%{--                                            <span class = "text-info">--}%
-%{--                                                <span ng-show = "!image.properties.security_classification">--}%
-%{--                                                    Security Classification Unknown--}%
-%{--                                                </span>--}%
-%{--                                                <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">--}%
-%{--                                                    {{ image.properties.security_classification }}--}%
-%{--                                                </span>--}%
-%{--                                        </div>--}%
-%{--                                    </div>--}%
-%{--                                    <div class="row">--}%
-%{--                                        <div class="col-md-12" style="font-size: 13px;">--}%
-%{--                                            Sensor:&nbsp;&nbsp;--}%
-%{--                                            <span class="text-success">--}%
-%{--                                                <span ng-show="!image.properties.sensor_id">Unknown</span>--}%
-%{--                                                {{image.properties.sensor_id}}--}%
-%{--                                            </span>--}%
-%{--                                            &nbsp;&nbsp;--}%
-%{--                                            <span ng-show="image.properties.valid_model">--}%
-%{--                                                <span class = "glyphicon glyphicon-ok text-success"></span>--}%
-%{--                                                <span class = "text-success">Valid Model</span>--}%
-%{--                                            </span>--}%
-%{--                                            <span ng-show="!image.properties.valid_model">--}%
-%{--                                                <span class = "text-info">Model: N/A</span>--}%
-%{--                                            </span>--}%
-%{--                                        </div>--}%
-%{--                                    </div>--}%
-%{--                                    <div class="row">--}%
-%{--                                        <div class="col-md-12" style="font-size: 13px;">--}%
-%{--                                            Country Code:&nbsp;&nbsp;--}%
-%{--                                            <span class="text-success">--}%
-%{--                                                <span ng-show="!image.properties.country_code">Unknown</span>--}%
-%{--                                                {{image.properties.country_code}}--}%
-%{--                                            </span>--}%
-%{--                                        </div>--}%
-%{--                                    </div>--}%
-%{--                                    <div class="row">--}%
-%{--                                        <div class="col-md-12" style="font-size: 13px;">--}%
-%{--                                            NIIRS:&nbsp;&nbsp;--}%
-%{--                                            <span class="text-success">--}%
-%{--                                                <span ng-show="!image.properties.niirs">Unknown</span>--}%
-%{--                                                {{image.properties.niirs}}--}%
-%{--                                            </span>--}%
-%{--                                            &nbsp;&nbsp;/&nbsp;&nbsp;--}%
-%{--                                            GSD:&nbsp;&nbsp;--}%
-%{--                                            <span class="text-success">--}%
-%{--                                                <span ng-show="!image.properties.gsdy">Unknown</span>--}%
-%{--                                                {{image.properties.gsdy | number:4}} m--}%
-%{--                                            </span>--}%
-%{--                                        </div>--}%
-%{--                                    </div>--}%
-%{--                                    <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">--}%
-%{--                                        <a class="btn btn-default" type="button"--}%
-%{--                                           ng-click="list.zoomToSelectedImage(image.properties.id);">--}%
-%{--                                            <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>--}%
-%{--                                        </a>--}%
-%{--                                        <a class="btn btn-default" type="button"--}%
-%{--                                           ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">--}%
-%{--                                            <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>--}%
-%{--                                        </a>--}%
-%{--                                        <a class="btn btn-default" type="button"--}%
-%{--                                           ng-click="list.viewOrtho(image)">--}%
-%{--                                            <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>--}%
-%{--                                        </a>--}%
-%{--                                        <a class="btn btn-default" type="button"--}%
-%{--                                           ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('toolbox');"--}%
-%{--                                        >--}%
-%{--                                            <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>--}%
-%{--                                        </a>--}%
-%{--                                    </div>--}%
-%{--                                </div>--}%
-%{--                            </div>--}%
-%{--                        </div>--}%
-%{--                    </div>--}%
+
+%{--                    <div class="panel panel-default cursor-pointer" >
+                        <div class="panel-heading"
+                             ng-click="list.addRemoveCards(image.properties.id)"
+                             style="font-size: 11px; padding: 2px 7px;">
+                            <span>
+                                <i class="fa fa-square-o cursor-pointer"
+                                   ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
+                                   aria-hidden="true"
+                                   style="padding-right: 5px;"
+                                   tooltip-placement="left-bottom"
+                                   uib-tooltip="Add image to selected list">
+                                </i>
+                            </span>
+                            <span class="text-default cursor-pointer">
+                                <span ng-show="!image.properties.title">Unknown</span>
+                                {{image.properties.title}}
+                            </span>
+                        </div>
+                        <div class="panel-body"
+                             ng-mouseenter="list.displayFootprint(image);"
+                             ng-mouseleave="list.removeFootprint();">
+                            <div class="media">
+                                <div class="media-left" style="position: relative">
+                                    <a
+                                            href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
+                                            target="_blank">
+                                        <img
+                                                class="media-object thumbnail-background"
+                                                tooltip-placement="right"
+                                                uib-tooltip="Click the thumbnail or the image ID to view the raw image"
+                                                height="114"
+                                                width="114"
+                                                style="border:1px solid black"
+                                                ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
+                                    </a>
+                                    <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">
+                                        <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="row"></div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            Acquisition Date:&nbsp;&nbsp;
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.acquisition_date">Unknown</span>
+                                                {{image.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                <span ng-show="image.properties.acquisition_date">z</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            <span class = "text-info">
+                                                <span ng-show = "!image.properties.security_classification">
+                                                    Security Classification Unknown
+                                                </span>
+                                                <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
+                                                    {{ image.properties.security_classification }}
+                                                </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            Sensor:&nbsp;&nbsp;
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.sensor_id">Unknown</span>
+                                                {{image.properties.sensor_id}}
+                                            </span>
+                                            &nbsp;&nbsp;
+                                            <span ng-show="image.properties.valid_model">
+                                                <span class = "glyphicon glyphicon-ok text-success"></span>
+                                                <span class = "text-success">Valid Model</span>
+                                            </span>
+                                            <span ng-show="!image.properties.valid_model">
+                                                <span class = "text-info">Model: N/A</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            Country Code:&nbsp;&nbsp;
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.country_code">Unknown</span>
+                                                {{image.properties.country_code}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            NIIRS:&nbsp;&nbsp;
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.niirs">Unknown</span>
+                                                {{image.properties.niirs}}
+                                            </span>
+                                            &nbsp;&nbsp;/&nbsp;&nbsp;
+                                            GSD:&nbsp;&nbsp;
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.gsdy">Unknown</span>
+                                                {{image.properties.gsdy | number:4}} m
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
+                                        <a class="btn btn-default" type="button"
+                                           ng-click="list.zoomToSelectedImage(image.properties.id);">
+                                            <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                        </a>
+                                        <a class="btn btn-default" type="button"
+                                           ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">
+                                            <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
+                                        </a>
+                                        <a class="btn btn-default" type="button"
+                                           ng-click="list.viewOrtho(image)">
+                                            <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>
+                                        </a>
+                                        <a class="btn btn-default" type="button"
+                                           ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('toolbox');"
+                                        >
+                                            <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>--}%
                 </div>
             </div>
             <div class="text-center" id = "pagination">
                 <uib-pagination style="margin: 8px;"
-                                total-items="list.wfsFeaturesTotalPaginationCount"
+                                total-items="videoData.features.length"
                                 items-per-page="list.pageLimit"
                                 ng-model="list.currentStartIndex"
                                 ng-change="list.pagingChanged()"

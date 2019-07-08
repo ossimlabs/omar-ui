@@ -867,7 +867,7 @@
         </div>
 
         <!-- Video tiles -->
-        <div class = "col-md-4" ng-show="filterVideosToggle" ng-controller="ListController as list">
+        <div class = "col-md-4" ng-if="filterVideosToggle" ng-controller="ListController as list">
             <!-- Top Nav -->
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
@@ -1029,8 +1029,9 @@
                 </div>
 
                 <!-- Main tile list area -->
+                <!-- filter doesnt work right startFrom:list.videoPage*list.pageLimit -->
                 <div ng-show="videoData.features.length >= 1"
-                     ng-repeat="video in videoData.features">
+                     ng-repeat="video in videoData.features | limitTo:list.pageLimit">
                     <div class="panel panel-default cursor-pointer" >
                         <!-- Heading -->
                         <div class="panel-heading"

@@ -143,8 +143,7 @@
 
     let wfsQueryCnt = 0;
 
-    this.executeWfsVideoQuery = function (toggle) {
-        console.log('showVideos', toggle)
+    this.executeWfsVideoQuery = function () {
         // needed for scopeage
         let vm = this;
         let videoResponse = 'empty response'
@@ -167,7 +166,7 @@
 
         const queryString = Object.keys(wfsParams).map(key => key + '=' + wfsParams[key]).join('&');
 
-        $http({
+        return $http({
             method: "GET",
             url: wfsUrl + queryString
         }).then(function(res) {
@@ -187,14 +186,8 @@
             // Create a short file name (no file extension)
             // used for screenshot naming
             // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
-            /*$scope.trustSrcurl = function(res.data)
-            {
-                return $sce.trustAsResourceUrl(res.data);
-            }*/
 
-            $rootScope.videoData = res.data
-            console.log('$rootScope.videoData', $rootScope.videoData)
-
+            // $rootScope.videoData = res.data
         })
 
     }

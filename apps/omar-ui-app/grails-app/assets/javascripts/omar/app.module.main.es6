@@ -130,6 +130,18 @@
         }
       };
     })
+    // used for video pagination
+      // returns sliced data from starting position
+    .filter('startFrom', function() {
+        return function(input, start) {
+            console.log('input', input)
+            console.log('start', start)
+
+            start = +start; //parse to int
+            console.log('newstart', start)
+          return input.slice(start);
+        }
+    })
     .directive("ngEnter", function() {
       return function(scope, elem, attrs) {
         elem.bind("keydown keypress", function(event) {

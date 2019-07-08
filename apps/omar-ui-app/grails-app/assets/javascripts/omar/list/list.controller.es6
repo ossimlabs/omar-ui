@@ -492,6 +492,7 @@
     vm.currentSortText = "Acquired (New)";
 
     vm.currentStartIndex = 1;
+    vm.videoPage = 0;
 
     vm.pagingChanged = function() {
       wfsService.updateAttrFilterPaginate(

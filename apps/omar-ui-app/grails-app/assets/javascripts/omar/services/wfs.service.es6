@@ -1,25 +1,20 @@
-(function() {
-  "use strict";
-  angular
-    .module("omarApp")
-    .service("wfsService", [
-      "stateService",
-      "$http",
-      "$injector",
-      "$log",
-      "$rootScope",
-      "$timeout",
-      wfsService
-    ]);
+"use strict";
+angular
+.module("omarApp")
+.service("wfsService", [
+  "stateService",
+  "$http",
+  "$injector",
+  "$log",
+  "$rootScope",
+  "$timeout",
 
-  function wfsService(stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
+function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
     // #################################################################################
     // AppO2.APP_CONFIG is passed down from the .gsp, and is a global variable.  It
     // provides access to various client params in application.yml
     // #################################################################################
     //console.log('AppO2.APP_CONFIG in wfsService: ', AppO2.APP_CONFIG);
-
-
 
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
     var wfsAjax = {};
@@ -497,4 +492,4 @@
       });
     };
   }
-})();
+]);

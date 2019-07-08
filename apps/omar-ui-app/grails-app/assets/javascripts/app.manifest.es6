@@ -35,6 +35,7 @@
 // <--Services-->
 //= require omar/services/state.service.js
 //= require omar/services/wfs.service.js
+//= require omar/services/video.service.js
 //= require omar/services/map.service.js
 //= require omar/services/image-space.service.js
 //= require omar/services/jpip.service.js

@@ -1,16 +1,17 @@
 "use strict";
 angular
-    .module("omarApp")
-    .controller("FilterController", [
-        "stateService",
-        "$http",
-        "$scope",
-        "wfsService",
-        "mapService",
-        "$stateParams",
-        "$window",
-        "toastr",
-        "$log",
+  .module("omarApp")
+  .controller("FilterController", [
+    "stateService",
+    "$http",
+    "$scope",
+    "wfsService",
+    "mapService",
+    "$stateParams",
+    "$window",
+    "toastr",
+    "$log",
+    "videoService",
 
 function (
     stateService,
@@ -22,7 +23,8 @@ function (
     $window,
     toastr,
     $log,
-    $sce
+    $sce,
+    videoService
 ) {
     /* jshint validthis: true */
     var vm = this;
@@ -79,7 +81,7 @@ function (
              * Additionally, because of the use of controllers throughout the app
              * this allows for the data to easily traverse the DOM.
              */
-            wfsService.executeWfsVideoQuery()
+            videoService.getData()
                 .success(function(data, status, header, config){
 
                     // Fill placeholder with data as soon as it is received

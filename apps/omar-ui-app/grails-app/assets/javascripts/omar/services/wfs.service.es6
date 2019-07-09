@@ -138,55 +138,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
 
     let wfsQueryCnt = 0;
 
-    this.executeWfsVideoQuery = function () {
-        // needed for scopeage
-        let vm = this;
-        let videoResponse = 'empty response'
-
-        // Not needed yet...
-        let urlParams = new URLSearchParams(window.location.search)
-        // let filter = urlParams.get('filter')
-
-        let filter = '';
-        const wfsUrl = 'https://omar-dev.ossim.io/omar-wfs/wfs?'
-        const wfsParams = {
-            service: 'WFS',
-            version: '1.1.0',
-            request: 'GetFeature',
-            typeName: 'omar:video_data_set',
-            filter: filter,
-            resultType: 'results',
-            outputFormat: 'JSON'
-        }
-
-        const queryString = Object.keys(wfsParams).map(key => key + '=' + wfsParams[key]).join('&');
-
-        return $http({
-            method: "GET",
-            url: wfsUrl + queryString
-        }).then(function(res) {
-            // Strip everything away leaving filename
-            // Because regex is the devil and this is cleaner
-            // split divides url by /, pop returns last, replace modifies filetype
-            const featureLength = res.data.features.length
-            console.log('featureLength', featureLength)
-
-            for (let i=0; i < res.data.features.length; i++ ){
-                const videoNameMp4 = res.data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
-
-                // Build final url and append to response keeping unified object intact
-                res.data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
-            }
-
-            // Create a short file name (no file extension)
-            // used for screenshot naming
-            // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
-
-            // $rootScope.videoData = res.data
-        })
-
-    }
-
     this.executeWfsQuery = function( requestHits ) {
         // console.log('executeWfsQuery RAN')
         // TODO Esterberg - this returns 5 times on page load and is undefined each time

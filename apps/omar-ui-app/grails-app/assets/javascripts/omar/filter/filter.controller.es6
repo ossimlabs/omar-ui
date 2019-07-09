@@ -23,10 +23,11 @@ function (
     $window,
     toastr,
     $log,
-    $sce,
     videoService
 ) {
     /* jshint validthis: true */
+    console.log('videoService', videoService)
+    console.log('wfsService', wfsService)
     var vm = this;
     // vm.videoData = [];
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
@@ -64,26 +65,36 @@ function (
     };
 
     $scope.videoData = []
+    /**
+     * generates $rootScope.videoData = res.data
+     * which is available to the app
+     * Better than timeout, and does not need scope.apply
+     * This functions more like actual $state in Vue.
+     * Additionally, because of the use of controllers throughout the app
+     * this allows for the data to easily traverse the DOM.
+     */
     vm.getVideos = function(filterVideosToggle) {
         // Only run this if the toggle (checkbox) is true
         if (filterVideosToggle) {
-            /*getThings.getData()
-                .success(function(data, status, header, config){
-
-                    // Fill placeholder with data as soon as it is received
-                    $scope.videoData = data;
-                });*/
-            /**
-             * generates $rootScope.videoData = res.data
-             * which is available to the app
-             * Better than timeout, and does not need scope.apply
-             * This functions more like actual $state in Vue.
-             * Additionally, because of the use of controllers throughout the app
-             * this allows for the data to easily traverse the DOM.
-             */
             videoService.getData()
                 .success(function(data, status, header, config){
 
+                    console.log('data', data)
+                    // Strip everything away leaving filename
+                    // Because regex is the devil and this is cleaner
+                    // split divides url by /, pop returns last, replace modifies filetype
+                    const featureLength = data.features.length
+                    console.log('featureLength', featureLength)
+
+                    for (let i=0; i < data.features.length; i++ ){
+                        const videoNameMp4 = data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
+
+                        // Build final url and append to response keeping unified object intact
+                        data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
+                    }
+                    // Create a short file name (no file extension)
+                    // used for screenshot naming
+                    // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
                     // Fill placeholder with data as soon as it is received
                     $scope.videoData = data;
                 });

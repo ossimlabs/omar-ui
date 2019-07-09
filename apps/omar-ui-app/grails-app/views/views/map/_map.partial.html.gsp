@@ -1062,23 +1062,49 @@
                                         <video
                                             ng-src="{{ video.properties.videoUrl }}"
                                             width="175px"
-                                            height="175px"
-                                            autoplay
+                                            autoplay loop
                                         ></video>
                                     </a>
                                 </div>
 
                                 <div class="media-body">
+                                    <!-- empty row for alignment -->
+                                    <div class="row"></div>
+
                                     <div class="row">
                                         <div class="col-md-12" style="font-size: 13px;">
-                                            Acquisition Date:&nbsp;&nbsp;
+                                            <span class = "text-info">
+                                                <span ng-show = "!image.properties.security_classification">
+                                                    Security Classification Unknown
+                                                </span>
+                                                <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
+                                                    {{ image.properties.security_classification }}
+                                                </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            Start Date:
                                             <span class="text-success">
                                                 <span ng-show="!image.properties.acquisition_date">Unknown</span>
-                                                {{image.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                {{video.properties.start_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
                                                 <span ng-show="image.properties.acquisition_date">z</span>
                                             </span>
                                         </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12" style="font-size: 13px;">
+                                            End Date:
+                                            <span class="text-success">
+                                                <span ng-show="!image.properties.acquisition_date">Unknown</span>
+                                                {{video.properties.end_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                <span ng-show="image.properties.acquisition_date">z</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>

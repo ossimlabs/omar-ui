@@ -5,9 +5,7 @@ angular
     "$http",
 
 function($http) { return {
-    getData: function () {
-        let vm = this;
-
+    videoQuery: function () {
         let urlParams = new URLSearchParams(window.location.search)
         // let filter = urlParams.get('filter')
         let filter = '';

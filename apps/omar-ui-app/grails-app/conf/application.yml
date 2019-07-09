@@ -344,7 +344,7 @@ environments:
     production:
         dataSource:
             dbCreate: update
-             url: jdbc:postgresql:omardb-prod
+            url: jdbc:postgresql:omardb-prod
             properties:
                 jmxEnabled: true
                 initialSize: 5

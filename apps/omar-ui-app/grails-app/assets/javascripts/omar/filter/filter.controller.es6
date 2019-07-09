@@ -555,7 +555,7 @@
         }
 
         // Keywords
-        if ( vm.beNumberCheck && vm.beNumber != "" && vm.imageryCheck ) {
+        if ( vm.beNumberCheck && vm.beNumber != undefined && vm.beNumber != "" && vm.imageryCheck ) {
             pushKeywordToArray( "be_number", vm.beNumber );
         }
 
@@ -565,11 +565,11 @@
             vm.countryCodeCheck = false;
         }
 
-        if ( vm.filenameCheck && vm.filename != "" ) {
+        if ( vm.filenameCheck && vm.filename != undefined && vm.filename != "" ) {
             pushKeywordToArray( "filename", vm.filename );
         }
 
-        if (vm.imageIdCheck && vm.imageId != "" && vm.imageryCheck ) {
+        if (vm.imageIdCheck && vm.imageId != undefined && vm.imageId != "" && vm.imageryCheck ) {
             pushKeywordToArray( "title", vm.imageId.toUpperCase() );
         }
 
@@ -585,11 +585,11 @@
             vm.sensorIdCheck = false;
         }
 
-        if ( vm.targetIdCheck && vm.targetId != "" && vm.imageryCheck ) {
+        if ( vm.targetIdCheck && vm.targetId != undefined && vm.targetId != "" && vm.imageryCheck ) {
             pushKeywordToArray( "target_id", vm.targetId );
         }
 
-        if ( vm.wacNumberCheck && vm.wacNumber != "" && vm.imageryCheck ) {
+        if ( vm.wacNumberCheck && vm.wacNumber != undefined && vm.wacNumber != "" && vm.imageryCheck ) {
             pushKeywordToArray( "wac_code", vm.wacNumber );
         }
 

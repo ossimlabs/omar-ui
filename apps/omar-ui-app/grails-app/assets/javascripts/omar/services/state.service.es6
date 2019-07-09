@@ -20,11 +20,11 @@
          */
     var omarSitesState = {
       info: {
-        name: AppO2.APP_CONFIG.params.sites[0].info.name,
-        description: AppO2.APP_CONFIG.params.sites[0].info.description
+        name: AppO2.APP_CONFIG.params.sites.o2.info.name,
+        description: AppO2.APP_CONFIG.params.sites.o2.info.description
       },
       url: {
-        base: AppO2.APP_CONFIG.params.sites[0].url.base,
+        base: AppO2.APP_CONFIG.params.sites.o2.url.base,
         uiContextPath: "/omar-ui",
         wfsContextPath: "/omar-wfs",
         wmsContextPath: "/omar-wms",

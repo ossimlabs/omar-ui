@@ -380,7 +380,7 @@
        * @type {string}
        */
       var beSearchUrlContext =
-        AppO2.APP_CONFIG.params.sites[0].url.wfsContextPath || "/omar-wfs";
+        AppO2.APP_CONFIG.params.sites.o2.url.wfsContextPath || "/omar-wfs";
 
       /**
        * Description: We can use the first item in the sites array here,
@@ -395,7 +395,7 @@
        * @type {string}
        */
       var beSearchUrl =
-        AppO2.APP_CONFIG.params.sites[0].url.base +
+        AppO2.APP_CONFIG.params.sites.o2.url.base +
         beSearchUrlContext +
         "/wfs?";
 

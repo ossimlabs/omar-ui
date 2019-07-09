@@ -70,7 +70,7 @@
       vm.legendUrl = `${stateService.omarSitesState.url.base}${
         stateService.omarSitesState.url.wmsContextPath
       }/wms/getLegendGraphic?style=${
-        AppO2.APP_CONFIG.params.footprints.params.styles
+        AppO2.APP_CONFIG.params.footprints.imageFootprints.styles
       }`;
       $log.debug(`vm.legendUrl: ${vm.legendUrl}`);
     });

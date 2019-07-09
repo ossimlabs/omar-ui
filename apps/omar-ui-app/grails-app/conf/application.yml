@@ -24,26 +24,22 @@ logging:
 omar:
   app:
     footprints:
-      # Misc. params for the wfs request
-      params:
-        # Name for the footprint layer.
-        # Shows up in UI's layerswitcher.
-        - format: image/gif
-          # Layer name
-          layers: omar:raster_entry
-          name: Image Footprints
-          # Styling for the footprint layer.
-          # Choices are "byFileType", "bySensorType", "byMissionType"
-          styles: byFileType
-          version: 1.1.1
-        - format: image/gif
-          # Layer name
-          layers: omar:video_data_set
-          name: Video Footprints
-          # Styling for the footprint layer.
-          # Choices are "byFileType", "bySensorType", "byMissionType"
-          styles: byFileType
-          version: 1.1.1
+      imageFootprints:
+        format: image/gif
+        layers: omar:raster_entry
+        name: Image Footprints
+        # Styling for the footprint layer.
+        # Choices are "byFileType", "bySensorType", "byMissionType"
+        styles: byFileType
+        version: 1.1.1
+      videoFootprints:
+        format: image/gif
+        layers: omar:video_data_set
+        name: Video Footprints
+        # Styling for the footprint layer.
+        # Choices are "byFileType", "bySensorType", "byMissionType"
+        styles: byFileType
+        version: 1.1.1
     jpipApp:
       # Used to show/hide the JPIP buttons in the UI (True or False)
       enabled: true
@@ -133,7 +129,8 @@ omar:
             # Used to show/hide the Services Monitor
             enabled: true
     sites:
-      - info:
+      o2:
+        info:
           # Short name for the omar site
           name: OMAR-DEV
           # Long name/description of the site.  This is displayed in the dropdown in the UI
@@ -159,7 +156,8 @@ omar:
     # If you do not have this field specified in the application YAML it will use the default layer.
     # The default layer is the **OSM Basic** layer from https://omar-dev.ossim.io.
     baseMaps:
-      - layerType: tilewms
+      o2-basemap-basic:
+        layerType: tilewms
         options:
           visible: true
         params:
@@ -170,7 +168,7 @@ omar:
     # Uncomment the example(s) below, and *modify* accordingly to
     # add a custom overlay layer.
     # overlayLayers:
-    #   -
+    #   ne:
     #     layerType: "tilewms"
     #     title: "Tile WMS Example"
     #     url: "https://ahocevar.com/geoserver/wms"
@@ -179,7 +177,7 @@ omar:
     #       tiled: true
     #     options:
     #       visible: false
-    #   -
+    #   topp:
     #     layerType: "imagewms"
     #     title: "Image WMS Example"
     #     url: "https://ahocevar.com/geoserver/wms"
@@ -326,7 +324,6 @@ hibernate:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
-
 dataSource:
     pooled: true
     jmxExport: true
@@ -334,7 +331,6 @@ dataSource:
     username: postgres
     password: postgres
     dialect: 'org.hibernate.spatial.dialect.postgis.PostgisDialect'
-
 
 environments:
     development:
@@ -348,7 +344,7 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql:omardb-prod
+             url: jdbc:postgresql:omardb-prod
             properties:
                 jmxEnabled: true
                 initialSize: 5

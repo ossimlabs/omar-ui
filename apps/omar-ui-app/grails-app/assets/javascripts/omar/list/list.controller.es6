@@ -135,7 +135,6 @@
     $.each( AppO2.APP_CONFIG.params.sites, function( key, site ) {
         vm.sites.push( site );
     } );
-    console.dir(vm.sites);
     vm.selectedUrl = AppO2.APP_CONFIG.params.sites.o2.info.description;
 
     // Only show the O2 sites select (dropdown) if there is more than

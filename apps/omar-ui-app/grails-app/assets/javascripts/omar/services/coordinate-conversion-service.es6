@@ -46,7 +46,7 @@
                     var tableName = AppO2.APP_CONFIG.params.misc.placemarks.tableName;
 
                     var beNumber = RegExp.$1;
-                    var wfsUrl = AppO2.APP_CONFIG.params.sites[ 0 ].url.wfsContextPath || "/omar-wfs";
+                    var wfsUrl = AppO2.APP_CONFIG.params.sites.o2.url.wfsContextPath || "/omar-wfs";
                     wfsUrl += "/wfs?" +
                         "filter=" + encodeURIComponent( columnName + " = '" + beNumber + "'" ) +
                         "&maxFeatures=1" +

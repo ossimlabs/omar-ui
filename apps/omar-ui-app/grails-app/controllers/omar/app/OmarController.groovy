@@ -217,7 +217,7 @@ class OmarController {
     ])
     def index() {
         // user information parameters coming in from application.yml
-        def userInfo = grailsApplication.config.omar.app.userInfo
+        def userInfo = grailsApplication.config.userInfo
 
         // The value of the request header for the user's name
         def requestHeaderName = request.getHeader(userInfo.requestHeaderUserName)
@@ -227,7 +227,7 @@ class OmarController {
 
         def userInfoName = (requestHeaderName == null) ? userInfo.requestHeaderUserNameDefault : requestHeaderName
 
-        grailsApplication.config.omar.app.sites = omarSitesConfig.sites
+        //grailsApplication.config.omar.app.sites = omarSitesConfig.sites
 
         def preferences
         JSON.use( "deep" ) {
@@ -235,8 +235,9 @@ class OmarController {
             preferences = new JsonSlurper().parseText( json.toString() )
         }
         def clientConfig = [
+			about: grailsApplication.config.about,
             serverURL: getBaseUrl(),
-            openlayers: openLayersConfig,
+            openlayers: grailsApplication.config.omar.openlayers, //openLayersConfig,
             params: grailsApplication.config.omar.app,
             userInfo: [name: userInfoName],
             userPreferences: preferences

@@ -45,11 +45,6 @@
       overlayGroup,
       mosaicGroup;
 
-    var version = "1.1.1";
-    var layers = "omar:raster_entry";
-    var styles = "byFileType";
-    var format = "image/gif";
-    var name = "Image Footprints";
     var mapObj = {};
 
     var baseServerUrl = AppO2.APP_CONFIG.serverURL;
@@ -192,43 +187,25 @@
         zoom: zoom
       });
 
-      footPrints = [];
-      if (AppO2.APP_CONFIG.params.footprints.params[0] != undefined) {
-        AppO2.APP_CONFIG.params.footprints.params.forEach( function(layer) {
-          footPrints.push(new ol.layer.Tile({
-            title: layer.name,
-            source: new ol.source.TileWMS({
-              url: footprintsRequestUrl,
-              params: {
-                FILTER: "",
-                VERSION: layer.version,
-                LAYERS: layer.layers,
-                STYLES: layer.styles,
-                FORMAT: layer.format
-              },
-              wrapX: false
-            }),
-            name: name
-          }));
+        footPrints = [];
+        $.each( AppO2.APP_CONFIG.params.footprints, function( key, layer ) {
+            footPrints.push(new ol.layer.Tile({
+                title: layer.name,
+                source: new ol.source.TileWMS({
+                    url: footprintsRequestUrl,
+                    params: {
+                        FILTER: "",
+                        VERSION: layer.version,
+                        LAYERS: layer.layers,
+                        STYLES: layer.styles,
+                        FORMAT: layer.format
+                    },
+                    wrapX: false
+                }),
+                name: name
+            }));
         });
-      } else {
-        // Default no configed layers
-        footPrints.push(new ol.layer.Tile({
-          title: name,
-          source: new ol.source.TileWMS({
-            url: footprintsRequestUrl,
-            params: {
-              FILTER: "",
-              VERSION: version,
-              LAYERS: layers,
-              STYLES: styles,
-              FORMAT: format
-            },
-            wrapX: false
-          }),
-          name: name
-        }));
-      }
+
 
       var footprintsSource = footPrints[0].getSource();
 
@@ -239,10 +216,10 @@
           url: autoMosaicRequestUrl,
           params: {
             FILTER: "",
-            VERSION: version,
-            LAYERS: layers,
-            STYLES: styles,
-            FORMAT: format
+            VERSION: "1.1.1",
+            LAYERS: "omar:raster_entry",
+            STYLES: "byFileType",
+            FORMAT: "image/gif"
           },
           wrapX: false
         }),
@@ -452,12 +429,16 @@
 
       if (AppO2.APP_CONFIG.openlayers.baseMaps != null) {
         // Map over each map item in the baseMaps array
-        AppO2.APP_CONFIG.openlayers.baseMaps.map(addBaseMapLayers);
+        $.each( AppO2.APP_CONFIG.openlayers.baseMaps, function( key, layer ) {
+            addBaseMapLayers( layer );
+        } );
       }
 
       if (AppO2.APP_CONFIG.openlayers.overlayLayers != null) {
         // Map over each layer item in the overlayLayers array
-        AppO2.APP_CONFIG.openlayers.overlayLayers.map(addOverlayLayers);
+        $.each( AppO2.APP_CONFIG.openlayers.overlayLayers, function( key, layer ) {
+            addOverlayLayers( layer );
+        } );
       }
       footPrints.forEach( function(footPrintLayer) {
         overlayGroup.getLayers().push(footPrintLayer);
@@ -1040,7 +1021,7 @@
                         colMd12.style = 'font-size: 13px';
                         row.appendChild( colMd12 );
 
-                            var span = document.createElement( 'span' );console.dir(properties.sensor_id);
+                            var span = document.createElement( 'span' );
                             if ( properties.sensor_id ) {
                                 span.className = 'text-success';
                                 span.innerHTML = properties.sensor_id;

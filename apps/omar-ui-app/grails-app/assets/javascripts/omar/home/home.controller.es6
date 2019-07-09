@@ -42,11 +42,6 @@
         document.location.href = "#/map?mapSearch=" + $( '#magicSearchInput' ).val();
     } );
 
-    vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
-    if (vm.apiAppEnabled) {
-      vm.apiAppLink = AppO2.APP_CONFIG.params.apiApp.baseUrl;
-    }
-
     vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
     if (vm.kmlAppEnabled) {
       var kmlBaseUrl = stateService.omarSitesState.url.base;
@@ -131,12 +126,9 @@
       }
     };
 
-    vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;
-    if (vm.tlvAppEnabled) {
-      var tlvBaseUrl = stateService.omarSitesState.url.base;
-      var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
-    }
+    var tlvBaseUrl = stateService.omarSitesState.url.base;
+    var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+    vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
 
     vm.uploadAppEnabled = AppO2.APP_CONFIG.params.uploadApp.enabled;
     if (vm.uploadAppEnabled) {

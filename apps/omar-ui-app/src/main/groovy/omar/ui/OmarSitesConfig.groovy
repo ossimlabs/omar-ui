@@ -11,10 +11,17 @@ class OmarSitesConfig
 {
   List<OmarConfig> sites
 
+  Footprints footprints
+
   @ToString(includeNames=true)
   static class OmarConfig {
       Map<String,String> info
       Map<String,String> url
+  }
+
+  @ToString(includeNames=true)
+  static class Footprints {
+      List<HashMap<String,String>> params
   }
 
   @ConfigurationPropertiesBinding

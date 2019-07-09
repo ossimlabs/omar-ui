@@ -82,20 +82,14 @@
     vm.metricsEurekaEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.user.eureka.enabled;
 
+    vm.metricsServicesMonitorUrl =
+      AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.baseUrl;
+    vm.metricsServicesMonitorEnabled =
+      AppO2.APP_CONFIG.params.misc.metrics.user.servicesMonitor.enabled;
+
     // Show/hide the Admin section of the Metrics dropdown menu
     // TODO: Show/Hide with Spring Security instead of through application.yaml
     vm.metricsAdminShow = AppO2.APP_CONFIG.params.misc.metrics.admin.enabled;
-
-    // Metrics dropdown menu Admin settings
-    vm.metricsHystrixTurbineUrl =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.baseUrl;
-    vm.metricsHystrixTurbineEnabled =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.hystrixTurbine.enabled;
-
-    vm.metricsSleuthZipkinUrl =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.baseUrl;
-    vm.metricsSleuthZipkinEnabled =
-      AppO2.APP_CONFIG.params.misc.metrics.admin.sleuthZipkin.enabled;
 
     vm.metricsKibanaUrl =
       AppO2.APP_CONFIG.params.misc.metrics.admin.kibana.baseUrl;
@@ -107,25 +101,10 @@
     vm.metricsSpringBootAdminEnabled =
       AppO2.APP_CONFIG.params.misc.metrics.admin.springBootAdmin.enabled;
 
-    // Show/hide the About dropdown menu
-    vm.aboutShow = AppO2.APP_CONFIG.params.misc.about.enabled;
-
     // About dropdown menu settings
-    vm.aboutContactEmail = AppO2.APP_CONFIG.params.misc.about.contactEmail;
-    vm.aboutMessage = AppO2.APP_CONFIG.params.misc.about.message;
-    vm.aboutReleaseName = AppO2.APP_CONFIG.params.misc.about.releaseName;
-    vm.aboutReleaseNumber = AppO2.APP_CONFIG.params.misc.about.releaseNumber;
-    vm.aboutUiBuildVersion = AppO2.APP_CONFIG.params.misc.about.uiBuildVersion;
-
-    vm.apiAppEnabled = AppO2.APP_CONFIG.params.apiApp.enabled;
-    if (vm.apiAppEnabled) {
-      vm.apiAppLink = AppO2.APP_CONFIG.params.apiApp.baseUrl;
-    }
-
-    vm.piwikAppEnabled = AppO2.APP_CONFIG.params.piwikApp.enabled;
-    if (vm.piwikAppEnabled) {
-      vm.piwikAppLink = AppO2.APP_CONFIG.params.piwikApp.baseUrl;
-    }
+    vm.aboutContactEmail = AppO2.APP_CONFIG.about.contactEmail;
+    vm.aboutReleaseName = AppO2.APP_CONFIG.about.releaseName;
+    vm.aboutReleaseNumber = AppO2.APP_CONFIG.about.releaseNumber;
 
     vm.kmlAppEnabled = AppO2.APP_CONFIG.params.kmlApp.enabled;
     if (vm.kmlAppEnabled) {
@@ -135,12 +114,9 @@
         kmlBaseUrl + kmlContextPath + "/superOverlay/getLastImagesKml";
     }
 
-    vm.tlvAppEnabled = AppO2.APP_CONFIG.params.tlvApp.enabled;
-    if (vm.tlvAppEnabled) {
-      var tlvBaseUrl = stateService.omarSitesState.url.base;
-      var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
-      vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
-    }
+    var tlvBaseUrl = stateService.omarSitesState.url.base;
+    var tlvContextPath = stateService.omarSitesState.url.tlvContextPath;
+    vm.tlvAppLink = tlvBaseUrl + tlvContextPath;
 
     vm.uploadAppEnabled = AppO2.APP_CONFIG.params.uploadApp.enabled;
     if (vm.uploadAppEnabled) {

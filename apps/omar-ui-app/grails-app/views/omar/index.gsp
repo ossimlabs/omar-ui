@@ -38,11 +38,9 @@
                 <li><a ui-sref="home">&nbsp;Home</a></li>
                 <li><a title="Search and discover various types of imagery." ui-sref="map">&nbsp;Search</a></li>
                 <li ng-show="{{nav.kmlAppEnabled}}"><a ng-href="{{nav.kmlAppLink}}" title="Download a KML of the last 10 images acquired." target="_blank">&nbsp;KML</a></li>
-                <li ng-show="{{nav.piwikAppEnabled}}"><a ng-href="{{nav.piwikAppLink}}" title="View O2 web analytics." target="_blank">&nbsp;PIWIK</a></li>
-                <li ng-show="{{nav.tlvAppEnabled}}"><a ng-href="{{nav.tlvAppLink}}" title="An on-demand imagery flipbook<" target="_blank">&nbsp;TLV</a></li>
+                <li><a ng-href="{{nav.tlvAppLink}}" title="An on-demand imagery flipbook<" target="_blank">&nbsp;TLV</a></li>
                 <li ng-show="{{nav.uploadAppEnabled}}"><a ng-href="{{nav.uploadAppLink}}" title="A service to upload images<" target="_blank">&nbsp;Image Upload</a></li>
                 <li ng-show="{{nav.userGuideEnabled}}"><a ng-href="{{nav.userGuideLink}}" target="_blank">&nbsp;User Guide</a></li>
-                <li ng-show="{{nav.apiAppEnabled}}"><a ng-href="{{nav.apiAppLink}}" target="_blank">&nbsp;API</a></li>
               </ul>
             </li>
             <li class = "nav-title-left">
@@ -105,19 +103,12 @@
                         <hr>
                         <div ng-href="" class="metrics-message text-center">User</div>
                         <a ng-href="{{nav.metricsEurekaUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Service Health & Status</a>
+                        <a ng-href="{{nav.metricsServicesMonitorUrl}}" target="_blank" class="btn btn-info btn-block btn-metrics" role="button">Services Monitor</a>
                       </div>
                       <!-- Metrics Admin area -->
                       <div ng-show="nav.metricsAdminShow">
                         <hr class="metrics-hr">
                         <div class="metrics-message text-center">System</div>
-                        <div ng-show="nav.metricsHystrixTurbineEnabled">
-                          <!-- <label>Hystrix/Turbine</label> -->
-                          <a ng-href="{{nav.metricsHystrixTurbineUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Real-time Insight/System Behavior</a>
-                        </div>
-                        <div ng-show="nav.metricsSleuthZipkinEnabled">
-                          <!-- <label>Sleuth/Zipkin</label> -->
-                          <a ng-href="{{nav.metricsSleuthZipkinUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Distributed Tracing</a>
-                        </div>
                         <div ng-show="nav.metricsKibanaEnabled">
                           <!-- <label>Kibana</label> -->
                           <a ng-href="{{nav.metricsKibanaUrl}}" target="_blank" class="btn btn-success btn-block btn-metrics" role="button">Kibana Dashboard</a>
@@ -133,7 +124,7 @@
               </ul>
             </li>
             <!-- About dropdown menu -->
-            <li class="dropdown mega-dropdown" ng-show="nav.aboutShow" tooltip-placement="bottom"
+            <li class="dropdown mega-dropdown" tooltip-placement="bottom"
             uib-tooltip="View installation information regarding the O2 deployment">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                 aria-expanded="false"><span class="fa fa-question-circle" aria-hidden="true"></span>
@@ -146,14 +137,11 @@
                     </li>
                     <li class="about-row">
                       <div class="col-sm-12">
-                        <span class="about-message">{{nav.aboutMessage}}</span>
+                        <span class="about-message">O2 | Image Discovery and Analysis</span>
                         <hr>
                         <p class="small"><span class="text-info">Contact: </span><a href = "mailto:{{nav.aboutContactEmail}}">{{nav.aboutContactEmail}}</a></p>
                         <p class="small"><span class="text-info">Release: </span><span>{{nav.aboutReleaseName}}</span></p>
                         <p class="small"><span class="text-info">Release Number: </span><span>{{nav.aboutReleaseNumber}}</span></p>
-                        <p class="small"><span class="text-info">Deployment: </span><span>${System.getenv("DEPLOYMENT_TARGET")}</span></p>
-                        <hr>
-                        <p class="small"><span class="text-info">UI Build Version:</span><span> <g:meta name="info.app.version"/></span></p>
                       </div>
                     </li>
                   </ul>
@@ -167,7 +155,7 @@
       <div ui-view></div>
 
       <!-- Splash Modal -->
-      %{--<div ng-controller="SplashController as splash">
+      <div ng-controller="SplashController as splash">
         <script type="text/ng-template" id="splashModalContent.html">
           <div class="modal-header">
             <div class="text-center">
@@ -187,7 +175,7 @@
             </div>
           </div>
         </script>
-      </div>--}%
+      </div>
 
     </div>
     <asset:script>

@@ -23,11 +23,11 @@
             <p>Search and discover various types of imagery. Use this as a starting
               point for filtering, sorting, and assembling imagery into a collection</p>
           </div>
-          
+
           <a type="button" class="btn btn-success" ui-sref="map">View</a>
         </div>
       </div>
-      <div ng-show="{{home.tlvAppEnabled}}" class="col-md-4">
+      <div class="col-md-4">
         <div class="text-center well">
           <div>
             <h2>Time Lapse Viewer</h2>

@@ -128,16 +128,20 @@
       return string ? string.toLowerCase().replace(/\s/g, "-") : "";
     };
 
-    vm.selectedOmar = AppO2.APP_CONFIG.params.sites[0];
+    vm.selectedOmar = AppO2.APP_CONFIG.params.sites.o2;
 
     // The list of urls we want to iterate over
-    vm.sites = AppO2.APP_CONFIG.params.sites;
-    vm.selectedUrl = AppO2.APP_CONFIG.params.sites[0].info.description;
+    vm.sites = [];
+    $.each( AppO2.APP_CONFIG.params.sites, function( key, site ) {
+        vm.sites.push( site );
+    } );
+    console.dir(vm.sites);
+    vm.selectedUrl = AppO2.APP_CONFIG.params.sites.o2.info.description;
 
     // Only show the O2 sites select (dropdown) if there is more than
     // one site in the list
     vm.showSitesSelect = false;
-    if (AppO2.APP_CONFIG.params.sites.length > 1) {
+    if (vm.sites.length > 1) {
       vm.showSitesSelect = true;
     }
 

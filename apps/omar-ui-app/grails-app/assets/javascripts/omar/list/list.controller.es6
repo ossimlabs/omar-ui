@@ -48,28 +48,19 @@
     var vm = this;
 
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
-
     var thumbnailsBaseUrl, thumbnailsContextPath, thumbnailsRequestUrl;
-
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
-
     var wmsBaseUrl, wmsContextPath, wmsRequestUrl;
-
     var tlvBaseUrl, tlvContextPath, tlvRequestUrl;
     vm.tlvRequestUrl = "";
-
     var kmlBaseUrl, kmlContextPath, kmlRequestUrl;
     vm.kmlRequestUrl = "";
-
     var imageSpaceBaseUrl, imageSpaceContextPath, imageSpaceRequestUrl;
     vm.imageSpaceRequestUrl = "";
-
     var uiBaseUrl, uiContextPath, uiRequestUrl;
     vm.uiRequestUrl = "";
-
     var mensaBaseUrl, mensaContextPath, mensaRequestUrl;
     vm.mensaRequestUrl = "";
-
     var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
     vm.omarMlRequestUrl = "";
 
@@ -346,10 +337,6 @@
         mapService.addSelectedImageAsLayer(imageId);
       }
 
-      if (vm.selectedCards.length >= 1) {
-      } else {
-      }
-
       // We need to enable the selected menu options if we have one
       // or more image cards selected
       if (vm.selectedCards.length >= 1) {
@@ -496,10 +483,22 @@
     vm.currentSortText = "Acquired (New)";
     vm.currentStartIndex = 1;
 
-    $scope.currentVideoIndex = 1;
-    vm.videoPageChange = function(page) {
-      $scope.currentVideoIndex = page * vm.pageLimit - 10
+
+
+    vm.currentVideoIndex = 1;
+
+    vm.videoPageChange = function(curPage) {
+      $scope.currentVideoIndex = curPage * vm.pageLimit - 10
     }
+
+    $scope.$watch('currentVideoIndex', function() {
+      // Kills function on page load.  Watchers fire on init
+      if ($scope.videoData.length === 0){
+        return
+      }
+      // Slice up videoData into 10 by chunks for pagination
+      $scope.slicedVideoData = $scope.videoData.features.slice($scope.currentVideoIndex, $scope.currentVideoIndex + vm.pageLimit)
+    });
 
     vm.pagingChanged = function() {
       wfsService.updateAttrFilterPaginate(

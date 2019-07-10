@@ -1023,8 +1023,8 @@
 
                 <!-- Main tile list area -->
                 <!-- filter doesnt work right startFrom:list.videoPage*list.pageLimit -->
-                <div ng-show="videoData.features.length >= 1"
-                     ng-repeat="video in videoData.features | startFrom:currentVideoIndex | limitTo:list.pageLimit">
+                <div ng-show="slicedVideoData.length >= 1"
+                     ng-repeat="video in slicedVideoData | limitTo:list.pageLimit">
                     <div class="panel panel-default cursor-pointer" >
                         <!-- Heading -->
                         <div class="panel-heading"
@@ -1050,8 +1050,7 @@
                                 <div class="media-left" style="position: relative">
                                     <!-- link to video player page -->
                                     <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
-                                       target="_blank"
-                                    >
+                                       target="_blank">
                                         <video
                                             ng-src="{{ video.properties.videoUrl }}"
                                             width="175px"
@@ -1112,8 +1111,8 @@
                     style="margin: 8px;"
                     total-items="videoData.features.length"
                     items-per-page="list.pageLimit"
-                    ng-model="list.videoPage"
-                    ng-change="list.videoPageChange(list.videoPage)"
+                    ng-model="list.currentVideoPage"
+                    ng-change="list.videoPageChange(list.currentVideoPage)"
                     max-size="5"
                     boundary-links="true"
                     force-ellipses="true"

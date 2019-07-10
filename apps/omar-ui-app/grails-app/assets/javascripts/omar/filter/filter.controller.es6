@@ -27,6 +27,7 @@ function (
 ) {
     /* jshint validthis: true */
     var vm = this;
+    $scope.videoData = [];
 
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
     vm.urlParams = $stateParams;
@@ -62,9 +63,7 @@ function (
         });
     };
 
-    /*vm.videoPageChange = function(params) {
-        console.log('page change')
-    }*/
+
     /**
      * generates $scope.videoData = res.data
      * which is available to the app
@@ -96,6 +95,9 @@ function (
                     // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
                     // Fill placeholder with data as soon as it is received
                     $scope.videoData = data;
+
+                    // get the first 10 results sliced up for page 1
+                    $scope.slicedVideoData = $scope.videoData.features.slice(0, vm.pageLimit)
                 });
         }
     }

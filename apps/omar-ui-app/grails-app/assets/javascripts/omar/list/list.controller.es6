@@ -494,12 +494,11 @@
     };
 
     vm.currentSortText = "Acquired (New)";
-
     vm.currentStartIndex = 1;
-    vm.videoPage = 0;
 
-    vm.videoPageChange = function() {
-
+    $scope.currentVideoIndex = 1;
+    vm.videoPageChange = function(page) {
+      $scope.currentVideoIndex = page * vm.pageLimit - 10
     }
 
     vm.pagingChanged = function() {

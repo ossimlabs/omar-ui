@@ -208,7 +208,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                         wfsAjax.features.abort();
                     }
                     wfsAjax.features = wfsQuery();
-                    console.log('wfsAjax.features', wfsAjax.features)
                 }
                 else if ( index == 1 ) {
                     extraParam = { resultType: 'hits' };
@@ -217,7 +216,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                         wfsAjax.hits.abort();
                     }
                     wfsAjax.hits = wfsQuery();
-                    console.log('wfsAjax.hits', wfsAjax.hits)
                 }
             }
         });

@@ -134,12 +134,9 @@
       // returns sliced data from starting position
     .filter('startFrom', function() {
         return function(input, start) {
-            console.log('input', input)
-            console.log('start', start)
-
+            console.log('start', start, 'input', input)
             start = +start; //parse to int
-            console.log('newstart', start)
-          return input.slice(start);
+            return input.slice(start);
         }
     })
     .directive("ngEnter", function() {

@@ -1024,7 +1024,7 @@
                 <!-- Main tile list area -->
                 <!-- filter doesnt work right startFrom:list.videoPage*list.pageLimit -->
                 <div ng-show="videoData.features.length >= 1"
-                     ng-repeat="video in videoData.features | limitTo:list.pageLimit">
+                     ng-repeat="video in videoData.features | startFrom:currentVideoIndex | limitTo:list.pageLimit">
                     <div class="panel panel-default cursor-pointer" >
                         <!-- Heading -->
                         <div class="panel-heading"
@@ -1112,8 +1112,8 @@
                     style="margin: 8px;"
                     total-items="videoData.features.length"
                     items-per-page="list.pageLimit"
-                    ng-model="list.currentStartIndex"
-                    ng-change="filter.videoPageChange({ page: list.currentStartIndex, maxFeatures : 10})"
+                    ng-model="list.videoPage"
+                    ng-change="list.videoPageChange(list.videoPage)"
                     max-size="5"
                     boundary-links="true"
                     force-ellipses="true"

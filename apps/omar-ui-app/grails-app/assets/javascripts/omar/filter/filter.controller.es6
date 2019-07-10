@@ -27,7 +27,7 @@ function (
 ) {
     /* jshint validthis: true */
     var vm = this;
-    // vm.videoData = [];
+
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
     vm.urlParams = $stateParams;
 
@@ -62,18 +62,9 @@ function (
         });
     };
 
-    vm.getTotalVideos = function () {
-        if ($scope.filterVideosToggle) {
-            videoService.videoQuery()
-              .success(function(data, status, header, config) {
-                const featureLength = data.features.length
-              })
-        }
-    }
-
-    vm.videoPageChange = function(params) {
-        console.log('currentPage', params.currentStartIndex * 10)
-    }
+    /*vm.videoPageChange = function(params) {
+        console.log('page change')
+    }*/
     /**
      * generates $scope.videoData = res.data
      * which is available to the app
@@ -83,7 +74,7 @@ function (
      * this allows for the data to easily traverse the DOM.
      */
     vm.getVideos = function(params) {
-        console.log('params', params, 'filterVideosToggle', $scope.filterVideosToggle)
+        // console.log('params', params, 'filterVideosToggle', $scope.filterVideosToggle)
         // Only run this if the toggle (checkbox) is true
         if ($scope.filterVideosToggle) {
             videoService.videoQuery()
@@ -105,7 +96,6 @@ function (
                     // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
                     // Fill placeholder with data as soon as it is received
                     $scope.videoData = data;
-                    console.log('videoData', $scope.videoData)
                 });
         }
     }

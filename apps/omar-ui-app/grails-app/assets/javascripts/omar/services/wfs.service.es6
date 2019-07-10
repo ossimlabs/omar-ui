@@ -188,14 +188,12 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                         $timeout(function() {
                             if ( index == 0 ) {
                                 $rootScope.$broadcast( 'wfs: updated', data.features );
-                                // console.log('wfs: updated', data.features)
                                 const imageIdArray = data.features.map( image => image.properties.id );
                                 stateService.mapState.featureIds = imageIdArray;
 
                             }
                             else if ( index == 1 ) {
                                 $rootScope.$broadcast( 'wfs features: updated', data.totalFeatures );
-                                // console.log('wfs features: updated', data.features)
                             }
                         });
                     } );
@@ -210,6 +208,7 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                         wfsAjax.features.abort();
                     }
                     wfsAjax.features = wfsQuery();
+                    console.log('wfsAjax.features', wfsAjax.features)
                 }
                 else if ( index == 1 ) {
                     extraParam = { resultType: 'hits' };
@@ -218,6 +217,7 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                         wfsAjax.hits.abort();
                     }
                     wfsAjax.hits = wfsQuery();
+                    console.log('wfsAjax.hits', wfsAjax.hits)
                 }
             }
         });

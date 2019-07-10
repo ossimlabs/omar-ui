@@ -5,7 +5,8 @@ angular
     "$http",
 
 function($http) { return {
-    videoQuery: function () {
+    videoQuery: function (startIndex = 0, maxFeatures = 100) {
+        // console.log('executing query... params:', params)
         let urlParams = new URLSearchParams(window.location.search)
         // let filter = urlParams.get('filter')
         let filter = '';
@@ -18,7 +19,9 @@ function($http) { return {
             typeName: 'omar:video_data_set',
             filter: filter,
             resultType: 'results',
-            outputFormat: 'JSON'
+            outputFormat: 'JSON',
+            startIndex: startIndex,
+            maxFeatures: maxFeatures
         }
 
         const queryString = Object.keys(wfsParams).map(key => key + '=' + wfsParams[key]).join('&');

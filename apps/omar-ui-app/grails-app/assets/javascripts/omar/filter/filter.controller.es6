@@ -62,6 +62,18 @@ function (
         });
     };
 
+    vm.getTotalVideos = function () {
+        if ($scope.filterVideosToggle) {
+            videoService.videoQuery()
+              .success(function(data, status, header, config) {
+                const featureLength = data.features.length
+              })
+        }
+    }
+
+    vm.videoPageChange = function(params) {
+        console.log('currentPage', params.currentStartIndex * 10)
+    }
     /**
      * generates $scope.videoData = res.data
      * which is available to the app
@@ -70,9 +82,10 @@ function (
      * Additionally, because of the use of controllers throughout the app
      * this allows for the data to easily traverse the DOM.
      */
-    vm.getVideos = function(filterVideosToggle) {
+    vm.getVideos = function(params) {
+        console.log('params', params, 'filterVideosToggle', $scope.filterVideosToggle)
         // Only run this if the toggle (checkbox) is true
-        if (filterVideosToggle) {
+        if ($scope.filterVideosToggle) {
             videoService.videoQuery()
                 .success(function(data, status, header, config){
 

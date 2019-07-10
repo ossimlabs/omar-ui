@@ -498,6 +498,10 @@
     vm.currentStartIndex = 1;
     vm.videoPage = 0;
 
+    vm.videoPageChange = function() {
+
+    }
+
     vm.pagingChanged = function() {
       wfsService.updateAttrFilterPaginate(
         (vm.currentStartIndex - 1) * wfsService.attrObj.pageLimit

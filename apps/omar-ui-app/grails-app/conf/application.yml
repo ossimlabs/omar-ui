@@ -89,7 +89,7 @@ omar:
       splashModal:
         delay: 1000
         # Used to enable/disable the splash modal from displaying
-        enabled: true
+        enabled: false
         # Splash modal header text
         header: O2 Notice
         # Splash modal message body text

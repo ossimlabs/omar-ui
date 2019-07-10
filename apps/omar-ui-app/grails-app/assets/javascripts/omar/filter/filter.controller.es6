@@ -81,21 +81,19 @@ function (
             videoService.videoQuery()
                 .success(function(data, status, header, config){
 
-                    // Strip everything away leaving filename
-                    // Because regex is the devil and this is cleaner
-                    // split divides url by /, pop returns last, replace modifies filetype
-                    const featureLength = data.features.length
-
                     for (let i=0; i < data.features.length; i++ ){
+                        // strip everything away leaving filename
+                        // because regex is the devil and this is cleaner
+                        // split divides url by /, pop returns last, replace modifies filetype
                         const videoNameMp4 = data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
 
                         // Build final url and append to response keeping unified object intact
                         data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
                     }
-                    // Create a short file name (no file extension)
-                    // used for screenshot naming
-                    // vm.videoName = videoNameMp4.split('.').slice(0, -1).join('.')
-                    // Fill placeholder with data as soon as it is received
+
+                    // save a copy to videoData
+                    // used for totals and pagination slicage.
+                    // never altered!
                     $scope.videoData = data;
 
                     // get the first 10 results sliced up for page 1

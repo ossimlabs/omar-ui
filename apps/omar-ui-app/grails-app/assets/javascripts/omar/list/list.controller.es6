@@ -485,6 +485,7 @@
 
 
 
+    //
     vm.currentVideoIndex = 1;
 
     vm.videoPageChange = function(curPage) {

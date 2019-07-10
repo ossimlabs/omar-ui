@@ -72,8 +72,10 @@ function (
      * Additionally, because of the use of controllers throughout the app
      * this allows for the data to easily traverse the DOM.
      */
-    vm.getVideos = function(params) {
-        // console.log('params', params, 'filterVideosToggle', $scope.filterVideosToggle)
+    vm.getVideos = function() {
+        // Clear videoData each time
+        $scope.videoData = [];
+
         // Only run this if the toggle (checkbox) is true
         if ($scope.filterVideosToggle) {
             videoService.videoQuery()

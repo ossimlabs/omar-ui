@@ -1005,7 +1005,7 @@
                 </div>
             </nav>
 
-            <div id="" style="border-style: solid; border-width: 1px; padding: 10px; border-radius: 4px;">
+            <div id="video-list" style="border-style: solid; border-width: 1px; padding: 10px; border-radius: 4px;">
                 <!-- Error or empty response area -->
                 <div ng-show="videoData.features === 0">
                     <div>
@@ -1106,7 +1106,7 @@
             </div>
 
             <!-- Video pagination -->
-            <div class="text-center">
+            <div class="text-center" id="pagination">
                 <uib-pagination
                     style="margin: 8px;"
                     total-items="videoData.features.length"

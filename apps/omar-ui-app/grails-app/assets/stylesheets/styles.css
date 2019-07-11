@@ -193,7 +193,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 57vh;
   }
-  #list {
+  #list, #video-list {
     height: 37vh;
   }
   #mapOrtho {
@@ -211,7 +211,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 72vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 55vh !important;
   }
   #mapOrtho {
@@ -229,7 +229,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 75vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 61vh !important;
   }
   #mapOrtho {
@@ -247,7 +247,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 78vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 65vh !important;
   }
   #mapOrtho {
@@ -265,7 +265,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 80vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 69vh !important;
   }
   #mapOrtho {
@@ -283,7 +283,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 82vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 72vh !important;
   }
   #mapOrtho {
@@ -301,7 +301,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 84vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 74vh !important;
   }
   #mapOrtho {
@@ -319,7 +319,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 86vh !important;
   }
-  #list {
+  #list, #video-list {
     height: 76vh !important;
   }
   #mapOrtho {
@@ -382,23 +382,23 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-right: 0px;
 }
 
-#list {
+#list, #video-list {
   overflow-y: auto;
   padding-right: 5px;
   margin-top: -15px;
 }
 
-#list .panel {
+#list .panel, #video-list.panel {
  margin-bottom: 3px;
 }
 
-#list .panel-body{
+#list .panel-body, #video-list.panel-body{
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 2px;
 }
 
-#list .media {
+#list .media, #video-list.media {
   margin-bottom: -20px;
   margin-top: -5px;
 }

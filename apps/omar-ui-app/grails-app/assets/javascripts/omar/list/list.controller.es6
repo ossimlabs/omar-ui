@@ -496,6 +496,14 @@
       }
       // Slice up videoData into chunks of 10 for pagination
       $scope.slicedVideoData = $scope.videoData.features.slice($scope.curVidStartInd, $scope.curVidStartInd + vm.pageLimit)
+
+      $("#video-list").animate(
+          {
+            scrollTop: 0
+          },
+          "fast"
+      );
+
     });
 
     vm.pagingChanged = function() {

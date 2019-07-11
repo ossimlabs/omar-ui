@@ -1,21 +1,19 @@
-(function() {
-  "use strict";
-  angular
-    .module("omarApp")
-    .controller("FilterController", [
-      "stateService",
-      "$http",
-      "$scope",
-      "wfsService",
-      "mapService",
-      "$stateParams",
-      "$window",
-      "toastr",
-      "$log",
-      FilterController
-    ]);
+"use strict";
+angular
+  .module("omarApp")
+  .controller("FilterController", [
+    "stateService",
+    "$http",
+    "$scope",
+    "wfsService",
+    "mapService",
+    "$stateParams",
+    "$window",
+    "toastr",
+    "$log",
+    "videoService",
 
-  function FilterController(
+function (
     stateService,
     $http,
     $scope,
@@ -24,10 +22,13 @@
     $stateParams,
     $window,
     toastr,
-    $log
-  ) {
+    $log,
+    videoService
+) {
     /* jshint validthis: true */
     var vm = this;
+    $scope.videoData = [];
+
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
     vm.urlParams = $stateParams;
 
@@ -39,48 +40,87 @@
     }
 
     vm.getCountryListing = function() {
-      var baseUrl = stateService.omarSitesState.url.base;
-      var contextPath = stateService.omarSitesState.url.wfsContextPath;
-      var url = baseUrl + contextPath + "/wfs//getFeature";
-      var params = {
-        outputFormat: "JSON",
-        resultType: "results",
-        request: "GetFeature",
-        service: "WFS",
-        typeName: "omar:country_code",
-        version: "1.1.0"
-      };
+        var baseUrl = stateService.omarSitesState.url.base;
+        var contextPath = stateService.omarSitesState.url.wfsContextPath;
+        var url = baseUrl + contextPath + "/wfs//getFeature";
+        var params = {
+            outputFormat: "JSON",
+            resultType: "results",
+            request: "GetFeature",
+            service: "WFS",
+            typeName: "omar:country_code",
+            version: "1.1.0"
+        };
 
-      $http({
-        method: "GET",
-        url: url + "?" + $.param(params)
-      }).then(function(response) {
-        var values = response.data.features.map(function(feature) {
-          return feature.properties;
+        $http({
+            method: "GET",
+            url: url + "?" + $.param(params)
+        }).then(function(response) {
+            var values = response.data.features.map(function(feature) {
+                return feature.properties;
+            });
+            $scope["countryListing"] = values;
         });
-        $scope["countryListing"] = values;
-      });
     };
+
+
+    /**
+     * generates $scope.videoData = res.data
+     * which is available to the app
+     * Better than timeout, and does not need scope.apply
+     * This functions more like actual $state in Vue.
+     * Additionally, because of the use of controllers throughout the app
+     * this allows for the data to easily traverse the DOM.
+     */
+    vm.getVideos = function() {
+        // Clear videoData each time
+        $scope.videoData = [];
+
+        // Only run this if the toggle (checkbox) is true
+        if ($scope.filterVideosToggle) {
+            videoService.videoQuery()
+                .success(function(data, status, header, config){
+
+                    for (let i=0; i < data.features.length; i++ ){
+                        // strip everything away leaving filename
+                        // because regex is the devil and this is cleaner
+                        // split divides url by /, pop returns last, replace modifies filetype
+                        const videoNameMp4 = data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
+
+                        // Build final url and append to response keeping unified object intact
+                        data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
+                    }
+
+                    // save a copy to videoData
+                    // used for totals and pagination slicage.
+                    // never altered!
+                    $scope.videoData = data;
+
+                    // get the first 10 results sliced up for page 1
+                    $scope.slicedVideoData = $scope.videoData.features.slice(0, vm.pageLimit)
+                });
+        }
+    }
 
     vm.showCurrentFilter = true;
     vm.refreshSpin = false;
     vm.refreshList = function() {
-      wfsService.executeWfsQuery();
-      vm.refreshSpin = true;
+        wfsService.executeWfsQuery();
+        vm.refreshSpin = true;
     };
 
     $scope.$on("wfs: updated", function(event, data) {
-      // Update the DOM (card list) with the data
-      $scope.$apply(function() {
-        vm.wfsData = data;
-        $("#list").animate(
-          {
-            scrollTop: 0
-          },
-          "fast"
-        );
-        vm.refreshSpin = false;
-      });
+        // Update the DOM (card list) with the data
+        $scope.$apply(function() {
+            vm.wfsData = data;
+            $("#list").animate(
+                {
+                    scrollTop: 0
+                },
+                "fast"
+            );
+            vm.refreshSpin = false;
+        });
     });
 
     $scope.$on("wfs features: updated", function(event, features) {
@@ -104,12 +144,12 @@
     var stagerBaseUrl, stagerContextPath, stagerRequestUrl;
 
     function setfilterControllerUrlProps() {
-      stagerBaseUrl = stateService.omarSitesState.url.base;
-      stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
-      stagerRequestUrl =
-        stagerBaseUrl +
-        stagerContextPath +
-        "/dataManager/getDistinctValues?property=";
+        stagerBaseUrl = stateService.omarSitesState.url.base;
+        stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
+        stagerRequestUrl =
+            stagerBaseUrl +
+            stagerContextPath +
+            "/dataManager/getDistinctValues?property=";
 
         $.each(
             [ 'countryCode', 'missionId', 'productId', 'sensorId' ],
@@ -120,29 +160,29 @@
     }
 
     $scope.$on("omarSitesState.updated", function(event, params) {
-      setfilterControllerUrlProps();
+        setfilterControllerUrlProps();
     });
 
     var filterString = "";
     var filterArray = [];
 
     vm.initSpatial = function() {
-      vm.viewPortSpatial = false;
-      vm.pointSpatial = false;
-      vm.polygonSpatial = false;
+        vm.viewPortSpatial = false;
+        vm.pointSpatial = false;
+        vm.polygonSpatial = false;
 
-      var spatial = vm.urlParams.spatial || vm.userPreferences.spatial;
-      if (spatial.toLowerCase() == "mapview") {
-        vm.viewPortSpatial = true;
-      } else if (spatial.toLowerCase().includes("point")) {
-        vm.pointSpatial = true;
-        var point = new ol.format.WKT().readGeometry(spatial);
-        mapService.filterByPoint({ coordinate: point.getCoordinates() });
-      } else if (spatial.toLowerCase().includes("polygon")) {
-        vm.polygonSpatial = true;
-        var polygon = new ol.format.WKT().readGeometry(spatial);
-        mapService.dragBoxEnd(polygon);
-      }
+        var spatial = vm.urlParams.spatial || vm.userPreferences.spatial;
+        if (spatial.toLowerCase() == "mapview") {
+            vm.viewPortSpatial = true;
+        } else if (spatial.toLowerCase().includes("point")) {
+            vm.pointSpatial = true;
+            var point = new ol.format.WKT().readGeometry(spatial);
+            mapService.filterByPoint({ coordinate: point.getCoordinates() });
+        } else if (spatial.toLowerCase().includes("polygon")) {
+            vm.polygonSpatial = true;
+            var polygon = new ol.format.WKT().readGeometry(spatial);
+            mapService.dragBoxEnd(polygon);
+        }
     };
 
     function getDistinctValues( property ) {
@@ -158,62 +198,62 @@
     };
 
     function checkNoSpatialFilter() {
-      // If we don't have any of the filters selected we will provide
-      // a list of all the images.
-      if (!vm.viewPortSpatial && !vm.pointSpatial && !vm.polygonSpatial) {
-        mapService.viewPortFilter(false);
-      }
+        // If we don't have any of the filters selected we will provide
+        // a list of all the images.
+        if (!vm.viewPortSpatial && !vm.pointSpatial && !vm.polygonSpatial) {
+            mapService.viewPortFilter(false);
+        }
     }
 
     this.byViewPort = function(status) {
-      $("a:contains('Map')").trigger("click");
+        $("a:contains('Map')").trigger("click");
 
-      // Turn on viewport
-      mapService.viewPortFilter(status);
+        // Turn on viewport
+        mapService.viewPortFilter(status);
 
-      // Turn off point
-      vm.pointSpatial = false;
-      mapService.pointFilter(vm.pointSpatial);
+        // Turn off point
+        vm.pointSpatial = false;
+        mapService.pointFilter(vm.pointSpatial);
 
-      // Turn off polygon
-      vm.polygonSpatial = false;
-      mapService.polygonFilter(vm.polygonSpatial);
+        // Turn off polygon
+        vm.polygonSpatial = false;
+        mapService.polygonFilter(vm.polygonSpatial);
 
-      checkNoSpatialFilter();
+        checkNoSpatialFilter();
     };
 
     this.byPointer = function(status) {
-      $("a:contains('Map')").trigger("click");
+        $("a:contains('Map')").trigger("click");
 
-      // Turn on point
-      mapService.pointFilter(status);
+        // Turn on point
+        mapService.pointFilter(status);
 
-      // Turn off viewport
-      vm.viewPortSpatial = false;
-      mapService.viewPortFilter(vm.viewPortSpatial);
+        // Turn off viewport
+        vm.viewPortSpatial = false;
+        mapService.viewPortFilter(vm.viewPortSpatial);
 
-      // Turn off polygon
-      vm.polygonSpatial = false;
-      mapService.polygonFilter(vm.polygonSpatial);
+        // Turn off polygon
+        vm.polygonSpatial = false;
+        mapService.polygonFilter(vm.polygonSpatial);
 
-      checkNoSpatialFilter();
+        checkNoSpatialFilter();
     };
 
     this.byPolygon = function(status) {
-      $("a:contains('Map')").trigger("click");
+        $("a:contains('Map')").trigger("click");
 
-      // Turn on polygons
-      mapService.polygonFilter(status);
+        // Turn on polygons
+        mapService.polygonFilter(status);
 
-      // Turn off viewport
-      vm.viewPortSpatial = false;
-      mapService.viewPortFilter(vm.viewPortSpatial);
+        // Turn off viewport
+        vm.viewPortSpatial = false;
+        mapService.viewPortFilter(vm.viewPortSpatial);
 
-      // Turn off point
-      vm.pointSpatial = false;
-      mapService.pointFilter(vm.pointSpatial);
+        // Turn off point
+        vm.pointSpatial = false;
+        mapService.pointFilter(vm.pointSpatial);
 
-      checkNoSpatialFilter();
+        checkNoSpatialFilter();
     };
 
     vm.handleDataList = function( inputId ) {
@@ -268,201 +308,201 @@
     }
 
     vm.initKeywords = function(reset) {
-      var arrays = [
-        { key: "countryCode", urlParam: "countries" },
-        { key: "missionId", urlParam: "missions" },
-        { key: "sensorId", urlParam: "sensors" },
-        { key: "productId", urlParam: "products" }
-      ];
-      $.each(arrays, function(index, keyword) {
-        vm[keyword.key + "Check"] = vm.userPreferences[keyword.key + "Enabled"];
-        var value = vm.userPreferences[keyword.key];
-        if (vm.urlParams[keyword.urlParam]) {
-          vm[keyword.key + "Check"] = true;
-          value = decodeURIComponent( vm.urlParams[keyword.urlParam] );
-        }
-        if (reset) {
-          vm[keyword.key + "Check"] = false;
-          value = null;
-        }
-        vm[keyword.key] = value ? value : '';
-      });
+        var arrays = [
+            { key: "countryCode", urlParam: "countries" },
+            { key: "missionId", urlParam: "missions" },
+            { key: "sensorId", urlParam: "sensors" },
+            { key: "productId", urlParam: "products" }
+        ];
+        $.each(arrays, function(index, keyword) {
+            vm[keyword.key + "Check"] = vm.userPreferences[keyword.key + "Enabled"];
+            var value = vm.userPreferences[keyword.key];
+            if (vm.urlParams[keyword.urlParam]) {
+                vm[keyword.key + "Check"] = true;
+                value = decodeURIComponent( vm.urlParams[keyword.urlParam] );
+            }
+            if (reset) {
+                vm[keyword.key + "Check"] = false;
+                value = null;
+            }
+            vm[keyword.key] = value ? value : '';
+        });
 
-      var strings = [
-        { key: "beNumber", urlParam: "be" },
-        { key: "filename", urlParam: "filename" },
-        { key: "imageId", urlParam: "imageId" },
-        { key: "targetId", urlParam: "target" },
-        { key: "wacNumber", urlParam: "wac" }
-      ];
-      $.each(strings, function(index, keyword) {
-        vm[keyword.key + "Check"] =
-          vm.userPreferences[keyword.urlParam + "Enabled"];
-        vm[keyword.key] = vm.userPreferences[keyword.urlParam];
-        if (vm.urlParams[keyword.urlParam]) {
-          vm[keyword.key + "Check"] = true;
-          vm[keyword.key] = vm.urlParams[keyword.urlParam];
-        }
-        if (reset) {
-          vm[keyword.key + "Check"] = false;
-          vm[keyword.key] = "";
-        }
-      });
+        var strings = [
+            { key: "beNumber", urlParam: "be" },
+            { key: "filename", urlParam: "filename" },
+            { key: "imageId", urlParam: "imageId" },
+            { key: "targetId", urlParam: "target" },
+            { key: "wacNumber", urlParam: "wac" }
+        ];
+        $.each(strings, function(index, keyword) {
+            vm[keyword.key + "Check"] =
+                vm.userPreferences[keyword.urlParam + "Enabled"];
+            vm[keyword.key] = vm.userPreferences[keyword.urlParam];
+            if (vm.urlParams[keyword.urlParam]) {
+                vm[keyword.key + "Check"] = true;
+                vm[keyword.key] = vm.urlParams[keyword.urlParam];
+            }
+            if (reset) {
+                vm[keyword.key + "Check"] = false;
+                vm[keyword.key] = "";
+            }
+        });
     };
 
     vm.initRanges = function(reset) {
-      var ranges = [
-        { key: "azimuth", max: 360, min: 0, urlParam: "azimuth" },
-        { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
-        { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
-        { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
-        { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
-      ];
-      $.each(ranges, function(index, range) {
-        vm[range.key + "Check"] =
-          vm.userPreferences[range.urlParam + "Enabled"];
-        vm[range.key + "Min"] = vm.userPreferences[range.urlParam + "Min"];
-        vm[range.key + "Max"] = vm.userPreferences[range.urlParam + "Max"];
-        if (vm.urlParams[range.urlParam]) {
-          vm[range.key + "Check"] = true;
-          var values = vm.urlParams[range.urlParam].split(":");
-          vm[range.key + "Min"] = values[0];
-          vm[range.key + "Max"] = values[1];
+        var ranges = [
+            { key: "azimuth", max: 360, min: 0, urlParam: "azimuth" },
+            { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
+            { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
+            { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
+            { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
+        ];
+        $.each(ranges, function(index, range) {
+            vm[range.key + "Check"] =
+                vm.userPreferences[range.urlParam + "Enabled"];
+            vm[range.key + "Min"] = vm.userPreferences[range.urlParam + "Min"];
+            vm[range.key + "Max"] = vm.userPreferences[range.urlParam + "Max"];
+            if (vm.urlParams[range.urlParam]) {
+                vm[range.key + "Check"] = true;
+                var values = vm.urlParams[range.urlParam].split(":");
+                vm[range.key + "Min"] = values[0];
+                vm[range.key + "Max"] = values[1];
+            }
+            if (reset) {
+                vm[range.key + "Check"] = false;
+                vm[range.key + "Min"] = range.emin;
+                vm[range.key + "Max"] = range.max;
+            }
+        });
+
+        vm.cloudCoverCheck = vm.userPreferences.cloudCoverEnabled;
+        vm.cloudCover = vm.userPreferences.cloudCoverMax;
+        if (vm.urlParams.cloudCover) {
+            vm.cloudCoverCheck = true;
+            vm.cloudCover = vm.urlParams.cloudCover;
         }
         if (reset) {
-          vm[range.key + "Check"] = false;
-          vm[range.key + "Min"] = range.emin;
-          vm[range.key + "Max"] = range.max;
+            vm.cloudCoverCheck = false;
+            vm.cloudCover = 100;
         }
-      });
-
-      vm.cloudCoverCheck = vm.userPreferences.cloudCoverEnabled;
-      vm.cloudCover = vm.userPreferences.cloudCoverMax;
-      if (vm.urlParams.cloudCover) {
-        vm.cloudCoverCheck = true;
-        vm.cloudCover = vm.urlParams.cloudCover;
-      }
-      if (reset) {
-        vm.cloudCoverCheck = false;
-        vm.cloudCover = 100;
-      }
-      vm.cloudCoverCheckNull = false;
+        vm.cloudCoverCheckNull = false;
     };
 
     vm.initTemporal = reset => {
-      vm.currentDateType = vm.dateTypes.find(function(element) {
-        return element.value == vm.userPreferences.dateType;
-      });
-      if (vm.urlParams.dateType) {
         vm.currentDateType = vm.dateTypes.find(function(element) {
-          return element.value == vm.urlParams.dateType;
+            return element.value == vm.userPreferences.dateType;
         });
-      }
-      if (reset) {
-        vm.currentDateType = vm.dateTypes[0];
-      }
+        if (vm.urlParams.dateType) {
+            vm.currentDateType = vm.dateTypes.find(function(element) {
+                return element.value == vm.urlParams.dateType;
+            });
+        }
+        if (reset) {
+            vm.currentDateType = vm.dateTypes[0];
+        }
 
-      vm.currentTemporalDuration = vm.temporalDurations.find(function(element) {
-        return element.value == vm.userPreferences.duration;
-      });
-      if (vm.urlParams.duration) {
-        vm.currentTemporalDuration = vm.temporalDurations.find(function(
-          element
-        ) {
-          return element.value == vm.urlParams.duration;
+        vm.currentTemporalDuration = vm.temporalDurations.find(function(element) {
+            return element.value == vm.userPreferences.duration;
         });
-      }
-      if (reset) {
-        vm.currentTemporalDuration = vm.temporalDurations[0];
-      }
+        if (vm.urlParams.duration) {
+            vm.currentTemporalDuration = vm.temporalDurations.find(function(
+                element
+            ) {
+                return element.value == vm.urlParams.duration;
+            });
+        }
+        if (reset) {
+            vm.currentTemporalDuration = vm.temporalDurations[0];
+        }
 
-      vm.customDateRangeVisible = false;
+        vm.customDateRangeVisible = false;
 
-      vm.setInitialCustomStartDate();
-      vm.setInitialCustomEndDate();
+        vm.setInitialCustomStartDate();
+        vm.setInitialCustomEndDate();
     };
 
     vm.dateTypes = [
-      { label: "Acquisition Date", value: "acquisition_date" },
-      { label: "Ingest Date", value: "ingest_date" }
+        { label: "Acquisition Date", value: "acquisition_date" },
+        { label: "Ingest Date", value: "ingest_date" }
     ];
 
     vm.temporalDurations = [
-      { label: "None", value: "none" },
-      { label: "Today", value: "lastDay" },
-      { label: "Yesterday", value: "yesterday" },
-      { label: "Last 3 Days", value: "last3Days" },
-      { label: "Last Week", value: "last7Days" },
-      { label: "Last Month", value: "lastMonth" },
-      { label: "Last 3 Months", value: "last3Months" },
-      { label: "Last 6 Months", value: "last6Months" },
-      { label: "Custom Date Range", value: "customDateRange" }
+        { label: "None", value: "none" },
+        { label: "Today", value: "lastDay" },
+        { label: "Yesterday", value: "yesterday" },
+        { label: "Last 3 Days", value: "last3Days" },
+        { label: "Last Week", value: "last7Days" },
+        { label: "Last Month", value: "lastMonth" },
+        { label: "Last 3 Months", value: "last3Months" },
+        { label: "Last 6 Months", value: "last6Months" },
+        { label: "Custom Date Range", value: "customDateRange" }
     ];
 
     vm.customDateRangeVisible = false;
 
     vm.showCustomDateRange = function() {
-      vm.customDateRangeVisible = true;
+        vm.customDateRangeVisible = true;
     };
 
     vm.setInitialCustomStartDate = function() {
-      if (
-        vm.userPreferences.customStartDateTime &&
-        vm.userPreferences.duration == "customDateRange"
-      ) {
-        vm.startDate = moment(vm.userPreferences.customStartDateTime).format(
-          "YYYY-MM-DD"
-        );
-      } else {
-        vm.startDate = moment()
-          .startOf("day")
-          .format("YYYY-MM-DD");
-      }
-      if (vm.urlParams.startDate) {
-        vm.currentTemporalDuration = vm.temporalDurations.find(function(
-          element
+        if (
+            vm.userPreferences.customStartDateTime &&
+            vm.userPreferences.duration == "customDateRange"
         ) {
-          return element.value == "customDateRange";
-        });
-        vm.startDate = moment(vm.urlParams.startDate).format("YYYY-MM-DD");
-      }
+            vm.startDate = moment(vm.userPreferences.customStartDateTime).format(
+                "YYYY-MM-DD"
+            );
+        } else {
+            vm.startDate = moment()
+                .startOf("day")
+                .format("YYYY-MM-DD");
+        }
+        if (vm.urlParams.startDate) {
+            vm.currentTemporalDuration = vm.temporalDurations.find(function(
+                element
+            ) {
+                return element.value == "customDateRange";
+            });
+            vm.startDate = moment(vm.urlParams.startDate).format("YYYY-MM-DD");
+        }
     };
     vm.openStartDatePopup = function() {
-      vm.startDatePopupOpen = true;
+        vm.startDatePopupOpen = true;
     };
 
     vm.setInitialCustomEndDate = function() {
-      if (
-        vm.userPreferences.customEndDateTime &&
-        vm.userPreferences.duration == "customDateRange"
-      ) {
-        vm.endDate = moment(vm.userPreferences.customEndDateTime).format(
-          "YYYY-MM-DD"
-        );
-      } else {
-        vm.endDate = moment()
-          .endOf("day")
-          .format("YYYY-MM-DD");
-      }
-      if (vm.urlParams.endDate) {
-        vm.currentTemporalDuration = vm.temporalDurations.find(function(
-          element
+        if (
+            vm.userPreferences.customEndDateTime &&
+            vm.userPreferences.duration == "customDateRange"
         ) {
-          return element.value == "customDateRange";
-        });
-        vm.endDate = moment(vm.urlParams.endDate).format("YYYY-MM-DD");
-      }
+            vm.endDate = moment(vm.userPreferences.customEndDateTime).format(
+                "YYYY-MM-DD"
+            );
+        } else {
+            vm.endDate = moment()
+                .endOf("day")
+                .format("YYYY-MM-DD");
+        }
+        if (vm.urlParams.endDate) {
+            vm.currentTemporalDuration = vm.temporalDurations.find(function(
+                element
+            ) {
+                return element.value == "customDateRange";
+            });
+            vm.endDate = moment(vm.urlParams.endDate).format("YYYY-MM-DD");
+        }
     };
     vm.openEndDatePopup = function() {
-      vm.endDatePopupOpen = true;
+        vm.endDatePopupOpen = true;
     };
 
     vm.getCustomStartDate = function() {
-      return moment(vm.startDate).format("MM-DD-YYYY HH:mm:ss+0000");
+        return moment(vm.startDate).format("MM-DD-YYYY HH:mm:ss+0000");
     };
 
     vm.getCustomEndDate = function() {
-      return moment(vm.endDate).format("MM-DD-YYYY HH:mm:ss+0000");
+        return moment(vm.endDate).format("MM-DD-YYYY HH:mm:ss+0000");
     };
 
     vm.updateFilterString = function() {
@@ -548,7 +588,7 @@
                 subClause = subClause.split("'").join("''");
 
                 clause = "(" + clause + " or intersects(ground_geom, collectGeometries(queryCollection('" +
-                placemarksConfig.tableName + "', '" + placemarksConfig.geomName + "', '" + subClause + "'))))";
+                    placemarksConfig.tableName + "', '" + placemarksConfig.geomName + "', '" + subClause + "'))))";
             }
 
             filterArray.push(clause);
@@ -605,9 +645,9 @@
             max = parseFloat(formFieldMax);
 
             /**
-            * Check to see if the user has exceeded the min or max ranges of the
-            * current range filter
-            */
+             * Check to see if the user has exceeded the min or max ranges of the
+             * current range filter
+             */
             var toastErrorOptions =  {
                 positionClass: "toast-bottom-left",
                 closeButton: true,
@@ -702,156 +742,156 @@
     vm.updateFilterString();
 
     let clearAllSpatialFilter = () => {
-      vm.viewPortSpatial = false;
-      vm.pointSpatial = false;
-      vm.polygonSpatial = false;
-      mapService.viewPortFilter(false);
+        vm.viewPortSpatial = false;
+        vm.pointSpatial = false;
+        vm.polygonSpatial = false;
+        mapService.viewPortFilter(false);
     };
 
     vm.clearFilters = () => {
-      clearAllSpatialFilter();
-      vm.initKeywords(true);
-      vm.initRanges(true);
-      vm.initTemporal(true);
+        clearAllSpatialFilter();
+        vm.initKeywords(true);
+        vm.initRanges(true);
+        vm.initTemporal(true);
 
-      vm.setInitialCustomStartDate();
-      vm.setInitialCustomEndDate();
+        vm.setInitialCustomStartDate();
+        vm.setInitialCustomEndDate();
 
-      vm.updateFilterString();
+        vm.updateFilterString();
     };
 
     vm.closeFilterDropdown = function(e) {
-      var elem = "." + e;
+        var elem = "." + e;
 
-      $(elem).dropdown("toggle");
+        $(elem).dropdown("toggle");
     };
 
     vm.loadSearch = function() {
-      window.open(AppO2.APP_CONFIG.contextPath + "/savedLink/list", "_blank");
+        window.open(AppO2.APP_CONFIG.contextPath + "/savedLink/list", "_blank");
     };
 
     vm.saveSearch = function() {
-      var searchString = {};
+        var searchString = {};
 
-      var keywords = [
-        { key: "beNumber", urlParam: "be" },
-        { key: "countryCode", urlParam: "countries" },
-        { key: "filename", urlParam: "filename" },
-        { key: "imageId", urlParam: "imageId" },
-        { key: "missionId", urlParam: "missions" },
-        { key: "productId", urlParam: "products" },
-        { key: "sensorId", urlParam: "sensors" },
-        { key: "targetId", urlParam: "target" },
-        { key: "wacNumber", urlParam: "wac" }
-      ];
-      $.each(keywords, function(index, keyword) {
-        if (vm[keyword.key + "Check"]) {
-          var value = vm[keyword.key];
-          searchString[keyword.urlParam] =
-            typeof value == "object" ? value.join(",") : value;
-        }
-      });
-
-      var ranges = [
-        { key: "azimuth", max: true, min: true, urlParam: "azimuth" },
-        { key: "cloudCover", max: true, urlParam: "cloudCover" },
-        { key: "grazeElev", max: true, min: true, urlParam: "elevation" },
-        { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
-        { key: "sunAzimuth", max: true, min: true, urlParam: "sunAzimuth" },
-        { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" }
-      ];
-      $.each(ranges, function(index, range) {
-        if (vm[range.key + "Check"]) {
-          var max, min;
-          [max, min] = [range.max, range.min];
-          if (max && min) {
-            searchString[range.urlParam] =
-              vm[range.key + "Min"] + ":" + vm[range.key + "Max"];
-          } else if (max) {
-            searchString[range.urlParam] = vm[range.key];
-          }
-        }
-      });
-
-      if (vm.currentTemporalDuration.value != "none") {
-        searchString.dateType = vm.currentDateType.value;
-
-        if (vm.currentTemporalDuration.value == "customDateRange") {
-          searchString.endDate = vm.endDate.toJSON().replace(/[.].*$/, "");
-          searchString.startDate = vm.startDate.toJSON().replace(/[.].*$/, "");
-        } else {
-          searchString.duration = vm.currentTemporalDuration.value;
-        }
-      }
-
-      if (vm.viewPortSpatial) {
-        searchString.spatial = "mapView";
-      } else if (vm.pointSpatial) {
-        var point = mapService.getFilterVectorGeometry();
-        var wkt = new ol.format.WKT().writeGeometry(point);
-        searchString.spatial = wkt;
-      } else if (vm.polygonSpatial) {
-        var extent = mapService.getFilterVectorGeometry().getExtent();
-        $.each(extent, function(index, degrees) {
-          extent[index] = degrees.toFixed(6);
+        var keywords = [
+            { key: "beNumber", urlParam: "be" },
+            { key: "countryCode", urlParam: "countries" },
+            { key: "filename", urlParam: "filename" },
+            { key: "imageId", urlParam: "imageId" },
+            { key: "missionId", urlParam: "missions" },
+            { key: "productId", urlParam: "products" },
+            { key: "sensorId", urlParam: "sensors" },
+            { key: "targetId", urlParam: "target" },
+            { key: "wacNumber", urlParam: "wac" }
+        ];
+        $.each(keywords, function(index, keyword) {
+            if (vm[keyword.key + "Check"]) {
+                var value = vm[keyword.key];
+                searchString[keyword.urlParam] =
+                    typeof value == "object" ? value.join(",") : value;
+            }
         });
-        var wkt =
-          "POLYGON((" +
-          extent[0] +
-          " " +
-          extent[1] +
-          "," +
-          extent[2] +
-          " " +
-          extent[1] +
-          "," +
-          extent[2] +
-          " " +
-          extent[3] +
-          "," +
-          extent[0] +
-          " " +
-          extent[3] +
-          "))";
-        searchString.spatial = wkt;
-      }
 
-      var searchInput = $( '#magicSearchInput' ).val();
-      if ( searchInput ) {
-        searchString.mapSearch = searchInput;
-      } else if (vm.viewPortSpatial) {
-        [
-          searchString.mapCenterX,
-          searchString.mapCenterY
-        ] = mapService.getCenter();
-        searchString.mapZoom = mapService.getZoom();
-      }
+        var ranges = [
+            { key: "azimuth", max: true, min: true, urlParam: "azimuth" },
+            { key: "cloudCover", max: true, urlParam: "cloudCover" },
+            { key: "grazeElev", max: true, min: true, urlParam: "elevation" },
+            { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
+            { key: "sunAzimuth", max: true, min: true, urlParam: "sunAzimuth" },
+            { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" }
+        ];
+        $.each(ranges, function(index, range) {
+            if (vm[range.key + "Check"]) {
+                var max, min;
+                [max, min] = [range.max, range.min];
+                if (max && min) {
+                    searchString[range.urlParam] =
+                        vm[range.key + "Min"] + ":" + vm[range.key + "Max"];
+                } else if (max) {
+                    searchString[range.urlParam] = vm[range.key];
+                }
+            }
+        });
 
-      if (mapService.getRotation() != 0) {
-        searchString.mapRotation = parseInt(
-          (mapService.getRotation() * 180) / Math.PI
-        );
-      }
+        if (vm.currentTemporalDuration.value != "none") {
+            searchString.dateType = vm.currentDateType.value;
 
-      var form = document.createElement("form");
-      form.action = AppO2.APP_CONFIG.contextPath + "/savedLink";
-      form.method = "post";
-      form.target = "_blank";
-      $("body").append(form);
+            if (vm.currentTemporalDuration.value == "customDateRange") {
+                searchString.endDate = vm.endDate.toJSON().replace(/[.].*$/, "");
+                searchString.startDate = vm.startDate.toJSON().replace(/[.].*$/, "");
+            } else {
+                searchString.duration = vm.currentTemporalDuration.value;
+            }
+        }
 
-      var input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "saveLink";
-      var url = document.location;
-      input.value =
-        url.origin +
-        url.pathname +
-        url.hash.split("?")[0] +
-        "?" +
-        $.param(searchString);
-      form.appendChild(input);
+        if (vm.viewPortSpatial) {
+            searchString.spatial = "mapView";
+        } else if (vm.pointSpatial) {
+            var point = mapService.getFilterVectorGeometry();
+            var wkt = new ol.format.WKT().writeGeometry(point);
+            searchString.spatial = wkt;
+        } else if (vm.polygonSpatial) {
+            var extent = mapService.getFilterVectorGeometry().getExtent();
+            $.each(extent, function(index, degrees) {
+                extent[index] = degrees.toFixed(6);
+            });
+            var wkt =
+                "POLYGON((" +
+                extent[0] +
+                " " +
+                extent[1] +
+                "," +
+                extent[2] +
+                " " +
+                extent[1] +
+                "," +
+                extent[2] +
+                " " +
+                extent[3] +
+                "," +
+                extent[0] +
+                " " +
+                extent[3] +
+                "))";
+            searchString.spatial = wkt;
+        }
 
-      form.submit();
+        var searchInput = $( '#magicSearchInput' ).val();
+        if ( searchInput ) {
+            searchString.mapSearch = searchInput;
+        } else if (vm.viewPortSpatial) {
+            [
+                searchString.mapCenterX,
+                searchString.mapCenterY
+            ] = mapService.getCenter();
+            searchString.mapZoom = mapService.getZoom();
+        }
+
+        if (mapService.getRotation() != 0) {
+            searchString.mapRotation = parseInt(
+                (mapService.getRotation() * 180) / Math.PI
+            );
+        }
+
+        var form = document.createElement("form");
+        form.action = AppO2.APP_CONFIG.contextPath + "/savedLink";
+        form.method = "post";
+        form.target = "_blank";
+        $("body").append(form);
+
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "saveLink";
+        var url = document.location;
+        input.value =
+            url.origin +
+            url.pathname +
+            url.hash.split("?")[0] +
+            "?" +
+            $.param(searchString);
+        form.appendChild(input);
+
+        form.submit();
     };
-  }
-})();
+}
+]);

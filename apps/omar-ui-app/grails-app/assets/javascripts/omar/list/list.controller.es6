@@ -48,28 +48,19 @@
     var vm = this;
 
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
-
     var thumbnailsBaseUrl, thumbnailsContextPath, thumbnailsRequestUrl;
-
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
-
     var wmsBaseUrl, wmsContextPath, wmsRequestUrl;
-
     var tlvBaseUrl, tlvContextPath, tlvRequestUrl;
     vm.tlvRequestUrl = "";
-
     var kmlBaseUrl, kmlContextPath, kmlRequestUrl;
     vm.kmlRequestUrl = "";
-
     var imageSpaceBaseUrl, imageSpaceContextPath, imageSpaceRequestUrl;
     vm.imageSpaceRequestUrl = "";
-
     var uiBaseUrl, uiContextPath, uiRequestUrl;
     vm.uiRequestUrl = "";
-
     var mensaBaseUrl, mensaContextPath, mensaRequestUrl;
     vm.mensaRequestUrl = "";
-
     var omarMlBaseUrl, omarMlContextPath, omarMlRequestUrl;
     vm.omarMlRequestUrl = "";
 
@@ -334,10 +325,6 @@
         mapService.addSelectedImageAsLayer(imageId);
       }
 
-      if (vm.selectedCards.length >= 1) {
-      } else {
-      }
-
       // We need to enable the selected menu options if we have one
       // or more image cards selected
       if (vm.selectedCards.length >= 1) {
@@ -482,8 +469,30 @@
     };
 
     vm.currentSortText = "Acquired (New)";
-
     vm.currentStartIndex = 1;
+    vm.pageLimit = 10
+
+    // takes curPage param, which is bound pagination ng-model (1, 2, 3, 4, etc)
+    // create the pagination range (pageLimit is typically 10)
+    vm.videoPageChange = function(curPage) {
+      $scope.curVidStartInd = curPage * vm.pageLimit - vm.pageLimit
+    }
+
+    $scope.$watch('curVidStartInd', function() {
+      // Kills function on page load.  Watchers fire on init
+      if ($scope.videoData.length === 0){
+        return
+      }
+      // Slice up videoData into chunks of 10 for pagination
+      $scope.slicedVideoData = $scope.videoData.features.slice($scope.curVidStartInd, $scope.curVidStartInd + vm.pageLimit)
+      $("#video-list").animate(
+          {
+            scrollTop: 0
+          },
+          "fast"
+      );
+
+    });
 
     vm.pagingChanged = function() {
       wfsService.updateAttrFilterPaginate(

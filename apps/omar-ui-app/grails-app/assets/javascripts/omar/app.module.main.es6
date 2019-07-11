@@ -17,12 +17,14 @@
       "$urlRouterProvider",
       "$uibTooltipProvider",
       "$logProvider",
+      "$sceDelegateProvider",
 
       function(
         $stateProvider,
         $urlRouterProvider,
         $uibTooltipProvider,
-        $logProvider
+        $logProvider,
+        $sceDelegateProvider
       ) {
         // This checks to make sure that the backspace/delete key does not
         // allow the browser to go back a page (default browser behavior).  This
@@ -37,6 +39,14 @@
             if (e.target.nodeName.toUpperCase() != "INPUT")
               return e.keyCode != 8;
           };
+
+        $sceDelegateProvider.resourceUrlWhitelist(['**']);
+        /*$sceDelegateProvider.resourceUrlWhitelist([
+            // Allow same origin resource loads.
+            'self',
+            // Allow loading from our assets domain.  Notice the difference between * and **.
+            'http://srv*.assets.example.com/!**'
+        ]);*/
 
         $logProvider.debugEnabled(AppO2.APP_CONFIG.params.misc.javascriptDebug);
 
@@ -119,6 +129,15 @@
           return filename;
         }
       };
+    })
+    // used for video pagination
+      // returns sliced data from starting position
+    .filter('startFrom', function() {
+        return function(input, start) {
+            console.log('start', start, 'input', input)
+            start = +start; //parse to int
+            return input.slice(start);
+        }
     })
     .directive("ngEnter", function() {
       return function(scope, elem, attrs) {

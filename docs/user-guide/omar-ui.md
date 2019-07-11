@@ -11,7 +11,7 @@
 - **Service Health & Status** Displays a Spring Cloud Eureka page with information on the system status, uptime, and individual service statuses for the O2 deployment
 - **Services Monitor** Displays any errors occurring on currently running services.
 
-## Search
+## Image Search
 
 ### Filters
 
@@ -71,10 +71,11 @@ The map will show footprints for all the imagery in the database according to wh
 TIP: You can right-click the map to get that point's coordinate. Also, the mouse-coordinate format found at the bottom-right of the map can be changed simply by clicking on it.
 
 ### Results
-Search results are displayed in a box to the right of the map with the total number of results shown in the top-right corner. Each image will have the corresponding links associated with it.
+Search results are displayed in a box to the right of the map with the total number of results shown in the top-right corner.
 
 ![](./carousel.png)
 
+#### Associated Links
 * **<span class="fa fa-arrows"></span>&nbsp;:**
 Zoom to an image extent.
 * **<span class="fa fa-table"></span>&nbsp;:**
@@ -109,7 +110,7 @@ Sorts the list in reverse alphabetical order sensor to image ID.
 ### Viewing Results
 To view an image in the viewport simply check the box in the upper-left corner of its entry in the carousel.
 
-## Map
+## Map Controls
 
 ### Rotation
 You can rotate the map by holding Shift + Alt while clicking and dragging.
@@ -122,18 +123,17 @@ On the bottom-right corner of the ViewPort, there is a legends button. Clicking 
 
 ### Map Configuration
 Hovering your mouse over the three bars/hamburger icon on the top right corner of the map gives you ways to configure the ViewPort however you like.
-* **Overlays**
-  * **Video Footprints:**
-  Check this box to have video data footprints rendered on the map.
-  * **Image Footprints:**
-  Check this box to have image data footprints rendered on the map.
+* **Video Footprints:**
+Check this box to have video data footprints rendered on the map.
+* **Image Footprints:**
+Check this box to have image data footprints rendered on the map.
 * **Mosaics:**
 Check the Auto box to have images automatically mosaiced and rendered on the map after a certain zoom level without having to select them from the carousel.
 * **Base Maps:**
 Select the base map that best matches the experience you are looking for.
 
 ## Image Space
-Access an image an Image Space simply by clicking on the its thumbnail in the carousel.
+Access an image in Image Space simply by clicking on the its thumbnail in the carousel.
 
 ### Geo-Jump
 There is an input box located above the map all the way to the left. The box is meant to take in various kinds of input and will automatically determine if a BE, coordinate or placename is entered. In all cases, if a match is found, the map will center to the appropriate area.
@@ -188,7 +188,7 @@ Select the method by which unknown pixels are determined from known pixels. Thin
 #### Sharpen Mode
 Select the kernel size used for sharpening. You can also try squinting really hard to bring things into focus.
 
-## Operations
+## Image Operations
 These are a list of operations that can be done on the image results in your carousel.
 
 ### Export All

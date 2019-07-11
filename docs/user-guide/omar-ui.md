@@ -122,7 +122,6 @@ The current coordinate of the mouse is displayed in the lower-right corner of th
 On the bottom-right corner of the ViewPort, there is a legends button. Clicking this will bring up a color-code for the footprints seen on the map, which differentiates between image types by color.
 
 ### Map Configuration
-Hovering your mouse over the three bars/hamburger icon on the top right corner of the map gives you ways to configure the ViewPort however you like.
 * **Video Footprints:**
 Check this box to have video data footprints rendered on the map.
 * **Image Footprints:**
@@ -231,3 +230,6 @@ Run a machine learning workflow on the image.
 
 ### Geo-Jump
 There is an input box located above the map all the way to the right. The box is meant to take in various kinds of input and will automatically determine if a BE, coordinate, image ID or placename is entered. In all cases, if a match is found, the map will zoom to the appropriate area.
+
+### Image Upload
+Ever had an image locally and wish you could take advantage of all the things O2 has to offer to exploit it? Click on the O2 drop-down button on the left side of the nav bar and select "Image Upload" to directly upload your local image into O2 and view it within minutes.

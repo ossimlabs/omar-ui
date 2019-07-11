@@ -126,7 +126,6 @@
     $.each( AppO2.APP_CONFIG.params.sites, function( key, site ) {
         vm.sites.push( site );
     } );
-    console.dir(vm.sites);
     vm.selectedUrl = AppO2.APP_CONFIG.params.sites.o2.info.description;
 
     // Only show the O2 sites select (dropdown) if there is more than
@@ -191,17 +190,6 @@
         vm.thumbPath = thumbnailsRequestUrl;
       });
     });
-
-    vm.totalPaginationCount = 1000;
-    vm.pageLimit = 10;
-
-    if (AppO2.APP_CONFIG.params.misc.totalPaginationCount != undefined) {
-      vm.totalPaginationCount =
-        AppO2.APP_CONFIG.params.misc.totalPaginationCount;
-    }
-    if (AppO2.APP_CONFIG.params.misc.pageLimit != undefined) {
-      vm.pageLimit = AppO2.APP_CONFIG.params.misc.pageLimit;
-    }
 
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
@@ -482,6 +470,7 @@
 
     vm.currentSortText = "Acquired (New)";
     vm.currentStartIndex = 1;
+    vm.pageLimit = 10
 
     // takes curPage param, which is bound pagination ng-model (1, 2, 3, 4, etc)
     // create the pagination range (pageLimit is typically 10)
@@ -496,7 +485,7 @@
       }
       // Slice up videoData into chunks of 10 for pagination
       $scope.slicedVideoData = $scope.videoData.features.slice($scope.curVidStartInd, $scope.curVidStartInd + vm.pageLimit)
-
+      console.log('$scope.slicedVideoData', $scope.slicedVideoData)
       $("#video-list").animate(
           {
             scrollTop: 0
@@ -586,7 +575,7 @@
         vm.wfsFeatures = features;
         if (features != undefined) {
           vm.wfsFeaturesTotalPaginationCount = Math.min(
-            vm.totalPaginationCount,
+            1000,
             vm.wfsFeatures
           );
         }

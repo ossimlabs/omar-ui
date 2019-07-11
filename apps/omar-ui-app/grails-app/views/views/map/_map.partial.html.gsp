@@ -1413,21 +1413,20 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center" id = "pagination">
-                <uib-pagination style="margin: 8px;"
-                                total-items="list.wfsFeaturesTotalPaginationCount"
-                                items-per-page="list.pageLimit"
-                                ng-model="list.currentStartIndex"
-                                ng-change="list.pagingChanged()"
-                                max-size="5"
-                                boundary-links="true"
-                                force-ellipses="true"
-                                rotate="false"
-                                first-text="First"
-                                last-text="Last"
-                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                </uib-pagination>
-            </div>
+        <div class="text-center" id = "pagination">
+            <uib-pagination style="margin: 8px;"
+                total-items="list.wfsFeaturesTotalPaginationCount"
+                items-per-page="list.pageLimit"
+                ng-model="list.currentStartIndex"
+                ng-change="list.pagingChanged()"
+                max-size="5"
+                boundary-links="true"
+                force-ellipses="true"
+                rotate="false"
+                first-text="First"
+                last-text="Last"
+                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+            </uib-pagination>
         </div>
     </div>
 

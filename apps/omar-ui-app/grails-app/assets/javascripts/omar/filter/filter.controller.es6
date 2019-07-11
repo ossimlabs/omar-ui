@@ -103,8 +103,6 @@ function (
     }
 
     vm.showCurrentFilter = true;
-    vm.listRefreshButtonVisible =
-        AppO2.APP_CONFIG.params.misc.listRefreshButtonVisible;
     vm.refreshSpin = false;
     vm.refreshList = function() {
         wfsService.executeWfsQuery();
@@ -126,21 +124,21 @@ function (
     });
 
     $scope.$on("wfs features: updated", function(event, features) {
-        // Update the total feature count
-        $scope.$apply(function() {
-            vm.wfsFeatures = features;
-            if (features != undefined) {
-                vm.wfsFeaturesTotalPaginationCount = Math.min(
-                    vm.totalPaginationCount,
-                    vm.wfsFeatures
-                );
-            }
-            $window.document.activeElement.blur();
-            // add a comma in-between every set of three numbers
-            vm.totalWfsFeatures = features
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        });
+      // Update the total feature count
+      $scope.$apply(function() {
+        vm.wfsFeatures = features;
+        if (features != undefined) {
+          vm.wfsFeaturesTotalPaginationCount = Math.min(
+            1000,
+            vm.wfsFeatures
+          );
+        }
+        $window.document.activeElement.blur();
+        // add a comma in-between every set of three numbers
+        vm.totalWfsFeatures = features
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      });
     });
 
     var stagerBaseUrl, stagerContextPath, stagerRequestUrl;
@@ -597,7 +595,7 @@ function (
         }
 
         // Keywords
-        if ( vm.beNumberCheck && vm.beNumber != "" && vm.imageryCheck ) {
+        if ( vm.beNumberCheck && vm.beNumber != undefined && vm.beNumber != "" && vm.imageryCheck ) {
             pushKeywordToArray( "be_number", vm.beNumber );
         }
 
@@ -607,11 +605,11 @@ function (
             vm.countryCodeCheck = false;
         }
 
-        if ( vm.filenameCheck && vm.filename != "" ) {
+        if ( vm.filenameCheck && vm.filename != undefined && vm.filename != "" ) {
             pushKeywordToArray( "filename", vm.filename );
         }
 
-        if (vm.imageIdCheck && vm.imageId != "" && vm.imageryCheck ) {
+        if (vm.imageIdCheck && vm.imageId != undefined && vm.imageId != "" && vm.imageryCheck ) {
             pushKeywordToArray( "title", vm.imageId.toUpperCase() );
         }
 
@@ -627,11 +625,11 @@ function (
             vm.sensorIdCheck = false;
         }
 
-        if ( vm.targetIdCheck && vm.targetId != "" && vm.imageryCheck ) {
+        if ( vm.targetIdCheck && vm.targetId != undefined && vm.targetId != "" && vm.imageryCheck ) {
             pushKeywordToArray( "target_id", vm.targetId );
         }
 
-        if ( vm.wacNumberCheck && vm.wacNumber != "" && vm.imageryCheck ) {
+        if ( vm.wacNumberCheck && vm.wacNumber != undefined && vm.wacNumber != "" && vm.imageryCheck ) {
             pushKeywordToArray( "wac_code", vm.wacNumber );
         }
 

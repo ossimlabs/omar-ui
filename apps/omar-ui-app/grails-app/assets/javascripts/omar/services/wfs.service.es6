@@ -57,10 +57,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
       pageLimit: 10
     };
 
-    if (AppO2.APP_CONFIG.params.misc.pageLimit != undefined) {
-      this.attrObj.pageLimit = AppO2.APP_CONFIG.params.misc.pageLimit;
-    }
-
     // this will just do a swap out INTERSECTS for BBOX based on the current map zoom level
     this.modifyParamBasedOnZoom = function( string ) {
         var intersectsPattern = /INTERSECTS[(]ground_geom,([^)]*[)]{2})[)]/;

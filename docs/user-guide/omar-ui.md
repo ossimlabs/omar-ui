@@ -233,3 +233,21 @@ There is an input box located above the map all the way to the right. The box is
 
 ### Image Upload
 Ever had an image locally and wish you could take advantage of all the things O2 has to offer to exploit it? Click on the O2 drop-down button on the left side of the nav bar and select "Image Upload" to directly upload your local image into O2 and view it within minutes.
+
+## Use Cases
+
+### Making a Simple Image Search
+The first page you are brought to when navigating to the OMAR UI is the filters page, which allows you to narrow down your query to images you really want. For example, if we wanted to find images in the US, simply type "US" into the Country Code filter box and watch the results pop up in the carousel on the right side of your browser.
+
+![](./filter_ex.png)
+
+![](./results.png)
+
+After selecting the "US" Country Code under filters, we now are only shown images appearing in the United States as seen above.
+
+### Downloading an Image
+After querying for some imagery, one of the many things you can do is download the image you are looking for. To do this simply check the box for the image(s) desired in your carousel. Then click the "Selected" Button on the top of the carousel before finally selecting "Download" from the dropdown menu.
+
+![](./selected_image.png)
+
+![](./dropdown.png)

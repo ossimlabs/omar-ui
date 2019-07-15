@@ -39,6 +39,11 @@
                     <li class = "active" role = "presentation">
                         <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
+                    <%-- BEN BUZZELLI --%>
+                    <li role = "presentation">
+                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).show()"  >Reachback</a>
+                    </li>
+                    <%-- BEN BUZZELLI --%>
                 </ul>
 
                 <!--
@@ -109,6 +114,7 @@
         <div class = "col-md-8">
             <div class = "tab-content">
 
+                <%-- FILTER SEARCH TAB --%>
                 <div role ="tabpanel" class = "tab-pane" id = "filterSearch">
                     <div class = "row">
                         <div class = "col-md-4">
@@ -843,6 +849,7 @@
                     </div>
                 </div>
 
+                <%-- MAP SEARCH TAB --%>
                 <div role = "tabpanel" class = "tab-pane active" id = "mapSearch">
                     <!-- Just activating the search controller -->
                     <div ng-controller = "SearchController as search" style = "display: none;"></div>
@@ -859,6 +866,243 @@
                         </div>
                         <div id = "progress" class = "text-info">
                             <i class = "fa fa-spinner fa-spin fa-4x"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <%-- REACHBACK SEARCH TAB --%>
+                <div ng-controller = "ReachbackController as reachback" role ="tabpanel" class = "tab-pane" id = "reachbackSearch">
+                    <div class = "row">
+                        <%-- KEYWORD FILTERS --%>
+                        <div class = "col-md-4">
+                            <div class = "row">
+                                <div class = "col-md-12" style = "text-align: center"><h4>Keyword Filters</h4></div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">Image</div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div class = "input-group input-group-sm">
+                                        <span class = "input-group-addon">
+                                            <input
+                                                    ng-change = "reachback.updateFilterString()"
+                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.imageIdCheck"
+                                                    ng-disabled = "!reachback.imageryCheck"
+                                                    ng-model = "reachback.imageIdCheck"
+                                                    type = "checkbox">
+                                        </span>
+                                        <input focus-input
+                                               ng-disabled = "!reachback.imageryCheck"
+                                               ng-model = "reachback.imageId"
+                                               ng-enter = "reachback.updateFilterString()"
+                                               ng-blur = "reachback.updateFilterString()"
+                                               ng-change = "reachback.imageIdCheck = reachback.imageId === '' ? false: true;"
+                                               class = "form-control"
+                                               placeholder = "Image ID"
+                                               value = "reachback.imageId">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">Sensor</div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div class = "input-group input-group-sm">
+                                        <span class = "input-group-addon">
+                                            <input
+                                                    ng-change = "reachback.updateFilterString()"
+                                                    ng-model = "reachback.sensorIdCheck"
+                                                    type = "checkbox">
+                                        </span>
+                                        <input
+                                                class = "form-control"
+                                                id = "sensorIdInput"
+                                                list = "sensorIdList"
+                                                ng-blur = "reachback.sensorIdCheck = reachback.sensorId === '' ? false : true; reachback.updateFilterString()"
+                                                ng-change = "reachback.handleDataList( 'sensorIdInput' )"
+                                                ng-keyup = "reachback.handleDataList( 'sensorIdInput' )"
+                                                ng-model = "reachback.sensorId"
+                                                placeholder = "Sensor ID">
+                                        <datalist id = "sensorIdList">
+                                            <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
+                                        </datalist>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <%-- END OF KEYWORD FILTERS --%>
+                        <%-- RANGE FILTERS --%>
+                        <div class = "col-md-4">
+                            <div class = "row">
+                                <div class = "col-md-12" style = "text-align: center"><h4>Range Filters</h4></div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-6">
+                                    NIIRS
+                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 9"></i>
+                                </div>
+                                <div align = "right" class = "col-md-6">
+                                    <input
+                                            class = "form-check-input"
+                                            type = "checkbox"
+                                            ng-checked = "!reachback.imageryCheck ? false : reachback.predNiirsCheckNull"
+                                            ng-disabled = "!reachback.predNiirsCheck || !reachback.imageryCheck"
+                                            ng-model = "reachback.predNiirsCheckNull"
+                                            ng-click = "reachback.updateFilterString()">
+                                    <label class = "form-check-label range-include-unknown-label" for = "predNiirsCheckNull">UNK</label>
+                                    <i class =  "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the NIIRS metadata field"></i>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div class = "input-group input-group-sm">
+                                        <div class = "input-group-addon">
+                                            <span style = "font-family: monospace;"><small>Min</small></span>
+                                        </div>
+                                        <input focus-input
+                                               style = "text-align: center;"
+                                               type = "number"
+                                               placeholder = "0"
+                                               ng-disabled = "!reachback.imageryCheck"
+                                               ng-model = "reachback.predNiirsMin"
+                                               class = "form-control input-sm"
+                                               value = "{{reachback.predNiirsMin}}"
+                                               min = "0" max = "8.9" step = "0.1"
+                                               ng-change = "reachback.predNiirsCheck = (reachback.predNiirsMin === 0 && reachback.predNiirsMax === 9) ? false: true;"
+                                               ng-enter = "reachback.updateFilterString()"
+                                               ng-blur = "reachback.updateFilterString()">
+                                        <div class = "input-group-addon">
+                                            <input
+                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.predNiirsCheck"
+                                                    ng-click = "reachback.updateFilterString()"
+                                                    ng-disabled = "!reachback.imageryCheck"
+                                                    ng-model = "reachback.predNiirsCheck"
+                                                    type = "checkbox">
+                                        </div>
+                                        <input focus-input
+                                               style = "text-align: center;"
+                                               type = "number"
+                                               placeholder = "9"
+                                               ng-disabled = "!reachback.imageryCheck"
+                                               ng-model = "reachback.predNiirsMax"
+                                               class = "form-control input-sm"
+                                               value = "{{reachback.predNiirsMax}}"
+                                               min = "0.1" max = "9" step = "0.1"
+                                               ng-change = "reachback.predNiirsCheck = (reachback.predNiirsMin === 0 && reachback.predNiirsMax === 9) ? false: true;"
+                                               ng-enter = "reachback.updateFilterString()"
+                                               ng-blur = "reachback.updateFilterString()">
+                                        <div class = "input-group-addon">
+                                            <span style = "font-family: monospace;"><small>Max</small></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-6">Max Results</div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div class = "input-group input-group-sm">
+                                        <span class = "input-group-addon">
+                                            <input
+                                                    ng-change = "reachback.updateFilterString()"
+                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.imageIdCheck"
+                                                    ng-disabled = "!reachback.imageryCheck"
+                                                    ng-model = "reachback.imageIdCheck"
+                                                    type = "checkbox">
+                                        </span>
+                                        <input focus-input
+                                               ng-disabled = "!reachback.imageryCheck"
+                                               ng-model = "reachback.imageId"
+                                               ng-enter = "reachback.updateFilterString()"
+                                               ng-blur = "reachback.updateFilterString()"
+                                               ng-change = "reachback.imageIdCheck = filter.imageId === '' ? false: true;"
+                                               class = "form-control"
+                                               placeholder = "Max Results"
+                                               value = "reachback.imageId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%-- END OF RANGE FILTERS --%>
+                        <%-- TEMPORAL FILTERS --%>
+                        <div class = "col-md-4">
+                            <div class = "row">
+                                <div class = "col-md-12" style = "text-align: center"><h4>Temporal Filters</h4></div>
+                            </div>
+                            <div class = "row"><div class = "col-md-12">
+                                <div>Duration (Acquisition Date)</div>
+                                <div>
+                                    <select
+                                            ng-model="reachback.currentTemporalDuration"
+                                            ng-options="duration.label for duration in reachback.temporalDurations"
+                                            ng-change="reachback.updateFilterString()"
+                                            class="form-control input-sm">
+                                    </select>
+                                </div>
+                            </div></div>
+
+                            <div class = "row" ng-show="reachback.customDateRangeVisible">
+                                <div class = "col-md-12">Start Date & Time</div>
+                                <div class = "col-md-6">
+                                    <input uib-datepicker-popup
+                                           type = "text"
+                                           class = "form-control input-sm"
+                                           ng-change="reachback.updateFilterString()"
+                                           ng-click = "reachback.openStartDatePopup()"
+                                           ng-model = "reachback.startDate"
+                                           is-open="reachback.startDatePopupOpen"
+                                           close-text = "Close">
+                                </div>
+                                <div class = "col-md-6">
+                                    <input bs-timepicker
+                                           type="text"
+                                           class="form-control input-sm"
+                                           ng-model="reachback.startDate"
+                                           data-time-format="HH:mm:ss"
+                                           data-autoclose="false"
+                                           data-minute-step="1"
+                                           data-second-step="1"
+                                           placeholder="Time"
+                                           ng-blur="reachback.updateFilterString()">
+                                </div>
+                            </div>
+
+                            <div class = "row" ng-show="reachback.customDateRangeVisible">
+                                <div class = "col-md-12">End Date & Time</div>
+                                <div class = "col-md-6">
+                                    <input uib-datepicker-popup
+                                           type = "text"
+                                           class = "form-control input-sm"
+                                           ng-change="reachback.updateFilterString()"
+                                           ng-click = "reachback.openEndDatePopup()"
+                                           ng-model = "reachback.endDate"
+                                           is-open="reachback.endDatePopupOpen"
+                                           close-text = "Close">
+                                </div>
+                                <div class = "col-md-6">
+                                    <input bs-timepicker
+                                           type="text"
+                                           size="8"
+                                           class="form-control input-sm"
+                                           ng-model="reachback.endDate"
+                                           data-time-format="HH:mm:ss"
+                                           data-autoclose="0"
+                                           data-minute-step="1"
+                                           data-second-step="1"
+                                           placeholder="Time"
+                                           ng-change="reachback.updateFilterString()">
+                                </div>
+                            </div>
+                        </div>
+                        <%-- END OF TEMPORAL FILTERS --%>
+                    </div>
+                    <div class = "row">
+                        <div class = "col-md-12" style = "text-align: center">
+                            <button class = "btn btn-default btn-sm" ng-click = "reachback.clearFilters()">Clear Filters</button>
                         </div>
                     </div>
                 </div>

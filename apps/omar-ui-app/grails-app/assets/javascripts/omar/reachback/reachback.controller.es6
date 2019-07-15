@@ -26,6 +26,7 @@
         toastr,
         $log
     ) {
+
         /* jshint validthis: true */
         var vm = this;
         vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
@@ -36,6 +37,12 @@
             setTimeout(function () {
                 $("a:contains('Filters')").trigger("click");
             }, 10);
+        }
+
+        var resultsPanel = false;
+
+        vm.switchPanel = function(results_panel) {
+            resultsPanel = results_panel;
         }
 
         vm.showCurrentFilter = true;

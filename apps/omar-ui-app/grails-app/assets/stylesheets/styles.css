@@ -33,6 +33,7 @@ body {
 
 .ResultsPane {
   /*background-color: black;*/
+  max-height: 85%;
   background: linear-gradient(to bottom, #101010 0%, #16191E 30px, #474A4F 31px, #272B2E 31px, #272B2E 100%);
   padding-left: 10px;
   padding-right: 10px;
@@ -40,6 +41,7 @@ body {
   border-color: #474A4F;
   border-radius: 5px;
   border-width: 1px;
+  margin-bottom: 8px;
 }
 
 .Results-tab-heading {
@@ -54,10 +56,18 @@ body {
   min-height: 28px !important;
   color: #C4C8C9;
   background: linear-gradient(to bottom, #474A4F 0%, #272B2E 100%);
-  border: none;
-  outline: none;
+  border-style: solid;
+  border-color: #474A4F;
+  border-width: 1px;
+  border-bottom-width: 0px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+
+.Results-tab-heading button:hover {
+  color: #C4C8C9;
+  background: linear-gradient(to bottom, #272B2E 0%, #272B2E 100%);
+  border-width: 0px;
 }
 
 .navbar {

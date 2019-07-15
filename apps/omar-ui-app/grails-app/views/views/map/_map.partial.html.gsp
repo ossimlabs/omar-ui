@@ -34,10 +34,10 @@
                         </ul>
                     </li>
                     <li role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).show()"  >Filters</a>
+                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#filterSearch' ).show()"  >Filters</a>
                     </li>
                     <li class = "active" role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
+                        <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
                     <%-- BEN BUZZELLI --%>
                     <li role = "presentation">
@@ -1111,278 +1111,271 @@
         </div>
 
         <div class = "col-md-4">
-            <!-- Video tiles -->
-            <div id = "videoPanel" ng-if="filterVideosToggle" ng-controller="ListController as list">
-                <div class = "ResultsPane">
-                    <div class = "Results-tab-heading">
-                        <button> Cards list </button>
-                        <button> Reachback </button>
-                    </div>
+            <div class = "ResultsPane" ng-controller = "ReachbackController as reachback">
+                <div class = "Results-tab-heading" ng-hide="filterVideosToggle">
+                    <button onclick = "javascript: $( '#reachbackPanel' ).hide(); $( '#imagePanel' ).show(); $( '#videoPanel' ).show();"> Cards list </button>
+                    <button onclick = "javascript: $( '#reachbackPanel' ).show(); $( '#imagePanel' ).hide(); $( '#videoPanel' ).hide(); reachback.resultsPanel = true;"> Reachback </button>
+                </div>
+                <!-- Video tiles -->
+                <div id="videoPanel" ng-if="filterVideosToggle" ng-controller="ListController as list">
                     <!-- Top Nav -->
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
-                            <div class="navbar-header">
-                                <button
-                                        type="button"
-                                        class="navbar-toggle collapsed"
-                                        data-toggle="collapse"
-                                        data-target="#sort-navbar-collapse"
-                                        aria-expanded="false">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                            </div>
-                            <div class="collapse navbar-collapse" id="sort-navbar-collapse">
-                                <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" ng-bind-html="list.currentSortText"><span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li ng-click="list.sortWfs('acquisition_date', '+D', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('acquisition_date', '+A', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('ingest_date', '+D', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('ingest_date', '+A', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('niirs', '+D', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('niirs', '+A', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('title', '+D', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('title', '+A', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider "></li>
-                                            <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle navbar-sort-dropdown-toggle"
-                                           data-toggle="dropdown"
-                                           role="button"
-                                           aria-haspopup="true"
-                                           aria-expanded="false">{{list.exportSelectedButtonText}}
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li class="dropdown-header">Use the checkboxes on the image cards to </li>
-                                            <li class="dropdown-header">select individual images. They can then be</li>
-                                            <li class="dropdown-header"> downloaded, exported, or viewed in</li>
-                                            <li class="dropdown-header">applications</li>
-                                            <li class="divider" ng-if="list.showSelectedButton"></li>
-                                            <li role="menuitem" ng-click="list.downloadSelectedImages()" ng-if="list.showSelectedButton">
-                                                <a href="">Download
-                                                    <i class="fa fa-info-circle text-info" style="font-size: 12px;" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 10 can be downloaded at one time"></i>
-                                                </a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li class="dropdown-header">
-                                                Exports
-                                                <i class="fa fa-info-circle text-info" tooltip-placement="left-bottom" uib-tooltip="Export the selected images into the following formats"></i>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('CSV')">
-                                                <a href="">CSV</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('GML2')">
-                                                <a href="">GML2</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('GML3')">
-                                                <a href="">GML3</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('GML32')">
-                                                <a href="">GML32</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('JSON')">
-                                                <a href="">JSON</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('KML')">
-                                                <a href="">KML</a>
-                                            </li>
-                                            <li role="separator" class="divider" ng-if="!list.showSelectedButton"></li>
-                                            <li class="dropdown-header" ng-if="!list.showSelectedButton">
-                                                Create a GeoRSS feed of the images
-                                                <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A browser extension is required for Internet Explorer and Chrome.  Firefox has built in support for RSS feeds."></i>
-                                            </li>
-                                            <li>
-                                                <a ng-href="" target="_blank" ng-click="list.getGeoRss()" ng-if="!list.showSelectedButton">GeoRSS</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li class="dropdown-header">Applications
-                                                <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 100 can be viewed per application"></i>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.viewSelectedImagesApp('tlv')">
-                                                <a href="">TLV</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li role="menuitem" ng-class="{'disabled': !list.showSelectedButton}" ng-click="list.clearSelectedImages(); list.clearSelectedMosaicImages()">
-                                                <a href="">
-                                                    Clear Selected
-                                                    <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="Remove all currently selected image cards"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <div class="navbar-header">
+                                    <button
+                                            type="button"
+                                            class="navbar-toggle collapsed"
+                                            data-toggle="collapse"
+                                            data-target="#sort-navbar-collapse"
+                                            aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <div class="collapse navbar-collapse" id="sort-navbar-collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" ng-bind-html="list.currentSortText"><span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li ng-click="list.sortWfs('acquisition_date', '+D', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                                <li ng-click="list.sortWfs('acquisition_date', '+A', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li ng-click="list.sortWfs('ingest_date', '+D', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                                <li ng-click="list.sortWfs('ingest_date', '+A', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li ng-click="list.sortWfs('niirs', '+D', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                                <li ng-click="list.sortWfs('niirs', '+A', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li ng-click="list.sortWfs('title', '+D', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                                <li ng-click="list.sortWfs('title', '+A', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                                <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                                <li role="separator" class="divider "></li>
+                                                <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                                <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle navbar-sort-dropdown-toggle"
+                                               data-toggle="dropdown"
+                                               role="button"
+                                               aria-haspopup="true"
+                                               aria-expanded="false">{{list.exportSelectedButtonText}}
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li class="dropdown-header">Use the checkboxes on the image cards to </li>
+                                                <li class="dropdown-header">select individual images. They can then be</li>
+                                                <li class="dropdown-header"> downloaded, exported, or viewed in</li>
+                                                <li class="dropdown-header">applications</li>
+                                                <li class="divider" ng-if="list.showSelectedButton"></li>
+                                                <li role="menuitem" ng-click="list.downloadSelectedImages()" ng-if="list.showSelectedButton">
+                                                    <a href="">Download
+                                                        <i class="fa fa-info-circle text-info" style="font-size: 12px;" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 10 can be downloaded at one time"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li class="dropdown-header">
+                                                    Exports
+                                                    <i class="fa fa-info-circle text-info" tooltip-placement="left-bottom" uib-tooltip="Export the selected images into the following formats"></i>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.exportSelectedImages('CSV')">
+                                                    <a href="">CSV</a>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.exportSelectedImages('GML2')">
+                                                    <a href="">GML2</a>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.exportSelectedImages('GML3')">
+                                                    <a href="">GML3</a>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.exportSelectedImages('GML32')">
+                                                    <a href="">GML32</a>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.exportSelectedImages('JSON')">
+                                                    <a href="">JSON</a>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.exportSelectedImages('KML')">
+                                                    <a href="">KML</a>
+                                                </li>
+                                                <li role="separator" class="divider" ng-if="!list.showSelectedButton"></li>
+                                                <li class="dropdown-header" ng-if="!list.showSelectedButton">
+                                                    Create a GeoRSS feed of the images
+                                                    <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A browser extension is required for Internet Explorer and Chrome.  Firefox has built in support for RSS feeds."></i>
+                                                </li>
+                                                <li>
+                                                    <a ng-href="" target="_blank" ng-click="list.getGeoRss()" ng-if="!list.showSelectedButton">GeoRSS</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li class="dropdown-header">Applications
+                                                    <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 100 can be viewed per application"></i>
+                                                </li>
+                                                <li role="menuitem" ng-click="list.viewSelectedImagesApp('tlv')">
+                                                    <a href="">TLV</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li role="menuitem" ng-class="{'disabled': !list.showSelectedButton}" ng-click="list.clearSelectedImages(); list.clearSelectedMosaicImages()">
+                                                    <a href="">
+                                                        Clear Selected
+                                                        <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="Remove all currently selected image cards"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
 
-                                <!-- Tile Header area -->
-                                <ul class = "nav navbar-nav navbar-right">
-                                    <p class = "navbar-text cursor-default">
-                                        <span class = "glyphicon glyphicon-film"></span>
-                                        <span
-                                                class = "label label-primary"
-                                                ng-class = "{'label-info': filter.refreshSpin}"
-                                                tooltip-placement = "left"
-                                                uib-tooltip = "Number of Search Result Videos">
-                                            {{ videoData.features.length }}
-                                        </span>
-                                    </p>
-                                    <li class = "dropdown">
-                                        <a class = "dropdown-toggle navbar-sort-dropdown-toggle"
-                                           ng-click = "filter.refreshList()"
-                                           tooltip-placement = "bottom"
-                                           uib-tooltip = "Refresh the image list data">
-                                            &nbsp;
-                                            <span class = "fa fa-refresh"
-                                                  ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
+                                    <!-- Tile Header area -->
+                                    <ul class = "nav navbar-nav navbar-right">
+                                        <p class = "navbar-text cursor-default">
+                                            <span class = "glyphicon glyphicon-film"></span>
+                                            <span
+                                                    class = "label label-primary"
+                                                    ng-class = "{'label-info': filter.refreshSpin}"
+                                                    tooltip-placement = "left"
+                                                    uib-tooltip = "Number of Search Result Videos">
+                                                {{ videoData.features.length }}
                                             </span>
-                                            &nbsp;
-                                        </a>
-                                    </li>
-                                </ul>
+                                        </p>
+                                        <li class = "dropdown">
+                                            <a class = "dropdown-toggle navbar-sort-dropdown-toggle"
+                                               ng-click = "filter.refreshList()"
+                                               tooltip-placement = "bottom"
+                                               uib-tooltip = "Refresh the image list data">
+                                                &nbsp;
+                                                <span class = "fa fa-refresh"
+                                                      ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
+                                                </span>
+                                                &nbsp;
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                     </nav>
 
                     <div id="video-list" style="border-style: solid; max-height: 60%; border-width: 1px; padding: 10px; border-radius: 4px;">
-                        <!-- Error or empty response area -->
-                        <div ng-show="videoData.features === 0">
-                            <div>
-                                <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>
-                                <span class="text-info"><h4 >Check the dates</h4></span>
-                                <p>Make sure you provide valid dates for the query.  Also, make sure you are searching for the appropriate date type (acquisition versus ingest).</p>
-                                <span class="text-info"><h4>Check the spelling</h4></span>
-                                <p>It is possible that one of the Keyword filters has a spelling error.</p>
-                                <span class="text-info"><h4>Check range values</h4></span>
-                                <p>Make sure that the range values you have submitted are valid for those attributes.</p>
-                                <span class="text-info"><h4 class="text-info">Check your map extent</h4></span>
-                                <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>
-                            </div>
-                        </div>
-
-                        <!-- Main tile list area -->
-                        <!-- filter doesnt work right startFrom:list.videoPage*list.pageLimit -->
-                        <div ng-show="slicedVideoData.length >= 1"
-                             ng-repeat="video in slicedVideoData | limitTo:list.pageLimit">
-                            <div class="panel panel-default cursor-pointer" >
-                                <!-- Heading -->
-                                <div class="panel-heading"
-                                     ng-click="list.addToExportList(video.properties.id)"
-                                     style="font-size: 11px; padding: 2px 7px;">
-                                    <span>
-                                        <i class="fa fa-square-o cursor-pointer"
-                                        %{--                                   ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"--}%
-                                           aria-hidden="true"
-                                           style="padding-right: 5px;"
-                                           tooltip-placement="left-bottom"
-                                           uib-tooltip="Add video to export list">
-                                        </i>
-                                    </span>
-                                    <span class="text-default cursor-pointer">
-                                        <span ng-show="!video.id">Unknown</span>
-                                        {{ video.id }}
-                                    </span>
+                            <!-- Error or empty response area -->
+                            <div ng-show="videoData.features === 0">
+                                <div>
+                                    <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>
+                                    <span class="text-info"><h4 >Check the dates</h4></span>
+                                    <p>Make sure you provide valid dates for the query.  Also, make sure you are searching for the appropriate date type (acquisition versus ingest).</p>
+                                    <span class="text-info"><h4>Check the spelling</h4></span>
+                                    <p>It is possible that one of the Keyword filters has a spelling error.</p>
+                                    <span class="text-info"><h4>Check range values</h4></span>
+                                    <p>Make sure that the range values you have submitted are valid for those attributes.</p>
+                                    <span class="text-info"><h4 class="text-info">Check your map extent</h4></span>
+                                    <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>
                                 </div>
+                            </div>
 
-                                <div class="panel-body">
-                                    <div class="media">
-                                        <div class="media-left" style="position: relative">
-                                            <!-- link to video player page -->
-                                            <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
-                                               target="_blank">
-                                                <video
-                                                    ng-src="{{ video.properties.videoUrl }}"
-                                                    width="175px"
-                                                    autoplay loop
-                                                ></video>
-                                            </a>
-                                        </div>
+                            <!-- Main tile list area -->
+                            <!-- filter doesnt work right startFrom:list.videoPage*list.pageLimit -->
+                            <div ng-show="slicedVideoData.length >= 1"
+                                 ng-repeat="video in slicedVideoData | limitTo:list.pageLimit">
+                                <div class="panel panel-default cursor-pointer" >
+                                    <!-- Heading -->
+                                    <div class="panel-heading"
+                                         ng-click="list.addToExportList(video.properties.id)"
+                                         style="font-size: 11px; padding: 2px 7px;">
+                                        <span>
+                                            <i class="fa fa-square-o cursor-pointer"
+                                            %{--                                   ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"--}%
+                                               aria-hidden="true"
+                                               style="padding-right: 5px;"
+                                               tooltip-placement="left-bottom"
+                                               uib-tooltip="Add video to export list">
+                                            </i>
+                                        </span>
+                                        <span class="text-default cursor-pointer">
+                                            <span ng-show="!video.id">Unknown</span>
+                                            {{ video.id }}
+                                        </span>
+                                    </div>
 
-                                        <div class="media-body">
-                                            <!-- empty row for alignment -->
-                                            <div class="row"></div>
+                                    <div class="panel-body">
+                                        <div class="media">
+                                            <div class="media-left" style="position: relative">
+                                                <!-- link to video player page -->
+                                                <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
+                                                   target="_blank">
+                                                    <video
+                                                        ng-src="{{ video.properties.videoUrl }}"
+                                                        width="175px"
+                                                        autoplay loop
+                                                    ></video>
+                                                </a>
+                                            </div>
 
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    <span class = "text-info">
-                                                        <span ng-show = "!video.properties.security_classification">
-                                                            Security Classification Unknown
+                                            <div class="media-body">
+                                                <!-- empty row for alignment -->
+                                                <div class="row"></div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12" style="font-size: 13px;">
+                                                        <span class = "text-info">
+                                                            <span ng-show = "!video.properties.security_classification">
+                                                                Security Classification Unknown
+                                                            </span>
+                                                            <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
+                                                                {{ image.properties.security_classification }}
+                                                            </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12" style="font-size: 13px;">
+                                                        Start Date:
+                                                        <span class="text-success">
+                                                            <span ng-show="!video.properties.start_date">Unknown</span>
+                                                            {{ video.properties.start_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                            <span ng-show="video.properties.start_date">z</span>
                                                         </span>
-                                                        <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
-                                                            {{ image.properties.security_classification }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12" style="font-size: 13px;">
+                                                        End Date:
+                                                        <span class="text-success">
+                                                            <span ng-show="!video.properties.end_date">Unknown</span>
+                                                            {{ video.properties.end_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                            <span ng-show="video.properties.end_date">z</span>
                                                         </span>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    Start Date:
-                                                    <span class="text-success">
-                                                        <span ng-show="!video.properties.start_date">Unknown</span>
-                                                        {{ video.properties.start_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
-                                                        <span ng-show="video.properties.start_date">z</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    End Date:
-                                                    <span class="text-success">
-                                                        <span ng-show="!video.properties.end_date">Unknown</span>
-                                                        {{ video.properties.end_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
-                                                        <span ng-show="video.properties.end_date">z</span>
-                                                    </span>
-                                                </div>
                                             </div>
 
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     <!-- Video pagination -->
                     <div class="text-center" id="pagination">
-                        <uib-pagination
-                            style="margin: 8px;"
-                            total-items="videoData.features.length"
-                            items-per-page="list.pageLimit"
-                            ng-model="list.currentVideoPage"
-                            ng-change="list.videoPageChange(list.currentVideoPage)"
-                            max-size="5"
-                            boundary-links="true"
-                            force-ellipses="true"
-                            rotate="false"
-                            first-text="First"
-                            last-text="Last"
-                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                        </uib-pagination>
-                    </div>
+                            <uib-pagination
+                                style="margin: 8px;"
+                                total-items="videoData.features.length"
+                                items-per-page="list.pageLimit"
+                                ng-model="list.currentVideoPage"
+                                ng-change="list.videoPageChange(list.currentVideoPage)"
+                                max-size="5"
+                                boundary-links="true"
+                                force-ellipses="true"
+                                rotate="false"
+                                first-text="First"
+                                last-text="Last"
+                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </uib-pagination>
+                        </div>
                 </div>
-            </div>
 
-            <!-- Imagery tiles -->
-            <div id = "imagePanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
-                <div class = "ResultsPane">
-                    <div class = "Results-tab-heading">
-                        <button> Cards list </button>
-                        <button> Reachback </button>
-                    </div>
-
+                <!-- Imagery tiles -->
+                <div id="imagePanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
                             <div class="navbar-header">
@@ -1672,36 +1665,31 @@
                     </div>
                     <div class="text-center" id = "pagination">
                         <uib-pagination style="margin: 8px;"
-                            total-items="list.wfsFeaturesTotalPaginationCount"
-                            items-per-page="list.pageLimit"
-                            ng-model="list.currentStartIndex"
-                            ng-change="list.pagingChanged()"
-                            max-size="5"
-                            boundary-links="true"
-                            force-ellipses="true"
-                            rotate="false"
-                            first-text="First"
-                            last-text="Last"
-                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                                        total-items="list.wfsFeaturesTotalPaginationCount"
+                                        items-per-page="list.pageLimit"
+                                        ng-model="list.currentStartIndex"
+                                        ng-change="list.pagingChanged()"
+                                        max-size="5"
+                                        boundary-links="true"
+                                        force-ellipses="true"
+                                        rotate="false"
+                                        first-text="First"
+                                        last-text="Last"
+                                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
                         </uib-pagination>
                     </div>
                 </div>
-            </div>
 
-            <!-- Reachback tiles -->
-            <div id = "reachbackPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
-                <div class = "ResultsPane" ng-controller = "ReachbackController as reachback">
-                    <div class = "Results-tab-heading">
-                        <button onclick = "javascript: $( '#reachbackPanel' ).hide();"> Cards list </button>
-                        <button onclick = "javascript: $( '#reachbackPanel' ).show();"> Reachback </button>
-                    </div>
-
-                    <div style="border-style: solid; border-width: 1px; margin-top: 10px; padding: 10px; border-radius: 4px;">
+                <!-- Reachback tiles -->
+                <div id="reachbackPanel" ng-if="reachback.resultsPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
+                    <div style="border-style: solid; min-height: 60%; border-width: 1px; margin-top: 10px; padding: 10px; border-radius: 4px;">
                     </div>
                 </div>
             </div>
-
         </div>
+
+
+    </div>
 
     <!-- right-click context menu -->
     <div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">

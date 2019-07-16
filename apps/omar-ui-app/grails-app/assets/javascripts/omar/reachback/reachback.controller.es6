@@ -46,7 +46,6 @@
         $('.reachbackPanel').hide();
 
         var tabButtons=document.querySelectorAll(".ResultsPane .Results-tab-heading button");
-        // var tabPanels=document.querySelectorAll(".tabContainer  .tabPanel");
 
         tabButtons[0].style.background="linear-gradient(to bottom, #272B2E 0%, #272B2E 100%)";
         tabButtons[0].style.color="#FEFFFF";
@@ -67,7 +66,17 @@
             tabButtons[other_index].style.borderColor="#474A4F";
         }
 
-        // let text = jQuery.get('https://omar-dev.ossim.io/omar-reachback/index/search?sensors=AA', function(data) { alert(data); });
+        let text = jQuery.getJSON('https://omar-dev.ossim.io/omar-reachback/index/search?sensors=AA', function(data) { alert(); });
+
+        vm.getJSONs = function(json_object) {
+            let json = [];
+            $.each( json_object, function( index, json_obj ) {
+                json.push( JSON.stringify(json_obj, null, 4) );
+            });
+            return json;
+        }
+
+        // var test = JSON.stringify(text.responseJSON[index]
 
         // Show either the reachback panel, or the cards list
         vm.switchPanel = function(value, index) {
@@ -81,21 +90,9 @@
             }
 
             vm.showPanel(index);
-            vm.addElement();
-            // console.log(text);
-        }
 
-        vm.addElement = function() {
-            // create a new div element
-            var newDiv = document.createElement("div");
-            // and give it some content
-            var newContent = document.createTextNode("Hi there and greetings!");
-            // add the text node to the newly created div
-            newDiv.appendChild(newContent);
-
-            // add the newly created element and its content into the DOM
-            var currentDiv = document.getElementById("reachbackText");
-            document.body.insertBefore(newDiv, currentDiv);
+            var test = vm.getJSONs(text.responseJSON);
+            document.getElementById("reachbackJSON").appendChild(document.createTextNode(test));
         }
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

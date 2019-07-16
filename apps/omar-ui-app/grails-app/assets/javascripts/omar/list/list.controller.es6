@@ -44,12 +44,6 @@
     // #################################################################################
     //console.log('AppO2.APP_CONFIG in ListController: ', AppO2.APP_CONFIG);
 
-    // Ben Buzzelli's code
-
-    // let text = jQuery.get('https://omar-dev.ossim.io/omar-reachback/index/search?sensors=AA', function(data) { alert(data); });
-
-    // EOBBC
-
     /* jshint validthis: true */
     var vm = this;
 

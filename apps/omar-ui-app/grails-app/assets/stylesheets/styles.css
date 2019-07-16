@@ -80,6 +80,22 @@ body {
   border-color: #272B2E;
 }
 
+.reachbackPanel {
+  resize: none;
+  outline: none;
+  border-style: solid;
+  border-color: #F0F0F0;
+  min-height: 70%;
+  min-width: 100%;
+  border-width: 1px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  color: #F0F0F0;
+  background: transparent;
+}
+
 .navbar {
   min-height: 28px !important;
 }

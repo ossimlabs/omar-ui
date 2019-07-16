@@ -39,11 +39,67 @@
             }, 10);
         }
 
-        var resultsPanel = false;
 
-        vm.switchPanel = function(results_panel) {
-            resultsPanel = results_panel;
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
+        // Hide the reachback panel initially
+        $('.reachbackPanel').hide();
+
+        var tabButtons=document.querySelectorAll(".ResultsPane .Results-tab-heading button");
+        // var tabPanels=document.querySelectorAll(".tabContainer  .tabPanel");
+
+        tabButtons[0].style.background="linear-gradient(to bottom, #272B2E 0%, #272B2E 100%)";
+        tabButtons[0].style.color="#FEFFFF";
+        tabButtons[0].style.borderColor="#272B2E";
+
+        vm.showPanel = function(panelIndex) {
+            var other_index = panelIndex == 0 ? 1 : 0;
+            tabButtons.forEach(function(node){
+                node.style.backgroundColor="";
+                node.style.color="";
+            });
+            tabButtons[panelIndex].style.background="linear-gradient(to bottom, #272B2E 0%, #272B2E 100%)";
+            tabButtons[panelIndex].style.color="#FEFFFF";
+            tabButtons[panelIndex].style.borderColor="#272B2E";
+
+            tabButtons[other_index].style.background="linear-gradient(to bottom, #474A4F 0%, #3C3F44 100%)";
+            tabButtons[other_index].style.color="#C4C8C9";
+            tabButtons[other_index].style.borderColor="#474A4F";
         }
+
+        // let text = jQuery.get('https://omar-dev.ossim.io/omar-reachback/index/search?sensors=AA', function(data) { alert(data); });
+
+        // Show either the reachback panel, or the cards list
+        vm.switchPanel = function(value, index) {
+            value == true ? $( '.reachbackPanel' ).show() : $( '.reachbackPanel' ).hide();
+            if (value) {
+                $('.cardsPanel').hide();
+                $('.reachbackPanel').show();
+            } else {
+                $('.cardsPanel').show();
+                $('.reachbackPanel').hide();
+            }
+
+            vm.showPanel(index);
+            vm.addElement();
+            // console.log(text);
+        }
+
+        vm.addElement = function() {
+            // create a new div element
+            var newDiv = document.createElement("div");
+            // and give it some content
+            var newContent = document.createTextNode("Hi there and greetings!");
+            // add the text node to the newly created div
+            newDiv.appendChild(newContent);
+
+            // add the newly created element and its content into the DOM
+            var currentDiv = document.getElementById("reachbackText");
+            document.body.insertBefore(newDiv, currentDiv);
+        }
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
         vm.showCurrentFilter = true;
         vm.refreshSpin = false;
@@ -559,7 +615,6 @@
             }
 
             filterString = filterArray.join(" AND ");
-            console.log("Printing filter string: " + filterArray);
             wfsService.updateAttrFilter(filterString);
         };
 

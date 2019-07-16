@@ -933,7 +933,7 @@
                             </div>
 
                         </div>
-                        <%-- END OF KEYWORD FILTERS --%>
+
                         <%-- RANGE FILTERS --%>
                         <div class = "col-md-4">
                             <div class = "row">
@@ -1027,7 +1027,7 @@
                                 </div>
                             </div>
                         </div>
-                        <%-- END OF RANGE FILTERS --%>
+
                         <%-- TEMPORAL FILTERS --%>
                         <div class = "col-md-4">
                             <div class = "row">
@@ -1098,7 +1098,6 @@
                                 </div>
                             </div>
                         </div>
-                        <%-- END OF TEMPORAL FILTERS --%>
                     </div>
                     <div class = "row">
                         <div class = "col-md-12" style = "text-align: center">
@@ -1111,13 +1110,13 @@
         </div>
 
         <div class = "col-md-4">
-            <div class = "ResultsPane" ng-controller = "ReachbackController as reachback">
-                <div class = "Results-tab-heading" ng-hide="filterVideosToggle">
-                    <button onclick = "javascript: $( '#reachbackPanel' ).hide(); $( '#imagePanel' ).show(); $( '#videoPanel' ).show();"> Cards list </button>
-                    <button onclick = "javascript: $( '#reachbackPanel' ).show(); $( '#imagePanel' ).hide(); $( '#videoPanel' ).hide(); reachback.resultsPanel = true;"> Reachback </button>
+            <div class = "ResultsPane">
+                <div class = "Results-tab-heading" ng-controller = "ReachbackController as reachback">
+                    <button ng-click = "reachback.switchPanel(false, 0)"> Cards list </button>
+                    <button ng-click = "reachback.switchPanel(true, 1)"> Reachback </button>
                 </div>
                 <!-- Video tiles -->
-                <div id="videoPanel" ng-if="filterVideosToggle" ng-controller="ListController as list">
+                <div class = "cardsPanel" ng-if="filterVideosToggle" ng-controller="ListController as list">
                     <!-- Top Nav -->
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
@@ -1255,7 +1254,7 @@
                             </div>
                     </nav>
 
-                    <div id="video-list" style="border-style: solid; max-height: 60%; border-width: 1px; padding: 10px; border-radius: 4px;">
+                    <div id="video-list" style="border-style: solid; max-height: 55%; border-width: 1px; padding: 10px; border-radius: 4px;">
                             <!-- Error or empty response area -->
                             <div ng-show="videoData.features === 0">
                                 <div>
@@ -1375,7 +1374,7 @@
                 </div>
 
                 <!-- Imagery tiles -->
-                <div id="imagePanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
+                <div class = "cardsPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
                             <div class="navbar-header">
@@ -1518,7 +1517,7 @@
                         </div>
                     </nav>
 
-                    <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
+                    <div id="list" style="border-style: solid; border-width: 1px; max-height: 55%; padding: 10px; border-radius: 4px;">
                         <div ng-show="list.wfsData.length === 0">
                             <div>
                                 <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>
@@ -1681,8 +1680,26 @@
                 </div>
 
                 <!-- Reachback tiles -->
-                <div id="reachbackPanel" ng-if="reachback.resultsPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
-                    <div style="border-style: solid; min-height: 60%; border-width: 1px; margin-top: 10px; padding: 10px; border-radius: 4px;">
+                <div class = "reachbackPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
+                    <div style="border-style: solid; min-height: 70%; border-width: 1px; margin-top: 10px; padding: 10px; border-radius: 4px;">
+%{--                        <div ng-show="true">--}%
+%{--                            <div>--}%
+%{--                                <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>--}%
+%{--                                <span class="text-info"><h4 >Check the dates</h4></span>--}%
+%{--                                <p>Make sure you provide valid dates for the query.  Also, make sure you are searching for the appropriate date type (acquisition versus ingest).</p>--}%
+%{--                                <span class="text-info"><h4>Check the spelling</h4></span>--}%
+%{--                                <p>It is possible that one of the Keyword filters has a spelling error.</p>--}%
+%{--                                <span class="text-info"><h4>Check range values</h4></span>--}%
+%{--                                <p>Make sure that the range values you have submitted are valid for those attributes.</p>--}%
+%{--                                <span class="text-info"><h4 class="text-info">Check your map extent</h4></span>--}%
+%{--                                <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>--}%
+%{--                            </div>--}%
+%{--                        </div>--}%
+
+                        <div id = "reachbackText" ng-controller = "ReachbackController as reachback">
+                            element
+                        </div>
+
                     </div>
                 </div>
             </div>

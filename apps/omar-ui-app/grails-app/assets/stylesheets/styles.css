@@ -67,12 +67,6 @@ body {
   border-top-right-radius: 8px;
 }
 
-.Results-tab-heading button:hover {
-  color: #FEFFFF;
-  background: linear-gradient(to bottom, #3C3F44 0%, #3C3F44 100%);
-  border-color: #404348;
-}
-
 .Results-tab-heading button:focus {
   outline: none !important;
   color: #FEFFFF;

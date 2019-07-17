@@ -1676,10 +1676,41 @@
                 </div>
             </div>
 
+            <!-- Reachback Panel -->
             <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer" >
                 <div class = "Results-tab-heading" ng-controller = "ReachbackController as reachback">
-                    <button ng-click = "reachback.switchPanel(false, 0)"> Cards list </button>
-                    <button ng-click = "reachback.switchPanel(true, 1)"> Reachback </button>
+                    <button onmouseover="hover(0)" onmouseout="revert(0)" onclick="setClicked(0,1)" ng-click = "reachback.switchPanel(false, 0)"> Cards list </button>
+                    <button onmouseover="hover(1)" onmouseout="revert(1)" onclick="setClicked(1,0)" ng-click = "reachback.switchPanel(true, 1)"> Reachback </button>
+
+                    <script>
+                        var tabButtons = document.querySelectorAll(".ResultsPane .Results-tab-heading button");
+                        var clicked = [2];
+                        clicked[0] = true;
+                        clicked[1] = false;
+
+                        function hover(index) {
+                            if (clicked[index] == false) {
+                                console.log("DID HOVER FUNCTION");
+                                tabButtons[index].style.background = "linear-gradient(to bottom, #3C3F44 0%, #3C3F44 100%)";
+                                tabButtons[index].style.borderColor = "#404348";
+                            }
+                        }
+
+                        function revert(index) {
+                            if (clicked[index] == false) {
+                                tabButtons[index].style.background = "linear-gradient(to bottom, #474A4F 0%, #3C3F44 100%)";
+                                tabButtons[index].style.borderColor = "#474A4F";
+                            }
+                        }
+
+                        function setClicked(index, other) {
+                            if (clicked[index] == false) {
+                                clicked[index] = true;
+                                clicked[other] = false;
+                            }
+                        }
+
+                    </script>
                 </div>
 
                 <!-- Imagery tiles for Reachback -->

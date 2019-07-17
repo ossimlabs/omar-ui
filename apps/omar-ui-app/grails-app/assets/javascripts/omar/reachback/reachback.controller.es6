@@ -48,8 +48,9 @@
         // Hide the reachback panel initially
         $('.reachbackPanel').hide();
 
-        var tabButtons=document.querySelectorAll(".ResultsPane .Results-tab-heading button");
+        var tabButtons = document.querySelectorAll(".ResultsPane .Results-tab-heading button");
 
+        // Initialise the cards panel to be selected
         tabButtons[0].style.background="linear-gradient(to bottom, #272B2E 0%, #272B2E 100%)";
         tabButtons[0].style.color="#FEFFFF";
         tabButtons[0].style.borderColor="#272B2E";

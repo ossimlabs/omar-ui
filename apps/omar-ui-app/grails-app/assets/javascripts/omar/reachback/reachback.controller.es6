@@ -492,7 +492,14 @@
         // Takes in a json formatted string and adds a new child if none
         // is present, otherwise, it replaces the current text area child.
         vm.populateReachbackTextArea = function(json_string) {
-            let textNode = document.createTextNode(json_string.slice(0, vm.predMaxResults));
+
+            let textNode;
+
+            if (json_string != null)
+                textNode = document.createTextNode(json_string.slice(0, vm.predMaxResults));
+            else
+                textNode = $( '#reachbackMessage' ).value;
+
             let parent = document.getElementById("reachbackJSON");
 
             if (parent.firstChild === null)

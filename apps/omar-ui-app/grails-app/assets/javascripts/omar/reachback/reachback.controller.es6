@@ -615,7 +615,6 @@
             let json_object = $.ajax({
                 url: reachbackSearchUrl,
                 dataType: 'json',
-                // data: 'data',
                 success: function(json){
                     $.each( json_object.responseJSON, function( index, json_obj ) {
                         json_string.push( JSON.stringify(json_obj, null, 4) );

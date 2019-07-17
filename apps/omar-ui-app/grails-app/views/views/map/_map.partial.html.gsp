@@ -1697,7 +1697,7 @@
 %{--                            </div>--}%
 %{--                        </div>--}%
 
-                    <textarea id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
+                <textarea id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
             </div>
         </div>
 

@@ -27,6 +27,9 @@
         $log
     ) {
 
+        // Reachback URL for retrieving json data from reachback
+        var reachbackUrl = 'https://omar-dev.ossim.io/omar-reachback/index/search?';
+
         /* jshint validthis: true */
         var vm = this;
         vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
@@ -66,18 +69,6 @@
             tabButtons[other_index].style.borderColor="#474A4F";
         }
 
-        let text = jQuery.getJSON('https://omar-dev.ossim.io/omar-reachback/index/search?sensors=AA', function(data) { alert(); });
-
-        vm.getJSONs = function(json_object) {
-            let json = [];
-            $.each( json_object, function( index, json_obj ) {
-                json.push( JSON.stringify(json_obj, null, 4) );
-            });
-            return json;
-        }
-
-        // var test = JSON.stringify(text.responseJSON[index]
-
         // Show either the reachback panel, or the cards list
         vm.switchPanel = function(value, index) {
             value == true ? $( '.reachbackPanel' ).show() : $( '.reachbackPanel' ).hide();
@@ -90,9 +81,6 @@
             }
 
             vm.showPanel(index);
-
-            var test = vm.getJSONs(text.responseJSON);
-            document.getElementById("reachbackJSON").appendChild(document.createTextNode(test));
         }
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
@@ -524,12 +512,10 @@
                     vm.maxEndDate = new Date();
                     vm.customDateRangeVisible = true;
                     filterArray.push(dbName + " >= '" + vm.getCustomStartDate() + "' AND " + dbName + " <= '" + vm.getCustomEndDate() + "'");
-                    test = dbName + " >= '" + vm.getCustomStartDate() + "' AND " + dbName + " <= '" + vm.getCustomEndDate() + "'";
                     break;
                 default:
                     vm.customDateRangeVisible = false;
                     filterArray.push(dbName + " >= '" + temporalParam.fromDate + "' AND " + dbName + " <= '" + temporalParam.toDate + "'");
-                    test = dbName + " >= '" + temporalParam.fromDate + "' AND " + dbName + " <= '" + temporalParam.toDate + "'";
                     break;
             }
 
@@ -613,7 +599,44 @@
 
             filterString = filterArray.join(" AND ");
             wfsService.updateAttrFilter(filterString);
+
+            vm.getReachbackJSON(filterString);
+
         };
+
+        // Takes in a string filter as a parameter and makes an ajax jquery call
+        // to GET from omar-reachback. Upon success, call vm.populateReachbackTextArea
+        // to append/replace the current text area child with the json data
+        vm.getReachbackJSON = function(filter) {
+            let reachbackSearchUrl = reachbackUrl + filter;
+
+            let json_string = [];
+
+            let json_object = $.ajax({
+                url: reachbackSearchUrl,
+                dataType: 'json',
+                // data: 'data',
+                success: function(json){
+                    $.each( json_object.responseJSON, function( index, json_obj ) {
+                        json_string.push( JSON.stringify(json_obj, null, 4) );
+                    });
+                    vm.populateReachbackTextArea(filter, json_string);
+                }
+            });
+        }
+
+        // Takes in a json formatted string and adds a new child if none
+        // is present, otherwise, it replaces the current text area child.
+        vm.populateReachbackTextArea = function(json_string) {
+
+            let textNode = document.createTextNode(json_string);
+            let parent = document.getElementById("reachbackJSON");
+
+            if (parent.firstChild === null)
+                parent.appendChild(textNode);
+            else
+                parent.replaceChild(textNode, parent.firstChild);
+        }
 
         vm.initSpatial();
         vm.initKeywords();

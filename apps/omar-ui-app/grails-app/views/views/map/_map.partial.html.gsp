@@ -1002,18 +1002,13 @@
                                                type = "number"
                                                placeholder = "0"
                                                ng-disabled = "!reachback.imageryCheck"
-                                               ng-model = "reachback.predMaxResults"
+                                               ng-model = "reachback.predMaxFeatures"
                                                class = "form-control input-sm"
-                                               value = "{{reachback.predMaxResults}}"
+                                               value = "{{reachback.predMaxFeatures}}"
                                                min = "0" max = "100" step = "10"
-                                               ng-change = "reachback.predMaxCheck = (reachback.predMaxResults === 0) ? false: true;"
+                                               ng-change = "reachback.predMaxCheck = (reachback.predMaxFeatures === 0) ? false: true;"
                                                ng-enter = "reachback.updateFilterString()"
                                                ng-blur = "reachback.updateFilterString()">
-                                        <script>
-                                            function changeMaxResults() {
-
-                                            }
-                                        </script>
                                     </div>
                                 </div>
                             </div>

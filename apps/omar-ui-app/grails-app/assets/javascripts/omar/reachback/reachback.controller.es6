@@ -237,7 +237,7 @@
                     vm[range.key + "Max"] = range.max;
                 }
             });
-            vm.predMaxResults = 0;
+            vm.predMaxFeatures = 0;
             vm.predMaxCheck = false;
         };
 
@@ -447,6 +447,8 @@
                     filterArray.push(dbName + " >= " + min + " AND " + dbName + " <= " + max);
                 }
             }
+            if (vm.predMaxCheck && vm.predMaxFeatures > 0)
+                filterArray.push("maxFeatures=" + vm.predMaxFeatures);
 
             // Ranges
             if (vm.predNiirsCheck) {
@@ -466,7 +468,7 @@
 
         };
 
-        vm.predMaxResults = 0;
+        vm.predMaxFeatures = 0;
         vm.predMaxCheck = false;
 
         // Takes in a string filter as a parameter and makes an ajax jquery call
@@ -478,12 +480,10 @@
             let json_object = $.ajax({
                 url: reachbackSearchUrl,
                 dataType: 'json',
-                success: function(json){
-                    if (vm.predMaxCheck) {
-                        $.each(json_object.responseJSON, function (index, json_obj) {
-                            json_string.push(JSON.stringify(json_obj, null, 4));
-                        });
-                    }
+                success: function (json) {
+                    $.each(json_object.responseJSON, function (index, json_obj) {
+                        json_string.push(JSON.stringify(json_obj, null, 4));
+                    });
                     vm.populateReachbackTextArea(json_string);
                 }
             });
@@ -495,10 +495,10 @@
 
             let textNode;
 
-            if (json_string != null)
-                textNode = document.createTextNode(json_string.slice(0, vm.predMaxResults));
+            if (vm.predMaxCheck)
+                textNode = document.createTextNode(json_string);
             else
-                textNode = $( '#reachbackMessage' ).value;
+                textNode = document.createTextNode("");
 
             let parent = document.getElementById("reachbackJSON");
 

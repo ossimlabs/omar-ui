@@ -34,14 +34,14 @@
                         </ul>
                     </li>
                     <li role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#filterSearch' ).show()"  >Filters</a>
+                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#filterSearch' ).show(); $( '#reachbackPanelContainer' ).hide(); $( '#imageCardsPanel' ).show()"  >Filters</a>
                     </li>
                     <li class = "active" role = "presentation">
                         <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
                     <%-- BEN BUZZELLI --%>
                     <li role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).show()"  >Reachback</a>
+                        <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).show(); $( '#reachbackPanelContainer' ).show(); $( '#imageCardsPanel' ).hide()"  >Reachback</a>
                     </li>
                     <%-- BEN BUZZELLI --%>
                 </ul>
@@ -1112,7 +1112,7 @@
         <div class = "col-md-4">
 
             <!-- Video tiles -->
-            <div class = "cardsPanel" ng-if="filterVideosToggle" ng-controller="ListController as list">
+            <div ng-if="filterVideosToggle" ng-controller="ListController as list">
                 <!-- Top Nav -->
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
@@ -1369,13 +1369,319 @@
                 </div>
             </div>
 
-            <div class = "ResultsPane" ng-hide="filterVideosToggle" >
+            <!-- Imagery tiles -->
+            <div id="imageCardsPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list">
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button
+                                    type="button"
+                                    class="navbar-toggle collapsed"
+                                    data-toggle="collapse"
+                                    data-target="#sort-navbar-collapse"
+                                    aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="sort-navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" ng-bind-html="list.currentSortText"><span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-click="list.sortWfs('acquisition_date', '+D', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('acquisition_date', '+A', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('ingest_date', '+D', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('ingest_date', '+A', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('niirs', '+D', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('niirs', '+A', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('title', '+D', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('title', '+A', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider "></li>
+                                        <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle navbar-sort-dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">{{list.exportSelectedButtonText}}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li class="dropdown-header">Use the checkboxes on the image cards to </li>
+                                        <li class="dropdown-header">select individual images. They can then be</li>
+                                        <li class="dropdown-header"> downloaded, exported, or viewed in</li>
+                                        <li class="dropdown-header">applications</li>
+                                        <li class="divider" ng-if="list.showSelectedButton"></li>
+                                        <li role="menuitem" ng-click="list.downloadSelectedImages()" ng-if="list.showSelectedButton">
+                                            <a href="">Download
+                                                <i class="fa fa-info-circle text-info" style="font-size: 12px;" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 10 can be downloaded at one time"></i>
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-header">
+                                            Exports
+                                            <i class="fa fa-info-circle text-info" tooltip-placement="left-bottom" uib-tooltip="Export the selected images into the following formats"></i>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.exportSelectedImages('CSV')">
+                                            <a href="">CSV</a>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.exportSelectedImages('GML2')">
+                                            <a href="">GML2</a>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.exportSelectedImages('GML3')">
+                                            <a href="">GML3</a>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.exportSelectedImages('GML32')">
+                                            <a href="">GML32</a>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.exportSelectedImages('JSON')">
+                                            <a href="">JSON</a>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.exportSelectedImages('KML')">
+                                            <a href="">KML</a>
+                                        </li>
+                                        <li role="separator" class="divider" ng-if="!list.showSelectedButton"></li>
+                                        <li class="dropdown-header" ng-if="!list.showSelectedButton">
+                                            Create a GeoRSS feed of the images
+                                            <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A browser extension is required for Internet Explorer and Chrome.  Firefox has built in support for RSS feeds."></i>
+                                        </li>
+                                        <li>
+                                            <a ng-href="" target="_blank" ng-click="list.getGeoRss()" ng-if="!list.showSelectedButton">GeoRSS</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li class="dropdown-header">Applications
+                                            <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 100 can be viewed per application"></i>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.viewSelectedImagesApp('tlv')">
+                                            <a href="">TLV</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li role="menuitem" ng-class="{'disabled': !list.showSelectedButton}" ng-click="list.clearSelectedImages(); list.clearSelectedMosaicImages()">
+                                            <a href="">
+                                                Clear Selected
+                                                <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="Remove all currently selected image cards"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class = "nav navbar-nav navbar-right">
+                                <p class = "navbar-text cursor-default">
+                                    <span class = "glyphicon glyphicon-picture"></span>
+                                    <span
+                                            class = "label label-primary"
+                                            ng-class = "{'label-info': filter.refreshSpin}"
+                                            tooltip-placement = "left"
+                                            uib-tooltip = "Number of Search Result Images">{{filter.totalWfsFeatures}}
+                                    </span>
+                                    <%--
+                                    <span class = "glyphicon glyphicon-film"></span>
+                                    <span
+                                        class = "label label-primary"
+                                        ng-class = "{'label-info': filter.refreshSpin}"
+                                        tooltip-placement = "left"
+                                        uib-tooltip = "Number of Search Result Videos">0
+                                    </span>
+                                    --%>
+                                </p>
+                                <li class = "dropdown">
+                                    <a class = "dropdown-toggle navbar-sort-dropdown-toggle"
+                                       ng-click = "filter.refreshList()"
+                                       tooltip-placement = "bottom"
+                                       uib-tooltip = "Refresh the image list data">
+                                        &nbsp;
+                                        <span class = "fa fa-refresh"
+                                              ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
+                                        </span>
+                                        &nbsp;
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div id="list" style="border-style: solid; border-width: 1px; max-height: 65%; padding: 10px; border-radius: 4px;">
+                    <div ng-show="list.wfsData.length === 0">
+                        <div>
+                            <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>
+                            <span class="text-info"><h4 >Check the dates</h4></span>
+                            <p>Make sure you provide valid dates for the query.  Also, make sure you are searching for the appropriate date type (acquisition versus ingest).</p>
+                            <span class="text-info"><h4>Check the spelling</h4></span>
+                            <p>It is possible that one of the Keyword filters has a spelling error.</p>
+                            <span class="text-info"><h4>Check range values</h4></span>
+                            <p>Make sure that the range values you have submitted are valid for those attributes.</p>
+                            <span class="text-info"><h4 class="text-info">Check your map extent</h4></span>
+                            <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>
+                        </div>
+                    </div>
+                    <div ng-show="list.wfsFeatures >= 1"
+                         ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
+                         ng-model="image">
+                        <div class="panel panel-default cursor-pointer" >
+                            <div class="panel-heading"
+                                 ng-click="list.addRemoveCards(image.properties.id)"
+                                 style="font-size: 11px; padding: 2px 7px;">
+                                <span>
+                                    <i class="fa fa-square-o cursor-pointer"
+                                       ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
+                                       aria-hidden="true"
+                                       style="padding-right: 5px;"
+                                       tooltip-placement="left-bottom"
+                                       uib-tooltip="Add image to selected list">
+                                    </i>
+                                </span>
+                                <span class="text-default cursor-pointer">
+                                    <span ng-show="!image.properties.title">Unknown</span>
+                                    {{image.properties.title}}
+                                </span>
+                            </div>
+                            <div class="panel-body"
+                                 ng-mouseenter="list.displayFootprint(image);"
+                                 ng-mouseleave="list.removeFootprint();">
+                                <div class="media">
+                                    <div class="media-left" style="position: relative">
+                                        <a
+                                                href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
+                                                target="_blank">
+                                            <img
+                                                    class="media-object thumbnail-background"
+                                                    tooltip-placement="right"
+                                                    uib-tooltip="Click the thumbnail or the image ID to view the raw image"
+                                                    height="114"
+                                                    width="114"
+                                                    style="border:1px solid black"
+                                                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
+                                        </a>
+                                        <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">
+                                            <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="row"></div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="font-size: 13px;">
+                                                Acquisition Date:&nbsp;&nbsp;
+                                                <span class="text-success">
+                                                    <span ng-show="!image.properties.acquisition_date">Unknown</span>
+                                                    {{image.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                    <span ng-show="image.properties.acquisition_date">z</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="font-size: 13px;">
+                                                <span class = "text-info">
+                                                    <span ng-show = "!image.properties.security_classification">
+                                                        Security Classification Unknown
+                                                    </span>
+                                                    <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
+                                                        {{ image.properties.security_classification }}
+                                                    </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="font-size: 13px;">
+                                                Sensor:&nbsp;&nbsp;
+                                                <span class="text-success">
+                                                    <span ng-show="!image.properties.sensor_id">Unknown</span>
+                                                    {{image.properties.sensor_id}}
+                                                </span>
+                                                &nbsp;&nbsp;
+                                                <span ng-show="image.properties.valid_model">
+                                                    <span class = "glyphicon glyphicon-ok text-success"></span>
+                                                    <span class = "text-success">Valid Model</span>
+                                                </span>
+                                                <span ng-show="!image.properties.valid_model">
+                                                    <span class = "text-info">Model: N/A</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="font-size: 13px;">
+                                                Country Code:&nbsp;&nbsp;
+                                                <span class="text-success">
+                                                    <span ng-show="!image.properties.country_code">Unknown</span>
+                                                    {{image.properties.country_code}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" style="font-size: 13px;">
+                                                NIIRS:&nbsp;&nbsp;
+                                                <span class="text-success">
+                                                    <span ng-show="!image.properties.niirs">Unknown</span>
+                                                    {{image.properties.niirs}}
+                                                </span>
+                                                &nbsp;&nbsp;/&nbsp;&nbsp;
+                                                GSD:&nbsp;&nbsp;
+                                                <span class="text-success">
+                                                    <span ng-show="!image.properties.gsdy">Unknown</span>
+                                                    {{image.properties.gsdy | number:4}} m
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.zoomToSelectedImage(image.properties.id);">
+                                                <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                            </a>
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">
+                                                <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
+                                            </a>
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.viewOrtho(image)">
+                                                <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>
+                                            </a>
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('toolbox');"
+                                            >
+                                                <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" id = "pagination">
+                    <uib-pagination style="margin: 8px;"
+                                    total-items="list.wfsFeaturesTotalPaginationCount"
+                                    items-per-page="list.pageLimit"
+                                    ng-model="list.currentStartIndex"
+                                    ng-change="list.pagingChanged()"
+                                    max-size="5"
+                                    boundary-links="true"
+                                    force-ellipses="true"
+                                    rotate="false"
+                                    first-text="First"
+                                    last-text="Last"
+                                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                    </uib-pagination>
+                </div>
+            </div>
+
+            <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer" >
                 <div class = "Results-tab-heading" ng-controller = "ReachbackController as reachback">
                     <button ng-click = "reachback.switchPanel(false, 0)"> Cards list </button>
                     <button ng-click = "reachback.switchPanel(true, 1)"> Reachback </button>
                 </div>
 
-                <!-- Imagery tiles -->
+                <!-- Imagery tiles for Reachback -->
                 <div class = "cardsPanel" ng-controller="ListController as list">
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
@@ -1519,8 +1825,9 @@
                         </div>
                     </nav>
 
+
                     <div id="list" style="border-style: solid; border-width: 1px; max-height: 55%; padding: 10px; border-radius: 4px;">
-                        <div ng-show="list.wfsData.length === 0">
+                        <div ng-show="list.wfsData.length >= 0">
                             <div>
                                 <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>
                                 <span class="text-info"><h4 >Check the dates</h4></span>
@@ -1533,169 +1840,8 @@
                                 <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>
                             </div>
                         </div>
-                        <div ng-show="list.wfsFeatures >= 1"
-                             ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
-                             ng-model="image">
-                            <div class="panel panel-default cursor-pointer" >
-                                <div class="panel-heading"
-                                     ng-click="list.addRemoveCards(image.properties.id)"
-                                     style="font-size: 11px; padding: 2px 7px;">
-                                    <span>
-                                        <i class="fa fa-square-o cursor-pointer"
-                                           ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
-                                           aria-hidden="true"
-                                           style="padding-right: 5px;"
-                                           tooltip-placement="left-bottom"
-                                           uib-tooltip="Add image to selected list">
-                                        </i>
-                                    </span>
-                                    <span class="text-default cursor-pointer">
-                                        <span ng-show="!image.properties.title">Unknown</span>
-                                        {{image.properties.title}}
-                                    </span>
-                                </div>
-                                <div class="panel-body"
-                                     ng-mouseenter="list.displayFootprint(image);"
-                                     ng-mouseleave="list.removeFootprint();">
-                                    <div class="media">
-                                        <div class="media-left" style="position: relative">
-                                            <a
-                                                    href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
-                                                    target="_blank">
-                                                <img
-                                                        class="media-object thumbnail-background"
-                                                        tooltip-placement="right"
-                                                        uib-tooltip="Click the thumbnail or the image ID to view the raw image"
-                                                        height="114"
-                                                        width="114"
-                                                        style="border:1px solid black"
-                                                        ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
-                                            </a>
-                                            <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">
-                                                <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="row"></div>
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    Acquisition Date:&nbsp;&nbsp;
-                                                    <span class="text-success">
-                                                        <span ng-show="!image.properties.acquisition_date">Unknown</span>
-                                                        {{image.properties.acquisition_date | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
-                                                        <span ng-show="image.properties.acquisition_date">z</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    <span class = "text-info">
-                                                        <span ng-show = "!image.properties.security_classification">
-                                                            Security Classification Unknown
-                                                        </span>
-                                                        <span class = "{{list.getSecurityClassificationClass( image.properties.security_classification )}}">
-                                                            {{ image.properties.security_classification }}
-                                                        </span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    Sensor:&nbsp;&nbsp;
-                                                    <span class="text-success">
-                                                        <span ng-show="!image.properties.sensor_id">Unknown</span>
-                                                        {{image.properties.sensor_id}}
-                                                    </span>
-                                                    &nbsp;&nbsp;
-                                                    <span ng-show="image.properties.valid_model">
-                                                        <span class = "glyphicon glyphicon-ok text-success"></span>
-                                                        <span class = "text-success">Valid Model</span>
-                                                    </span>
-                                                    <span ng-show="!image.properties.valid_model">
-                                                        <span class = "text-info">Model: N/A</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    Country Code:&nbsp;&nbsp;
-                                                    <span class="text-success">
-                                                        <span ng-show="!image.properties.country_code">Unknown</span>
-                                                        {{image.properties.country_code}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12" style="font-size: 13px;">
-                                                    NIIRS:&nbsp;&nbsp;
-                                                    <span class="text-success">
-                                                        <span ng-show="!image.properties.niirs">Unknown</span>
-                                                        {{image.properties.niirs}}
-                                                    </span>
-                                                    &nbsp;&nbsp;/&nbsp;&nbsp;
-                                                    GSD:&nbsp;&nbsp;
-                                                    <span class="text-success">
-                                                        <span ng-show="!image.properties.gsdy">Unknown</span>
-                                                        {{image.properties.gsdy | number:4}} m
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
-                                                <a class="btn btn-default" type="button"
-                                                   ng-click="list.zoomToSelectedImage(image.properties.id);">
-                                                    <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
-                                                </a>
-                                                <a class="btn btn-default" type="button"
-                                                   ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">
-                                                    <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
-                                                </a>
-                                                <a class="btn btn-default" type="button"
-                                                   ng-click="list.viewOrtho(image)">
-                                                    <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>
-                                                </a>
-                                                <a class="btn btn-default" type="button"
-                                                   ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('toolbox');"
-                                                >
-                                                    <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center" id = "pagination">
-                        <uib-pagination style="margin: 8px;"
-                                        total-items="list.wfsFeaturesTotalPaginationCount"
-                                        items-per-page="list.pageLimit"
-                                        ng-model="list.currentStartIndex"
-                                        ng-change="list.pagingChanged()"
-                                        max-size="5"
-                                        boundary-links="true"
-                                        force-ellipses="true"
-                                        rotate="false"
-                                        first-text="First"
-                                        last-text="Last"
-                                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                        </uib-pagination>
                     </div>
                 </div>
-
-                <!-- Reachback tiles -->
-%{--                <div class = "reachbackPanel" ng-hide="filterVideosToggle" ng-controller="ListController as list" id="test" style="border-style: solid; min-height: 70%; border-width: 1px; margin-top: 10px; padding: 10px; border-radius: 4px;">--}%
-%{--                        <div ng-show="true">--}%
-%{--                            <div>--}%
-%{--                                <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>--}%
-%{--                                <span class="text-info"><h4 >Check the dates</h4></span>--}%
-%{--                                <p>Make sure you provide valid dates for the query.  Also, make sure you are searching for the appropriate date type (acquisition versus ingest).</p>--}%
-%{--                                <span class="text-info"><h4>Check the spelling</h4></span>--}%
-%{--                                <p>It is possible that one of the Keyword filters has a spelling error.</p>--}%
-%{--                                <span class="text-info"><h4>Check range values</h4></span>--}%
-%{--                                <p>Make sure that the range values you have submitted are valid for those attributes.</p>--}%
-%{--                                <span class="text-info"><h4 class="text-info">Check your map extent</h4></span>--}%
-%{--                                <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>--}%
-%{--                            </div>--}%
-%{--                        </div>--}%
 
                 <textarea id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
             </div>

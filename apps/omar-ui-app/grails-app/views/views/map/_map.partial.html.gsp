@@ -33,17 +33,18 @@
                             </li>
                         </ul>
                     </li>
+                    <%-- Handle the filtersearch tab --%>
                     <li role = "presentation">
                         <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#filterSearch' ).show(); $( '#reachbackPanelContainer' ).hide(); $( '#imageCardsPanel' ).show()"  >Filters</a>
                     </li>
+                    <%-- Handle the mapsearch tab --%>
                     <li class = "active" role = "presentation">
                         <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
-                    <%-- BEN BUZZELLI --%>
+                    <%-- Handle the reachback tab --%>
                     <li role = "presentation">
                         <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).show(); $( '#reachbackPanelContainer' ).show(); $( '#imageCardsPanel' ).hide()"  >Reachback</a>
                     </li>
-                    <%-- BEN BUZZELLI --%>
                 </ul>
 
                 <!--

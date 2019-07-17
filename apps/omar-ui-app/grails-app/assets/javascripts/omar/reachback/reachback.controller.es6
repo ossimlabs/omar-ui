@@ -42,50 +42,12 @@
             }, 10);
         }
 
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
-
         // Hide the reachback panel initially
         $('.reachbackPanel').hide();
 
-        var tabButtons = document.querySelectorAll(".ResultsPane .Results-tab-heading button");
-
         // Initialise the cards panel to be selected
-        tabButtons[0].style.background="linear-gradient(to bottom, #272B2E 0%, #272B2E 100%)";
-        tabButtons[0].style.color="#FEFFFF";
-        tabButtons[0].style.borderColor="#272B2E";
-
-        vm.showPanel = function(panelIndex) {
-            var other_index = panelIndex == 0 ? 1 : 0;
-            tabButtons.forEach(function(node){
-                node.style.backgroundColor="";
-                node.style.color="";
-            });
-            tabButtons[panelIndex].style.background="linear-gradient(to bottom, #272B2E 0%, #272B2E 100%)";
-            tabButtons[panelIndex].style.color="#FEFFFF";
-            tabButtons[panelIndex].style.borderColor="#272B2E";
-
-            tabButtons[other_index].style.background="linear-gradient(to bottom, #474A4F 0%, #3C3F44 100%)";
-            tabButtons[other_index].style.color="#C4C8C9";
-            tabButtons[other_index].style.borderColor="#474A4F";
-        }
-
-        // Show either the reachback panel, or the cards list
-        vm.switchPanel = function(value, index) {
-            value == true ? $( '.reachbackPanel' ).show() : $( '.reachbackPanel' ).hide();
-            if (value) {
-                $('.cardsPanel').hide();
-                $('.reachbackPanel').show();
-            } else {
-                $('.cardsPanel').show();
-                $('.reachbackPanel').hide();
-            }
-
-            vm.showPanel(index);
-        }
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+        $( '#button0' ).removeClass();
+        $( '#button0' ).addClass("reachbackTabButtonClicked");
 
         vm.showCurrentFilter = true;
         vm.refreshSpin = false;
@@ -151,25 +113,6 @@
         var filterString = "";
         var filterArray = [];
 
-        vm.initSpatial = function () {
-            vm.viewPortSpatial = false;
-            vm.pointSpatial = false;
-            vm.polygonSpatial = false;
-
-            var spatial = vm.urlParams.spatial || vm.userPreferences.spatial;
-            if (spatial.toLowerCase() == "mapview") {
-                vm.viewPortSpatial = true;
-            } else if (spatial.toLowerCase().includes("point")) {
-                vm.pointSpatial = true;
-                var point = new ol.format.WKT().readGeometry(spatial);
-                mapService.filterByPoint({ coordinate: point.getCoordinates() });
-            } else if (spatial.toLowerCase().includes("polygon")) {
-                vm.polygonSpatial = true;
-                var polygon = new ol.format.WKT().readGeometry(spatial);
-                mapService.dragBoxEnd(polygon);
-            }
-        };
-
         function getDistinctValues(property) {
             $scope[property + 'Types'] = [];
 
@@ -180,65 +123,6 @@
             }).then(function (response) {
                 $scope[property + 'Types'] = response.data;
             });
-        };
-
-        function checkNoSpatialFilter() {
-            // If we don't have any of the filters selected we will provide
-            // a list of all the images.
-            if (!vm.viewPortSpatial && !vm.pointSpatial && !vm.polygonSpatial) {
-                mapService.viewPortFilter(false);
-            }
-        }
-
-        this.byViewPort = function (status) {
-            $("a:contains('Map')").trigger("click");
-
-            // Turn on viewport
-            mapService.viewPortFilter(status);
-
-            // Turn off point
-            vm.pointSpatial = false;
-            mapService.pointFilter(vm.pointSpatial);
-
-            // Turn off polygon
-            vm.polygonSpatial = false;
-            mapService.polygonFilter(vm.polygonSpatial);
-
-            checkNoSpatialFilter();
-        };
-
-        this.byPointer = function (status) {
-            $("a:contains('Map')").trigger("click");
-
-            // Turn on point
-            mapService.pointFilter(status);
-
-            // Turn off viewport
-            vm.viewPortSpatial = false;
-            mapService.viewPortFilter(vm.viewPortSpatial);
-
-            // Turn off polygon
-            vm.polygonSpatial = false;
-            mapService.polygonFilter(vm.polygonSpatial);
-
-            checkNoSpatialFilter();
-        };
-
-        this.byPolygon = function (status) {
-            $("a:contains('Map')").trigger("click");
-
-            // Turn on polygons
-            mapService.polygonFilter(status);
-
-            // Turn off viewport
-            vm.viewPortSpatial = false;
-            mapService.viewPortFilter(vm.viewPortSpatial);
-
-            // Turn off point
-            vm.pointSpatial = false;
-            mapService.pointFilter(vm.pointSpatial);
-
-            checkNoSpatialFilter();
         };
 
         vm.handleDataList = function (inputId) {
@@ -334,11 +218,7 @@
 
         vm.initRanges = function (reset) {
             var ranges = [
-                { key: "azimuth", max: 360, min: 0, urlParam: "azimuth" },
-                { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
                 { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
-                { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
-                { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
             ];
             $.each(ranges, function (index, range) {
                 vm[range.key + "Check"] =
@@ -353,22 +233,12 @@
                 }
                 if (reset) {
                     vm[range.key + "Check"] = false;
-                    vm[range.key + "Min"] = range.emin;
+                    vm[range.key + "Min"] = range.min;
                     vm[range.key + "Max"] = range.max;
                 }
             });
-
-            vm.cloudCoverCheck = vm.userPreferences.cloudCoverEnabled;
-            vm.cloudCover = vm.userPreferences.cloudCoverMax;
-            if (vm.urlParams.cloudCover) {
-                vm.cloudCoverCheck = true;
-                vm.cloudCover = vm.urlParams.cloudCover;
-            }
-            if (reset) {
-                vm.cloudCoverCheck = false;
-                vm.cloudCover = 100;
-            }
-            vm.cloudCoverCheckNull = false;
+            vm.predMaxResults = 0;
+            vm.predMaxCheck = false;
         };
 
         vm.initTemporal = reset => {
@@ -596,6 +466,9 @@
 
         };
 
+        vm.predMaxResults = 0;
+        vm.predMaxCheck = false;
+
         // Takes in a string filter as a parameter and makes an ajax jquery call
         // to GET from omar-reachback. Upon success, call vm.populateReachbackTextArea
         // to append/replace the current text area child with the json data
@@ -606,9 +479,11 @@
                 url: reachbackSearchUrl,
                 dataType: 'json',
                 success: function(json){
-                    $.each( json_object.responseJSON, function( index, json_obj ) {
-                        json_string.push( JSON.stringify(json_obj, null, 4) );
-                    });
+                    if (vm.predMaxCheck) {
+                        $.each(json_object.responseJSON, function (index, json_obj) {
+                            json_string.push(JSON.stringify(json_obj, null, 4));
+                        });
+                    }
                     vm.populateReachbackTextArea(json_string);
                 }
             });
@@ -617,7 +492,7 @@
         // Takes in a json formatted string and adds a new child if none
         // is present, otherwise, it replaces the current text area child.
         vm.populateReachbackTextArea = function(json_string) {
-            let textNode = document.createTextNode(json_string);
+            let textNode = document.createTextNode(json_string.slice(0, vm.predMaxResults));
             let parent = document.getElementById("reachbackJSON");
 
             if (parent.firstChild === null)
@@ -626,7 +501,6 @@
                 parent.replaceChild(textNode, parent.firstChild);
         }
 
-        vm.initSpatial();
         vm.initKeywords();
         vm.initRanges();
         vm.initTemporal();
@@ -638,15 +512,7 @@
 
         vm.updateFilterString();
 
-        let clearAllSpatialFilter = () => {
-            vm.viewPortSpatial = false;
-            vm.pointSpatial = false;
-            vm.polygonSpatial = false;
-            mapService.viewPortFilter(false);
-        };
-
         vm.clearFilters = () => {
-            clearAllSpatialFilter();
             vm.initKeywords(true);
             vm.initRanges(true);
             vm.initTemporal(true);
@@ -709,47 +575,9 @@
                 }
             }
 
-            if (vm.viewPortSpatial) {
-                searchString.spatial = "mapView";
-            } else if (vm.pointSpatial) {
-                var point = mapService.getFilterVectorGeometry();
-                var wkt = new ol.format.WKT().writeGeometry(point);
-                searchString.spatial = wkt;
-            } else if (vm.polygonSpatial) {
-                var extent = mapService.getFilterVectorGeometry().getExtent();
-                $.each(extent, function (index, degrees) {
-                    extent[index] = degrees.toFixed(6);
-                });
-                var wkt =
-                    "POLYGON((" +
-                    extent[0] +
-                    " " +
-                    extent[1] +
-                    "," +
-                    extent[2] +
-                    " " +
-                    extent[1] +
-                    "," +
-                    extent[2] +
-                    " " +
-                    extent[3] +
-                    "," +
-                    extent[0] +
-                    " " +
-                    extent[3] +
-                    "))";
-                searchString.spatial = wkt;
-            }
-
             var searchInput = $('#magicSearchInput').val();
             if (searchInput) {
                 searchString.mapSearch = searchInput;
-            } else if (vm.viewPortSpatial) {
-                [
-                    searchString.mapCenterX,
-                    searchString.mapCenterY
-                ] = mapService.getCenter();
-                searchString.mapZoom = mapService.getZoom();
             }
 
             if (mapService.getRotation() != 0) {

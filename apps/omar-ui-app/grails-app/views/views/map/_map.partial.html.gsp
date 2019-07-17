@@ -961,43 +961,25 @@
                                 <div class = "col-md-12">
                                     <div class = "input-group input-group-sm">
                                         <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Min</small></span>
-                                        </div>
-                                        <input focus-input
-                                               style = "text-align: center;"
-                                               type = "number"
-                                               placeholder = "0"
-                                               ng-disabled = "!reachback.imageryCheck"
-                                               ng-model = "reachback.predNiirsMin"
-                                               class = "form-control input-sm"
-                                               value = "{{reachback.predNiirsMin}}"
-                                               min = "0" max = "8.9" step = "0.1"
-                                               ng-change = "reachback.predNiirsCheck = (reachback.predNiirsMin === 0 && reachback.predNiirsMax === 9) ? false: true;"
-                                               ng-enter = "reachback.updateFilterString()"
-                                               ng-blur = "reachback.updateFilterString()">
-                                        <div class = "input-group-addon">
                                             <input
-                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.predNiirsCheck"
-                                                    ng-click = "reachback.updateFilterString()"
-                                                    ng-disabled = "!reachback.imageryCheck"
-                                                    ng-model = "reachback.predNiirsCheck"
-                                                    type = "checkbox">
+                                                ng-checked = "!reachback.imageryCheck ? false : reachback.predNiirsCheck"
+                                                ng-click = "reachback.updateFilterString()"
+                                                ng-disabled = "!reachback.imageryCheck"
+                                                ng-model = "reachback.predNiirsCheck"
+                                                type = "checkbox">
                                         </div>
                                         <input focus-input
-                                               style = "text-align: center;"
-                                               type = "number"
-                                               placeholder = "9"
-                                               ng-disabled = "!reachback.imageryCheck"
-                                               ng-model = "reachback.predNiirsMax"
-                                               class = "form-control input-sm"
-                                               value = "{{reachback.predNiirsMax}}"
-                                               min = "0.1" max = "9" step = "0.1"
-                                               ng-change = "reachback.predNiirsCheck = (reachback.predNiirsMin === 0 && reachback.predNiirsMax === 9) ? false: true;"
-                                               ng-enter = "reachback.updateFilterString()"
-                                               ng-blur = "reachback.updateFilterString()">
-                                        <div class = "input-group-addon">
-                                            <span style = "font-family: monospace;"><small>Max</small></span>
-                                        </div>
+                                           style = "text-align: center;"
+                                           type = "number"
+                                           placeholder = "0"
+                                           ng-disabled = "!reachback.imageryCheck"
+                                           ng-model = "reachback.predNiirsMin"
+                                           class = "form-control input-sm"
+                                           value = "{{reachback.predNiirsMin}}"
+                                           min = "0" max = "8.9" step = "0.1"
+                                           ng-change = "reachback.predNiirsCheck = (reachback.predNiirsMin === 0) ? false: true;"
+                                           ng-enter = "reachback.updateFilterString()"
+                                           ng-blur = "reachback.updateFilterString()">
                                     </div>
                                 </div>
                             </div>
@@ -1007,23 +989,31 @@
                             <div class = "row">
                                 <div class = "col-md-12">
                                     <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
+                                        <div class = "input-group-addon">
                                             <input
-                                                    ng-change = "reachback.updateFilterString()"
-                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.imageIdCheck"
+                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.predMaxCheck"
+                                                    ng-click = "reachback.updateFilterString()"
                                                     ng-disabled = "!reachback.imageryCheck"
-                                                    ng-model = "reachback.imageIdCheck"
+                                                    ng-model = "reachback.predMaxCheck"
                                                     type = "checkbox">
-                                        </span>
+                                        </div>
                                         <input focus-input
+                                               style = "text-align: center;"
+                                               type = "number"
+                                               placeholder = "0"
                                                ng-disabled = "!reachback.imageryCheck"
-                                               ng-model = "reachback.imageId"
+                                               ng-model = "reachback.predMaxResults"
+                                               class = "form-control input-sm"
+                                               value = "{{reachback.predMaxResults}}"
+                                               min = "0" max = "100" step = "10"
+                                               ng-change = "reachback.predMaxCheck = (reachback.predMaxResults === 0) ? false: true;"
                                                ng-enter = "reachback.updateFilterString()"
-                                               ng-blur = "reachback.updateFilterString()"
-                                               ng-change = "reachback.imageIdCheck = filter.imageId === '' ? false: true;"
-                                               class = "form-control"
-                                               placeholder = "Max Results"
-                                               value = "reachback.imageId">
+                                               ng-blur = "reachback.updateFilterString()">
+                                        <script>
+                                            function changeMaxResults() {
+
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -1678,38 +1668,35 @@
 
             <!-- Reachback Panel -->
             <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer" >
-                <div class = "Results-tab-heading" ng-controller = "ReachbackController as reachback">
-                    <button onmouseover="hover(0)" onmouseout="revert(0)" onclick="setClicked(0,1)" ng-click = "reachback.switchPanel(false, 0)"> Cards list </button>
-                    <button onmouseover="hover(1)" onmouseout="revert(1)" onclick="setClicked(1,0)" ng-click = "reachback.switchPanel(true, 1)"> Reachback </button>
-
+                <div class = "Results-tab-heading">
+                    <button id="button0" class = "reachbackTabButton" onclick="addClickClass(0,1); switchPanel(false, 0)"> Cards list </button>
+                    <button id="button1" class = "reachbackTabButton" onclick="addClickClass(1,0); switchPanel(true, 1)"> JSON </button>
                     <script>
-                        var tabButtons = document.querySelectorAll(".ResultsPane .Results-tab-heading button");
-                        var clicked = [2];
-                        clicked[0] = true;
-                        clicked[1] = false;
-
-                        function hover(index) {
-                            if (clicked[index] == false) {
-                                console.log("DID HOVER FUNCTION");
-                                tabButtons[index].style.background = "linear-gradient(to bottom, #3C3F44 0%, #3C3F44 100%)";
-                                tabButtons[index].style.borderColor = "#404348";
-                            }
+                        let tabButtons = document.querySelectorAll(".ResultsPane .Results-tab-heading button");
+                        function addClickClass(index, index1) {
+                            let button = '#button' + index.toString();
+                            $( button ).removeClass();
+                            $( button ).addClass("reachbackTabButtonClicked");
+                            revert(index1);
                         }
 
                         function revert(index) {
-                            if (clicked[index] == false) {
-                                tabButtons[index].style.background = "linear-gradient(to bottom, #474A4F 0%, #3C3F44 100%)";
-                                tabButtons[index].style.borderColor = "#474A4F";
-                            }
+                            let button = '#button' + index.toString();
+                            $( button ).removeClass("reachbackTabButtonClicked");
+                            $( button ).addClass("reachbackTabButton");
                         }
 
-                        function setClicked(index, other) {
-                            if (clicked[index] == false) {
-                                clicked[index] = true;
-                                clicked[other] = false;
+                        // Show either the reachback panel, or the cards list
+                        function switchPanel(value, index) {
+                            value == true ? $( '.reachbackPanel' ).show() : $( '.reachbackPanel' ).hide();
+                            if (value) {
+                                $('.cardsPanel').hide();
+                                $('.reachbackPanel').show();
+                            } else {
+                                $('.cardsPanel').show();
+                                $('.reachbackPanel').hide();
                             }
                         }
-
                     </script>
                 </div>
 
@@ -1858,18 +1845,16 @@
                     </nav>
 
 
-                    <div id="list" style="border-style: solid; border-width: 1px; max-height: 55%; padding: 10px; border-radius: 4px;">
+                    <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
                         <div ng-show="list.wfsData.length >= 0">
                             <div>
-                                <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your search filters</strong></h4></span>
+                                <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your reachback filters</strong></h4></span>
                                 <span class="text-info"><h4 >Check the dates</h4></span>
-                                <p>Make sure you provide valid dates for the query.  Also, make sure you are searching for the appropriate date type (acquisition versus ingest).</p>
+                                <p>Make sure you provide valid dates for the query.</p>
                                 <span class="text-info"><h4>Check the spelling</h4></span>
                                 <p>It is possible that one of the Keyword filters has a spelling error.</p>
                                 <span class="text-info"><h4>Check range values</h4></span>
                                 <p>Make sure that the range values you have submitted are valid for those attributes.</p>
-                                <span class="text-info"><h4 class="text-info">Check your map extent</h4></span>
-                                <p>The map extent is also a filter for the images.  Make sure the map is zoomed out to an appropriate extent for your search.</p>
                             </div>
                         </div>
                     </div>

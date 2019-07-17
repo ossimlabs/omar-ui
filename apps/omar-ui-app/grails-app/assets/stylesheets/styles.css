@@ -34,7 +34,7 @@ body {
 .ResultsPane {
   /*background-color: black;*/
   max-height: 80%;
-  min-height: 80%;
+  min-height: 60%;
   background: linear-gradient(to bottom, #101010 0%, #16191E 34px, #474A4F 35px, #272B2E 35px, #272B2E 100%);
   padding-left: 10px;
   padding-right: 10px;
@@ -42,7 +42,7 @@ body {
   border-color: #474A4F;
   border-radius: 5px;
   border-width: 1px;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
 }
 
 .Results-tab-heading {
@@ -53,7 +53,7 @@ body {
   margin-bottom: 14px;
 }
 
-.Results-tab-heading button {
+.reachbackTabButton {
   width: 30%;
   min-height: 28px !important;
   color: #C4C8C9;
@@ -67,11 +67,32 @@ body {
   border-top-right-radius: 8px;
 }
 
-.Results-tab-heading button:focus {
+.reachbackTabButton:hover {
+  color: #FEFFFF;
+  background: linear-gradient(to bottom, #3C3F44 0%, #3C3F44 100%);
+  border-color: #404348;
+}
+
+.reachbackTabButton:focus {
   outline: none !important;
+}
+
+.reachbackTabButtonClicked {
+  width: 30%;
+  min-height: 28px !important;
   color: #FEFFFF;
   background: linear-gradient(to bottom, #272B2E 0%, #272B2E 100%);
+  border-style: solid;
   border-color: #272B2E;
+  border-width: 1px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.reachbackTabButtonClicked:focus {
+  outline: none !important;
 }
 
 .reachbackPanel {

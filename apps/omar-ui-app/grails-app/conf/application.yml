@@ -188,6 +188,9 @@ omar:
     # if you would like to differentiate things on a specific zoom level, set it here
     zoomFilterChangeLevel: 10
 
+# If true, the reachback tab and panel will be displayed and accessible.
+reachbackServiceEnabled: true
+
 securityClassification:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.
   # For example, if you wanted white banners you can set the value to "#FFFFFF" and if you wanted red you can also use the value "#FF0000".

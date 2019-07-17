@@ -408,15 +408,15 @@
         ];
 
         // Strings of dates for constructing the duration, available for user selection
-        var dateToday = moment().format("MM-DD-YYYY 00:00+0000");
-        var dateTodayEnd = moment().format("MM-DD-YYYY 23:59+0000");
-        var dateYesterday = moment().subtract(1, "days").format("MM-DD-YYYY 00:00+0000");
-        var dateYesterdayEnd = moment().subtract(1, "days").format("MM-DD-YYYY 23:59+0000");
-        var dateLast3Days = moment().subtract(2, "days").format("MM-DD-YYYY 00:00+0000");
-        var dateLast7Days = moment().subtract(7, "days").format("MM-DD-YYYY 00:00+0000");
-        var dateThisMonth = moment().subtract(1, "months").format("MM-DD-YYYY 00:00+0000");
-        var dateLast3Months = moment().subtract(3, "months").format("MM-DD-YYYY 00:00+0000");
-        var dateLast6Months = moment().subtract(6, "months").format("MM-DD-YYYY 00:00+0000");
+        var dateToday = moment().format("YYYY-MM-DD") + 'T00:00:00';
+        var dateTodayEnd = moment().format("YYYY-MM-DD") + 'T23:59:00';
+        var dateYesterday = moment().subtract(1, "days").format("YYYY-MM-DD")+ 'T00:00:00';
+        var dateYesterdayEnd = moment().subtract(1, "days").format("YYYY-MM-DD") + 'T23:59:00';
+        var dateLast3Days = moment().subtract(2, "days").format("YYYY-MM-DD") + 'T00:00:00';
+        var dateLast7Days = moment().subtract(7, "days").format("YYYY-MM-DD") + 'T00:00:00';
+        var dateThisMonth = moment().subtract(1, "months").format("YYYY-MM-DD") + 'T00:00:00';
+        var dateLast3Months = moment().subtract(3, "months").format("YYYY-MM-DD") + 'T00:00:00';
+        var dateLast6Months = moment().subtract(6, "months").format("YYYY-MM-DD") + 'T00:00:00';
 
         // The durations available to be selected by the user
         vm.temporalDurations = [
@@ -491,11 +491,11 @@
         };
 
         vm.getCustomStartDate = function () {
-            return moment(vm.startDate).format("MM-DD-YYYY HH:mm:ss+0000");
+            return moment(vm.startDate).format("YYYY_MM_DD") + 'T' +  moment(vm.startDate).format("HH:mm:ss");
         };
 
         vm.getCustomEndDate = function () {
-            return moment(vm.endDate).format("MM-DD-YYYY HH:mm:ss+0000");
+            return moment(vm.endDate).format("YYYY_MM_DD") + 'T' + moment(vm.endDate).format("HH:mm:ss");
         };
 
         vm.updateFilterString = function () {
@@ -511,35 +511,24 @@
                 case "customDateRange":
                     vm.maxEndDate = new Date();
                     vm.customDateRangeVisible = true;
-                    filterArray.push(dbName + " >= '" + vm.getCustomStartDate() + "' AND " + dbName + " <= '" + vm.getCustomEndDate() + "'");
+                    filterArray.push('startDate=' + vm.getCustomStartDate() + '&endDate=' + vm.getCustomEndDate());
                     break;
                 default:
                     vm.customDateRangeVisible = false;
-                    filterArray.push(dbName + " >= '" + temporalParam.fromDate + "' AND " + dbName + " <= '" + temporalParam.toDate + "'");
+                    filterArray.push('startDate=' + temporalParam.fromDate + '&endDate=' + temporalParam.toDate);
                     break;
             }
 
             function pushKeywordToArray(dbName, formField) {
                 var clause = "";
-                if (
-                    dbName === "sensor_id"
-                ) {
+                if ( dbName === "sensors" ) {
                     var clauses = [];
                     $.each(formField, function (index, value) {
-                        clauses.push(dbName + " LIKE '%" + value.trim() + "%'");
+                        clauses.push(dbName + "=" + value.trim());
                     });
-                    clause = "(" + clauses.join(" OR ") + ")";
+                    clause = clauses.join(" OR ");
                 } else {
-                    clause = [dbName + " LIKE '%", formField.trim(), "%'"].join("");
-                }
-
-                var placemarksConfig = AppO2.APP_CONFIG.params.misc.placemarks;
-                if (dbName === "be_number" && placemarksConfig) {
-                    var subClause = clause.replace("be_number", placemarksConfig.columnName);
-                    subClause = subClause.split("'").join("''");
-
-                    clause = "(" + clause + " or intersects(ground_geom, collectGeometries(queryCollection('" +
-                        placemarksConfig.tableName + "', '" + placemarksConfig.geomName + "', '" + subClause + "'))))";
+                    clause = [dbName + "=", formField.trim()].join("");
                 }
 
                 filterArray.push(clause);
@@ -552,7 +541,7 @@
             }
 
             if (vm.sensorIdCheck && vm.sensorId.length != 0) {
-                pushKeywordToArray("sensor_id", vm.sensorId.split(','));
+                pushKeywordToArray("sensors", vm.sensorId.split(','));
             } else if (vm.sensorId.length === 0) {
                 vm.sensorIdCheck = false;
             }
@@ -597,8 +586,10 @@
                 }
             }
 
-            filterString = filterArray.join(" AND ");
-            wfsService.updateAttrFilter(filterString);
+            filterString = filterArray.join("&");
+
+            // Commented this out until we figure out if we can add cards lists for reachback
+            // wfsService.updateAttrFilter(filterString);
 
             vm.getReachbackJSON(filterString);
 
@@ -609,9 +600,7 @@
         // to append/replace the current text area child with the json data
         vm.getReachbackJSON = function(filter) {
             let reachbackSearchUrl = reachbackUrl + filter;
-
             let json_string = [];
-
             let json_object = $.ajax({
                 url: reachbackSearchUrl,
                 dataType: 'json',
@@ -619,7 +608,7 @@
                     $.each( json_object.responseJSON, function( index, json_obj ) {
                         json_string.push( JSON.stringify(json_obj, null, 4) );
                     });
-                    vm.populateReachbackTextArea(filter, json_string);
+                    vm.populateReachbackTextArea(json_string);
                 }
             });
         }
@@ -627,7 +616,6 @@
         // Takes in a json formatted string and adds a new child if none
         // is present, otherwise, it replaces the current text area child.
         vm.populateReachbackTextArea = function(json_string) {
-
             let textNode = document.createTextNode(json_string);
             let parent = document.getElementById("reachbackJSON");
 

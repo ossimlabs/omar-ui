@@ -23,6 +23,7 @@ logging:
 
 omar:
   app:
+    # If true, the reachback tab and panel will be displayed and accessible.
     footprints:
       imageFootprints:
         format: image/gif
@@ -187,9 +188,6 @@ omar:
     #       visible: false
     # if you would like to differentiate things on a specific zoom level, set it here
     zoomFilterChangeLevel: 10
-
-# If true, the reachback tab and panel will be displayed and accessible.
-reachbackServiceEnabled: true
 
 securityClassification:
   # Can be named values such as "red", "green", "yellow" , ... etc. or you can specify an exact color using the CSS styling format.

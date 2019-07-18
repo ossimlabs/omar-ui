@@ -880,32 +880,6 @@
                                 <div class = "col-md-12" style = "text-align: center"><h4>Keyword Filters</h4></div>
                             </div>
                             <div class = "row">
-                                <div class = "col-md-12">Image</div>
-                            </div>
-                            <div class = "row">
-                                <div class = "col-md-12">
-                                    <div class = "input-group input-group-sm">
-                                        <span class = "input-group-addon">
-                                            <input
-                                                    ng-change = "reachback.updateFilterString()"
-                                                    ng-checked = "!reachback.imageryCheck ? false : reachback.imageIdCheck"
-                                                    ng-disabled = "!reachback.imageryCheck"
-                                                    ng-model = "reachback.imageIdCheck"
-                                                    type = "checkbox">
-                                        </span>
-                                        <input focus-input
-                                               ng-disabled = "!reachback.imageryCheck"
-                                               ng-model = "reachback.imageId"
-                                               ng-enter = "reachback.updateFilterString()"
-                                               ng-blur = "reachback.updateFilterString()"
-                                               ng-change = "reachback.imageIdCheck = reachback.imageId === '' ? false: true;"
-                                               class = "form-control"
-                                               placeholder = "Image ID"
-                                               value = "reachback.imageId">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class = "row">
                                 <div class = "col-md-12">Sensor</div>
                             </div>
                             <div class = "row">
@@ -944,17 +918,6 @@
                                 <div class = "col-md-6">
                                     NIIRS
                                     <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 9"></i>
-                                </div>
-                                <div align = "right" class = "col-md-6">
-                                    <input
-                                            class = "form-check-input"
-                                            type = "checkbox"
-                                            ng-checked = "!reachback.imageryCheck ? false : reachback.predNiirsCheckNull"
-                                            ng-disabled = "!reachback.predNiirsCheck || !reachback.imageryCheck"
-                                            ng-model = "reachback.predNiirsCheckNull"
-                                            ng-click = "reachback.updateFilterString()">
-                                    <label class = "form-check-label range-include-unknown-label" for = "predNiirsCheckNull">UNK</label>
-                                    <i class =  "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values ih the NIIRS metadata field"></i>
                                 </div>
                             </div>
                             <div class = "row">
@@ -1086,7 +1049,7 @@
                         </div>
                     </div>
                     <div class = "row">
-                        <div class = "col-md-12" style = "text-align: center">
+                        <div class = "col-md-12" style = "text-align: center; padding: 12px">
                             <button class = "btn btn-default btn-sm" ng-click = "reachback.clearFilters()">Clear Filters</button>
                         </div>
                     </div>
@@ -1855,7 +1818,7 @@
                     </div>
                 </div>
 
-                <textarea id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
+                <textarea disable id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
             </div>
         </div>
 

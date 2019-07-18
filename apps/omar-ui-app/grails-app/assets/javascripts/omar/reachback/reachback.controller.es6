@@ -447,17 +447,13 @@
                     filterArray.push(dbName + " >= " + min + " AND " + dbName + " <= " + max);
                 }
             }
+
+            // Ranges
             if (vm.predMaxCheck && vm.predMaxFeatures > 0)
                 filterArray.push("maxFeatures=" + vm.predMaxFeatures);
 
-            // Ranges
-            if (vm.predNiirsCheck) {
-                if (vm.predNiirsCheckNull) {
-                    pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax, true);
-                } else {
-                    pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
-                }
-            }
+            if (vm.predNiirsCheck)
+                pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
 
             filterString = filterArray.join("&");
 
@@ -492,7 +488,6 @@
         // Takes in a json formatted string and adds a new child if none
         // is present, otherwise, it replaces the current text area child.
         vm.populateReachbackTextArea = function(json_string) {
-
             let textNode;
 
             if (vm.predMaxCheck)
@@ -501,11 +496,7 @@
                 textNode = document.createTextNode("");
 
             let parent = document.getElementById("reachbackJSON");
-
-            if (parent.firstChild === null)
-                parent.appendChild(textNode);
-            else
-                parent.replaceChild(textNode, parent.firstChild);
+            parent.value = json_string;
         }
 
         vm.initKeywords();

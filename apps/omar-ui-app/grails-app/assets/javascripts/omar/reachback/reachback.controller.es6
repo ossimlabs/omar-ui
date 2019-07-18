@@ -460,12 +460,13 @@
 
         // Takes in a json formatted string and adds a new child if none
         // is present, otherwise, it replaces the current text area child.
-        vm.populateReachbackTextArea = function(json_string) {
-            let length = json_string.length;
+        vm.populateReachbackTextArea = function(json_strings) {
+            let length = json_strings.length;
+            var json_string = json_strings.join(",\n");
             let parent = document.getElementById("reachbackJSON");
             parent.value = json_string;
             let json_info = document.getElementById('JSONInfo');
-            json_info.innerText = length > 1 ? "Showing " + json_string.length + " results" : "Showing " + json_string.length + " result";
+            json_info.innerText = length > 1 ? "Showing " + length + " results" : "Showing " + length + " result";
         }
 
         vm.initKeywords();

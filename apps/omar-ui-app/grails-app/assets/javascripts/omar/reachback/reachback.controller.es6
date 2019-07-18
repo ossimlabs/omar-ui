@@ -390,10 +390,8 @@
                 vm.sensorIdCheck = false;
             }
 
-            function pushRangeToArray(dbName, formFieldMin, formFieldMax, showNull) {
-                let min, max, clause;
-                min = parseFloat(formFieldMin);
-                max = parseFloat(formFieldMax);
+            function pushRangeToArray(dbName, formFieldValue) {
+                let val = parseFloat(formFieldValue);
 
                 /**
                  * Check to see if the user has exceeded the min or max ranges of the
@@ -406,27 +404,20 @@
                     extendedTimeOut: 5000,
                     target: "body"
                 };
-                if (isNaN(min)) {
-                    toastr.error(`Please check the allowable ranges, and enter a valid minimum value for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions);
+                if (isNaN(val)) {
+                    toastr.error(`Please check the allowable ranges, and enter a valid value for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions);
                     return;
-                } else if (isNaN(max)) {
-                    toastr.error(`Please check the allowable ranges, and enter a valid maximum value for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions);
-                } else if (min > max) {
-                    toastr.error(`Please make sure the minimum is less than the maximum for the ${dbName.toUpperCase()} range filter.`, 'Error', toastErrorOptions);
-                } else if (showNull === true) {
-                    clause = `(( ${dbName} >= ${min} AND ${dbName} <= ${max} ) OR ${dbName} IS NULL)`;
-                    filterArray.push(clause);
                 } else {
-                    filterArray.push(dbName + " >= " + min + " AND " + dbName + " <= " + max);
+                    filterArray.push(dbName + "=" + val);
                 }
             }
 
             // Ranges
             if (vm.predMaxCheck && vm.predMaxFeatures > 0)
-                filterArray.push("maxFeatures=" + vm.predMaxFeatures);
+                pushRangeToArray("maxFeatures", vm.predMaxFeatures);
 
             if (vm.predNiirsCheck)
-                pushRangeToArray("niirs", vm.predNiirsMin, vm.predNiirsMax);
+                pushRangeToArray("niirs", vm.predNiirsMin);
 
             filterString = filterArray.join("&");
 
@@ -445,6 +436,7 @@
         // to append/replace the current text area child with the json data
         vm.getReachbackJSON = function(filter) {
             let reachbackSearchUrl = reachbackUrl + filter;
+            console.log("Url: " + reachbackSearchUrl);
             let json_string = [];
             let json_object = $.ajax({
                 url: reachbackSearchUrl,

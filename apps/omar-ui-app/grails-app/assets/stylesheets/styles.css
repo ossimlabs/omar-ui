@@ -100,7 +100,7 @@ body {
   outline: none;
   border-style: solid;
   border-color: #F0F0F0;
-  min-height: 70%;
+  min-height: 60%;
   min-width: 100%;
   border-width: 1px;
   margin-top: 10px;
@@ -109,6 +109,10 @@ body {
   white-space: nowrap;
   color: #F0F0F0;
   background: transparent;
+}
+
+.resultsInfo {
+  margin-bottom: -10px;
 }
 
 .navbar {

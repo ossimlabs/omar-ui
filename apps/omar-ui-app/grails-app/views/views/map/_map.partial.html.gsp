@@ -917,7 +917,7 @@
                             <div class = "row">
                                 <div class = "col-md-6">
                                     NIIRS
-                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range 0 to 9"></i>
+                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid value 0 to 9"></i>
                                 </div>
                             </div>
                             <div class = "row">
@@ -947,7 +947,10 @@
                                 </div>
                             </div>
                             <div class = "row">
-                                <div class = "col-md-6">Max Results</div>
+                                <div class = "col-md-6">
+                                    Max Results
+                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid value 0 to 100"></i>
+                                </div>
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
@@ -1646,13 +1649,12 @@
 
                         // Show either the reachback panel, or the cards list
                         function switchPanel(value, index) {
-                            value == true ? $( '.reachbackPanel' ).show() : $( '.reachbackPanel' ).hide();
                             if (value) {
                                 $('.cardsPanel').hide();
-                                $('.reachbackPanel').show();
+                                $('.JSONPanel').show();
                             } else {
                                 $('.cardsPanel').show();
-                                $('.reachbackPanel').hide();
+                                $('.JSONPanel').hide();
                             }
                         }
                     </script>
@@ -1804,7 +1806,7 @@
 
 
                     <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
-                        <div ng-show="list.wfsData.length >= 0">
+                        <div ng-show="true">
                             <div>
                                 <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your reachback filters</strong></h4></span>
                                 <span class="text-info"><h4 >Check the dates</h4></span>
@@ -1818,7 +1820,10 @@
                     </div>
                 </div>
 
-                <textarea disable id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
+                <div class = "JSONPanel">
+                    <div class="resultsInfo"><h4 id="JSONInfo">Showing results</h4></div>
+                    <textarea id="reachbackJSON" class="reachbackPanel" ng-controller = "ReachbackController as reachback"/>
+                </div>
             </div>
         </div>
 

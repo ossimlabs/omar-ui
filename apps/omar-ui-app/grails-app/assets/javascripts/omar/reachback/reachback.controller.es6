@@ -43,7 +43,7 @@
         }
 
         // Hide the reachback panel initially
-        $('.reachbackPanel').hide();
+        $('.JSONPanel').hide();
 
         // Initialise the cards panel to be selected
         $( '#button0' ).removeClass();
@@ -165,7 +165,6 @@
         vm.initDataTypes = function () {
             var types = [
                 { key: "imagery", urlParam: "imagery" },
-                { key: "video", urlParam: "video" }
             ];
             $.each(types, function (index, value) {
                 vm[value.key + "Check"] = vm.userPreferences[value.key + "Enabled"];
@@ -192,27 +191,6 @@
                     value = null;
                 }
                 vm[keyword.key] = value ? value : '';
-            });
-
-            var strings = [
-                { key: "beNumber", urlParam: "be" },
-                { key: "filename", urlParam: "filename" },
-                { key: "imageId", urlParam: "imageId" },
-                { key: "targetId", urlParam: "target" },
-                { key: "wacNumber", urlParam: "wac" }
-            ];
-            $.each(strings, function (index, keyword) {
-                vm[keyword.key + "Check"] =
-                    vm.userPreferences[keyword.urlParam + "Enabled"];
-                vm[keyword.key] = vm.userPreferences[keyword.urlParam];
-                if (vm.urlParams[keyword.urlParam]) {
-                    vm[keyword.key + "Check"] = true;
-                    vm[keyword.key] = vm.urlParams[keyword.urlParam];
-                }
-                if (reset) {
-                    vm[keyword.key + "Check"] = false;
-                    vm[keyword.key] = "";
-                }
             });
         };
 
@@ -406,11 +384,6 @@
             }
 
             // Keywords
-
-            if (vm.imageIdCheck && vm.imageId != undefined && vm.imageId != "" && vm.imageryCheck) {
-                pushKeywordToArray("title", vm.imageId.toUpperCase());
-            }
-
             if (vm.sensorIdCheck && vm.sensorId.length != 0) {
                 pushKeywordToArray("sensors", vm.sensorId.split(','));
             } else if (vm.sensorId.length === 0) {
@@ -488,15 +461,11 @@
         // Takes in a json formatted string and adds a new child if none
         // is present, otherwise, it replaces the current text area child.
         vm.populateReachbackTextArea = function(json_string) {
-            let textNode;
-
-            if (vm.predMaxCheck)
-                textNode = document.createTextNode(json_string);
-            else
-                textNode = document.createTextNode("");
-
+            let length = json_string.length;
             let parent = document.getElementById("reachbackJSON");
             parent.value = json_string;
+            let json_info = document.getElementById('JSONInfo');
+            json_info.innerText = length > 1 ? "Showing " + json_string.length + " results" : "Showing " + json_string.length + " result";
         }
 
         vm.initKeywords();
@@ -535,7 +504,6 @@
             var searchString = {};
 
             var keywords = [
-                { key: "imageId", urlParam: "imageId" },
                 { key: "sensorId", urlParam: "sensors" },
             ];
             $.each(keywords, function (index, keyword) {

@@ -63,6 +63,76 @@ function (
         });
     };
 
+    /**
+     * This block is for handling when a checkbox is pressed on
+     * and should not change the check value passed through to
+     * the following functions
+     */
+    let tempID = [false, false, false, false];
+    let same = [false, false, false, false];
+
+    vm.switchCheckDown = function(name) {
+        switch( name ) {
+            case "countrycode":
+                tempID[0] = vm.countryCodeCheck;
+                setTimeout(function() {
+                    same[0] = tempID[0] === vm.countryCodeCheck;
+                    tempID[0] = vm.countryCodeCheck; }, 10);
+                break;
+            case "mission":
+                tempID[1] = vm.missionIdCheck;
+                setTimeout(function() {
+                    same[1] = tempID[1] === vm.missionIdCheck;
+                    tempID[1] = vm.missionIdCheck; }, 10);
+                break;
+            case "product":
+                tempID[2] = vm.productIdCheck;
+                setTimeout(function() {
+                    same[2] = tempID[2] === vm.productIdCheck;
+                    tempID[2] = vm.productIdCheck; }, 10);
+                break;
+            case "sensor":
+                tempID[3] = vm.sensorIdCheck;
+                setTimeout(function() {
+                    same[3] = tempID[3] === vm.sensorIdCheck;
+                    tempID[3] = vm.sensorIdCheck; }, 10);
+                break;
+            default:
+                return;
+        }
+    }
+
+    vm.doUpdateOnNoChange = function(name) {
+        switch( name ) {
+            case "countrycode":
+                if (same[0] && vm.countryCode != '')
+                    vm.updateFilterString();
+                else
+                    vm.countryCodeCheck = tempID[0];
+                break;
+            case "mission":
+                if (same[1] && vm.missionId != '')
+                    vm.updateFilterString();
+                else
+                    vm.missionIdCheck = tempID[1];
+                break;
+            case "product":
+                if (same[2] && vm.productId != '')
+                    vm.updateFilterString();
+                else
+                    vm.productIdCheck = tempID[2];
+                break;
+            case "sensor":
+                if (same[3] && vm.sensorId != '')
+                    vm.updateFilterString();
+                else
+                    vm.sensorIdCheck = tempID[3];
+                break;
+            default:
+                return;
+        }
+    }
+
 
     /**
      * generates $scope.videoData = res.data

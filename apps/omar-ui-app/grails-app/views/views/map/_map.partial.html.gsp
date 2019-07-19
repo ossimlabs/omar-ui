@@ -149,7 +149,8 @@
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
                                             <input
-                                                    ng-change = "filter.updateFilterString()"
+                                                    ng-mousedown="filter.switchCheckDown('countrycode')"
+                                                    ng-change = "filter.doUpdateOnNoChange('countrycode')"
                                                     ng-checked = "!filter.imageryCheck ? false : filter.countryCodeCheck"
                                                     ng-disabled = "!filter.imageryCheck"
                                                     ng-model = "filter.countryCodeCheck"
@@ -227,7 +228,11 @@
                                 <div class = "col-md-12">
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
-                                            <input ng-change = "filter.updateFilterString()" ng-model = "filter.missionIdCheck" type="checkbox">
+                                            <input
+                                                    ng-mousedown="filter.switchCheckDown('mission')"
+                                                    ng-change = "filter.doUpdateOnNoChange('mission')"
+                                                    ng-model = "filter.missionIdCheck"
+                                                    type="checkbox">
                                         </span>
                                         <input
                                                 class = "form-control"
@@ -252,7 +257,8 @@
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
                                             <input
-                                                    ng-change="filter.updateFilterString()"
+                                                    ng-mousedown="filter.switchCheckDown('product')"
+                                                    ng-change = "filter.doUpdateOnNoChange('product')"
                                                     ng-disabled = "!filter.imageryCheck"
                                                     ng-model="filter.productIdCheck"
                                                     type="checkbox">
@@ -282,7 +288,8 @@
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
                                             <input
-                                                    ng-change = "filter.updateFilterString()"
+                                                    ng-mousedown="filter.switchCheckDown('sensor')"
+                                                    ng-change = "filter.doUpdateOnNoChange('sensor')"
                                                     ng-model = "filter.sensorIdCheck"
                                                     type = "checkbox">
                                         </span>

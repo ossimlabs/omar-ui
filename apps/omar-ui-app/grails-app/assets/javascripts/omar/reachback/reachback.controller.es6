@@ -37,6 +37,23 @@ angular
                 }, 10);
             }
 
+            let sensorIDTemp = false;
+            let sensorSame = false;
+
+            vm.switchCheckDown = function() {
+                sensorIDTemp = vm.sensorIdCheck;
+                setTimeout(function() {
+                    sensorSame = sensorIDTemp === vm.sensorIdCheck;
+                    sensorIDTemp = vm.sensorIdCheck; }, 10);
+            }
+
+            vm.doUpdateOnNoChange = function() {
+                if (sensorSame && vm.sensorId != '')
+                    vm.updateFilterString();
+                else
+                    vm.sensorIdCheck = sensorIDTemp;
+            }
+
             // Hide the reachback panel initially
             $('.JSONPanel').hide();
 
@@ -240,6 +257,7 @@ angular
             };
 
             vm.updateFilterString = function () {
+                console.log("Called updateFilterString()");
                 filterArray = [];
                 let temporalParam = vm.currentTemporalDuration;
 
@@ -276,7 +294,6 @@ angular
 
                 // Keywords
                 if (vm.sensorIdCheck && vm.sensorId.length != 0) {
-                    console.log("changing sensor value");
                     pushKeywordToArray("sensors", vm.sensorId.split(','));
                 } else if (vm.sensorId.length === 0) {
                     vm.sensorIdCheck = false;
@@ -328,7 +345,6 @@ angular
             // to append/replace the current text area child with the json data
             vm.getReachbackJSON = function(filter) {
                 let reachbackSearchUrl = reachbackUrl + filter;
-                console.log("Url: " + reachbackSearchUrl);
                 let json_string = [];
                 let json_object = $.ajax({
                     url: reachbackSearchUrl,

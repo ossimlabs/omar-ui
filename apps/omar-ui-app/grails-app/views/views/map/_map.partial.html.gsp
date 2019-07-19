@@ -863,19 +863,19 @@
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
                                             <input
-                                                    ng-change = "reachback.updateFilterString()"
-                                                    ng-model = "reachback.sensorIdCheck"
-                                                    type = "checkbox">
+                                                ng-mousedown="reachback.switchCheckDown()"
+                                                ng-change = "reachback.doUpdateOnNoChange()"
+                                                ng-model = "reachback.sensorIdCheck"
+                                                type = "checkbox">
                                         </span>
                                         <input
-                                                class = "form-control"
-                                                id = "sensorIdInput"
-                                                list = "sensorIdList"
-                                                ng-blur = "reachback.sensorIdCheck = reachback.sensorId === '' ? false : true; reachback.updateFilterString()"
-                                                ng-change = "reachback.handleDataList( 'sensorIdInput' )"
-                                                ng-keyup = "reachback.handleDataList( 'sensorIdInput' )"
-                                                ng-model = "reachback.sensorId"
-                                                placeholder = "Sensor ID">
+                                            class = "form-control"
+                                            list = "sensorIdList"
+                                            ng-blur = "reachback.sensorIdCheck = reachback.sensorId === '' ? false : true; reachback.updateFilterString();"
+                                            ng-change = "reachback.handleDataList( 'sensorIdInput' )"
+                                            ng-keyup = "reachback.handleDataList( 'sensorIdInput' )"
+                                            ng-model = "reachback.sensorId"
+                                            placeholder = "Sensor ID">
                                         <datalist id = "sensorIdList">
                                             <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
                                         </datalist>

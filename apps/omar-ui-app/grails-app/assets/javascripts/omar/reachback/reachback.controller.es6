@@ -23,14 +23,14 @@ angular
         ) {
 
             // Reachback URL for retrieving json data from reachback
-            var reachbackUrl = 'https://omar-dev.ossim.io/omar-reachback/index/search?';
+            let reachbackUrl = 'https://omar-dev.ossim.io/omar-reachback/index/search?';
 
             /* jshint validthis: true */
-            var vm = this;
+            let vm = this;
             vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
             vm.urlParams = $stateParams;
 
-            var mapVisibility = vm.urlParams.mapVisibility == "true" || vm.userPreferences.mapVisibility;
+            let mapVisibility = vm.urlParams.mapVisibility == "true" || vm.userPreferences.mapVisibility;
             if (!mapVisibility && !vm.urlParams.mapSearch) {
                 setTimeout(function () {
                     $("a:contains('Filters')").trigger("click");
@@ -51,119 +51,16 @@ angular
                 vm.refreshSpin = true;
             };
 
-            $scope.$on("wfs: updated", function (event, data) {
-                // Update the DOM (card list) with the data
-                $scope.$apply(function () {
-                    vm.wfsData = data;
-                    $("#list").animate(
-                        {
-                            scrollTop: 0
-                        },
-                        "fast"
-                    );
-                    vm.refreshSpin = false;
-                });
-            });
-
-            $scope.$on("wfs features: updated", function (event, features) {
-                // Update the total feature count
-                $scope.$apply(function () {
-                    vm.wfsFeatures = features;
-                    if (features != undefined) {
-                        vm.wfsFeaturesTotalPaginationCount = Math.min(
-                            1000,
-                            vm.wfsFeatures
-                        );
-                    }
-                    $window.document.activeElement.blur();
-                    // add a comma in-between every set of three numbers
-                    vm.totalWfsFeatures = features
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                });
-            });
-
-            var stagerBaseUrl, stagerContextPath, stagerRequestUrl;
-
-            function setfilterControllerUrlProps() {
-                stagerBaseUrl = stateService.omarSitesState.url.base;
-                stagerContextPath = stateService.omarSitesState.url.stagerContextPath;
-                stagerRequestUrl =
-                    stagerBaseUrl +
-                    stagerContextPath +
-                    "/dataManager/getDistinctValues?property=";
-
-                $.each(
-                    ['sensorId'],
-                    function (index, value) {
-                        getDistinctValues(value);
-                    }
-                );
-            }
-
-            $scope.$on("omarSitesState.updated", function (event, params) {
-                setfilterControllerUrlProps();
-            });
-
-            var filterString = "";
-            var filterArray = [];
-
-            function getDistinctValues(property) {
-                $scope[property + 'Types'] = [];
-
-                var url = stagerRequestUrl + property;
-                $http({
-                    method: 'GET',
-                    url: url
-                }).then(function (response) {
-                    $scope[property + 'Types'] = response.data;
-                });
-            };
-
-            vm.handleDataList = function (inputId) {
-                var inputElement = $('#' + inputId);
-
-                var dataList = inputElement.next();
-                var options = inputElement.attr("data-options");
-                // if there are no options, store them
-                if (!options) {
-                    var optionsArray = [];
-                    $.each(dataList[0].options, function (index, option) {
-                        optionsArray.push($(option).val());
-                    });
-                    inputElement.attr("data-options", optionsArray.join(','));
-                }
-                else {
-                    options = options.split(',');
-                }
-
-
-                var prefix = '';
-                var userInput = inputElement.val().replace(/^\s+|\s+$/g, '');
-                if (userInput != inputElement.val()) {
-                    var lastCommaIndex = userInput.lastIndexOf(',');
-                    if (lastCommaIndex != -1) {
-                        prefix = userInput.substr(0, lastCommaIndex) + ', ';
-                    }
-
-                    if (userInput.indexOf(',') > -1) {
-                        dataList.empty();
-                        $.each(options, function (index, option) {
-                            if (userInput.indexOf(option) < 0) {
-                                dataList.append('<option value="' + prefix + option + '">');
-                            }
-                        });
-                    }
-                }
-            }
+            let filterString = "";
+            let filterArray = [];
 
             vm.initDataTypes = function () {
-                var types = [
+                let types = [
                     { key: "imagery", urlParam: "imagery" },
                 ];
                 $.each(types, function (index, value) {
                     vm[value.key + "Check"] = vm.userPreferences[value.key + "Enabled"];
-                    var urlParam = vm.urlParams[value.urlParam];
+                    let urlParam = vm.urlParams[value.urlParam];
                     if (urlParam) {
                         vm[value.key + "Check"] = urlParam == "true";
                     }
@@ -171,12 +68,12 @@ angular
             }
 
             vm.initKeywords = function (reset) {
-                var arrays = [
+                let arrays = [
                     { key: "sensorId", urlParam: "sensors" },
                 ];
                 $.each(arrays, function (index, keyword) {
                     vm[keyword.key + "Check"] = vm.userPreferences[keyword.key + "Enabled"];
-                    var value = vm.userPreferences[keyword.key];
+                    let value = vm.userPreferences[keyword.key];
                     if (vm.urlParams[keyword.urlParam]) {
                         vm[keyword.key + "Check"] = true;
                         value = decodeURIComponent(vm.urlParams[keyword.urlParam]);
@@ -190,7 +87,7 @@ angular
             };
 
             vm.initRanges = function (reset) {
-                var ranges = [
+                let ranges = [
                     { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
                 ];
                 $.each(ranges, function (index, range) {
@@ -200,7 +97,7 @@ angular
                     vm[range.key + "Max"] = vm.userPreferences[range.urlParam + "Max"];
                     if (vm.urlParams[range.urlParam]) {
                         vm[range.key + "Check"] = true;
-                        var values = vm.urlParams[range.urlParam].split(":");
+                        let values = vm.urlParams[range.urlParam].split(":");
                         vm[range.key + "Min"] = values[0];
                         vm[range.key + "Max"] = values[1];
                     }
@@ -252,15 +149,15 @@ angular
             ];
 
             // Strings of dates for constructing the duration, available for user selection
-            var dateToday = moment().format("YYYY-MM-DD") + 'T00:00:00';
-            var dateTodayEnd = moment().format("YYYY-MM-DD") + 'T23:59:00';
-            var dateYesterday = moment().subtract(1, "days").format("YYYY-MM-DD")+ 'T00:00:00';
-            var dateYesterdayEnd = moment().subtract(1, "days").format("YYYY-MM-DD") + 'T23:59:00';
-            var dateLast3Days = moment().subtract(2, "days").format("YYYY-MM-DD") + 'T00:00:00';
-            var dateLast7Days = moment().subtract(7, "days").format("YYYY-MM-DD") + 'T00:00:00';
-            var dateThisMonth = moment().subtract(1, "months").format("YYYY-MM-DD") + 'T00:00:00';
-            var dateLast3Months = moment().subtract(3, "months").format("YYYY-MM-DD") + 'T00:00:00';
-            var dateLast6Months = moment().subtract(6, "months").format("YYYY-MM-DD") + 'T00:00:00';
+            let dateToday = moment().format("YYYY-MM-DD") + 'T00:00:00';
+            let dateTodayEnd = moment().format("YYYY-MM-DD") + 'T23:59:00';
+            let dateYesterday = moment().subtract(1, "days").format("YYYY-MM-DD")+ 'T00:00:00';
+            let dateYesterdayEnd = moment().subtract(1, "days").format("YYYY-MM-DD") + 'T23:59:00';
+            let dateLast3Days = moment().subtract(2, "days").format("YYYY-MM-DD") + 'T00:00:00';
+            let dateLast7Days = moment().subtract(7, "days").format("YYYY-MM-DD") + 'T00:00:00';
+            let dateThisMonth = moment().subtract(1, "months").format("YYYY-MM-DD") + 'T00:00:00';
+            let dateLast3Months = moment().subtract(3, "months").format("YYYY-MM-DD") + 'T00:00:00';
+            let dateLast6Months = moment().subtract(6, "months").format("YYYY-MM-DD") + 'T00:00:00';
 
             // The durations available to be selected by the user
             vm.temporalDurations = [
@@ -363,9 +260,9 @@ angular
                 }
 
                 function pushKeywordToArray(dbName, formField) {
-                    var clause = "";
+                    let clause = "";
                     if ( dbName === "sensors" ) {
-                        var clauses = [];
+                        let clauses = [];
                         $.each(formField, function (index, value) {
                             clauses.push(dbName + "=" + value.trim());
                         });
@@ -379,6 +276,7 @@ angular
 
                 // Keywords
                 if (vm.sensorIdCheck && vm.sensorId.length != 0) {
+                    console.log("changing sensor value");
                     pushKeywordToArray("sensors", vm.sensorId.split(','));
                 } else if (vm.sensorId.length === 0) {
                     vm.sensorIdCheck = false;
@@ -391,7 +289,7 @@ angular
                      * Check to see if the user has exceeded the min or max ranges of the
                      * current range filter
                      */
-                    var toastErrorOptions = {
+                    let toastErrorOptions = {
                         positionClass: "toast-bottom-left",
                         closeButton: true,
                         timeOut: 5000,
@@ -448,7 +346,7 @@ angular
             // is present, otherwise, it replaces the current text area child.
             vm.populateReachbackTextArea = function(json_strings) {
                 let length = json_strings.length;
-                var json_string = json_strings.join(",\n");
+                let json_string = json_strings.join(",\n");
                 let parent = document.getElementById("reachbackJSON");
                 parent.value = json_string;
                 let json_info = document.getElementById('JSONInfo');
@@ -478,86 +376,8 @@ angular
             };
 
             vm.closeFilterDropdown = function (e) {
-                var elem = "." + e;
-
+                let elem = "." + e;
                 $(elem).dropdown("toggle");
-            };
-
-            vm.loadSearch = function () {
-                window.open(AppO2.APP_CONFIG.contextPath + "/savedLink/list", "_blank");
-            };
-
-            vm.saveSearch = function () {
-                var searchString = {};
-
-                var keywords = [
-                    { key: "sensorId", urlParam: "sensors" },
-                ];
-                $.each(keywords, function (index, keyword) {
-                    if (vm[keyword.key + "Check"]) {
-                        var value = vm[keyword.key];
-                        searchString[keyword.urlParam] =
-                            typeof value == "object" ? value.join(",") : value;
-                    }
-                });
-
-                var ranges = [
-                    { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
-                ];
-                $.each(ranges, function (index, range) {
-                    if (vm[range.key + "Check"]) {
-                        var max, min;
-                        [max, min] = [range.max, range.min];
-                        if (max && min) {
-                            searchString[range.urlParam] =
-                                vm[range.key + "Min"] + ":" + vm[range.key + "Max"];
-                        } else if (max) {
-                            searchString[range.urlParam] = vm[range.key];
-                        }
-                    }
-                });
-
-                if (vm.currentTemporalDuration.value != "none") {
-                    searchString.dateType = vm.currentDateType.value;
-
-                    if (vm.currentTemporalDuration.value == "customDateRange") {
-                        searchString.endDate = vm.endDate.toJSON().replace(/[.].*$/, "");
-                        searchString.startDate = vm.startDate.toJSON().replace(/[.].*$/, "");
-                    } else {
-                        searchString.duration = vm.currentTemporalDuration.value;
-                    }
-                }
-
-                var searchInput = $('#magicSearchInput').val();
-                if (searchInput) {
-                    searchString.mapSearch = searchInput;
-                }
-
-                if (mapService.getRotation() != 0) {
-                    searchString.mapRotation = parseInt(
-                        (mapService.getRotation() * 180) / Math.PI
-                    );
-                }
-
-                var form = document.createElement("form");
-                form.action = AppO2.APP_CONFIG.contextPath + "/savedLink";
-                form.method = "post";
-                form.target = "_blank";
-                $("body").append(form);
-
-                var input = document.createElement("input");
-                input.type = "hidden";
-                input.name = "saveLink";
-                var url = document.location;
-                input.value =
-                    url.origin +
-                    url.pathname +
-                    url.hash.split("?")[0] +
-                    "?" +
-                    $.param(searchString);
-                form.appendChild(input);
-
-                form.submit();
             };
         }
     ]);

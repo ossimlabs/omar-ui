@@ -22,13 +22,16 @@ angular
             toastr
         ) {
 
-            // Reachback URL for retrieving json data from reachback
-            let reachbackUrl = 'https://omar-dev.ossim.io/omar-reachback/index/search?';
-
             /* jshint validthis: true */
             let vm = this;
             vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
             vm.urlParams = $stateParams;
+
+            // Reachback will be hidden if value is false in application.yml
+            vm.reachbackEnabled = AppO2.APP_CONFIG.params.reachbackEnabled;
+
+            // Reachback URL for retrieving json data from reachback
+            let reachbackUrl = AppO2.APP_CONFIG.params.reachbackUrl;
 
             let mapVisibility = vm.urlParams.mapVisibility == "true" || vm.userPreferences.mapVisibility;
             if (!mapVisibility && !vm.urlParams.mapSearch) {
@@ -257,7 +260,6 @@ angular
             };
 
             vm.updateFilterString = function () {
-                console.log("Called updateFilterString()");
                 filterArray = [];
                 let temporalParam = vm.currentTemporalDuration;
 

@@ -42,7 +42,7 @@
                         <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
                     <%-- Handle the reachback tab --%>
-                    <li role = "presentation">
+                    <li  ng-controller = "ReachbackController as reachback" ng-show="reachback.reachbackEnabled" role = "presentation">
                         <a data-toggle = "tab" onclick = "javascript: $( '#mapSearch' ).hide(); $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).show(); $( '#reachbackPanelContainer' ).show(); $( '#imageCardsPanel' ).hide()"  >Reachback</a>
                     </li>
                 </ul>

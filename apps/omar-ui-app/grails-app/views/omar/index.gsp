@@ -184,6 +184,7 @@
 
         var APP_CONFIG = ${raw( clientConfig.encodeAsJSON() as String )};
         APP_CONFIG.contextPath = "${ request.contextPath }";
+        APP_CONFIG.baseUrl = "${ request.contextPath }";
 
         return {
 

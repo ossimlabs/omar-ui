@@ -725,6 +725,7 @@ function (
         }
 
         filterString = filterArray.join( " AND " );
+      
         wfsService.updateAttrFilter( filterString );
     };
 

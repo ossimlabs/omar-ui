@@ -60,30 +60,6 @@
                     > Videos Only
                 </div>
 
-                <%--
-                <ul class = "nav navbar-nav col-md-4" style = "text-align: center">
-                    <form class = "navbar-form navbar-center">
-                        <div class = "input-group">
-                            <div class = "input-group-addon">
-                                <input
-                                    ng-change = "filter.updateFilterString()"
-                                    ng-model = "filter.imageryCheck"
-                                    type = "checkbox">
-                                <span>Imagery</span>
-                            </div>
-                        </div>
-                        <div class = "input-group">
-                            <div class = "input-group-addon">
-                                <input
-                                    ng-change = "filter.updateFilterString()"
-                                    ng-model = "filter.videoCheck"
-                                    type = "checkbox">
-                                <span>Video</span>
-                            </div>
-                        </div>
-                    </form>
-                </ul>
-                --%>
                 <ul class = "nav navbar-nav navbar-right col-md-4">
                     <li class = "dropdown pull-right" ng-controller = "ListController as list" ng-show = "list.showSitesSelect">
                         <a class = "dropdown-toggle" data-toggle = "dropdown">

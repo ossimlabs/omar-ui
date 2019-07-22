@@ -103,10 +103,9 @@ body {
   min-height: 60%;
   min-width: 100%;
   border-width: 1px;
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 10px;
   border-radius: 4px;
-  white-space: nowrap;
   color: #F0F0F0;
   background: transparent;
 }

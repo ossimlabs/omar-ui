@@ -1798,8 +1798,8 @@
                     </div>
 
                     <div class = "JSONPanel">
-                        <div class="resultsInfo"><h4 id="JSONInfo">Showing results</h4></div>
-                        <textarea id="reachbackJSON" class="reachbackPanel"/>
+                        <div class="resultsInfo"><h4 id="JSONInfo">Showing {{ reachbackResponse.length }} results</h4></div>
+                        <pre id="reachbackJSON" class="reachbackPanel"> {{ reachbackResponse | json }} </pre>
                     </div>
                 </div>
             </div>

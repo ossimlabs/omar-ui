@@ -330,28 +330,13 @@ angular
             // to append/replace the current text area child with the json data
             vm.getReachbackJSON = function(filter) {
                 let reachbackSearchUrl = reachbackUrl + filter;
-                let json_string = [];
-                let json_object = $.ajax({
+                $.ajax({
                     url: reachbackSearchUrl,
                     dataType: 'json',
                     success: function (json) {
-                        $.each(json_object.responseJSON, function (index, json_obj) {
-                            json_string.push(JSON.stringify(json_obj, null, 4));
-                        });
-                        vm.populateReachbackTextArea(json_string);
+                        vm.reachbackResponse = json;
                     }
                 });
-            }
-
-            // Takes in a json formatted string and adds a new child if none
-            // is present, otherwise, it replaces the current text area child.
-            vm.populateReachbackTextArea = function(json_strings) {
-                let length = json_strings.length;
-                let json_string = json_strings.join(",\n");
-                let parent = document.getElementById("reachbackJSON");
-                parent.value = json_string;
-                let json_info = document.getElementById('JSONInfo');
-                json_info.innerText = length > 1 ? "Showing " + length + " results" : "Showing " + length + " result";
             }
 
             vm.initKeywords();

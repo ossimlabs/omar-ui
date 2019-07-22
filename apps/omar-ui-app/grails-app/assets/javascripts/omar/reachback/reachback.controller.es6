@@ -328,19 +328,14 @@ angular
             // Takes in a string filter as a parameter and makes an ajax jquery call
             // to GET from omar-reachback. Upon success, call vm.populateReachbackTextArea
             // to append/replace the current text area child with the json data
-            vm.getReachbackJSON = function(filter) {
+                        vm.getReachbackJSON = function(filter) {
                 let reachbackSearchUrl = reachbackUrl + filter;
                 $.ajax({
                     url: reachbackSearchUrl,
                     dataType: 'json',
                     success: function (json) {
-                        console.log("success");
-                        vm.reachbackResponse = json;
-                        let length = vm.reachbackResponse.length;
-                        let json_info = document.getElementById('JSONInfo');
-                        json_info.innerText = length > 1 ? "Showing " + length + " results" : "Showing " + length + " result";
-                        let parent = document.getElementById("reachbackJSON");
-                        parent.value = JSON.stringify(vm.reachbackResponse, null, 4);
+                        $scope.reachbackResponse = json;
+                        $scope.$apply();
                     }
                 });
             }

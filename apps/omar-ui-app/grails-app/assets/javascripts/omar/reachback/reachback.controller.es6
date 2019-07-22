@@ -3,22 +3,12 @@ angular
     .module("omarApp")
     .controller("ReachbackController", [
         "stateService",
-        "$http",
-        "$scope",
-        "wfsService",
-        "mapService",
         "$stateParams",
-        "$window",
         "toastr",
 
         function (
             stateService,
-            $http,
-            $scope,
-            wfsService,
-            mapService,
             $stateParams,
-            $window,
             toastr
         ) {
 
@@ -63,13 +53,6 @@ angular
             // Initialise the cards panel to be selected
             $( '#button0' ).removeClass();
             $( '#button0' ).addClass("reachbackTabButtonClicked");
-
-            vm.showCurrentFilter = true;
-            vm.refreshSpin = false;
-            vm.refreshList = function () {
-                wfsService.executeWfsQuery();
-                vm.refreshSpin = true;
-            };
 
             let filterString = "";
             let filterArray = [];

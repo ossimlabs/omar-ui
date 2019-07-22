@@ -3,11 +3,13 @@ angular
     .module("omarApp")
     .controller("ReachbackController", [
         "stateService",
+        "$scope",
         "$stateParams",
         "toastr",
 
         function (
             stateService,
+            $scope,
             $stateParams,
             toastr
         ) {

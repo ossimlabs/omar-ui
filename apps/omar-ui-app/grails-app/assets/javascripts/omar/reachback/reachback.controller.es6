@@ -351,7 +351,6 @@ angular
                 startPageIndex = ($scope.currentPageNumber - 1) * $scope.itemsPerPage;
                 endPageIndex = (startPageIndex + $scope.itemsPerPage - 1);
                 $scope.currentPage = $scope.reachbackResponse.slice(startPageIndex, endPageIndex + 1);
-                $('#list').scrollTop(0);
             }
 
             vm.initKeywords();

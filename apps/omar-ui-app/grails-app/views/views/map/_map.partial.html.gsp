@@ -1604,7 +1604,7 @@
             </div>
 
             <!-- Reachback Panel -->
-            <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer" >
+            <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer">
                 <div class = "Results-tab-heading">
                     <button id="button0" class = "reachbackTabButton" onclick="addClickClass(0,1); switchPanel(false, 0)"> Cards list </button>
                     <button id="button1" class = "reachbackTabButton" onclick="addClickClass(1,0); switchPanel(true, 1)"> JSON </button>
@@ -1637,152 +1637,9 @@
                 </div>
 
                 <!-- Imagery tiles for Reachback -->
-                <div class = "cardsPanel" ng-controller="ListController as list">
-                    <nav class="navbar navbar-inverse">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                                <button
-                                        type="button"
-                                        class="navbar-toggle collapsed"
-                                        data-toggle="collapse"
-                                        data-target="#sort-navbar-collapse"
-                                        aria-expanded="false">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                            </div>
-                            <div class="collapse navbar-collapse" id="sort-navbar-collapse">
-                                <ul class="nav navbar-nav">
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle navbar-sort-dropdown-toggle" data-toggle="dropdown" ng-bind-html="list.currentSortText"><span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li ng-click="list.sortWfs('acquisition_date', '+D', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('acquisition_date', '+A', 'Acquired');"><a>Acquired <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('ingest_date', '+D', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('ingest_date', '+A', 'Ingest');"><a>Ingested <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('niirs', '+D', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('niirs', '+A', 'NIIRS');"><a>NIIRS <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('title', '+D', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('title', '+A', 'Image ID');"><a>Image ID <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                            <li role="separator" class="divider "></li>
-                                            <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                            <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle navbar-sort-dropdown-toggle"
-                                           data-toggle="dropdown"
-                                           role="button"
-                                           aria-haspopup="true"
-                                           aria-expanded="false">{{list.exportSelectedButtonText}}
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li class="dropdown-header">Use the checkboxes on the image cards to </li>
-                                            <li class="dropdown-header">select individual images. They can then be</li>
-                                            <li class="dropdown-header"> downloaded, exported, or viewed in</li>
-                                            <li class="dropdown-header">applications</li>
-                                            <li class="divider" ng-if="list.showSelectedButton"></li>
-                                            <li role="menuitem" ng-click="list.downloadSelectedImages()" ng-if="list.showSelectedButton">
-                                                <a href="">Download
-                                                    <i class="fa fa-info-circle text-info" style="font-size: 12px;" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 10 can be downloaded at one time"></i>
-                                                </a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li class="dropdown-header">
-                                                Exports
-                                                <i class="fa fa-info-circle text-info" tooltip-placement="left-bottom" uib-tooltip="Export the selected images into the following formats"></i>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('CSV')">
-                                                <a href="">CSV</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('GML2')">
-                                                <a href="">GML2</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('GML3')">
-                                                <a href="">GML3</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('GML32')">
-                                                <a href="">GML32</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('JSON')">
-                                                <a href="">JSON</a>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.exportSelectedImages('KML')">
-                                                <a href="">KML</a>
-                                            </li>
-                                            <li role="separator" class="divider" ng-if="!list.showSelectedButton"></li>
-                                            <li class="dropdown-header" ng-if="!list.showSelectedButton">
-                                                Create a GeoRSS feed of the images
-                                                <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A browser extension is required for Internet Explorer and Chrome.  Firefox has built in support for RSS feeds."></i>
-                                            </li>
-                                            <li>
-                                                <a ng-href="" target="_blank" ng-click="list.getGeoRss()" ng-if="!list.showSelectedButton">GeoRSS</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li class="dropdown-header">Applications
-                                                <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 100 can be viewed per application"></i>
-                                            </li>
-                                            <li role="menuitem" ng-click="list.viewSelectedImagesApp('tlv')">
-                                                <a href="">TLV</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li role="menuitem" ng-class="{'disabled': !list.showSelectedButton}" ng-click="list.clearSelectedImages(); list.clearSelectedMosaicImages()">
-                                                <a href="">
-                                                    Clear Selected
-                                                    <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="Remove all currently selected image cards"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class = "nav navbar-nav navbar-right">
-                                    <p class = "navbar-text cursor-default">
-                                        <span class = "glyphicon glyphicon-picture"></span>
-                                        <span
-                                                class = "label label-primary"
-                                                ng-class = "{'label-info': filter.refreshSpin}"
-                                                tooltip-placement = "left"
-                                                uib-tooltip = "Number of Search Result Images">{{filter.totalWfsFeatures}}
-                                        </span>
-                                        <%--
-                                        <span class = "glyphicon glyphicon-film"></span>
-                                        <span
-                                            class = "label label-primary"
-                                            ng-class = "{'label-info': filter.refreshSpin}"
-                                            tooltip-placement = "left"
-                                            uib-tooltip = "Number of Search Result Videos">0
-                                        </span>
-                                        --%>
-                                    </p>
-                                    <li class = "dropdown">
-                                        <a class = "dropdown-toggle navbar-sort-dropdown-toggle"
-                                           ng-click = "filter.refreshList()"
-                                           tooltip-placement = "bottom"
-                                           uib-tooltip = "Refresh the image list data">
-                                            &nbsp;
-                                            <span class = "fa fa-refresh"
-                                                  ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
-                                            </span>
-                                            &nbsp;
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-
-
+                <div class = "cardsPanel" style="margin-top: 35px">
                     <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
-                        <div ng-show="true">
+                        <div ng-show="reachbackResponse.length < 1">
                             <div>
                                 <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your reachback filters</strong></h4></span>
                                 <span class="text-info"><h4 >Check the dates</h4></span>
@@ -1793,9 +1650,65 @@
                                 <p>Make sure that the range values you have submitted are valid for those attributes.</p>
                             </div>
                         </div>
+                        <div ng-show="reachbackResponse.length >= 1"
+                             ng-repeat="item in currentPage"
+                             ng-model="item">
+                            <div class="panel panel-default cursor-pointer" >
+                                <div class="panel-heading" style="font-size: 11px; padding: 5px 7px;">
+                                    <span ng-show="!item.imageId">Unknown</span>
+                                    {{ item.imageId }}
+                                </div>
+                                <div class="panel-body"
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div class="row" style="padding-left: 5px; margin-bottom: 2px;">
+                                                <div class="col-md-12" style="font-size: 13px;">
+                                                    Acquisition Date:&nbsp;&nbsp;
+                                                    <span class="text-success">
+                                                        <span ng-show="!item.acquisitionDate">Unknown</span>
+                                                        {{item.acquisitionDate | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-left: 5px; margin-bottom: 2px;">
+                                                <div class="col-md-12" style="font-size: 13px;">
+                                                    Sensor:&nbsp;&nbsp;
+                                                    <span class="text-success">
+                                                        <span ng-show="!item.sensor">Unknown</span>
+                                                        {{item.sensor}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-left: 5px; margin-bottom: 2px;">
+                                                <div class="col-md-12" style="font-size: 13px;">
+                                                    NIIRS:&nbsp;&nbsp;
+                                                    <span class="text-success">
+                                                        <span ng-show="!item.niirs">Unknown</span>
+                                                        {{item.niirs}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="text-center" id = "pagination">
+                        <uib-pagination style="margin: 8px;"
+                                        total-items="reachbackResponse.length"
+                                        items-per-page="10"
+                                        ng-model="currentPageNumber"
+                                        ng-change="currentPageNumber; reachback.setPage()"
+                                        max-size="5"
+                                        boundary-links="true"
+                                        force-ellipses="true"
+                                        rotate="false"
+                                        first-text="First"
+                                        last-text="Last"
+                                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                        </uib-pagination>
                     </div>
                 </div>
-
                 <div class = "JSONPanel">
                     <div class="resultsInfo"><h4 id="JSONInfo">Showing {{ reachbackResponse.length }} results</h4></div>
                     <pre id="reachbackJSON" class="reachbackPanel"> {{ reachbackResponse | json }} </pre>

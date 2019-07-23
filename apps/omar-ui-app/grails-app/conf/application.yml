@@ -23,6 +23,9 @@ logging:
 
 omar:
   app:
+    # If true, the reachback tab and panel will be displayed and accessible.
+    reachbackEnabled: true
+    reachbackUrl: https://omar-dev.ossim.io/omar-reachback/index/search?
     footprints:
       imageFootprints:
         format: image/gif

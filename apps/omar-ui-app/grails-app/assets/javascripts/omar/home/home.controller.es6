@@ -138,7 +138,7 @@
     }
 
     var twofishProxy = AppO2.APP_CONFIG.params.twofishes.baseUrl;
-
+    
     vm.go = function(url) {
       console.log(url);
 

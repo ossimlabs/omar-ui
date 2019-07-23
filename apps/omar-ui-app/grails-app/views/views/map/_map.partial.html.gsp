@@ -1657,7 +1657,6 @@
                                 <div class="panel-heading" style="font-size: 11px; padding: 5px 7px;">
                                     <span ng-show="!item.imageId">Unknown</span>
                                     {{ item.imageId }}
-                                    <span ng-show="item.imageId">z</span>
                                 </div>
                                 <div class="panel-body"
                                     <div class="media">
@@ -1668,7 +1667,6 @@
                                                     <span class="text-success">
                                                         <span ng-show="!item.acquisitionDate">Unknown</span>
                                                         {{item.acquisitionDate | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
-                                                        <span ng-show="item.acquisitionDate">z</span>
                                                     </span>
                                                 </div>
                                             </div>

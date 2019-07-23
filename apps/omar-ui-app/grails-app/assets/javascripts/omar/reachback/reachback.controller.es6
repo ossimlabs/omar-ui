@@ -321,11 +321,15 @@ angular
                 // wfsService.updateAttrFilter(filterString);
 
                 vm.getReachbackJSON(filterString);
-
             };
 
             vm.predMaxFeatures = 0;
             vm.predMaxCheck = false;
+
+            $scope.itemsPerPage = 10;
+            $scope.currentPageNumber = 1;
+            let startPageIndex = ($scope.currentPageNumber - 1) * $scope.itemsPerPage;
+            let endPageIndex = (startPageIndex + $scope.itemsPerPage - 1);
 
             // Takes in a string filter as a parameter and makes an ajax jquery call
             // to GET from omar-reachback. Upon success, call vm.populateReachbackTextArea
@@ -337,9 +341,17 @@ angular
                     dataType: 'json',
                     success: function (json) {
                         $scope.reachbackResponse = json;
+                        $scope.currentPage = $scope.reachbackResponse.slice(startPageIndex, endPageIndex + 1);
                         $scope.$apply();
                     }
                 });
+            }
+
+            vm.setPage = function() {
+                startPageIndex = ($scope.currentPageNumber - 1) * $scope.itemsPerPage;
+                endPageIndex = (startPageIndex + $scope.itemsPerPage - 1);
+                $scope.currentPage = $scope.reachbackResponse.slice(startPageIndex, endPageIndex + 1);
+                $('#list').scrollTop(0);
             }
 
             vm.initKeywords();

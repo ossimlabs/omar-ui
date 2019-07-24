@@ -1654,7 +1654,7 @@
                                 </select>
                             </div>
                             <div style="float: right; margin-right: 5px;">sort by: </div>
-                            <div style="float: left;">Showing {{ reachbackResponse.length }} results</div>
+                            <div style="float: left; ">Showing {{ reachbackResponse.length }} results</div>
                         </div>
                     </nav>
                     <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
@@ -1729,7 +1729,7 @@
                     </div>
                 </div>
                 <div class = "JSONPanel">
-                    <pre id="reachbackJSON" class="reachbackPanel"> {{ reachbackResponse | json }} </pre>
+                    <pre id="reachbackJSON" class="reachbackPanel"> {{ sortedCopy | json }} </pre>
                 </div>
             </div>
         </div>

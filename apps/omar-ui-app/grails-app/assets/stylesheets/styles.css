@@ -34,7 +34,7 @@ body {
 .ResultsPane {
   /*background-color: black;*/
   max-height: 80%;
-  min-height: 60%;
+  min-height: 80%;
   background: linear-gradient(to bottom, #101010 0%, #16191E 34px, #474A4F 35px, #272B2E 35px, #272B2E 100%);
   padding-left: 10px;
   padding-right: 10px;
@@ -100,8 +100,8 @@ body {
   outline: none;
   border-style: solid;
   border-color: #F0F0F0;
-  max-height: 67%;
-  min-height: 50%;
+  max-height: 71%;
+  min-height: 71%;
   min-width: 100%;
   border-width: 1px;
   margin-top: 20px;

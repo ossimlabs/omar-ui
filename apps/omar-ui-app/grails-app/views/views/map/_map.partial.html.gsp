@@ -1729,7 +1729,6 @@
                     </div>
                 </div>
                 <div class = "JSONPanel">
-                    <div class="resultsInfo">Showing {{ reachbackResponse.length }} results</div>
                     <pre id="reachbackJSON" class="reachbackPanel"> {{ reachbackResponse | json }} </pre>
                 </div>
             </div>

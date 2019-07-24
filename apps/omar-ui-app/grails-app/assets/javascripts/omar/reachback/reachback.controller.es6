@@ -341,7 +341,7 @@ angular
                     dataType: 'json',
                     success: function (json) {
                         $scope.reachbackResponse = json;
-                        $scope.currentPage = $scope.reachbackResponse.slice(startPageIndex, endPageIndex + 1);
+                        vm.sortByFilter();
                         $scope.$apply();
                     }
                 });
@@ -350,22 +350,24 @@ angular
             vm.setPage = function() {
                 startPageIndex = ($scope.currentPageNumber - 1) * $scope.itemsPerPage;
                 endPageIndex = (startPageIndex + $scope.itemsPerPage - 1);
-                $scope.currentPage = $scope.reachbackResponse.slice(startPageIndex, endPageIndex + 1);
+                $scope.currentPage = $scope.sortedCopy.slice(startPageIndex, endPageIndex + 1);
             }
 
-            vm.sortByFilter = function(filter) {
-                if (filter === "") {
-                    vm.updateFilterString();
+            $scope.sortFilter = "";
+
+            vm.sortByFilter = function() {
+                $scope.sortedCopy = Object.assign([], $scope.reachbackResponse);
+                if ($scope.sortFilter === "") {
                     vm.setPage();
                     return;
                 }
-                $scope.reachbackResponse.sort(function(a, b) {
-                    if (a[filter] === null)
+                $scope.sortedCopy.sort(function(a, b) {
+                    if (a[$scope.sortFilter] === null)
                         return  1;
-                    else if (b[filter] === null)
+                    else if (b[$scope.sortFilter] === null)
                         return -1;
-                    let x = a[filter].toLowerCase();
-                    let y = b[filter].toLowerCase();
+                    let x = a[$scope.sortFilter].toLowerCase();
+                    let y = b[$scope.sortFilter].toLowerCase();
                     if (x < y) {return -1;}
                     if (x > y) {return 1;}
                     return 0;

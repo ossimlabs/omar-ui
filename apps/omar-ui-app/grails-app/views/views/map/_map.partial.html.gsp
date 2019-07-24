@@ -1645,7 +1645,7 @@
                                     class="reachbackFilterDropdown"
                                     placeholder="sort by"
                                     ng-model="value"
-                                    ng-change="reachback.sortByFilter(value)">
+                                    ng-change="sortFilter=value; reachback.sortByFilter(value)">
                                     <option value="">none</option>
                                     <option value="acquisitionDate">Date</option>
                                     <option value="imageId">Image ID</option>

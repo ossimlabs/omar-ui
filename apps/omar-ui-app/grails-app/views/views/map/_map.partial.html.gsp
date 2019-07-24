@@ -1637,7 +1637,26 @@
                 </div>
 
                 <!-- Imagery tiles for Reachback -->
-                <div class = "cardsPanel" style="margin-top: 35px">
+                <div class = "cardsPanel" style="margin-top: 0px">
+                    <nav>
+                        <div class = "reachbackCardsHeader">
+                            <div>
+                                <select
+                                    class="reachbackFilterDropdown"
+                                    placeholder="sort by"
+                                    ng-model="value"
+                                    ng-change="reachback.sortByFilter(value)">
+                                    <option value="">none</option>
+                                    <option value="acquisitionDate">Date</option>
+                                    <option value="imageId">Image ID</option>
+                                    <option value="niirs">NIIRS</option>
+                                    <option value="sensor">Sensor ID</option>
+                                </select>
+                            </div>
+                            <div style="float: right; margin-right: 5px;">sort by: </div>
+                            <div style="float: left;">Showing {{ reachbackResponse.length }} results</div>
+                        </div>
+                    </nav>
                     <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
                         <div ng-show="reachbackResponse.length < 1">
                             <div>
@@ -1710,7 +1729,7 @@
                     </div>
                 </div>
                 <div class = "JSONPanel">
-                    <div class="resultsInfo"><h4 id="JSONInfo">Showing {{ reachbackResponse.length }} results</h4></div>
+                    <div class="resultsInfo">Showing {{ reachbackResponse.length }} results</div>
                     <pre id="reachbackJSON" class="reachbackPanel"> {{ reachbackResponse | json }} </pre>
                 </div>
             </div>

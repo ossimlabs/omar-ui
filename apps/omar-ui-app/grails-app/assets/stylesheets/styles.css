@@ -111,6 +111,29 @@ body {
   background: transparent;
 }
 
+.reachbackCardsHeader {
+  margin-top: 15px;
+  margin-bottom: 20;
+  min-width: 100%;
+  min-height: 25px;
+}
+
+.reachbackFilterDropdown {
+  margin-top: 1px;
+  color: #C4C8C9;
+  float: right;
+  background: transparent;
+  border: none;
+}
+
+.reachbackFilterDropdown:hover {
+  color: white !important;
+}
+
+.reachbackFilterDropdown:focus {
+  outline: none;
+}
+
 .resultsInfo {
   margin-bottom: -10px;
 }

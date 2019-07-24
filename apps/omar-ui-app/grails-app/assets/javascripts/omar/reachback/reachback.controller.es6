@@ -353,6 +353,26 @@ angular
                 $scope.currentPage = $scope.reachbackResponse.slice(startPageIndex, endPageIndex + 1);
             }
 
+            vm.sortByFilter = function(filter) {
+                if (filter === "") {
+                    vm.updateFilterString();
+                    vm.setPage();
+                    return;
+                }
+                $scope.reachbackResponse.sort(function(a, b) {
+                    if (a[filter] === null)
+                        return  1;
+                    else if (b[filter] === null)
+                        return -1;
+                    let x = a[filter].toLowerCase();
+                    let y = b[filter].toLowerCase();
+                    if (x < y) {return -1;}
+                    if (x > y) {return 1;}
+                    return 0;
+                });
+                vm.setPage();
+            }
+
             vm.initKeywords();
             vm.initRanges();
             vm.initTemporal();

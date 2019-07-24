@@ -107,7 +107,9 @@ body {
   margin-top: 20px;
   padding: 10px;
   border-radius: 4px;
-  color: #F0F0F0;
+  font-family: monospace;
+  font-weight: lighter;
+  color: #C4C8C9;
   background: transparent;
 }
 

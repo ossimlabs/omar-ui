@@ -140,6 +140,10 @@ body {
   margin-bottom: -10px;
 }
 
+.testInput[list] {
+
+}
+
 .navbar {
   min-height: 28px !important;
 }

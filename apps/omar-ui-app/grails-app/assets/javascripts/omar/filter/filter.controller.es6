@@ -505,6 +505,19 @@ function (
         return moment(vm.endDate).format("MM-DD-YYYY HH:mm:ss+0000");
     };
 
+    vm.setDataListValue = function(idCheck, input, datalist) {
+        let inputElement = $('#' + input);
+        let value = document.getElementById(input).value;
+        let list = document.getElementById(datalist).options;
+        $.each(list, function(index, option) {
+            if (value === option.value) {
+                vm[idCheck] = true;
+                inputElement.blur();
+                return;
+            }
+        })
+    }
+
     vm.updateFilterString = function() {
         filterArray = [];
 

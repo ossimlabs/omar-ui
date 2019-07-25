@@ -49,6 +49,19 @@ angular
                     vm.sensorIdCheck = sensorIDTemp;
             }
 
+            vm.setDataListValue = function(idCheck, input, datalist) {
+                let inputElement = $('#' + input);
+                let value = document.getElementById(input).value;
+                let list = document.getElementById(datalist).options;
+                $.each(list, function(index, option) {
+                    if (value === option.value) {
+                        vm[idCheck] = true;
+                        inputElement.blur();
+                        return;
+                    }
+                })
+            }
+
             // Hide the reachback panel initially
             $('.JSONPanel').hide();
 

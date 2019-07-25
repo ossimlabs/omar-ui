@@ -145,7 +145,7 @@
                                                 ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'countryCodeInput' )"
                                                 ng-disabled = "!filter.imageryCheck"
-                                                ng-keyup = "filter.handleDataList( 'countryCodeInput' )"
+                                                ng-keyup = "filter.handleDataList( 'countryCodeInput' ); filter.setDataListValue('imageryCheck', 'countryCodeInput', 'countryCodeList')"
                                                 ng-model = "filter.countryCode"
                                                 placeholder = "Country Code">
                                         <datalist id = "countryCodeList">
@@ -218,7 +218,7 @@
                                                 list = "missionIdList"
                                                 ng-blur = "filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'missionIdInput' )"
-                                                ng-keyup = "filter.handleDataList( 'missionIdInput' )"
+                                                ng-keyup = "filter.handleDataList( 'missionIdInput' ); filter.setDataListValue('missionIdCheck', 'missionIdInput', 'missionIdList')"
                                                 ng-model = "filter.missionId"
                                                 placeholder = "Mission ID">
                                         <datalist id = "missionIdList">
@@ -247,7 +247,7 @@
                                                 ng-disabled = "!filter.imageryCheck"
                                                 ng-blur = "filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'productIdInput' )"
-                                                ng-keyup = "filter.handleDataList( 'productIdInput' )"
+                                                ng-keyup = "filter.handleDataList( 'productIdInput' ); filter.setDataListValue('productIdCheck', 'productIdInput', 'productIdList')"
                                                 ng-model = "filter.productId"
                                                 placeholder = "Product ID">
                                         <datalist id = "productIdList">
@@ -275,7 +275,7 @@
                                                 list = "sensorIdList"
                                                 ng-blur = "filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'sensorIdInput' )"
-                                                ng-keyup = "filter.handleDataList( 'sensorIdInput' )"
+                                                ng-keyup = "filter.handleDataList( 'sensorIdInput' ); filter.setDataListValue('sensorIdCheck', 'sensorIdInput', 'sensorIdList')"
                                                 ng-model = "filter.sensorId"
                                                 placeholder = "Sensor ID">
                                         <datalist id = "sensorIdList">
@@ -869,16 +869,17 @@
                                                 type = "checkbox">
                                         </span>
                                         <input
+                                            id = "reachbackSensorInput"
                                             class = "form-control"
                                             list = "sensorIdList"
                                             ng-blur = "reachback.sensorIdCheck = reachback.sensorId === '' ? false : true; reachback.updateFilterString();"
-                                            ng-change = "reachback.handleDataList( 'sensorIdInput' )"
-                                            ng-keyup = "reachback.handleDataList( 'sensorIdInput' )"
+                                            ng-keyup = "reachback.setDataListValue('sensorIdCheck', 'reachbackSensorInput', 'sensorIdList')"
                                             ng-model = "reachback.sensorId"
                                             placeholder = "Sensor ID">
-                                        <datalist id = "sensorIdList">
+                                        <datalist id = "sensorIdList" onclick="hello()">
                                             <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
                                         </datalist>
+                                        <script> function hello() { console.log("hello world"); } </script>
                                     </div>
                                 </div>
                             </div>

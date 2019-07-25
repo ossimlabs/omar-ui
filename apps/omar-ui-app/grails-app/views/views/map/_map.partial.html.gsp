@@ -56,7 +56,7 @@
                     <input
                         type="checkbox"
                         ng-model="filterVideosToggle"
-                        ng-change="filter.getVideos(filterVideosToggle)"
+                        ng-change="filter.getVideos(filterVideosToggle); filter.handleNonVideoFilters(); filter.clearFilters()"
                     > Videos Only
                 </div>
 
@@ -108,12 +108,12 @@
                                             <input
                                                     ng-change = "filter.updateFilterString()"
                                                     ng-checked = "!filter.imageryCheck ? false : filter.beNumberCheck"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.beNumberCheck"
                                                     type = "checkbox">
                                         </span>
                                         <input focus-input
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.beNumber"
                                                class = "form-control"
                                                ng-enter = "filter.updateFilterString()"
@@ -134,17 +134,16 @@
                                             <input
                                                     ng-change = "filter.updateFilterString()"
                                                     ng-checked = "!filter.imageryCheck ? false : filter.countryCodeCheck"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.countryCodeCheck"
                                                     type="checkbox">
                                         </span>
                                         <input
                                                 class = "form-control"
-                                                id = "countryCodeInput"
                                                 list = "countryCodeList"
                                                 ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'countryCodeInput' )"
-                                                ng-disabled = "!filter.imageryCheck"
+                                                ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                 ng-keyup = "filter.handleDataList( 'countryCodeInput' ); filter.setDataListValue('imageryCheck', 'countryCodeInput', 'countryCodeList')"
                                                 ng-model = "filter.countryCode"
                                                 placeholder = "Country Code">
@@ -187,12 +186,12 @@
                                             <input
                                                     ng-change = "filter.updateFilterString()"
                                                     ng-checked = "!filter.imageryCheck ? false : filter.imageIdCheck"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.imageIdCheck"
                                                     type = "checkbox">
                                         </span>
                                         <input focus-input
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.imageId"
                                                ng-enter = "filter.updateFilterString()"
                                                ng-blur = "filter.updateFilterString()"
@@ -210,12 +209,13 @@
                                 <div class = "col-md-12">
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
-                                            <input ng-change = "filter.updateFilterString()" ng-model = "filter.missionIdCheck" type="checkbox">
+                                            <input ng-change = "filter.updateFilterString()" ng-disabled = "filterVideosToggle" ng-model = "filter.missionIdCheck" type="checkbox">
                                         </span>
                                         <input
                                                 class = "form-control"
                                                 id = "missionIdInput"
                                                 list = "missionIdList"
+                                                ng-disabled = "filterVideosToggle"
                                                 ng-blur = "filter.missionIdCheck = filter.missionId === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'missionIdInput' )"
                                                 ng-keyup = "filter.handleDataList( 'missionIdInput' ); filter.setDataListValue('missionIdCheck', 'missionIdInput', 'missionIdList')"
@@ -236,7 +236,7 @@
                                         <span class = "input-group-addon">
                                             <input
                                                     ng-change="filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model="filter.productIdCheck"
                                                     type="checkbox">
                                         </span>
@@ -244,7 +244,7 @@
                                                 class = "form-control"
                                                 id = "productIdInput"
                                                 list = "productIdList"
-                                                ng-disabled = "!filter.imageryCheck"
+                                                ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                 ng-blur = "filter.productIdCheck = filter.productId === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'productIdInput' )"
                                                 ng-keyup = "filter.handleDataList( 'productIdInput' ); filter.setDataListValue('productIdCheck', 'productIdInput', 'productIdList')"
@@ -265,6 +265,7 @@
                                     <div class = "input-group input-group-sm">
                                         <span class = "input-group-addon">
                                             <input
+                                                    ng-disabled = "filterVideosToggle"
                                                     ng-change = "filter.updateFilterString()"
                                                     ng-model = "filter.sensorIdCheck"
                                                     type = "checkbox">
@@ -273,6 +274,7 @@
                                                 class = "form-control"
                                                 id = "sensorIdInput"
                                                 list = "sensorIdList"
+                                                ng-disabled = "filterVideosToggle"
                                                 ng-blur = "filter.sensorIdCheck = filter.sensorId === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'sensorIdInput' )"
                                                 ng-keyup = "filter.handleDataList( 'sensorIdInput' ); filter.setDataListValue('sensorIdCheck', 'sensorIdInput', 'sensorIdList')"
@@ -294,19 +296,20 @@
                                             <input
                                                     ng-change = "filter.updateFilterString()"
                                                     ng-checked = "!filter.imageryCheck ? false : filter.targetIdCheck"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.targetIdCheck"
                                                     type = "checkbox">
                                         </span>
                                         <input focus-input
-                                               ng-disabled = "!filter.imageryCheck"
-                                               ng-model = "filter.targetId"
-                                               ng-enter = "filter.updateFilterString()"
-                                               ng-blur = "filter.updateFilterString()"
-                                               ng-change = "filter.targetIdCheck = filter.targetId === '' ? false: true;"
-                                               class = "form-control"
-                                               placeholder="Target ID"
-                                               value="filter.targetId">
+                                            id="targetIdInput"
+                                           ng-disabled = "!filter.imageryCheck || filterVideosToggle"
+                                           ng-model = "filter.targetId"
+                                           ng-enter = "filter.updateFilterString()"
+                                           ng-blur = "filter.updateFilterString()"
+                                           ng-change = "filter.targetIdCheck = filter.targetId === '' ? false: true;"
+                                           class = "form-control"
+                                           placeholder="Target ID"
+                                           value="filter.targetId">
                                     </div>
                                 </div>
                             </div>
@@ -320,12 +323,13 @@
                                             <input
                                                     ng-change = "filter.updateFilterString()"
                                                     ng-checked = "!filter.imageryCheck ? false : filter.wacNumberCheck"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.wacNumberCheck"
                                                     type = "checkbox">
                                         </span>
                                         <input focus-input
-                                               ng-disabled = "!filter.imageryCheck"
+                                            id="wacIdInput"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.wacNumber"
                                                ng-enter = "filter.updateFilterString()"
                                                ng-blur = "filter.updateFilterString()"
@@ -369,7 +373,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "0"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.predNiirsMin"
                                                class = "form-control input-sm"
                                                value = "{{filter.predNiirsMin}}"
@@ -381,7 +385,7 @@
                                             <input
                                                     ng-checked = "!filter.imageryCheck ? false : filter.predNiirsCheck"
                                                     ng-click = "filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.predNiirsCheck"
                                                     type = "checkbox">
                                         </div>
@@ -389,7 +393,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "9"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.predNiirsMax"
                                                class = "form-control input-sm"
                                                value = "{{filter.predNiirsMax}}"
@@ -432,7 +436,7 @@
                                                type = "number"
                                                placeholder = "0"
                                                ng-checked = "!filter.imageryCheck ? false : filter.azimuthCheck"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.azimuthMin"
                                                class = "form-control input-sm"
                                                value = "{{filter.azimuthMin}}"
@@ -443,7 +447,7 @@
                                         <div class = "input-group-addon">
                                             <input
                                                     ng-click = "filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.azimuthCheck"
                                                     type = "checkbox">
                                         </div>
@@ -451,7 +455,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "360"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.azimuthMax"
                                                class = "form-control input-sm"
                                                value = "{{filter.azimuthMax}}"
@@ -493,7 +497,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "0"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.grazeElevMin"
                                                class = "form-control input-sm"
                                                value = "{{filter.grazeElevMin}}"
@@ -505,7 +509,7 @@
                                             <input
                                                     ng-checked = "!filter.imageryCheck ? false : filter.grazeElevCheck"
                                                     ng-click = "filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.grazeElevCheck"
                                                     type = "checkbox">
                                         </div>
@@ -513,7 +517,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "90"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.grazeElevMax"
                                                class = "form-control input-sm"
                                                value = "{{filter.grazeElevMax}}"
@@ -555,7 +559,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "0"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.sunAzimuthMin"
                                                class = "form-control input-sm"
                                                value = "{{filter.sunAzimuthMin}}"
@@ -567,7 +571,7 @@
                                             <input
                                                     ng-checked = "!filter.imageryCheck ? false : filter.sunAzimuthCheck"
                                                     ng-click = "filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.sunAzimuthCheck"
                                                     type = "checkbox">
                                         </div>
@@ -575,7 +579,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "360"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.sunAzimuthMax"
                                                class = "form-control input-sm"
                                                value = "{{filter.sunAzimuthMax}}"
@@ -617,7 +621,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "0"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.sunElevationMin"
                                                class = "form-control input-sm"
                                                value = "{{filter.sunElevationMin}}"
@@ -629,7 +633,7 @@
                                             <input
                                                     ng-checked = "!filter.imageryCheck ? false : filter.sunElevationCheck"
                                                     ng-click = "filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.sunElevationCheck"
                                                     type = "checkbox">
                                         </div>
@@ -637,7 +641,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "0"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.sunElevationMax"
                                                class = "form-control input-sm"
                                                value = "{{filter.sunElevationMax}}"
@@ -685,7 +689,7 @@
                                             <input
                                                     ng-checked = "!filter.imageryCheck ? false : filter.cloudCoverCheck"
                                                     ng-click = "filter.updateFilterString()"
-                                                    ng-disabled = "!filter.imageryCheck"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.cloudCoverCheck"
                                                     type = "checkbox">
                                         </div>
@@ -693,7 +697,7 @@
                                                style = "text-align: center;"
                                                type = "number"
                                                placeholder = "0"
-                                               ng-disabled = "!filter.imageryCheck"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                ng-model = "filter.cloudCover"
                                                class = "form-control input-sm"
                                                value = "{{filter.cloudCover}}"

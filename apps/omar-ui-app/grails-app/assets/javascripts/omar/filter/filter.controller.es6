@@ -102,6 +102,19 @@ function (
         }
     }
 
+    // Change the dataTypes variable based on filterVideosToggle
+    vm.handleNonVideoFilters = function() {
+        if ($scope.filterVideosToggle)
+            vm.dateTypes = [{label: "Ingest Date", value: "ingest_date"}];
+        else {
+            vm.dateTypes = [
+                { label: "Acquisition Date", value: "acquisition_date" },
+                { label: "Ingest Date", value: "ingest_date" }
+            ];
+        }
+        vm.currentDateType = vm.dateTypes[0];
+    }
+
     vm.showCurrentFilter = true;
     vm.refreshSpin = false;
     vm.refreshList = function() {

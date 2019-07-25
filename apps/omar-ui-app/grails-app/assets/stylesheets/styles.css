@@ -306,7 +306,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 57vh;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 37vh;
   }
   #mapOrtho {
@@ -324,7 +324,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 72vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 55vh !important;
   }
   #mapOrtho {
@@ -342,7 +342,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 75vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 61vh !important;
   }
   #mapOrtho {
@@ -360,7 +360,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 78vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 65vh !important;
   }
   #mapOrtho {
@@ -378,7 +378,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 80vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 69vh !important;
   }
   #mapOrtho {
@@ -396,7 +396,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 82vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 72vh !important;
   }
   #mapOrtho {
@@ -414,7 +414,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 84vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 74vh !important;
   }
   #mapOrtho {
@@ -432,7 +432,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 86vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 76vh !important;
   }
   #mapOrtho {
@@ -495,23 +495,23 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-right: 0px;
 }
 
-#list, #video-list {
+#list, #video-list, #reachback-list {
   overflow-y: auto;
   padding-right: 5px;
   margin-top: -15px;
 }
 
-#list .panel, #video-list.panel {
+#list .panel, #video-list.panel, #reachback-list.panel {
  margin-bottom: 3px;
 }
 
-#list .panel-body, #video-list.panel-body{
+#list .panel-body, #video-list.panel-body, #reachback-list.panel-body{
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 2px;
 }
 
-#list .media, #video-list.media {
+#list .media, #video-list.media, #reachback-list.media {
   margin-bottom: -20px;
   margin-top: -5px;
 }

@@ -364,6 +364,12 @@ angular
                 startPageIndex = ($scope.currentPageNumber - 1) * $scope.itemsPerPage;
                 endPageIndex = (startPageIndex + $scope.itemsPerPage - 1);
                 $scope.currentPage = $scope.sortedCopy.slice(startPageIndex, endPageIndex + 1);
+                $("#reachback-list").animate(
+                    {
+                        scrollTop: 0
+                    },
+                    "fast"
+                );
             }
 
             $scope.sortFilter = "";

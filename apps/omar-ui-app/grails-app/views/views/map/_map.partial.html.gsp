@@ -1642,7 +1642,7 @@
                 </div>
 
                 <!-- Imagery tiles for Reachback -->
-                <div class = "cardsPanel" style="margin-top: 0px">
+                <div class = "cardsPanel">
                     <nav>
                         <div class = "reachbackCardsHeader">
                             <div>
@@ -1662,7 +1662,7 @@
                             <div style="float: left; ">Showing {{ reachbackResponse.length }} results</div>
                         </div>
                     </nav>
-                    <div id="list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
+                    <div id="reachback-list" style="border-style: solid; border-width: 1px; max-height: 60%; padding: 10px; border-radius: 4px;">
                         <div ng-show="reachbackResponse.length < 1">
                             <div>
                                 <span class="text-default"><h4 class="text-center"><strong>We did not find any images that match your reachback filters</strong></h4></span>

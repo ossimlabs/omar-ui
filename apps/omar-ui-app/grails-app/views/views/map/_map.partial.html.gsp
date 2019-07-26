@@ -1277,7 +1277,7 @@
                                                 <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>--}%
                                             <a class="btn btn-default" type="button"
-                                               ng-click="">
+                                               ng-click="openComponentModal()">
                                                 <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                             </a>
                                            %{-- <a class="btn btn-default" type="button"
@@ -1289,7 +1289,9 @@
                                             >
                                                 <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
                                             </a>--}%
-                                            <modal></modal>
+                                        <modal modal-data="modalData" video="{video: video}">
+
+                                        </modal>
                                         </div>
 
 
@@ -1743,9 +1745,11 @@
 
     </div>
 
+
+
     <!-- right-click context menu -->
     <!-- Esterberg. commented out.  not sure what this is for. -->
-    <div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">
+    %{--<div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1756,5 +1760,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}%
 </div>

@@ -587,6 +587,7 @@
     });
 
     vm.openTab = tab => {
+      console.log('list.openTab')
       setTimeout(function() {
         $(`[data-target="#${tab}"]`).tab("show");
       }, 250);

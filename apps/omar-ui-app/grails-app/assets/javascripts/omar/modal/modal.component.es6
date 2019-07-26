@@ -2,8 +2,7 @@
 angular
     .module('omarApp')
     .component('modal', {
-        // templateUrl: 'modal/modal.template.html',
-        template: '<h1> it works!</h1>',
+        templateUrl: AppO2.APP_CONFIG.serverURL + '/views/modal/modal.template.html',
         controller: ModalController
     });
 

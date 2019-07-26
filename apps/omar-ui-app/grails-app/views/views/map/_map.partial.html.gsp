@@ -1744,6 +1744,7 @@
     </div>
 
     <!-- right-click context menu -->
+    <!-- Esterberg. commented out.  not sure what this is for. -->
     <div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

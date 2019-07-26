@@ -79,22 +79,21 @@ function (
         // Only run this if the toggle (checkbox) is true
         if ($scope.filterVideosToggle) {
             videoService.videoQuery()
-                .success(function(data, status, header, config){
-
-                    for (let i=0; i < data.features.length; i++ ){
+                .then((res) => {
+                    for (let i=0; i < res.data.features.length; i++ ){
                         // strip everything away leaving filename
                         // because regex is the devil and this is cleaner
                         // split divides url by /, pop returns last, replace modifies filetype
-                        const videoNameMp4 = data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
+                        const videoNameMp4 = res.data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
 
                         // Build final url and append to response keeping unified object intact
-                        data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
+                        res.data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
                     }
 
                     // save a copy to videoData
                     // used for totals and pagination slicage.
                     // never altered!
-                    $scope.videoData = data;
+                    $scope.videoData = res.data;
 
                     // get the first 10 results sliced up for page 1
                     $scope.slicedVideoData = $scope.videoData.features.slice(0, vm.pageLimit)

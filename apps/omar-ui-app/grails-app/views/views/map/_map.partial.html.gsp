@@ -1691,6 +1691,7 @@
                                                     <span class="text-success">
                                                         <span ng-show="!item.acquisitionDate">Unknown</span>
                                                         {{item.acquisitionDate | date:'MM/dd/yyyy HH:mm:ss' : 'UTC'}}
+                                                        <span ng-show="item.acquisitionDate">z</span>
                                                     </span>
                                                 </div>
                                             </div>

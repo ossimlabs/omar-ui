@@ -1223,17 +1223,17 @@
                                 </span>
                             </div>
 
-                            <div class="panel-body" style="height:128px;">
-                                <div class="">
-                                    <div class="media-left">
+                            <div class="panel-body">
+                                <div class="media">
+                                    <div class="media-left" style="position: relative">
                                         <!-- link to video player page -->
                                         <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
                                            target="_blank">
-                                            <img class="video-tile-image" ng-src="https://omar-dev.ossim.io/omar-stager/videoDataSet/getThumbnail?id={{video.properties.id}}&size=128&type=png"/>
+                                            <img ng-src="https://omar-dev.ossim.io/omar-stager/videoDataSet/getThumbnail?id={{video.properties.id}}&size=128&type=png"/>
                                         </a>
                                     </div>
 
-                                    <div class="push-right">
+                                    <div class="media-body">
                                         <!-- empty row for alignment -->
                                         <div class="row"></div>
 

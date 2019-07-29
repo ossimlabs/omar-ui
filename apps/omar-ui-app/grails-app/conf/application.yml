@@ -135,9 +135,9 @@ omar:
       o2:
         info:
           # Short name for the omar site
-          name: OMAR-DEV
+          name: OMAR - Default
           # Long name/description of the site.  This is displayed in the dropdown in the UI
-          description: OMAR Development Server (Unclassified)
+          description: OMAR Default Server
         url:
           # Base URL for the federated site
           base: ${baseUrl}

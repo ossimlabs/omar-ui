@@ -919,7 +919,7 @@
                 media.appendChild( mediaLeft );
 
                     var a = document.createElement( 'a' );
-                    a.href = '/omar-ui/#/mapImage?' + $.param({
+                    a.href = '/omar-ui/omar/#/mapImage?' + $.param({
                         bands: 'default',
                         brightness: 0,
                         contrast: 1,

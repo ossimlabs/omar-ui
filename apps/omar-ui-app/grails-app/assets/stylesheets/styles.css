@@ -1217,3 +1217,12 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 .videos-checkbox {
   margin-top: 1em !important;
 }
+
+.video-tile-image {
+  position: absolute;
+  clip: rect(0px,128px,128px,0px);
+}
+
+.push-right {
+  padding-left:128px;
+}

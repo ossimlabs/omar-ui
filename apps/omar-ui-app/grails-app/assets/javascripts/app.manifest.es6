@@ -4,7 +4,7 @@
 //= require webjars/bootstrap/3.3.5/js/bootstrap.js
 //= require webjars/angularjs/1.7.5/angular.js
 //= require webjars/angular-ui-router/1.0.20/angular-ui-router.js
-//= require webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js
+//= require webjars/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js
 //= require webjars/angular-deferred-bootstrap/0.1.5/angular-deferred-bootstrap.js
 //= require webjars/bootstrap-select/2.0.0-beta1/dist/js/bootstrap-select.js
 //= require webjars/devbridge-autocomplete/1.2.21/dist/jquery.autocomplete.js

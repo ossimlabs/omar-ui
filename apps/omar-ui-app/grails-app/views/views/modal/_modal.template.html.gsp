@@ -7,9 +7,9 @@
             <a href="#"></a>
         </li>
     </ul>
-    modalData: <b>{{ $ctrl.modalData }}</b>
+    $ctrl.modalData: <b>{{ $ctrl.modalData }}</b>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
 </div>

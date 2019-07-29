@@ -1276,8 +1276,9 @@
                                                ng-click="list.zoomToSelectedImage(image.properties.id);">
                                                 <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>--}%
+                                            <!-- Open modal component and send {video} to it for processing -->
                                             <a class="btn btn-default" type="button"
-                                               ng-click="list.openComponentModal()">
+                                               ng-click="list.openComponentModal(video)">
                                                 <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                             </a>
                                            %{-- <a class="btn btn-default" type="button"
@@ -1289,9 +1290,6 @@
                                             >
                                                 <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
                                             </a>--}%
-                                        %{--<modal modal-data="modalData" video="{video: video}">
-
-                                        </modal>--}%
                                         </div>
 
 

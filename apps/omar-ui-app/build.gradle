@@ -63,7 +63,7 @@ dependencies {
   compile "org.webjars:bootstrap:3.3.5"
   compile "org.webjars.bower:angularjs:1.7.5"
   compile "org.webjars:angular-ui-router:1.0.20"
-  compile "org.webjars.npm:angular-ui-bootstrap:0.14.3"
+  compile "org.webjars:angular-ui-bootstrap:2.5.0"
   compile "org.webjars:angular-deferred-bootstrap:0.1.5"
   compile "org.webjars.bower:bootstrap-select:${bootstrapSelectV}"
   compile "org.webjars.bower:devbridge-autocomplete:1.2.21"

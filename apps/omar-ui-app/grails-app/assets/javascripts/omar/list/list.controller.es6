@@ -783,26 +783,22 @@
     };
 
     // VIC-201 //esterberg Open new modal component
-    vm.openComponentModal = () => {
-      console.log('opening modal')
-      const dataForModal = {
-        name: 'NameToEdit',
-        value: 'ValueToEdit'
-      }
+    vm.openComponentModal = function(dataToBeRendered) {
+      console.log('opening modal.  dataToBeRendered:', dataToBeRendered)
 
-      $uibModal.open({
-        component: "modal",
-        templateUrl: AppO2.APP_CONFIG.serverURL + '/views/modal/modal.template.html',
+      const modalInstance = $uibModal.open({
+        component: 'modal',
         resolve: {
           modalData: () => {
-            return dataForModal;
+            return dataToBeRendered;
           }
         }
-      }).result.then(function(result) {
-        console.info("I was closed, so do what I need to do myContent's controller now.  Result was->");
-        console.info('result', result);
-      }, function(reason) {
-        console.info("I was dimissed, so do what I need to do myContent's controller now.  Reason was->" + reason);
+      })
+
+      modalInstance.result.then((selectedItem) => {
+        vm.selected = selectedItem;
+      }, function () {
+        $log.info('modal-component dismissed at: ' + new Date());
       });
 
     }

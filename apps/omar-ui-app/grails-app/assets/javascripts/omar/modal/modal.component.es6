@@ -5,35 +5,29 @@ angular
         templateUrl: AppO2.APP_CONFIG.serverURL + '/views/modal/modal.template.html',
         controller: ModalController,
         bindings: {
-            // modalData: '@',
             // video: '<',
             // onDelete: '&',
             // onUpdate: '&',
-            modalInsance: '<',
-            resolve: '<'
+            modalInstance: '<',
+            resolve: '<',
+            close: '&',
+            dismiss: '&'
         }
     });
 
 function ModalController($scope) {
+    // makes data available to ui/html/controller
     this.$onInit = function() {
         this.modalData = this.resolve.modalData;
     }
-    // this.openComponentModal = () => {
-    //     var modalInstance = $uibModal.open({
-    //         animation: true,
-    //         component: 'modalComponent',
-    //         resolve: {
-    //             items: function () {
-    //                 return $ctrl.items;
-    //             }
-    //         }
-    //     });
-    //
-    //     modalInstance.result.then(function (selectedItem) {
-    //         $ctrl.selected = selectedItem;
-    //     }, function () {
-    //         $log.info('modal-component dismissed at: ' + new Date());
-    //     });
-    // }
+
+    this.ok = function () {
+        this.close({$value: 'ok'});
+    }
+
+    this.cancel = function () {
+        this.dismiss({$value: 'cancel'});
+    }
+
     console.log('this!', this)
 }

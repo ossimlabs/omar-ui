@@ -45,6 +45,7 @@
     //console.log('AppO2.APP_CONFIG in ListController: ', AppO2.APP_CONFIG);
 
     /* jshint validthis: true */
+
     var vm = this;
 
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
@@ -587,7 +588,6 @@
     });
 
     vm.openTab = tab => {
-      console.log('list.openTab')
       setTimeout(function() {
         $(`[data-target="#${tab}"]`).tab("show");
       }, 250);
@@ -781,6 +781,31 @@
 
       // TODO: Figure out if selections are possible
     };
+
+    // VIC-201 //esterberg Open new modal component
+    vm.openComponentModal = () => {
+      console.log('opening modal')
+      const dataForModal = {
+        name: 'NameToEdit',
+        value: 'ValueToEdit'
+      }
+
+      $uibModal.open({
+        component: "modal",
+        templateUrl: AppO2.APP_CONFIG.serverURL + '/views/modal/modal.template.html',
+        resolve: {
+          modalData: () => {
+            return dataForModal;
+          }
+        }
+      }).result.then(function(result) {
+        console.info("I was closed, so do what I need to do myContent's controller now.  Result was->");
+        console.info('result', result);
+      }, function(reason) {
+        console.info("I was dimissed, so do what I need to do myContent's controller now.  Reason was->" + reason);
+      });
+
+    }
   }
 
   // Handles the selected image modal obj

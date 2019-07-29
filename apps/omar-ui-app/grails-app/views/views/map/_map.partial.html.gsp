@@ -1277,7 +1277,7 @@
                                                 <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>--}%
                                             <a class="btn btn-default" type="button"
-                                               ng-click="openComponentModal()">
+                                               ng-click="list.openComponentModal()">
                                                 <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                             </a>
                                            %{-- <a class="btn btn-default" type="button"
@@ -1289,9 +1289,9 @@
                                             >
                                                 <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
                                             </a>--}%
-                                        <modal modal-data="modalData" video="{video: video}">
+                                        %{--<modal modal-data="modalData" video="{video: video}">
 
-                                        </modal>
+                                        </modal>--}%
                                         </div>
 
 

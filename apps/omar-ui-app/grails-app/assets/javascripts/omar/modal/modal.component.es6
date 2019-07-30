@@ -5,9 +5,6 @@ angular
         templateUrl: AppO2.APP_CONFIG.serverURL + '/views/modal/modal.template.html',
         controller: ModalController,
         bindings: {
-            // video: '<',
-            // onDelete: '&',
-            // onUpdate: '&',
             modalInstance: '<',
             resolve: '<',
             close: '&',
@@ -17,6 +14,8 @@ angular
 
 function ModalController($scope) {
     // makes data available to ui/html/controller
+    this.sourceItems = ['DB ID', 'Mission', 'Sensor', 'Product ID', 'Organization', 'Country Code', 'WAC Code', 'Image Representation']
+
     this.$onInit = function() {
         this.modalData = this.resolve.modalData;
     }

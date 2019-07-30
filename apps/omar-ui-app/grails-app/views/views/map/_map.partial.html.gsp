@@ -1291,11 +1291,7 @@
                                                 <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
                                             </a>--}%
                                         </div>
-
-
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>

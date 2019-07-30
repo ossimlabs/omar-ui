@@ -1299,21 +1299,21 @@
                 </div>
 
                 <!-- Video pagination -->
-                <div class="text-center" id="pagination">
-                    <uib-pagination
-                            style="margin: 8px;"
-                            total-items="videoData.features.length"
-                            items-per-page="list.pageLimit"
-                            ng-model="list.currentVideoPage"
-                            ng-change="list.videoPageChange(list.currentVideoPage)"
-                            max-size="5"
-                            boundary-links="true"
-                            force-ellipses="true"
-                            rotate="false"
-                            first-text="First"
-                            last-text="Last"
-                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                    </uib-pagination>
+                <div class="text-center" id="pagination-video">
+                    <ul uib-pagination
+                        style="margin: 8px;"
+                        total-items="videoData.features.length"
+                        items-per-page="list.pageLimit"
+                        ng-model="list.currentVideoPage"
+                        ng-change="list.videoPageChange(list.currentVideoPage)"
+                        max-size="5"
+                        boundary-links="true"
+                        force-ellipses="true"
+                        rotate="false"
+                        first-text="First"
+                        last-text="Last"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                    </ul>
                 </div>
             </div>
 
@@ -1607,23 +1607,23 @@
                     </div>
                 </div>
                 <div class="text-center" id = "pagination">
-                    <uib-pagination style="margin: 8px;"
-                                    total-items="list.wfsFeaturesTotalPaginationCount"
-                                    items-per-page="list.pageLimit"
-                                    ng-model="list.currentStartIndex"
-                                    ng-change="list.pagingChanged()"
-                                    max-size="5"
-                                    boundary-links="true"
-                                    force-ellipses="true"
-                                    rotate="false"
-                                    first-text="First"
-                                    last-text="Last"
-                                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                    </uib-pagination>
+                    <ul uib-pagination style="margin: 8px;"
+                        total-items="list.wfsFeaturesTotalPaginationCount"
+                        items-per-page="list.pageLimit"
+                        ng-model="list.currentStartIndex"
+                        ng-change="list.pagingChanged()"
+                        max-size="5"
+                        boundary-links="true"
+                        force-ellipses="true"
+                        rotate="false"
+                        first-text="First"
+                        last-text="Last"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                    </ul>
                 </div>
             </div>
 
-            <!-- Reachback Panel -->
+            <!-- Reachback tiles -->
             <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer">
                 <div class = "Results-tab-heading">
                     <button id="button0" class = "reachbackTabButton" onclick="addClickClass(0,1); switchPanel(false, 0)"> Cards list </button>
@@ -1714,19 +1714,19 @@
                             </div>
                         </div>
                     <div class="text-center" id = "pagination">
-                        <uib-pagination style="margin: 8px;"
-                                        total-items="reachbackResponse.length"
-                                        items-per-page="10"
-                                        ng-model="currentPageNumber"
-                                        ng-change="currentPageNumber; reachback.setPage()"
-                                        max-size="5"
-                                        boundary-links="true"
-                                        force-ellipses="true"
-                                        rotate="false"
-                                        first-text="First"
-                                        last-text="Last"
-                                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                        </uib-pagination>
+                        <ul uib-pagination style="margin: 8px;"
+                            total-items="reachbackResponse.length"
+                            items-per-page="10"
+                            ng-model="currentPageNumber"
+                            ng-change="currentPageNumber; reachback.setPage()"
+                            max-size="5"
+                            boundary-links="true"
+                            force-ellipses="true"
+                            rotate="false"
+                            first-text="First"
+                            last-text="Last"
+                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                        </ul>
                     </div>
                 </div>
                 <div class = "JSONPanel">

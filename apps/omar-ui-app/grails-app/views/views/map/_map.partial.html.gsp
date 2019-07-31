@@ -1227,13 +1227,9 @@
                                 <div class="media">
                                     <div class="media-left" style="position: relative">
                                         <!-- link to video player page -->
-                                        <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
+                                        <a href="{{ video.properties.videoUrl }}"
                                            target="_blank">
-                                            <video
-                                                    ng-src="{{ video.properties.videoUrl }}"
-                                                    width="175px"
-                                                    autoplay loop
-                                            ></video>
+                                            <img ng-src="{{ video.properties.requestThumbnailUrl }}"/>
                                         </a>
                                     </div>
 

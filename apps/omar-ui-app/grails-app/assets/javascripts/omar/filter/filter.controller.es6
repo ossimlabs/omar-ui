@@ -99,15 +99,14 @@ function (
                         // WEIRD BUG with backtick where the last ) is not rendered properly... Researched for a while.
                         const playerUrl = `${baseUrl}/omar-video-ui?filter=in(${id}%29`
 
-                        console.log('playerUrl', playerUrl)
                         // Build final url and append to response keeping unified object intact
                         data.features[i].properties.videoUrl = vm.videoUrl = baseUrl + '/videos/' + videoNameMp4
 
                         // Append requestThumbnailUrl to video response for UI
-                        data.features[i].properties.requestThumbnailUrl = vm.requestThumbnailUrl = thumbUrl
+                        data.features[i].properties.requestThumbnailUrl = thumbUrl
 
                         // Append omar-video-ui to video response for UI
-                        data.features[i].properties.omarVideoPlayerUrl = vm.playerUrl = playerUrl
+                        data.features[i].properties.playerUrl = playerUrl
                     }
 
                     // save a copy to videoData

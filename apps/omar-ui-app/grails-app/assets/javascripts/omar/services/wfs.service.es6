@@ -179,7 +179,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                         url: wfsRequestUrl
                     })
                     .done( function( data ) {
-                        console.log('wfs res', data)
                         // $timeout needed: http://stackoverflow.com/a/18996042
                         $timeout(function() {
                             if ( index == 0 ) {

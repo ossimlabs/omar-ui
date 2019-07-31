@@ -13,8 +13,13 @@ angular
     });
 
 function ModalController($scope) {
-    // makes data available to ui/html/controller
-    this.sourceItems = ['DB ID', 'Mission', 'Sensor', 'Product ID', 'Organization', 'Country Code', 'WAC Code', 'Image Representation']
+    // Source key list
+    this.sourceItems = ['id', 'DB ID', 'Mission', 'Sensor', 'Product ID', 'Organization', 'Country Code', 'WAC Code', 'Image Representation']
+    this.metricItems = ['NIIRS', 'Azimuth Angle', 'Grazing Angle', 'Sun Azimuth', 'Sun Elevation', 'Cloud Cover', 'Number of Bands', 'Number of Resolution Levels', 'Bit Depth']
+    this.fileItems = ['Type', 'Name', 'Entry ID']
+    this.dimensionItems = ['Height', 'Width']
+    this.generalItems = ['Description', 'Title', 'Security Classification']
+    this.geometryItems = ['GSD Unit', 'GSD X', 'GSD Y']
 
     this.$onInit = function() {
         this.modalData = this.resolve.modalData;

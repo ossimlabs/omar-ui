@@ -46,47 +46,14 @@
                 <div id="video-metadata" role="tabpanel" class="tab-pane">
                     <div class="row">
                         <div class="col-md-6">
-
+                            <!-- source -->
                             <h4 class="text-info">Source</h4>
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.sourceItems">
-                                        {{ item }} : {{
-                                    </li>
-                                    <li>DB ID: <span class="text-success">{{vm.selectedImage.properties.id}}</span></li>
-                                    <li>Mission:&nbs
+                                        {{ item }} :
                                         <span class="text-success">
-                                            {{vm.selectedImage.properties.mission_id}}
-                                        </span>
-                                    </li>
-                                    <li>Sensor:
-                                        <span class="text-success">
-                                            {{vm.selectedImage.properties.sensor_id}}
-                                        </span>
-                                    </li>
-                                    <li>Product ID:
-                                        <span class="text-success">
-                                            {{vm.selectedImage.properties.product_id}}
-                                        </span>
-                                    </li>
-                                    <li>Organization:
-                                        <span class="text-success">
-                                            {{vm.selectedImage.properties.organization}}
-                                        </span>
-                                    </li>
-                                    <li>Country Code:
-                                        <span class="text-success">
-                                            {{vm.selectedImage.properties.country_code}}
-                                        </span>
-                                    </li>
-                                    <li>WAC Code:
-                                        <span class="text-success">
-                                            {{vm.selectedImage.properties.wac_code}}
-                                        </span>
-                                    </li>
-                                    <li>Image Representation:
-                                        <span class="text-success">
-                                            {{vm.selectedImage.properties.image_representation}}
+                                            {{ $ctrl.modalData.properties[item] }}
                                         </span>
                                     </li>
                                 </ul>
@@ -94,34 +61,74 @@
                         </div>
                         <div class="col-md-6">
                             <h4 class="text-info">Metrics</h4>
-                            <p> and some data</p>
-                            <p>more data</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="col-md-6">
-                                <h4 class="text-info">File</h4>
-                                <p> and some data</p>
-                                <p>more data</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="col-md-6">
-                                <h4 class="text-info">Dimensions</h4>
-                                <p> and some data</p>
-                                <p>more data</p>
+                            <div class="panel panel-primary">
+                                <ul class="list-unstyled metadata-list">
+                                    <li ng-repeat="item in $ctrl.metricItems">
+                                        {{ item }}:
+                                        <span class="text-success">
+                                            {{ $ctrl.modalData.properties[item] }}
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-
+                            <h4 class="text-info">File</h4>
+                            <div class="panel panel-primary">
+                                <ul class="list-unstyled metadata-list">
+                                    <li ng-repeat="item in $ctrl.fileItems">
+                                        {{ item }}:
+                                        <span class="text-success">
+                                            {{ $ctrl.modalData.properties[item] }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-md-6">
+                            <h4 class="text-info">Dimensions</h4>
+                            <div class="panel panel-primary">
+                                <ul class="list-unstyled metadata-list">
+                                    <li ng-repeat="item in $ctrl.dimensionItems">
+                                        {{ item }}:
+                                        <span class="text-success">
+                                            {{ $ctrl.modalData.properties[item] }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="text-info">General</h4>
+                            <div class="panel panel-primary">
+                                <ul class="list-unstyled metadata-list">
+                                    <li ng-repeat="item in $ctrl.generalItems">
+                                        {{ item }}:
+                                        <span class="text-success">
+                                            {{ $ctrl.modalData.properties[item] }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-info">Geometry</h4>
+                            <div class="panel panel-primary">
+                                <ul class="list-unstyled metadata-list">
+                                    <li ng-repeat="item in $ctrl.geometryItems">
+                                        {{ item }}:
+                                        <span class="text-success">
+                                            {{ $ctrl.modalData.properties[item] }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 

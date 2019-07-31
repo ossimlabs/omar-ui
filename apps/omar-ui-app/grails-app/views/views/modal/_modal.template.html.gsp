@@ -45,13 +45,30 @@
 
                 <div id="video-metadata" role="tabpanel" class="tab-pane">
                     <div class="row">
+                        <div class="col-md-6" ng-repeat="(key, item) in $ctrl.meta">
+                            <!-- source -->
+                            <h4 class="text-info">{{ key }}</h4>
+                            <div class="panel panel-primary">
+                                <ul class="list-unstyled metadata-list">
+                                    <li ng-repeat="entry in item">
+                                        <span class="text-capitalize">{{ entry }} :</span>
+                                        <span class="text-success">
+                                            {{ $ctrl.modalData.properties[entry] }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    %{--<div class="row">
                         <div class="col-md-6">
                             <!-- source -->
                             <h4 class="text-info">Source</h4>
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.sourceItems">
-                                        {{ item }} :
+                                        <span class="text-capitalize">{{ item }} :</span>
                                         <span class="text-success">
                                             {{ $ctrl.modalData.properties[item] }}
                                         </span>
@@ -64,7 +81,7 @@
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.metricItems">
-                                        {{ item }}:
+                                        <span class="text-capitalize">{{ item }}:</span>
                                         <span class="text-success">
                                             {{ $ctrl.modalData.properties[item] }}
                                         </span>
@@ -80,7 +97,7 @@
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.fileItems">
-                                        {{ item }}:
+                                        <span class="text-capitalize">{{ item }}:</span>
                                         <span class="text-success">
                                             {{ $ctrl.modalData.properties[item] }}
                                         </span>
@@ -93,7 +110,7 @@
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.dimensionItems">
-                                        {{ item }}:
+                                        <span class="text-capitalize">{{ item }}:</span>
                                         <span class="text-success">
                                             {{ $ctrl.modalData.properties[item] }}
                                         </span>
@@ -109,7 +126,7 @@
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.generalItems">
-                                        {{ item }}:
+                                        <span class="text-capitalize">{{ item }}:</span>
                                         <span class="text-success">
                                             {{ $ctrl.modalData.properties[item] }}
                                         </span>
@@ -122,7 +139,7 @@
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="item in $ctrl.geometryItems">
-                                        {{ item }}:
+                                        <span class="text-capitalize">{{ item }}:</span>
                                         <span class="text-success">
                                             {{ $ctrl.modalData.properties[item] }}
                                         </span>
@@ -130,8 +147,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-
+                    </div>--}%
                 </div>
 
                 <div id="metadata" role="tabpanel" class="tab-pane active">

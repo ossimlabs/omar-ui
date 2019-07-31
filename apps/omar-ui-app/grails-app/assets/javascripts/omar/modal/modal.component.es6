@@ -14,9 +14,18 @@ angular
 
 function ModalController($scope) {
     // Source key list
+    this.meta = {
+        'Source': ['id', 'DB ID', 'Mission', 'Sensor', 'Product ID', 'Organization', 'Country Code', 'WAC Code', 'Image Representation'],
+        'Metrics': ['NIIRS', 'Azimuth Angle', 'Grazing Angle', 'Sun Azimuth', 'Sun Elevation', 'Cloud Cover', 'Number of Bands', 'Number of Resolution Levels', 'Bit Depth'],
+        'File': ['Type', 'filename', 'Entry ID'],
+        'Dimensions': ['Height', 'Width'],
+        'General': ['Description', 'Title', 'Security Classification'],
+        'Geometry': ['GSD Unit', 'GSD X', 'GSD Y']
+    }
+    console.log('this.meta', this.meta)
     this.sourceItems = ['id', 'DB ID', 'Mission', 'Sensor', 'Product ID', 'Organization', 'Country Code', 'WAC Code', 'Image Representation']
     this.metricItems = ['NIIRS', 'Azimuth Angle', 'Grazing Angle', 'Sun Azimuth', 'Sun Elevation', 'Cloud Cover', 'Number of Bands', 'Number of Resolution Levels', 'Bit Depth']
-    this.fileItems = ['Type', 'Name', 'Entry ID']
+    this.fileItems = ['Type', 'filename', 'Entry ID']
     this.dimensionItems = ['Height', 'Width']
     this.generalItems = ['Description', 'Title', 'Security Classification']
     this.geometryItems = ['GSD Unit', 'GSD X', 'GSD Y']

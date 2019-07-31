@@ -34,7 +34,7 @@ body {
 .ResultsPane {
   /*background-color: black;*/
   max-height: 80%;
-  min-height: 60%;
+  min-height: 80%;
   background: linear-gradient(to bottom, #101010 0%, #16191E 34px, #474A4F 35px, #272B2E 35px, #272B2E 100%);
   padding-left: 10px;
   padding-right: 10px;
@@ -100,19 +100,48 @@ body {
   outline: none;
   border-style: solid;
   border-color: #F0F0F0;
-  max-height: 67%;
-  min-height: 50%;
+  max-height: 71%;
+  min-height: 71%;
   min-width: 100%;
   border-width: 1px;
   margin-top: 20px;
   padding: 10px;
   border-radius: 4px;
-  color: #F0F0F0;
+  font-family: monospace;
+  font-weight: lighter;
+  color: #C4C8C9;
   background: transparent;
+}
+
+.reachbackCardsHeader {
+  margin-top: 15px;
+  margin-bottom: 20;
+  min-width: 100%;
+  min-height: 25px;
+}
+
+.reachbackFilterDropdown {
+  margin-top: 1px;
+  color: #C4C8C9;
+  float: right;
+  background: transparent;
+  border: none;
+}
+
+.reachbackFilterDropdown:hover {
+  color: white !important;
+}
+
+.reachbackFilterDropdown:focus {
+  outline: none;
 }
 
 .resultsInfo {
   margin-bottom: -10px;
+}
+
+.testInput[list] {
+
 }
 
 .navbar {
@@ -277,7 +306,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 57vh;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 37vh;
   }
   #mapOrtho {
@@ -295,7 +324,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 72vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 55vh !important;
   }
   #mapOrtho {
@@ -313,7 +342,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 75vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 61vh !important;
   }
   #mapOrtho {
@@ -331,7 +360,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 78vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 65vh !important;
   }
   #mapOrtho {
@@ -349,7 +378,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 80vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 69vh !important;
   }
   #mapOrtho {
@@ -367,7 +396,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 82vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 72vh !important;
   }
   #mapOrtho {
@@ -385,7 +414,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 84vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 74vh !important;
   }
   #mapOrtho {
@@ -403,7 +432,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   #map {
     height: 86vh !important;
   }
-  #list, #video-list {
+  #list, #video-list, #reachback-list {
     height: 76vh !important;
   }
   #mapOrtho {
@@ -466,23 +495,23 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-right: 0px;
 }
 
-#list, #video-list {
+#list, #video-list, #reachback-list {
   overflow-y: auto;
   padding-right: 5px;
   margin-top: -15px;
 }
 
-#list .panel, #video-list.panel {
+#list .panel, #video-list.panel, #reachback-list.panel {
  margin-bottom: 3px;
 }
 
-#list .panel-body, #video-list.panel-body{
+#list .panel-body, #video-list.panel-body, #reachback-list.panel-body{
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 2px;
 }
 
-#list .media, #video-list.media {
+#list .media, #video-list.media, #reachback-list.media {
   margin-bottom: -20px;
   margin-top: -5px;
 }

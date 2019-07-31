@@ -11,6 +11,7 @@ angular
     "$window",
     "toastr",
     "$log",
+    "$location",
     "videoService",
 
 function (
@@ -23,6 +24,7 @@ function (
     $window,
     toastr,
     $log,
+    $location,
     videoService
 ) {
     /* jshint validthis: true */
@@ -74,7 +76,9 @@ function (
      */
     vm.getVideos = function() {
         // Clear videoData each time
-        $scope.videoData = [];
+        $scope.videoData = []
+        const baseUrl = AppO2.APP_CONFIG.params.sites.o2.url.base
+            // <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
 
         // Only run this if the toggle (checkbox) is true
         if ($scope.filterVideosToggle) {
@@ -86,8 +90,20 @@ function (
                         // split divides url by /, pop returns last, replace modifies filetype
                         const videoNameMp4 = res.data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
 
+                        // Build thumbnail url using a more dynamnic approach
+                        // It's not a link directly to the image.  It's a service that responds with the image
+                        const thumbUrl = `${baseUrl}/omar-stager/videoDataSet/getThumbnail?id=${id}&size=128&type=png`
+                        // WEIRD BUG with backtick where the last ) is not rendered properly... Researched for a while.
+                        const playerUrl = `${baseUrl}/omar-video-ui?filter=in(${id}%29`
+
                         // Build final url and append to response keeping unified object intact
-                        res.data.features[i].properties.videoUrl = vm.videoUrl = 'https://omar-dev.ossim.io/videos/' + videoNameMp4
+                        data.features[i].properties.videoUrl = vm.videoUrl = baseUrl + '/videos/' + videoNameMp4
+
+                        // Append requestThumbnailUrl to video response for UI
+                        data.features[i].properties.requestThumbnailUrl = thumbUrl
+
+                        // Append omar-video-ui to video response for UI
+                        data.features[i].properties.playerUrl = playerUrl
                     }
 
                     // save a copy to videoData
@@ -99,6 +115,19 @@ function (
                     $scope.slicedVideoData = $scope.videoData.features.slice(0, vm.pageLimit)
                 });
         }
+    }
+
+    // Change the dataTypes variable based on filterVideosToggle
+    vm.handleNonVideoFilters = function() {
+        if ($scope.filterVideosToggle)
+            vm.dateTypes = [{label: "Ingest Date", value: "ingest_date"}];
+        else {
+            vm.dateTypes = [
+                { label: "Acquisition Date", value: "acquisition_date" },
+                { label: "Ingest Date", value: "ingest_date" }
+            ];
+        }
+        vm.currentDateType = vm.dateTypes[0];
     }
 
     vm.showCurrentFilter = true;
@@ -503,6 +532,19 @@ function (
     vm.getCustomEndDate = function() {
         return moment(vm.endDate).format("MM-DD-YYYY HH:mm:ss+0000");
     };
+
+    vm.setDataListValue = function(idCheck, input, datalist) {
+        let inputElement = $('#' + input);
+        let value = document.getElementById(input).value;
+        let list = document.getElementById(datalist).options;
+        $.each(list, function(index, option) {
+            if (value === option.value) {
+                vm[idCheck] = true;
+                inputElement.blur();
+                return;
+            }
+        })
+    }
 
     vm.updateFilterString = function() {
         filterArray = [];

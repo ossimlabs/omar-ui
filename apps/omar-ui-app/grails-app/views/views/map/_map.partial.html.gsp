@@ -1275,6 +1275,13 @@
                                             </div>
                                         </div>
 
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.zoomToSelectedVideo(video);">
+                                                <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                            </a>
+                                        </div>
+
                                     </div>
 
                                 </div>

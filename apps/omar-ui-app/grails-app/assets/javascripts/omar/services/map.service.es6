@@ -714,6 +714,27 @@
       zoomToSelectedImages(ids);
     };
 
+
+    const zoomToSelectedVideos = video => {
+      const imageArray = video.geometry.coordinates[0][0];
+
+      let polygon = new ol.geom.Polygon([imageArray]);
+
+      // Moves the map to the extent of the search item
+      var options = {
+        duration: 1000,
+        size: map.getSize()
+      };
+      map.getView().fit(polygon.getExtent(), options);
+    };
+
+    $rootScope.$on("zoomExtent", function(event, video) {
+      zoomToSelectedVideos(video);
+    });
+    vm.zoomToSelectedVideos = video => {
+      zoomToSelectedVideos(video);
+    };
+
     /**
      * Purpose: Clears all of the selected images in the mosaic array.
      * It does this by updating the filter parameters for the imageLayer

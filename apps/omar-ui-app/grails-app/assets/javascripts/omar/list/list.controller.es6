@@ -347,6 +347,11 @@
       mapService.zoomToSelectedImages(id);
     };
 
+    vm.zoomToSelectedVideo = video => {
+      $("a:contains('Map')").trigger("click");
+      mapService.zoomToSelectedVideos(video);
+    };
+
     // Remove selected items, and reset the DOM
     vm.clearSelectedImages = () => {
       vm.selectedCards = [];

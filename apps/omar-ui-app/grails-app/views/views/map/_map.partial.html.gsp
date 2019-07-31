@@ -1227,7 +1227,7 @@
                                 <div class="media">
                                     <div class="media-left" style="position: relative">
                                         <!-- link to video player page -->
-                                        <a href="{{ video.properties.videoUrl }}"
+                                        <a href="{{ video.properties.playerUrl }}"
                                            target="_blank">
                                             <img ng-src="{{ video.properties.requestThumbnailUrl }}"/>
                                         </a>

@@ -25,7 +25,7 @@
                 <li role="presentation">
                     <a data-target="#video-metadata" aria-controls="video-metadata" role="tab" data-toggle="tab">Video Metadata</a>
                 </li>
-                <li role="presentation" class="active">
+                %{--<li role="presentation" class="active">
                     <a data-target="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a>
                 </li>
                 <li role="presentation">
@@ -33,7 +33,7 @@
                 </li>
                 <li role="presentation" ng-show="vm.beLookupEnabled">
                     <a data-target="#be" aria-controls="be" role="tab" data-toggle="tab"ng-click="vm.loadBeData()">BE</a>
-                </li>
+                </li>--}%
                 <li role="presentation">
                     <a data-target="#toolbox" aria-controls="toolbox" role="tab" data-toggle="tab">Toolbox</a>
                 </li>
@@ -42,11 +42,9 @@
         <div class="row">
 
             <div class="tab-content">
-
                 <div id="video-metadata" role="tabpanel" class="tab-pane">
-                    <div class="row">
-                        <div class="col-md-6" ng-repeat="(key, item) in $ctrl.meta">
-                            <!-- source -->
+                    <div class="row align-items-start">
+                        <div class="col-md-6 meta-data-height" ng-repeat="(key, item) in $ctrl.metadata">
                             <h4 class="text-info">{{ key }}</h4>
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
@@ -60,6 +58,8 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
 
                     %{--<div class="row">
                         <div class="col-md-6">
@@ -148,8 +148,6 @@
                             </div>
                         </div>
                     </div>--}%
-                </div>
-
                 <div id="metadata" role="tabpanel" class="tab-pane active">
                     <br>
                     <div class="col-md-6 metadata-ul-list">
@@ -465,21 +463,3 @@
 <div class="modal-footer" id="modal-image-space-footer">
     <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
 </div>
-
-
-%{--
-<div class="modal-header">
-    <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
-</div>
-<div class="modal-body" id="modal-body">
-    <ul>
-        <li ng-repeat="item in $ctrl.items">
-            <a href="#"></a>
-        </li>
-    </ul>
-    $ctrl.modalData: <b>{{ $ctrl.modalData }}</b>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-</div>--}%

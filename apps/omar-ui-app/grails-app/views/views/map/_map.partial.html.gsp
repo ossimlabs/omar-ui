@@ -1277,7 +1277,7 @@
 
                                         <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
                                             <a class="btn btn-default" type="button"
-                                               ng-click="list.zoomToSelectedVideo(video);">
+                                               ng-click="list.zoomToSelectedMedia(video);">
                                                 <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>
                                         </div>
@@ -1575,7 +1575,7 @@
                                         </div>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
                                             <a class="btn btn-default" type="button"
-                                               ng-click="list.zoomToSelectedImage(image.properties.id);">
+                                               ng-click="list.zoomToSelectedMedia(image);">
                                                 <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>
                                             <a class="btn btn-default" type="button"

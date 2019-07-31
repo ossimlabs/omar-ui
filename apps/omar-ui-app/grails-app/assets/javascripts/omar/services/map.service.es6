@@ -692,31 +692,8 @@
      * It then uses the returned extent to zoom the map there
      * @param id
      */
-    const zoomToSelectedImages = ids => {
-      wfsService.getImagesExtent(ids).then(function(response) {
-        const imageArray = response.geometry.coordinates[0][0];
-
-        let polygon = new ol.geom.Polygon([imageArray]);
-
-        // Moves the map to the extent of the search item
-        var options = {
-          duration: 1000,
-          size: map.getSize()
-        };
-        map.getView().fit(polygon.getExtent(), options);
-      });
-    };
-
-    $rootScope.$on("zoomExtent", function(event, image) {
-      zoomToSelectedImages(image.properties.id);
-    });
-    vm.zoomToSelectedImages = ids => {
-      zoomToSelectedImages(ids);
-    };
-
-
-    const zoomToSelectedVideos = video => {
-      const imageArray = video.geometry.coordinates[0][0];
+    const zoomToSelectedMedia = media => {
+      const imageArray = media.geometry.coordinates[0][0];
 
       let polygon = new ol.geom.Polygon([imageArray]);
 
@@ -728,11 +705,11 @@
       map.getView().fit(polygon.getExtent(), options);
     };
 
-    $rootScope.$on("zoomExtent", function(event, video) {
-      zoomToSelectedVideos(video);
+    $rootScope.$on("zoomExtent", function(event, media) {
+      zoomToSelectedMedia(media);
     });
-    vm.zoomToSelectedVideos = video => {
-      zoomToSelectedVideos(video);
+    vm.zoomToSelectedMedia = media => {
+      zoomToSelectedMedia(media);
     };
 
     /**

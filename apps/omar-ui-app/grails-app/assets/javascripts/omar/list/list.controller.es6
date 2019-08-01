@@ -782,6 +782,15 @@
       // TODO: Figure out if selections are possible
     };
 
+    vm.testFunc = function () {
+      console.log('test func launched!')
+    }
+    vm.testFunc2 = function () {
+      console.log('test func2 launched!')
+    }
+    vm.testFunc3 = function () {
+      console.log('test func3 launched!')
+    }
     // VIC-201 //esterberg Open new modal component
     vm.openComponentModal = function(dataToBeRendered) {
       console.log('opening modal.  dataToBeRendered:', dataToBeRendered)
@@ -993,6 +1002,7 @@
     };
 
     vm.shareModal = function(imageLink) {
+      console.log('imageLink', imageLink)
       shareService.imageLinkModal(imageLink);
     };
 

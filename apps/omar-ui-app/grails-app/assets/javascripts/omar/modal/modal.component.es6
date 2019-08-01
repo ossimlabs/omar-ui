@@ -12,7 +12,7 @@ angular
         }
     });
 
-function ModalController($scope) {
+function ModalController(avroMetadataService, shareService) {
     // Source key list
     // These match up with the WFS response.  They are case sensitive but are rendered in sentence-case on the UI.
     // Adding any value here, will dynamically generate/remove it from the UI.  No other actions will need to be taken.
@@ -40,5 +40,9 @@ function ModalController($scope) {
 
     this.cancel = function () {
         this.dismiss({$value: 'cancel'});
+    }
+
+    this.share = (videoLink) => {
+        shareService.imageLinkModal(videoLink)
     }
 }

@@ -22,7 +22,7 @@
         <div class="row"></div>
         <div class="row">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation">
+                <li role="presentation" class="active">
                     <a data-target="#video-metadata" aria-controls="video-metadata" role="tab" data-toggle="tab">Video Metadata</a>
                 </li>
                 %{--<li role="presentation" class="active">
@@ -417,7 +417,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareModal(vm.getImageSpaceUrl(vm.selectedImage))" role = "button" target = "_blank">Share</a>
+                                <a class = "btn btn-default btn-block btn-metrics" ng-click="$ctrl.share($ctrl.modalData.properties.videoUrl)" role = "button" target = "_blank">Share</a>
                             </div>
                             <div class="col-md-6 toolbox-description-text">
                                 Share image link

@@ -12,7 +12,7 @@ angular
         }
     });
 
-function ModalController(avroMetadataService, shareService) {
+function ModalController(avroMetadataService, shareService, downloadService) {
     // Source key list
     // These match up with the WFS response.  They are case sensitive but are rendered in sentence-case on the UI.
     // Adding any value here, will dynamically generate/remove it from the UI.  No other actions will need to be taken.
@@ -44,5 +44,25 @@ function ModalController(avroMetadataService, shareService) {
 
     this.share = (videoLink) => {
         shareService.imageLinkModal(videoLink)
+    }
+
+    this.download = (videoUrl) => {
+        fetch(videoUrl)
+            .then(resp => resp.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                // the filename you want
+                a.download = 'todo-1.mp4';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                alert('your file has downloaded!'); // or you know, something with better UX...
+            })
+            .catch(() => alert('oh no!'));
+        // console.log('downloading video', videoUrl)
+        // downloadService.downloadVideo(videoUrl)
     }
 }

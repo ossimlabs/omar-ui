@@ -409,15 +409,19 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.archiveDownload(vm.selectedImage.properties.id, vm.selectedImage.properties.filename)" role = "button" target = "_blank">Download</a>
+                                <a class="btn btn-default btn-block btn-metrics"
+                                   ng-click="$ctrl.download( $ctrl.modalData.properties.videoUrl )"
+                                   role = "button">Download</a>
                             </div>
                             <div class="col-md-6 toolbox-description-text">
-                                Download raw image file
+                                Download raw file
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <a class = "btn btn-default btn-block btn-metrics" ng-click="$ctrl.share($ctrl.modalData.properties.videoUrl)" role = "button" target = "_blank">Share</a>
+                                <a class = "btn btn-default btn-block btn-metrics"
+                                   ng-click="$ctrl.share($ctrl.modalData.properties.videoUrl)"
+                                   role = "button">Share</a>
                             </div>
                             <div class="col-md-6 toolbox-description-text">
                                 Share image link

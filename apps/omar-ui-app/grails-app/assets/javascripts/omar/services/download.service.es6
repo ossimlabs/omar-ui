@@ -103,5 +103,35 @@
         }
       });
     };
+    this.downloadVideo = (videoUrl) => {
+      $.fileDownload(videoUrl, {
+        httpMethod: "POST",
+        dataType: "text",
+        contentType: "plain/text",
+        data: {
+          fileInfo: JSON.stringify(data)
+        },
+        successCallback: function(url) {
+          toastr.success("Files are being downloaded.", {
+            positionClass: "toast-bottom-left",
+            closeButton: true,
+            timeOut: 10000,
+            extendedTimeOut: 5000,
+            target: "body"
+          });
+        },
+        failCallback: function(responseHtml, url, error) {
+          //Error will occur if type and archiveOptions type is not specified
+
+          toastr.error("Unable to download with URL = " + url, {
+            positionClass: "toast-bottom-left",
+            closeButton: true,
+            timeOut: 10000,
+            extendedTimeOut: 5000,
+            target: "body"
+          });
+        }
+      });
+    }
   }
 })();

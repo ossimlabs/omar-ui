@@ -104,8 +104,7 @@
       });
     };
     this.downloadVideo = (videoProps) => {
-      console.log('videoProps', videoProps)
-      fetch(videoProps)
+      fetch(videoProps.video_url)
         .then(resp => resp.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(blob);

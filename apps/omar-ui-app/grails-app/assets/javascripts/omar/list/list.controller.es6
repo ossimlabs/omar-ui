@@ -784,8 +784,6 @@
 
     // VIC-201 //esterberg Open new modal component
     vm.openComponentModal = function(dataToBeRendered) {
-      console.log('opening modal.  dataToBeRendered:', dataToBeRendered)
-
       const modalInstance = $uibModal.open({
         component: 'modal',
         size: 'lg',
@@ -799,7 +797,7 @@
       modalInstance.result.then((selectedItem) => {
         vm.selected = selectedItem;
       }, function () {
-        $log.info('modal-component dismissed at: ' + new Date());
+        // $log.info('modal-component dismissed at: ' + new Date());
       });
 
     }

@@ -99,7 +99,7 @@ function (
                         const playerUrl = `${baseUrl}/omar-video-ui?filter=in(${id}%29`
 
                         // Build final url and append to response keeping unified object intact
-                        res.data.features[i].properties.videoUrl = vm.video_url = baseUrl + '/videos/' + videoNameMp4
+                        res.data.features[i].properties.video_url = vm.videoUrl = baseUrl + '/videos/' + videoNameMp4
 
                         // Append requestThumbnailUrl to video response for UI
                         res.data.features[i].properties.request_thumbnail_url = thumbUrl

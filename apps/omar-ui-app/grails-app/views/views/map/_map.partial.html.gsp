@@ -846,7 +846,7 @@
                             <div id = "popup-content"></div>
                         </div>
                         <div id = "progress" class = "text-info">
-                            <i class = "fa fa-spinner fa-spin fa-4x"></i>
+                            <i class = "fa fa-spinner fa-sync-alt fa-4x"></i>
                         </div>
                     </div>
                 </div>
@@ -1172,9 +1172,9 @@
                                        tooltip-placement = "bottom"
                                        uib-tooltip = "Refresh the image list data">
                                         &nbsp;
-                                        <span class = "fa fa-refresh"
+                                        <i class = "fa fa-sync-alt"
                                               ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
-                                        </span>
+                                        </i>
                                         &nbsp;
                                     </a>
                                 </li>
@@ -1451,7 +1451,7 @@
                                        tooltip-placement = "bottom"
                                        uib-tooltip = "Refresh the image list data">
                                         &nbsp;
-                                        <span class = "fa fa-refresh"
+                                        <span class = "fa fa-sync-alt"
                                               ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
                                         </span>
                                         &nbsp;

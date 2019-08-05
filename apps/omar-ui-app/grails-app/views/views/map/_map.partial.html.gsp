@@ -1585,7 +1585,7 @@
                                         <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
                                             <a class="btn btn-default" type="button"
                                                ng-click="list.zoomToSelectedImage(image.properties.id);">
-                                                <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                                <i class="fa fa-arrows-alt text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>
                                             <a class="btn btn-default" type="button"
                                                ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">

@@ -1270,27 +1270,16 @@
                                                 </span>
                                             </div>
                                         </div>
-
-                                        <!-- Buttons -->
                                         <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
-                                            %{--<a class="btn btn-default" type="button"
-                                               ng-click="list.zoomToSelectedImage(image.properties.id);">
-                                                <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
-                                            </a>--}%
-                                            <!-- Open modal component and send {video} to it for processing -->
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.zoomToSelectedMedia(video);">
+                                                <i class="fa fa-arrows-alt text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                            </a>
+
                                             <a class="btn btn-default" type="button"
                                                ng-click="list.openComponentModal(video)">
                                                 <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                             </a>
-                                           %{-- <a class="btn btn-default" type="button"
-                                               ng-click="list.viewOrtho(image)">
-                                                <i class="fa fa-history text-default" tooltip-placement="right" uib-tooltip="View rectified image in TLV"></i>
-                                            </a>
-                                            <a class="btn btn-default" type="button"
-                                               ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('toolbox');"
-                                            >
-                                                <i class="fa fa-wrench text-default" tooltip-placement="right" uib-tooltip="View image toolbox"></i>
-                                            </a>--}%
                                         </div>
                                     </div>
                                 </div>

@@ -333,6 +333,7 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
      * @param id
      */
     this.getImagesExtent = id => {
+        console.log("this was called");
       let version = "1.1.0";
       let typeName = "omar:raster_entry";
 

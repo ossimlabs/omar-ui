@@ -343,9 +343,9 @@
      * is wired up to the button on the image card
      * @param id
      */
-    vm.zoomToSelectedImage = id => {
+    vm.zoomToSelectedMedia = media => {
       $("a:contains('Map')").trigger("click");
-      mapService.zoomToSelectedImages(id);
+      mapService.zoomToSelectedMedia(media);
     };
 
     // Remove selected items, and reset the DOM

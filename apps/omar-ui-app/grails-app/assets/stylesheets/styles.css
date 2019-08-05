@@ -1019,6 +1019,38 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-top: 5px;
 }
 
+#video-panel-body {
+  display: flex;            /* establish flex container */
+  flex-direction: row;
+  align-items: center;      /* center column horizontally */
+}
+
+#video-circle-icon {
+  opacity: .5;
+  font-size: 25px;
+}
+
+#video-circle-icon:focus {
+  outline: none;
+}
+
+#video-circle-button {
+  background: transparent;
+  position: absolute;
+  border: none;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+#video-circle-button:focus {
+  outline: none;
+}
+
+#video-circle-button:hover #video-circle-icon {
+  opacity: 1;
+}
+
 .btn-metrics {
   margin-bottom: 5px;
 }

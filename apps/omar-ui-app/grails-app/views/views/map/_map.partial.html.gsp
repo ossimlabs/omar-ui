@@ -1224,12 +1224,15 @@
                             </div>
 
                             <div class="panel-body">
-                                <div class="media">
-                                    <div class="media-left" style="position: relative">
+                                <div class="media" id="video-panel-body">
+                                    <div class="media-left" style="position: relative;">
                                         <!-- link to video player page -->
+                                        <img style="border: #101010 solid 1px; border-radius: 3px;" ng-src="{{ video.properties.requestThumbnailUrl }}"/>
                                         <a href="{{ video.properties.playerUrl }}"
                                            target="_blank">
-                                            <img ng-src="{{ video.properties.requestThumbnailUrl }}"/>
+                                            <button id="video-circle-button" type="button" class="btn btn-default" aria-label="Left Align">
+                                                <span id="video-circle-icon" class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                                            </button>
                                         </a>
                                     </div>
 

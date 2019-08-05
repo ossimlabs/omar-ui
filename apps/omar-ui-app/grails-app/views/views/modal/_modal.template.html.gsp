@@ -22,7 +22,7 @@
         <uib-tabset active="0" justified="true">
 
             <!-- Meta Data -->
-            <uib-tab index="0" heading="MetaData">
+            <uib-tab index="0" heading="Metadata">
                 <div class="col-xs-6" style="min-height: 181px" ng-repeat="(key, item) in $ctrl.metadata">
                     <h4 class="text-info">{{ key }}</h4>
                     <div class="meta-data-box">
@@ -106,22 +106,24 @@
             <!-- Toolbox -->
             <uib-tab index="4" heading="Toolbox">
                 <div class="row text-center toolbox-button-row">
-                    <a
-                       class="btn btn-default disabled"
-                       type="button">
-                        <i class="fas fa-file-export fa-3x" uib-tooltip="Export to KML"></i>
+                    <a class="btn btn-default disabled"
+                       type="button"
+                       uib-tooltip="Export to KML">
+                        <i class="fas fa-file-export fa-3x" ></i>
                         <h5>Export</h5>
                     </a>
                     <a ng-click="$ctrl.download( $ctrl.modalData.properties )"
                        class="btn btn-default"
-                       type="button">
-                        <i class="fa fa-download fa-3x" uib-tooltip="Download raw file"></i>
+                       type="button"
+                       uib-tooltip="Download raw file">
+                        <i class="fa fa-download fa-3x" ></i>
                         <h5>Download</h5>
                     </a>
-                    <a ng-click="$ctrl.share($ctrl.modalData.properties.videoUrl)"
+                    <a ng-click="$ctrl.share($ctrl.modalData.properties.player_url)"
                        class="btn btn-default"
-                       type="button">
-                        <i class="fa fa-share-alt fa-3x" uib-tooltip="Share"></i>
+                       type="button"
+                       uib-tooltip="Share url to video player">
+                        <i class="fa fa-share-alt fa-3x" ></i>
                         <h5>Share</h5>
                     </a>
                     <a class="btn btn-default disabled" type="button">

@@ -103,26 +103,21 @@
         }
       });
     };
-    this.downloadVideo = (videoUrl) => {
-      $.fileDownload(videoUrl, {
-        httpMethod: "POST",
-        dataType: "text",
-        contentType: "plain/text",
-        data: {
-          fileInfo: JSON.stringify(data)
-        },
-        successCallback: function(url) {
-          toastr.success("Files are being downloaded.", {
-            positionClass: "toast-bottom-left",
-            closeButton: true,
-            timeOut: 10000,
-            extendedTimeOut: 5000,
-            target: "body"
-          });
-        },
-        failCallback: function(responseHtml, url, error) {
-          //Error will occur if type and archiveOptions type is not specified
-
+    this.downloadVideo = (videoProps) => {
+      console.log('videoProps', videoProps)
+      fetch(videoProps)
+        .then(resp => resp.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = videoProps.video_name;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(() => {
           toastr.error("Unable to download with URL = " + url, {
             positionClass: "toast-bottom-left",
             closeButton: true,
@@ -130,8 +125,7 @@
             extendedTimeOut: 5000,
             target: "body"
           });
-        }
-      });
+        });
     }
   }
 })();

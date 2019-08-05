@@ -20,28 +20,8 @@
 
         </div>
         <div class="row"></div>
-        <div class="row">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a data-target="#video-metadata" aria-controls="video-metadata" role="tab" data-toggle="tab">Video Metadata</a>
-                </li>
-                %{--<li role="presentation" class="active">
-                    <a data-target="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a>
-                </li>
-                <li role="presentation">
-                    <a data-target="#avro" aria-controls="avro" role="tab" data-toggle="tab" ng-click="vm.loadAvroMetadata()">Avro</a>
-                </li>
-                <li role="presentation" ng-show="vm.beLookupEnabled">
-                    <a data-target="#be" aria-controls="be" role="tab" data-toggle="tab"ng-click="vm.loadBeData()">BE</a>
-                </li>--}%
-                <li role="presentation">
-                    <a data-target="#toolbox" aria-controls="toolbox" role="tab" data-toggle="tab">Toolbox</a>
-                </li>
-            </ul>
-        </div>
-        <div class="row">
-
-            <div class="tab-content">
+        <uib-tabset active="metadata" justified="true">
+            <uib-tab index="metadata" heading="MetaData">
                 <div id="video-metadata" role="tabpanel" class="tab-pane">
                     <div class="row align-items-start">
                         <div class="col-md-6 meta-data-height" ng-repeat="(key, item) in $ctrl.metadata">
@@ -49,9 +29,9 @@
                             <div class="panel panel-primary">
                                 <ul class="list-unstyled metadata-list">
                                     <li ng-repeat="entry in item">
-                                        <span class="text-capitalize">{{ entry }} :</span>
+                                        <span class="text-capitalize">{{ entry }}:</span>
                                         <span class="text-success">
-                                            {{ $ctrl.modalData.properties[entry] }}
+                                            {{ modalData.properties[entry] }}
                                         </span>
                                     </li>
                                 </ul>
@@ -60,94 +40,29 @@
                     </div>
 
                 </div>
+            </uib-tab>
+            %{--<ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a data-target="#video-metadata" aria-controls="video-metadata" role="tab" data-toggle="tab">Video Metadata</a>
+                </li>
+                --}%%{--<li role="presentation" class="active">
+                    <a data-target="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a>
+                </li>
+                <li role="presentation">
+                    <a data-target="#avro" aria-controls="avro" role="tab" data-toggle="tab" ng-click="vm.loadAvroMetadata()">Avro</a>
+                </li>
+                <li role="presentation" ng-show="vm.beLookupEnabled">
+                    <a data-target="#be" aria-controls="be" role="tab" data-toggle="tab"ng-click="vm.loadBeData()">BE</a>
+                </li>--}%%{--
+                <li role="presentation">
+                    <a data-target="#toolbox" aria-controls="toolbox" role="tab" data-toggle="tab">Toolbox</a>
+                </li>
+            </ul>--}%
+        </uib-tabset>
+        %{--<div class="row">
 
-                    %{--<div class="row">
-                        <div class="col-md-6">
-                            <!-- source -->
-                            <h4 class="text-info">Source</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="item in $ctrl.sourceItems">
-                                        <span class="text-capitalize">{{ item }} :</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[item] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="text-info">Metrics</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="item in $ctrl.metricItems">
-                                        <span class="text-capitalize">{{ item }}:</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[item] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <div class="tab-content">
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="text-info">File</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="item in $ctrl.fileItems">
-                                        <span class="text-capitalize">{{ item }}:</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[item] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="text-info">Dimensions</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="item in $ctrl.dimensionItems">
-                                        <span class="text-capitalize">{{ item }}:</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[item] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="text-info">General</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="item in $ctrl.generalItems">
-                                        <span class="text-capitalize">{{ item }}:</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[item] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="text-info">Geometry</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="item in $ctrl.geometryItems">
-                                        <span class="text-capitalize">{{ item }}:</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[item] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>--}%
                 <div id="metadata" role="tabpanel" class="tab-pane active">
                     <br>
                     <div class="col-md-6 metadata-ul-list">
@@ -410,7 +325,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <a class="btn btn-default btn-block btn-metrics"
-                                   ng-click="$ctrl.download( $ctrl.modalData.properties.videoUrl )"
+                                   ng-click="$ctrl.download( $ctrl.modalData.properties )"
                                    role = "button">Download</a>
                             </div>
                             <div class="col-md-6 toolbox-description-text">
@@ -460,7 +375,7 @@
                 </div>
 
             </div>
-        </div>
+        </div>--}%
 
     </div>
 </div>

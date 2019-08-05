@@ -12,7 +12,7 @@ angular
         }
     });
 
-function ModalController(avroMetadataService, shareService, downloadService) {
+function ModalController($scope, avroMetadataService, shareService, downloadService) {
     // Source key list
     // These match up with the WFS response.  They are case sensitive but are rendered in sentence-case on the UI.
     // Adding any value here, will dynamically generate/remove it from the UI.  No other actions will need to be taken.
@@ -23,15 +23,18 @@ function ModalController(avroMetadataService, shareService, downloadService) {
         'Source': ['id', 'DB ID', 'Mission', 'Sensor', 'Product ID', 'Organization', 'Country Code', 'WAC Code', 'Image Representation'],
         'Metrics': ['NIIRS', 'Azimuth Angle', 'Grazing Angle', 'Sun Azimuth', 'Sun Elevation', 'Cloud Cover', 'Number of Bands', 'Number of Resolution Levels', 'Bit Depth'],
         'File': ['Type', 'filename', 'Entry ID'],
-        'Dimensions': ['height', 'width'],
+        'Dimensions': ['height', 'width', 'Length'],
         'General': ['Description', 'Title', 'Security Classification'],
         'Geometry': ['GSD Unit', 'GSD X', 'GSD Y']
     }
 
+
     this.$onInit = function() {
         // When component loads, run resolve.modalData, which essentially brings the dataToBeRendered into this component
-        // Assign that object/repsonse to this.modalData which gives the UI access to it
-        this.modalData = this.resolve.modalData;
+        // Assign that object/response to this.modalData which gives the UI access to it
+        $scope.modalData = this.resolve.modalData;
+        $scope.modalData.properties.Description = 'test desc'
+        console.log('$scope.modalData ', $scope.modalData )
     }
 
     this.ok = function () {
@@ -46,23 +49,7 @@ function ModalController(avroMetadataService, shareService, downloadService) {
         shareService.imageLinkModal(videoLink)
     }
 
-    this.download = (videoUrl) => {
-        fetch(videoUrl)
-            .then(resp => resp.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                // the filename you want
-                a.download = 'todo-1.mp4';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                alert('your file has downloaded!'); // or you know, something with better UX...
-            })
-            .catch(() => alert('oh no!'));
-        // console.log('downloading video', videoUrl)
-        // downloadService.downloadVideo(videoUrl)
+    this.download = (videoProps) => {
+        downloadService.downloadVideo(videoProps)
     }
 }

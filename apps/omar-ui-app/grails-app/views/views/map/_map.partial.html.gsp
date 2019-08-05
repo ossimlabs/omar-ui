@@ -1227,9 +1227,9 @@
                                 <div class="media">
                                     <div class="media-left" style="position: relative">
                                         <!-- link to video player page -->
-                                        <a href="{{ video.properties.playerUrl }}"
+                                        <a href="{{ video.properties.player_url }}"
                                            target="_blank">
-                                            <img ng-src="{{ video.properties.requestThumbnailUrl }}"/>
+                                            <img ng-src="{{ video.properties.request_thumbnail_url }}"/>
                                         </a>
                                     </div>
 
@@ -1759,20 +1759,4 @@
 
     </div>
 
-
-
-    <!-- right-click context menu -->
-    <!-- Esterberg. commented out.  not sure what this is for. -->
-    %{--<div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>You Clicked Here:</h4></div>
-                <div align="center" class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>--}%
 </div>

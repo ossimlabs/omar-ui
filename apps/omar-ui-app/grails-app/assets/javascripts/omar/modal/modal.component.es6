@@ -12,7 +12,7 @@ angular
         }
     });
 
-function ModalController($scope, avroMetadataService, shareService, downloadService) {
+function ModalController(avroMetadataService, shareService, downloadService) {
     // Source key list
     // These match up with the WFS response.  They are case sensitive but are rendered in sentence-case on the UI.
     // Adding any value here, will dynamically generate/remove it from the UI.  No other actions will need to be taken.
@@ -28,13 +28,10 @@ function ModalController($scope, avroMetadataService, shareService, downloadServ
         'Geometry': ['GSD Unit', 'GSD X', 'GSD Y']
     }
 
-
     this.$onInit = function() {
         // When component loads, run resolve.modalData, which essentially brings the dataToBeRendered into this component
         // Assign that object/response to this.modalData which gives the UI access to it
-        $scope.modalData = this.resolve.modalData;
-        $scope.modalData.properties.Description = 'test desc'
-        console.log('$scope.modalData ', $scope.modalData )
+        this.modalData = this.resolve.modalData;
     }
 
     this.ok = function () {

@@ -17,34 +17,29 @@
         <div class="row">
             <div class="col-md-1"><h4>ID:</h4></div>
             <div class="col-md-10"><h4 class="text-success">{{ $ctrl.modalData.id }}</h4></div>
-
         </div>
         <div class="row"></div>
         <uib-tabset active="0" justified="true">
 
             <!-- Meta Data -->
             <uib-tab index="0" heading="MetaData">
-                <div id="video-metadata" class="tab-pane">
-                    <div class="row align-items-start">
-                        <div class="col-md-6 meta-data-height" ng-repeat="(key, item) in $ctrl.metadata">
-                            <h4 class="text-info">{{ key }}</h4>
-                            <div class="panel panel-primary">
-                                <ul class="list-unstyled metadata-list">
-                                    <li ng-repeat="entry in item">
-                                        <span class="text-capitalize">{{ entry }}:</span>
-                                        <span class="text-success">
-                                            {{ $ctrl.modalData.properties[entry] }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="col-xs-6" style="min-height: 181px" ng-repeat="(key, item) in $ctrl.metadata">
+                    <h4 class="text-info">{{ key }}</h4>
+                    <div class="meta-data-box">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="entry in item">
+                                <span class="text-capitalize">{{ entry }}:</span>
+                                <span class="text-success ">
+                                    {{ $ctrl.modalData.properties[entry] }}
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </uib-tab>
 
             <!-- AVRO -->
-            <uib-tab index="1" heading="Avro">
+            <uib-tab index="1" heading="Avro" disable="true">
                 <div id="avro" class="tab-pane" ng-click="vm.loadAvroMetadata()">
                     <div class="panel panel-default panel-avro-metadata" ng-show="vm.showAvroMetadata">
                         <div class="col-md-4">
@@ -78,7 +73,7 @@
             </uib-tab>
 
             <!-- BE -->
-            <uib-tab index="3" heading="BE">
+            <uib-tab index="3" heading="BE" disable="true">
                 <div id="be" role="tabpanel" class="tab-pane" ng-click="vm.loadBeData()" index="2">
                     <div>
                         <br>
@@ -110,90 +105,40 @@
 
             <!-- Toolbox -->
             <uib-tab index="4" heading="Toolbox">
-
-                <i class="fas fa-file-export"></i>
-                <i class="fa fa-download"></i>
-                <i class="fa fa-share-alt"></i>
-                <i class="fa fa-search-plus"></i>
-                <i class="fa fa-map-marked-alt"></i>
-                <i class="fa fa-laptop-code"></i>
+                <div class="row text-center toolbox-button-row">
+                    <a
+                       class="btn btn-default disabled"
+                       type="button">
+                        <i class="fas fa-file-export fa-3x" uib-tooltip="Export to KML"></i>
+                        <h5>Export</h5>
+                    </a>
+                    <a ng-click="$ctrl.download( $ctrl.modalData.properties )"
+                       class="btn btn-default"
+                       type="button">
+                        <i class="fa fa-download fa-3x" uib-tooltip="Download raw file"></i>
+                        <h5>Download</h5>
+                    </a>
+                    <a ng-click="$ctrl.share($ctrl.modalData.properties.videoUrl)"
+                       class="btn btn-default"
+                       type="button">
+                        <i class="fa fa-share-alt fa-3x" uib-tooltip="Share"></i>
+                        <h5>Share</h5>
+                    </a>
+                    <a class="btn btn-default disabled" type="button">
+                        <i class="fa fa-search-plus fa-3x" uib-tooltop="Share a link to the GetCapabilities for image"></i>
+                        <h5>GetCapes</h5>
+                    </a>
+                    <a class="btn btn-default disabled" type="button">
+                        <i class="fa fa-map-marked-alt fa-3x" uib-tooltop="Share a link to the GetMap for image"></i>
+                        <h5>GetMap</h5>
+                    </a>
+                    <a class="btn btn-default disabled" type="button">
+                        <i class="fa fa-laptop-code fa-3x" uib-tooltop="Runs machine learning workflow on image"></i>
+                        <h5>Machine Learning</h5>
+                    </a>
+                </div>
             </uib-tab>
-
         </uib-tabset>
-
-
-
-        <div id="toolbox" role="tabpanel" class="tab-pane" index="3">
-            <div>
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <h4 class="text-info">Tool</h4>
-                    </div>
-                    <div class="col-md-6 text-center">
-                        <h4 class="text-info">Description</h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class = "btn btn-default btn-block btn-metrics" href="{{vm.kmlRequestUrl}}{{vm.selectedImage.properties.id}}" role = "button" target = "_blank">KML Export</a>
-                    </div>
-                    <div class="col-md-6 toolbox-description-text">
-                        Download KML document for this image
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class="btn btn-default btn-block btn-metrics"
-                           ng-click="$ctrl.download( $ctrl.modalData.properties )"
-                           role = "button">Download</a>
-                    </div>
-                    <div class="col-md-6 toolbox-description-text">
-                        Download raw file
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class = "btn btn-default btn-block btn-metrics"
-                           ng-click="$ctrl.share($ctrl.modalData.properties.videoUrl)"
-                           role = "button">Share</a>
-                    </div>
-                    <div class="col-md-6 toolbox-description-text">
-                        Share image link
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.copyWmsCaps(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Capabilities</a>
-                    </div>
-                    <div class="col-md-6 toolbox-description-text">
-                        Share a link to the GetCapabilities for image
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.shareWmsGetMap(vm.selectedImage.properties.id)" role = "button" target = "_blank">WMS Get Map</a>
-                    </div>
-                    <div class="col-md-6">
-                        Share a link to the GetMap for image
-                        <br>
-                        <small>Include BBox:</small>
-                        <input ng-model = "vm.bBoxCheck" type = "checkbox">
-                        <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Check the box to include the BBox of the image (default behavior). Otherwise, a variable of {bbox} will be used (rMaps)"></i>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class = "btn btn-default btn-block btn-metrics" ng-click="vm.submitMlJob(vm.selectedImage.properties.id)" role = "button" target = "_blank">Run Detections</a>
-                    </div>
-                    <div class="col-md-6 toolbox-description-text">
-                        Runs machine learning workflow on image
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-
-        </div>
 
     </div>
 </div>

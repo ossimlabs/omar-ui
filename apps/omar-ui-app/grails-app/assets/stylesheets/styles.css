@@ -1218,7 +1218,23 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   margin-top: 1em !important;
 }
 
+.meta-data-box {
+  padding: 8px;
+  border: black 1px solid;
+  border-radius: 10px;
+}
+
 .meta-data-height {
   display:inline-block;
   float:none !important;
+}
+
+.toolbox-button-row {
+  margin: 20px 0px;
+  padding: 8px,
+}
+
+.toolbox-button-row a {
+  margin: 0px 5px;
+  min-width:91px;
 }

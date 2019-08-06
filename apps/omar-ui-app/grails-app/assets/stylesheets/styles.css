@@ -1020,9 +1020,15 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 }
 
 #video-panel-body {
-  display: flex;            /* establish flex container */
+  display: flex;
   flex-direction: row;
-  align-items: center;      /* center column horizontally */
+  align-items: center;
+}
+
+#video-panel-body-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #video-circle-icon {
@@ -1040,7 +1046,7 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   border: none;
   bottom: 50%;
   left: 50%;
-  transform: translate(-50%, 50%);
+  transform: translate(-60%, 50%);
 }
 
 #video-circle-button:focus {

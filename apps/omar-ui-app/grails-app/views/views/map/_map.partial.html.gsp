@@ -1227,7 +1227,13 @@
                                 <div class="media" id="video-panel-body">
                                     <div class="media-left" style="position: relative;">
                                         <!-- link to video player page -->
-                                        <img style="border: #101010 solid 1px; border-radius: 3px;" ng-src="{{ video.properties.requestThumbnailUrl }}"/>
+                                        <img style="border: #101010 solid 1px;
+                                            border-radius: 3px;"
+                                             uib-tooltip="Click the thumbnail or the image ID to view the raw image"
+                                             height="114"
+                                             width="114"
+                                             style="border:1px solid black"
+                                             ng-src="{{ video.properties.requestThumbnailUrl }}"/>
                                         <a href="{{ video.properties.playerUrl }}"
                                            target="_blank">
                                             <button id="video-circle-button" type="button" class="btn btn-default" aria-label="Left Align">

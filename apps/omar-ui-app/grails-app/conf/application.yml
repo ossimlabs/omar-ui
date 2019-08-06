@@ -73,7 +73,7 @@ omar:
       # Message of The Display Banner settings
       motd:
         # Used to show/hide the message of the day banner
-        enabled: false
+        enabled: true
         # Text for the message of the day
         message: "Be sure to check out the new federation capability by selecting an O2 server from the new dropdown box located above the result cards list!"
       # The placemarks uses the WFS query engine to query placemark locations based on BE numbers.
@@ -92,7 +92,7 @@ omar:
       splashModal:
         delay: 1000
         # Used to enable/disable the splash modal from displaying
-        enabled: false
+        enabled: true
         # Splash modal header text
         header: O2 Notice
         # Splash modal message body text

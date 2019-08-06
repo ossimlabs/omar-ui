@@ -2,7 +2,6 @@ buildscript {
   repositories {
     mavenLocal()
     maven { url ossimMavenProxy }
-    mavenCentral()
   }
   dependencies {
     classpath "org.grails:grails-gradle-plugin:$grailsVersion"

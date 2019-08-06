@@ -78,7 +78,6 @@ function (
         // Clear videoData each time
         $scope.videoData = []
         const baseUrl = stateService.omarSitesState.url.base
-        $scope.videoThumbnailSize = 128;
             // <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
 
         // Only run this if the toggle (checkbox) is true

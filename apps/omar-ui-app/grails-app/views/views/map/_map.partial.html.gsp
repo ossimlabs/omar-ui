@@ -1227,26 +1227,14 @@
                                 <div class="media" id="video-panel-body">
                                     <div class="media-left" style="position: relative;">
                                         <!-- link to video player page -->
-                                        <div
-                                             style="height: 72px;
-                                             width: 128px;
-                                             border: #101010 solid 1px;
-                                             border-radius: 3px;
-                                             background: black;
-                                             opacity: .75;
-                                             display: flex;
-                                             align-items: center;
-                                             justify-content: center;">
-                                            <img
-                                                 tooltip-placement="right"
-                                                 uib-tooltip="Click the thumbnail to view the video"
-                                                 ng-src="{{ video.properties.requestThumbnailUrl }}"/>
-                                        </div>
                                         <a href="{{ video.properties.playerUrl }}"
                                            target="_blank">
-                                            <button id="video-circle-button" type="button" class="btn btn-default" aria-label="Left Align">
-                                                <span id="video-circle-icon" class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
-                                            </button>
+                                            <div id="video-thumbnail"
+                                                 tooltip-placement="right"
+                                                 uib-tooltip="Click the thumbnail to view the video">
+                                                    <img ng-src="{{ video.properties.requestThumbnailUrl }}"/>
+                                                    <span id="video-circle-icon" class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                                            </div>
                                         </a>
                                     </div>
 

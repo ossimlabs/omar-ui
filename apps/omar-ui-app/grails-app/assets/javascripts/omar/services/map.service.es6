@@ -48,21 +48,17 @@
     var mapObj = {};
 
     var baseServerUrl = AppO2.APP_CONFIG.serverURL;
-    var markerUrl =
-      baseServerUrl + "/" + AppO2.APP_CONFIG.params.misc.icons.greenMarker;
+    var markerUrl = baseServerUrl + "/" + AppO2.APP_CONFIG.params.misc.icons.greenMarker;
 
     // Sets the intial url values for the footprints (geoscript) service
     var footprintsBaseUrl = stateService.omarSitesState.url.base;
-    var footprintsContextPath =
-      stateService.omarSitesState.url.geoscriptContextPath;
-    var footprintsRequestUrl =
-      footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
+    var footprintsContextPath = stateService.omarSitesState.url.geoscriptContextPath;
+    var footprintsRequestUrl = footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
 
     // Sets the initial url values for the thumbnails (oms) service
     var thumbnailsBaseUrl = stateService.omarSitesState.url.base;
     var thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-    var thumbnailUrl =
-      thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+    var thumbnailUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
     var wmsBaseUrl = stateService.omarSitesState.url.base;
     var wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
@@ -75,15 +71,12 @@
      */
     vm.setMapServiceUrlProps = function() {
       footprintsBaseUrl = stateService.omarSitesState.url.base;
-      footprintsContextPath =
-        stateService.omarSitesState.url.geoscriptContextPath;
-      footprintsRequestUrl =
-        footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
+      footprintsContextPath = stateService.omarSitesState.url.geoscriptContextPath;
+      footprintsRequestUrl = footprintsBaseUrl + footprintsContextPath + "/footprints/getFootprints";
 
       thumbnailsBaseUrl = stateService.omarSitesState.url.base;
       thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-      thumbnailUrl =
-        thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
+      thumbnailUrl = thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
       wmsBaseUrl = stateService.omarSitesState.url.base;
       wmsContextPath = stateService.omarSitesState.url.wmsContextPath;
@@ -917,7 +910,7 @@
                 media.appendChild( mediaLeft );
 
                     var a = document.createElement( 'a' );
-                    a.href = '/omar-ui/omar/#/mapImage?' + $.param({
+                    a.href = '/omar-ui/omar/#!/mapImage?' + $.param({
                         bands: 'default',
                         brightness: 0,
                         contrast: 1,

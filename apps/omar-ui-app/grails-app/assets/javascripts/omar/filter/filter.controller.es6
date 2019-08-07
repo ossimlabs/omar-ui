@@ -83,7 +83,8 @@ function (
         if ($scope.filterVideosToggle) {
             videoService.videoQuery()
                 .then((res) => {
-                    for (let i=0; i < res.data.features.length; i++ ){
+                    let length = res.data.features.length;
+                    for (let i=0; i < length; i++ ){
                         const id = res.data.features[i].properties.id
 
                         // strip everything away leaving filename

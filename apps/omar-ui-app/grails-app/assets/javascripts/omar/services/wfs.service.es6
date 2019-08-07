@@ -169,7 +169,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
 
         $.each( [ true, requestHits ], function( index, value ) {
             // TODO Esterberg - requestHits is always undefined and somehow runs 10 times...
-            // console.log('index', index, 'value', value, 'requestHits', requestHits)
             if ( value !== false ) {
                 // TODO Esterberg - undefined = true in js.  This runs every single time...
                 var wfsQuery = function() {

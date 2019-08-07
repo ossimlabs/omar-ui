@@ -846,7 +846,7 @@
                             <div id = "popup-content"></div>
                         </div>
                         <div id = "progress" class = "text-info">
-                            <i class = "fa fa-spinner fa-spin fa-4x"></i>
+                            <i class = "fa fa-spinner fa-sync-alt fa-4x"></i>
                         </div>
                     </div>
                 </div>
@@ -1172,9 +1172,9 @@
                                        tooltip-placement = "bottom"
                                        uib-tooltip = "Refresh the image list data">
                                         &nbsp;
-                                        <span class = "fa fa-refresh"
+                                        <i class = "fa fa-sync-alt"
                                               ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
-                                        </span>
+                                        </i>
                                         &nbsp;
                                     </a>
                                 </li>
@@ -1227,9 +1227,9 @@
                                 <div class="media">
                                     <div class="media-left" style="position: relative">
                                         <!-- link to video player page -->
-                                        <a href="{{ video.properties.playerUrl }}"
+                                        <a href="{{ video.properties.player_url }}"
                                            target="_blank">
-                                            <img ng-src="{{ video.properties.requestThumbnailUrl }}"/>
+                                            <img ng-src="{{ video.properties.request_thumbnail_url }}"/>
                                         </a>
                                     </div>
 
@@ -1270,16 +1270,18 @@
                                                 </span>
                                             </div>
                                         </div>
-
                                         <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
                                             <a class="btn btn-default" type="button"
                                                ng-click="list.zoomToSelectedMedia(video);">
-                                                <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                                <i class="fa fa-arrows-alt text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                            </a>
+
+                                            <a class="btn btn-default" type="button"
+                                               ng-click="list.openComponentModal(video)">
+                                                <i class="fa fa-table text-default" tooltip-placement="pull-right" uib-tooltip="View image metadata"></i>
                                             </a>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -1287,21 +1289,21 @@
                 </div>
 
                 <!-- Video pagination -->
-                <div class="text-center" id="pagination">
-                    <uib-pagination
-                            style="margin: 8px;"
-                            total-items="videoData.features.length"
-                            items-per-page="list.pageLimit"
-                            ng-model="list.currentVideoPage"
-                            ng-change="list.videoPageChange(list.currentVideoPage)"
-                            max-size="5"
-                            boundary-links="true"
-                            force-ellipses="true"
-                            rotate="false"
-                            first-text="First"
-                            last-text="Last"
-                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                    </uib-pagination>
+                <div class="text-center" id="pagination-video">
+                    <ul uib-pagination
+                        style="margin: 8px;"
+                        total-items="videoData.features.length"
+                        items-per-page="list.pageLimit"
+                        ng-model="list.currentVideoPage"
+                        ng-change="list.videoPageChange(list.currentVideoPage)"
+                        max-size="5"
+                        boundary-links="true"
+                        force-ellipses="true"
+                        rotate="false"
+                        first-text="First"
+                        last-text="Last"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                    </ul>
                 </div>
             </div>
 
@@ -1438,7 +1440,7 @@
                                        tooltip-placement = "bottom"
                                        uib-tooltip = "Refresh the image list data">
                                         &nbsp;
-                                        <span class = "fa fa-refresh"
+                                        <span class = "fa fa-sync-alt"
                                               ng-class = "{'fa-spin fa-pulse': filter.refreshSpin}">
                                         </span>
                                         &nbsp;
@@ -1571,8 +1573,8 @@
                                         </div>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="card-buttons">
                                             <a class="btn btn-default" type="button"
-                                               ng-click="list.zoomToSelectedMedia(image);">
-                                                <i class="fa fa-arrows text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
+                                               ng-click="list.zoomToSelectedImage(image.properties.id);">
+                                                <i class="fa fa-arrows-alt text-default" tooltip-placement="right" uib-tooltip="Zoom to the image extent"></i>
                                             </a>
                                             <a class="btn btn-default" type="button"
                                                ng-click="list.showImageModal(image, list.imageSpaceDefaults, list.imageSpaceRequestUrl, list.uiRequestUrl, list.mensaRequestUrl, list.wfsRequestUrl, list.tlvRequestUrl, list.kmlRequestUrl);list.openTab('metadata');">
@@ -1595,23 +1597,23 @@
                     </div>
                 </div>
                 <div class="text-center" id = "pagination">
-                    <uib-pagination style="margin: 8px;"
-                                    total-items="list.wfsFeaturesTotalPaginationCount"
-                                    items-per-page="list.pageLimit"
-                                    ng-model="list.currentStartIndex"
-                                    ng-change="list.pagingChanged()"
-                                    max-size="5"
-                                    boundary-links="true"
-                                    force-ellipses="true"
-                                    rotate="false"
-                                    first-text="First"
-                                    last-text="Last"
-                                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                    </uib-pagination>
+                    <ul uib-pagination style="margin: 8px;"
+                        total-items="list.wfsFeaturesTotalPaginationCount"
+                        items-per-page="list.pageLimit"
+                        ng-model="list.currentStartIndex"
+                        ng-change="list.pagingChanged()"
+                        max-size="5"
+                        boundary-links="true"
+                        force-ellipses="true"
+                        rotate="false"
+                        first-text="First"
+                        last-text="Last"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                    </ul>
                 </div>
             </div>
 
-            <!-- Reachback Panel -->
+            <!-- Reachback tiles -->
             <div class = "ResultsPane" ng-hide="filterVideosToggle" id = "reachbackPanelContainer">
                 <div class = "Results-tab-heading">
                     <button id="button0" class = "reachbackTabButton" onclick="addClickClass(0,1); switchPanel(false, 0)"> Cards list </button>
@@ -1722,19 +1724,19 @@
                             </div>
                         </div>
                     <div class="text-center" id = "pagination">
-                        <uib-pagination style="margin: 8px;"
-                                        total-items="reachbackResponse.length"
-                                        items-per-page="10"
-                                        ng-model="currentPageNumber"
-                                        ng-change="currentPageNumber; reachback.setPage()"
-                                        max-size="5"
-                                        boundary-links="true"
-                                        force-ellipses="true"
-                                        rotate="false"
-                                        first-text="First"
-                                        last-text="Last"
-                                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                        </uib-pagination>
+                        <ul uib-pagination style="margin: 8px;"
+                            total-items="reachbackResponse.length"
+                            items-per-page="10"
+                            ng-model="currentPageNumber"
+                            ng-change="currentPageNumber; reachback.setPage()"
+                            max-size="5"
+                            boundary-links="true"
+                            force-ellipses="true"
+                            rotate="false"
+                            first-text="First"
+                            last-text="Last"
+                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                        </ul>
                     </div>
                 </div>
                 <div class = "JSONPanel">
@@ -1746,17 +1748,4 @@
 
     </div>
 
-    <!-- right-click context menu -->
-    <div class="modal" id="contextMenuDialog" role="dialog" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>You Clicked Here:</h4></div>
-                <div align="center" class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

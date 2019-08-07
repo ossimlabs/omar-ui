@@ -10,7 +10,7 @@
       "mgcrea.ngStrap",
       "angular-clipboard",
       "ui.select",
-      "ngSanitize"
+      "ngSanitize",
     ])
     .config([
       "$stateProvider",

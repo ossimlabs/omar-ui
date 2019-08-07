@@ -78,20 +78,19 @@ function (
         // Clear videoData each time
         $scope.videoData = []
         const baseUrl = AppO2.APP_CONFIG.params.sites.o2.url.base
-            // <a href="https://omar-dev.ossim.io/omar-video-ui?filter=in({{video.properties.id}})"
 
         // Only run this if the toggle (checkbox) is true
         if ($scope.filterVideosToggle) {
             videoService.videoQuery()
-                .success(function(data, status, header, config){
-
-                    for (let i=0; i < data.features.length; i++ ){
-                        const id = data.features[i].properties.id
+                .then((res) => {
+                    for (let i=0; i < res.data.features.length; i++ ){
+                        const id = res.data.features[i].properties.id
 
                         // strip everything away leaving filename
                         // because regex is the devil and this is cleaner
                         // split divides url by /, pop returns last, replace modifies filetype
-                        const videoNameMp4 = data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
+                        const videoNameMp4 = res.data.features[i].properties.filename.split('/').pop().replace(/mpg/i, 'mp4')
+                        const videoFileType = res.data.features[i].properties.filename.split('.').pop()
 
                         // Build thumbnail url using a more dynamnic approach
                         // It's not a link directly to the image.  It's a service that responds with the image
@@ -100,19 +99,25 @@ function (
                         const playerUrl = `${baseUrl}/omar-video-ui?filter=in(${id}%29`
 
                         // Build final url and append to response keeping unified object intact
-                        data.features[i].properties.videoUrl = vm.videoUrl = baseUrl + '/videos/' + videoNameMp4
+                        res.data.features[i].properties.video_url = vm.videoUrl = baseUrl + '/videos/' + videoNameMp4
 
                         // Append requestThumbnailUrl to video response for UI
-                        data.features[i].properties.requestThumbnailUrl = thumbUrl
+                        res.data.features[i].properties.request_thumbnail_url = thumbUrl
 
                         // Append omar-video-ui to video response for UI
-                        data.features[i].properties.playerUrl = playerUrl
+                        res.data.features[i].properties.player_url = playerUrl
+
+                        // Append filetype to video response for UI
+                        res.data.features[i].properties.type = videoFileType
+
+                        // Append name to video response for UI
+                        res.data.features[i].properties.video_name = videoNameMp4
                     }
 
                     // save a copy to videoData
                     // used for totals and pagination slicage.
                     // never altered!
-                    $scope.videoData = data;
+                    $scope.videoData = res.data;
 
                     // get the first 10 results sliced up for page 1
                     $scope.slicedVideoData = $scope.videoData.features.slice(0, vm.pageLimit)

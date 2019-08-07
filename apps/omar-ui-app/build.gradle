@@ -61,9 +61,9 @@ dependencies {
   compile "org.webjars:jquery:2.2.0"
   compile "org.webjars:jquery-ui:1.10.3"
   compile "org.webjars:bootstrap:3.3.5"
-  compile "org.webjars.bower:angularjs:1.4.8"
-  compile "org.webjars:angular-ui-router:0.2.15"
-  compile "org.webjars.npm:angular-ui-bootstrap:0.14.3"
+  compile "org.webjars.bower:angularjs:1.7.5"
+  compile "org.webjars:angular-ui-router:1.0.20"
+  compile "org.webjars:angular-ui-bootstrap:2.5.0"
   compile "org.webjars:angular-deferred-bootstrap:0.1.5"
   compile "org.webjars.bower:bootstrap-select:${bootstrapSelectV}"
   compile "org.webjars.bower:devbridge-autocomplete:1.2.21"
@@ -78,7 +78,7 @@ dependencies {
   compile "org.webjars.bower:angular-clipboard:1.4.2"
   compile "org.webjars:angular-ui-select:0.17.1"
   compile "org.webjars.bower:angular-ui-select2:0.0.5"
-  compile "org.webjars.npm:angular-sanitize:1.4.8"
+  compile "org.webjars.npm:angular-sanitize:1.7.8"
   compile "org.webjars.bower:microplugin:0.0.3"
   compile "org.webjars:selectize.js:${selectizeV}"
   compile "org.webjars.bower:seiyria-bootstrap-slider:${seiyriaBootstrapSliderV}"
@@ -86,7 +86,7 @@ dependencies {
   // compile 'org.webjars:openlayers:4.5.0'
 
   // Font stuff
-  compile "org.webjars:font-awesome:4.4.0"
+  compile "org.webjars:font-awesome:5.9.0"
 
   // compile "org.springframework.cloud:spring-cloud-starter-config"
   // compile "org.springframework.cloud:spring-cloud-starter-eureka"

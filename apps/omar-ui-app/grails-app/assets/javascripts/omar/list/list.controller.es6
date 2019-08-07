@@ -45,6 +45,7 @@
     //console.log('AppO2.APP_CONFIG in ListController: ', AppO2.APP_CONFIG);
 
     /* jshint validthis: true */
+
     var vm = this;
 
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
@@ -780,6 +781,26 @@
 
       // TODO: Figure out if selections are possible
     };
+
+    // VIC-201 //esterberg Open new modal component
+    vm.openComponentModal = function(dataToBeRendered) {
+      const modalInstance = $uibModal.open({
+        component: 'modal',
+        size: 'lg',
+        resolve: {
+          modalData: () => {
+            return dataToBeRendered;
+          }
+        }
+      })
+
+      modalInstance.result.then((selectedItem) => {
+        vm.selected = selectedItem;
+      }, function () {
+        // $log.info('modal-component dismissed at: ' + new Date());
+      });
+
+    }
   }
 
   // Handles the selected image modal obj

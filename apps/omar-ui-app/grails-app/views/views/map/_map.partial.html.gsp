@@ -1501,11 +1501,11 @@
                                                     height="114"
                                                     width="114"
                                                     style="border:1px solid black"
-                                                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">&nbsp;
+                                                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">
                                         </a>
                                         <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">
                                             <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
-                                        </div>
+                                        </div>&nbsp;
                                     </div>
                                     <div class="media-body">
                                         <div class="row"></div>

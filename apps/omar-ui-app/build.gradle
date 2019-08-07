@@ -16,6 +16,7 @@ assets {
   ]
   includes = [
     "**/fonts/**",
+    "**/webfonts/**",
     "**/webjars/**/bootstrap.min.css",
     "**/webjars/**/ol.css",
     "**/webjars/**/ol.js",

@@ -77,13 +77,14 @@ function (
     vm.getVideos = function() {
         // Clear videoData each time
         $scope.videoData = []
-        const baseUrl = AppO2.APP_CONFIG.params.sites.o2.url.base
+        const baseUrl = stateService.omarSitesState.url.base
 
         // Only run this if the toggle (checkbox) is true
         if ($scope.filterVideosToggle) {
             videoService.videoQuery()
                 .then((res) => {
-                    for (let i=0; i < res.data.features.length; i++ ){
+                    let length = res.data.features.length;
+                    for (let i=0; i < length; i++ ){
                         const id = res.data.features[i].properties.id
 
                         // strip everything away leaving filename
@@ -94,7 +95,7 @@ function (
 
                         // Build thumbnail url using a more dynamnic approach
                         // It's not a link directly to the image.  It's a service that responds with the image
-                        const thumbUrl = `${baseUrl}/omar-stager/videoDataSet/getThumbnail?id=${id}&size=128&type=png`
+                        const thumbUrl = `${baseUrl}/omar-stager/videoDataSet/getThumbnail?id=${id}&w=128&h=85&type=png`
                         // WEIRD BUG with backtick where the last ) is not rendered properly... Researched for a while.
                         const playerUrl = `${baseUrl}/omar-video-ui?filter=in(${id}%29`
 

@@ -1225,11 +1225,16 @@
 
                             <div class="panel-body">
                                 <div class="media">
-                                    <div class="media-left" style="position: relative">
+                                    <div class="media-left" style="position: relative;">
                                         <!-- link to video player page -->
                                         <a href="{{ video.properties.player_url }}"
                                            target="_blank">
-                                            <img ng-src="{{ video.properties.request_thumbnail_url }}"/>
+                                            <div id="video-thumbnail"
+                                                 tooltip-placement="right"
+                                                 uib-tooltip="Click the thumbnail to view the video">
+                                                <img ng-src="{{ video.properties.request_thumbnail_url }}"/>
+                                                <span id="video-circle-icon" class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                                            </div>
                                         </a>
                                     </div>
 

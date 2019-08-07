@@ -180,6 +180,47 @@ body {
   font-size: 0.95em;
 }
 
+#video-panel-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#video-panel-body-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#video-circle-icon {
+  opacity: 0;
+  font-size: 25px;
+  background: transparent;
+  position: absolute;
+  border: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-65%, -50%);
+}
+
+#video-thumbnail {
+  height: 85px;
+  width: 128px;
+  background: black;
+  opacity: .75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#video-thumbnail:hover #video-circle-icon {
+  opacity: .8;
+}
+
+#video-circle-icon:focus {
+  outline: none;
+}
+
 .jumbotron {
   position: relative;
   background: #000 url("aerial_rs.jpg") center center;

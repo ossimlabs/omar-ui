@@ -133,18 +133,18 @@
                                         <span class = "input-group-addon">
                                             <input
                                                     ng-change = "filter.updateFilterString()"
-                                                    ng-checked = "!filter.imageryCheck ? false : filter.countryCodeCheck"
                                                     ng-disabled = "!filter.imageryCheck || filterVideosToggle"
                                                     ng-model = "filter.countryCodeCheck"
                                                     type="checkbox">
                                         </span>
                                         <input
                                                 class = "form-control"
+                                                id = "countryCodeInput"
                                                 list = "countryCodeList"
                                                 ng-blur = "filter.countryCodeCheck = filter.countryCode === '' ? false : true; filter.updateFilterString()"
                                                 ng-change = "filter.handleDataList( 'countryCodeInput' )"
                                                 ng-disabled = "!filter.imageryCheck || filterVideosToggle"
-                                                ng-keyup = "filter.handleDataList( 'countryCodeInput' ); filter.setDataListValue('imageryCheck', 'countryCodeInput', 'countryCodeList')"
+                                                ng-keyup = "filter.handleDataList( 'countryCodeInput' ); filter.setDataListValue('countryCodeCheck', 'countryCodeInput', 'countryCodeList')"
                                                 ng-model = "filter.countryCode"
                                                 placeholder = "Country Code">
                                         <datalist id = "countryCodeList">
@@ -880,10 +880,9 @@
                                             ng-keyup = "reachback.setDataListValue('sensorIdCheck', 'reachbackSensorInput', 'sensorIdList')"
                                             ng-model = "reachback.sensorId"
                                             placeholder = "Sensor ID">
-                                        <datalist id = "sensorIdList" onclick="hello()">
+                                        <datalist id = "sensorIdList">
                                             <option ng-repeat = "val in sensorIdTypes" value="{{val}}">
                                         </datalist>
-                                        <script> function hello() { console.log("hello world"); } </script>
                                     </div>
                                 </div>
                             </div>
@@ -1209,7 +1208,7 @@
                                  ng-click="list.addToExportList(video.properties.id)"
                                  style="font-size: 11px; padding: 2px 7px;">
                                 <span>
-                                    <i class="fa fa-square-o cursor-pointer"
+                                    <i class="far fa-square cursor-pointer"
                                     %{--                                   ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"--}%
                                        aria-hidden="true"
                                        style="padding-right: 5px;"
@@ -1473,12 +1472,12 @@
                                  ng-click="list.addRemoveCards(image.properties.id)"
                                  style="font-size: 11px; padding: 2px 7px;">
                                 <span>
-                                    <i class="fa fa-square-o cursor-pointer"
-                                       ng-class="{'fa-check-square text-success': list.checkSelectItem(image.properties.id)}"
-                                       aria-hidden="true"
-                                       style="padding-right: 5px;"
-                                       tooltip-placement="left-bottom"
-                                       uib-tooltip="Add image to selected list">
+                                    <i
+                                        ng-class="{'far fa-check-square text-success': list.checkSelectItem(image.properties.id), 'far fa-square cursor-pointer': !list.checkSelectItem(image.properties.id)}"
+                                        aria-hidden="true"
+                                        style="padding-right: 5px;"
+                                        tooltip-placement="left-bottom"
+                                        uib-tooltip="Add image to selected list">
                                     </i>
                                 </span>
                                 <span class="text-default cursor-pointer">

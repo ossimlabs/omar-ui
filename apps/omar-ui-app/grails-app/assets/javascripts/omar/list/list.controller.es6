@@ -894,7 +894,7 @@
         wmsRequestUrl: wmsRequestUrl
       };
 
-      return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param(params);
+      return AppO2.APP_CONFIG.serverURL + "/omar/#!/mapImage?" + $.param(params);
     };
 
     // Used to show/hide the 'Image not found message'

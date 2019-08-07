@@ -998,7 +998,7 @@
                             }
                             else {
                                 span.className = 'text-info';
-                                span.innerHTML = 'Security Classification Unkown';
+                                span.innerHTML = 'Security Classification Unknown';
                             }
                             colMd12.appendChild( span );
 
@@ -1110,7 +1110,7 @@
                         buttonGroup.appendChild( a );
 
                             var i = document.createElement( 'i' );
-                            i.className = 'fa fa-arrows text-default';
+                            i.className = 'fa fa-arrows-alt text-default';
                             i[ 'tooltip-placement' ] = 'right';
                             i[ 'ui-tooltip' ] = 'Zoom to the image extent';
                             a.appendChild( i );

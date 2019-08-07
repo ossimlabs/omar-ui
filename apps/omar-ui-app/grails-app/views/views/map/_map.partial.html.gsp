@@ -846,7 +846,7 @@
                             <div id = "popup-content"></div>
                         </div>
                         <div id = "progress" class = "text-info">
-                            <i class = "fa fa-spinner fa-sync-alt fa-4x"></i>
+                            <i class = "fa fa-spinner fa-pulse fa-4x"></i>
                         </div>
                     </div>
                 </div>

@@ -207,13 +207,12 @@ body {
   height: 85px;
   width: 128px;
   background: black;
-  opacity: .75;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#video-thumbnail:hover #video-circle-icon {
+.video-thumbnail:hover #video-circle-icon {
   opacity: .8;
 }
 

@@ -44,7 +44,7 @@
               </ul>
             </li>
             <li class = "nav-title-left">
-                <form id = "searchForm" class = "searchForm">
+                <form id = "searchForm" class = "searchForm" style="margin-bottom: -5px;">
                     <div class = "input-group input-group-sm">
                         <input id = "magicSearchInput" type = "text" class = "form-control" placeholder = "BE, Coordinate, Image ID or Placename" autofocus>
                         <span class = "input-group-btn">

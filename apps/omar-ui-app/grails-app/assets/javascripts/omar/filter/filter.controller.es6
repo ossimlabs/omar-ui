@@ -224,6 +224,7 @@ function (
     };
 
     function getDistinctValues( property ) {
+        console.log("getting values");
         $scope[ property + 'Types' ] = [];
 
         var url = stagerRequestUrl + property;

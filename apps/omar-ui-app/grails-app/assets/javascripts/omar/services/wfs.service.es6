@@ -185,7 +185,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                                 $rootScope.$broadcast( 'wfs: updated', data.features );
                                 const imageIdArray = data.features.map( image => image.properties.id );
                                 stateService.mapState.featureIds = imageIdArray;
-
                             }
                             else if ( index == 1 ) {
                                 $rootScope.$broadcast( 'wfs features: updated', data.totalFeatures );

@@ -66,10 +66,6 @@
     vm.omarMlRequestUrl = "";
 
     function setlistControllerUrlProps() {
-      thumbnailsBaseUrl = stateService.omarSitesState.url.base;
-      thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-      thumbnailsRequestUrl =
-        thumbnailsBaseUrl + thumbnailsContextPath + "/imageSpace/getThumbnail";
 
       uiBaseUrl = stateService.omarSitesState.url.base;
       uiContextPath = stateService.omarSitesState.url.uiContextPath;
@@ -169,7 +165,7 @@
      */
     stateService.updateSitesAppState({});
 
-    $scope.$on("omarSitesState.updated", function(event, params) {
+    $scope.$on("omarSitesState.updated", function (event, params) {
       setlistControllerUrlProps();
       wfsService.setWfsUrlProps();
       downloadService.setDownloadServiceUrlProps();
@@ -179,16 +175,18 @@
       jpipService.setJpipUrlProps();
       omarMlService.setOmarMlUrlProps();
 
-      $scope.$apply(function() {
-        thumbnailsBaseUrl = stateService.omarSitesState.url.base;
-        thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
-        thumbnailsRequestUrl =
-          thumbnailsBaseUrl +
-          thumbnailsContextPath +
-          "/imageSpace/getThumbnail";
+      $scope.$on("wfs: updated", function (event, features) {
+        $scope.$apply(function () {
+          thumbnailsBaseUrl = stateService.omarSitesState.url.base;
+          thumbnailsContextPath = stateService.omarSitesState.url.omsContextPath;
+          thumbnailsRequestUrl =
+              thumbnailsBaseUrl +
+              thumbnailsContextPath +
+              "/imageSpace/getThumbnail";
 
-        // Resets the thumbnails URL for the view
-        vm.thumbPath = thumbnailsRequestUrl;
+          // Resets the thumbnails URL for the view
+          vm.thumbPath = thumbnailsRequestUrl;
+        });
       });
     });
 

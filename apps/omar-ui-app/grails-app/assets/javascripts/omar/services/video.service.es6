@@ -9,7 +9,6 @@ function($http, stateService) { return {
     videoQuery: function (startIndex = 0, maxFeatures = 100) {
         // console.log('executing query... params:', params)
         const baseUrl = stateService.omarSitesState.url.base
-        console.log("baseUrl: " + baseUrl);
         // console.log("mey baseUrl: " + stateService.omarSitesState.url.base);
         let urlParams = new URLSearchParams(window.location.search)
         // let filter = urlParams.get('filter')
@@ -29,7 +28,7 @@ function($http, stateService) { return {
         }
 
         const queryString = Object.keys(wfsParams).map(key => key + '=' + wfsParams[key]).join('&');
-
+        console.log("video query url: " + (wfsUrl + queryString));
         return $http({
             method: "GET",
             url: wfsUrl + queryString

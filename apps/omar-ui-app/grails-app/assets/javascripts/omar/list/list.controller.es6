@@ -475,14 +475,19 @@
     // create the pagination range (pageLimit is typically 10)
     vm.videoPageChange = function(curPage) {
       $scope.curVidStartInd = curPage * vm.pageLimit - vm.pageLimit
+      console.log("start index: " + $scope.curVidStartInd);
     }
 
     $scope.$watch('curVidStartInd', function() {
       // Kills function on page load.  Watchers fire on init
       if ($scope.videoData.length === 0){
+        console.log("length is zero");
         return
       }
       // Slice up videoData into chunks of 10 for pagination
+      if (typeof $scope.curVidStartInd === 'undefined')
+        $scope.curVidStartInd = 0;
+
       $scope.slicedVideoData = $scope.videoData.features.slice($scope.curVidStartInd, $scope.curVidStartInd + vm.pageLimit)
       $("#video-list").animate(
           {

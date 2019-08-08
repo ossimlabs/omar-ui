@@ -203,7 +203,7 @@ body {
   transform: translate(-65%, -50%);
 }
 
-#video-thumbnail {
+.video-thumbnail {
   height: 85px;
   width: 128px;
   background: black;

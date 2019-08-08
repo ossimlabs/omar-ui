@@ -198,6 +198,7 @@ function (
 
     $scope.$on("omarSitesState.updated", function(event, params) {
         setfilterControllerUrlProps();
+        vm.getVideos();
     });
 
     var filterString = "";

@@ -3,11 +3,14 @@ angular
 .module("omarApp")
 .service("videoService", [
     "$http",
+    "stateService",
 
-function($http) { return {
+function($http, stateService) { return {
     videoQuery: function (startIndex = 0, maxFeatures = 100) {
         // console.log('executing query... params:', params)
-        const baseUrl = AppO2.APP_CONFIG.params.sites.o2.url.base
+        const baseUrl = stateService.omarSitesState.url.base
+        console.log("baseUrl: " + baseUrl);
+        // console.log("mey baseUrl: " + stateService.omarSitesState.url.base);
         let urlParams = new URLSearchParams(window.location.search)
         // let filter = urlParams.get('filter')
         let filter = '';

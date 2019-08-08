@@ -1228,7 +1228,7 @@
                                         <!-- link to video player page -->
                                         <a href="{{ video.properties.player_url }}"
                                            target="_blank">
-                                            <div id="video-thumbnail"
+                                            <div class="video-thumbnail"
                                                  tooltip-placement="right"
                                                  uib-tooltip="Click the thumbnail to view the video">
                                                 <img ng-src="{{ video.properties.request_thumbnail_url }}"/>

@@ -56,7 +56,7 @@
                     <input
                         type="checkbox"
                         ng-model="filterVideosToggle"
-                        ng-change="filter.getVideos(filterVideosToggle); filter.handleNonVideoFilters(); filter.clearFilters()"
+                        ng-change="filter.getVideos(); filter.handleNonVideoFilters(); filter.clearFilters()"
                     > Videos Only
                 </div>
 

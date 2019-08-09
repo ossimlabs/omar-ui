@@ -483,6 +483,9 @@
         return
       }
       // Slice up videoData into chunks of 10 for pagination
+      if (typeof $scope.curVidStartInd === 'undefined')
+        $scope.curVidStartInd = 0;
+
       $scope.slicedVideoData = $scope.videoData.features.slice($scope.curVidStartInd, $scope.curVidStartInd + vm.pageLimit)
       $("#video-list").animate(
           {

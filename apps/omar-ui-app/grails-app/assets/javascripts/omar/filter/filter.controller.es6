@@ -65,7 +65,6 @@ function (
         });
     };
 
-
     /**
      * generates $scope.videoData = res.data
      * which is available to the app
@@ -76,7 +75,6 @@ function (
      */
     vm.getVideos = function() {
         // Clear videoData each time
-        $scope.videoData = []
         const baseUrl = stateService.omarSitesState.url.base
 
         // Only run this if the toggle (checkbox) is true
@@ -119,7 +117,6 @@ function (
                     // used for totals and pagination slicage.
                     // never altered!
                     $scope.videoData = res.data;
-
                     // get the first 10 results sliced up for page 1
                     $scope.slicedVideoData = $scope.videoData.features.slice(0, vm.pageLimit)
                 });
@@ -142,6 +139,7 @@ function (
     vm.showCurrentFilter = true;
     vm.refreshSpin = false;
     vm.refreshList = function() {
+        vm.getVideos();
         wfsService.executeWfsQuery();
         vm.refreshSpin = true;
     };

@@ -198,7 +198,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
                     extraParam = { maxFeatures: wfsRequest.pageLimit };
 
                     if ( wfsAjax.features ) {
-                        // console.log('wfsAjax.features', wfsAjax.features)
                         wfsAjax.features.abort();
                     }
                     wfsAjax.features = wfsQuery();
@@ -332,7 +331,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
      * @param id
      */
     this.getImagesExtent = id => {
-        console.log("this was called");
       let version = "1.1.0";
       let typeName = "omar:raster_entry";
 
@@ -363,7 +361,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
 
       return $http({ method: "GET", url: wfsUrl }).then(function(response) {
         var features = response.data.features;
-        console.log('main features', features)
         return features;
       });
     };

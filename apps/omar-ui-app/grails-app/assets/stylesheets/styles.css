@@ -180,18 +180,6 @@ body {
   font-size: 0.95em;
 }
 
-#video-panel-body {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#video-panel-body-left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 #video-circle-icon {
   opacity: 0;
   font-size: 25px;

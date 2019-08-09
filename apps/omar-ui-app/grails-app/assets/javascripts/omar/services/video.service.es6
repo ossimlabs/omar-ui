@@ -28,7 +28,7 @@ function($http, stateService) { return {
         }
 
         const queryString = Object.keys(wfsParams).map(key => key + '=' + wfsParams[key]).join('&');
-        console.log("video query url: " + (wfsUrl + queryString));
+
         return $http({
             method: "GET",
             url: wfsUrl + queryString

@@ -65,7 +65,6 @@ function (
         });
     };
 
-
     /**
      * generates $scope.videoData = res.data
      * which is available to the app

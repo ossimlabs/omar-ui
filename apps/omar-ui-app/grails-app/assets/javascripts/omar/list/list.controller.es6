@@ -471,17 +471,17 @@
     vm.currentStartIndex = 1;
     vm.pageLimit = 10
 
+    vm.currentVideoPage = 1;
+
     // takes curPage param, which is bound pagination ng-model (1, 2, 3, 4, etc)
     // create the pagination range (pageLimit is typically 10)
     vm.videoPageChange = function(curPage) {
       $scope.curVidStartInd = curPage * vm.pageLimit - vm.pageLimit
-      console.log("start index: " + $scope.curVidStartInd);
     }
 
     $scope.$watch('curVidStartInd', function() {
       // Kills function on page load.  Watchers fire on init
       if ($scope.videoData.length === 0){
-        console.log("length is zero");
         return
       }
       // Slice up videoData into chunks of 10 for pagination

@@ -1202,7 +1202,7 @@
                     <!-- filter doesnt work right startFrom:list.videoPage*list.pageLimit -->
                     <div ng-show="slicedVideoData.length >= 1"
                          ng-repeat="video in slicedVideoData | limitTo:list.pageLimit">
-                        <div class="panel panel-default cursor-pointer" >
+                        <div class="panel panel-default" >
                             <!-- Heading -->
                             <div class="panel-heading"
                                  ng-click="list.addToExportList(video.properties.id)"
@@ -1472,7 +1472,7 @@
                     <div ng-show="list.wfsFeatures >= 1"
                          ng-repeat="image in list.wfsData" ng-init="list.showProcessInfo=[]"
                          ng-model="image">
-                        <div class="panel panel-default cursor-pointer" >
+                        <div class="panel panel-default" >
                             <div class="panel-heading"
                                  ng-click="list.addRemoveCards(image.properties.id)"
                                  style="font-size: 11px; padding: 2px 7px;">
@@ -1686,7 +1686,7 @@
                         <div ng-show="reachbackResponse.length >= 1"
                              ng-repeat="item in currentPage"
                              ng-model="item">
-                            <div class="panel panel-default cursor-pointer" >
+                            <div class="panel panel-default" >
                                 <div class="panel-heading" style="font-size: 11px; padding: 5px 7px;">
                                     <span ng-show="!item.imageId">Unknown</span>
                                     {{ item.imageId }}

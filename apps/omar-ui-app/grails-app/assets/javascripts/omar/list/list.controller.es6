@@ -471,8 +471,6 @@
     vm.currentStartIndex = 1;
     vm.pageLimit = 10
 
-    vm.currentVideoPage = 1;
-
     // takes curPage param, which is bound pagination ng-model (1, 2, 3, 4, etc)
     // create the pagination range (pageLimit is typically 10)
     vm.videoPageChange = function(curPage) {

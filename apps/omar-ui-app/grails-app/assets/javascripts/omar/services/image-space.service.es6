@@ -356,7 +356,8 @@
       sourceImage = new ol.source.ImageWMS({
         params: {
           LAYERS: "omar:raster_entry." + imgID,
-          STYLES: '{"bands":"default","resamplerFilter":"bilinear"}'
+          STYLES: '{"bands":"default","resamplerFilter":"bilinear"}',
+          FORMAT: 'image/jpeg'
         },
         url: wmsRequestUrl + "/wms",
         crossOrigin: "Anonymous",
@@ -367,11 +368,16 @@
       sourceTile = new ol.source.TileWMS({
         params: {
           LAYERS: "omar:raster_entry." + imgID,
-          STYLES: '{"bands":"default","resamplerFilter":"bilinear"}'
+          STYLES: '{"bands":"default","resamplerFilter":"bilinear"}',
+          FORMAT: 'image/jpeg'
         },
         url: wmsRequestUrl + "/wms",
         crossOrigin: "Anonymous",
-        tileLoadFunction: fixY
+        tileLoadFunction: fixY,
+        tileGrid: ol.tilegrid.createXYZ({
+          extent: imgExtent,
+          tileSize: 512
+        })
       });
 
       sourceImage.on("imageloadstart", function() {

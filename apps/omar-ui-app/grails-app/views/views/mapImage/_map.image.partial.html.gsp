@@ -305,7 +305,7 @@
             </div>
           </div>
         </div>
-        <!-- Brightness/Contrast Panel -->
+        <!-- Brightness/Contrast/Gamma Panel -->
         <div class="panel panel-info" id="image-sharpness-contrast">
           <div class="panel-body">
             <div class="row">
@@ -313,11 +313,16 @@
                 <div id="brightness-section">
                   <small class="text text-info">Brightness:</small>&nbsp;&nbsp;
                   <span id="imgBrightnessVal"></span><br>
-                  <input id="imgBrightnessSlider" data-slider-id="imgBrightnessSlider" type="text"/>
+                  <input id="imgBrightnessSlider" type="text"/>
                 </div>
                 <div id="contrast-section">
                   <small class="text text-info">Contrast:</small>&nbsp;&nbsp;<span id="imgContrastVal"></span><br>
-                  <input id="imgContrastSlider" data-slider-id='imgContrastSlider' type="text"/>
+                  <input id="imgContrastSlider" type="text"/>
+                </div>
+                <div id="gamma-section">
+                  <small class="text text-info">Gamma:</small>&nbsp;&nbsp;
+                  <span id="imgGammaVal"></span><br>
+                  <input id="imgGammaSlider" type="text"/>
                 </div>
               </div>
               <div class="col-sm-3">

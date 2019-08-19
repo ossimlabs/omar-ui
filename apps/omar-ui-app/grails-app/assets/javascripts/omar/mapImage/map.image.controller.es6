@@ -13,6 +13,7 @@
       "$state",
       "$stateParams",
       "toastr",
+      "$uibModal",
       MapImageController
     ]);
 
@@ -26,7 +27,8 @@
     shareService,
     $state,
     $stateParams,
-    toastr
+    toastr,
+    $uibModal
   ) {
     var vm = this;
 
@@ -42,6 +44,8 @@
       brightness,
       brightnesSlider,
       contrast,
+      gamma,
+      gammaSlider,
       contrastSlider;
 
     vm.baseServerUrl = AppO2.APP_CONFIG.serverURL;
@@ -280,56 +284,84 @@
 
     //END - Band Selection Section
 
+    function getSliderVal(slider_val, normal_val, min, max, precision) {
+      if (slider_val < 0) {
+        return (normal_val - Math.abs(slider_val) * Math.abs((normal_val - min)/100)).toFixed(precision);
+      } else {
+        return (normal_val + Math.abs(slider_val) * Math.abs((normal_val - max)/100)).toFixed(precision);
+      }
+    }
+
     // Start - Brightness/Contrast Section
 
     // Instantiate a slider
     brightnesSlider = $("#imgBrightnessSlider").slider({
-      value: parseFloat(brightness),
-      min: -1.0,
-      max: 1.0,
+      value: 0,
+      min: -100,
+      max: 100,
       precision: 2,
-      step: 0.01,
+      step: 1,
       tooltip: "hide"
     });
 
     contrastSlider = $("#imgContrastSlider").slider({
-      value: parseFloat(contrast),
-      min: 0.01,
-      max: 20.0,
+      value: 0,
+      min: -100,
+      max: 100,
       precision: 2,
-      step: 0.01,
+      step: 1,
       tooltip: "hide"
     });
 
-    $("#imgBrightnessVal").text(brightness);
+    gammaSlider = $("#imgGammaSlider").slider({
+      value: 0,
+      min: -100,
+      max: 100,
+      precision: 2,
+      step: 1,
+      tooltip: "hide"
+    });
+
+    $("#imgBrightnessVal").text(0);
 
     brightnesSlider.on("slide", function(slideEvt) {
       $("#imgBrightnessVal").text(slideEvt.value);
     });
 
     brightnesSlider.on("slideStop", function(slideEvt) {
-      imageSpaceService.setBrightness(slideEvt.value);
+      imageSpaceService.setBrightness(getSliderVal(slideEvt.value, parseFloat(brightness), -1, 1, 2));
       $("#imgBrightnessVal").text(slideEvt.value);
     });
 
-    $("#imgContrastVal").text(parseFloat(contrast));
+    $("#imgContrastVal").text(0);
 
     contrastSlider.on("slide", function(slideEvt) {
       $("#imgContrastVal").text(slideEvt.value);
     });
 
     contrastSlider.on("slideStop", function(slideEvt) {
-      imageSpaceService.setContrast(slideEvt.value);
+      imageSpaceService.setContrast(getSliderVal(slideEvt.value, parseFloat(contrast), 0, 4, 2));
       $("#imgContrastVal").text(slideEvt.value);
     });
 
+    $("#imgGammaVal").text(0);
+
+    gammaSlider.on("slide", function(slideEvt) {
+      $("#imgGammaVal").text(slideEvt.value);
+    });
+
+    gammaSlider.on("slideStop", function(slideEvt) {
+      // imageSpaceService.setBrightness(getSliderVal(slideEvt.value, parseFloat(brightness), -1, 1, 2));
+      $("#imgGammaVal").text(slideEvt.value);
+    });
+
     vm.resetBrightnessContrast = function() {
-      $("#imgBrightnessVal").text(imageSpaceObj.brightness);
-      brightnesSlider.slider("setValue", parseFloat(imageSpaceObj.brightness));
+      $("#imgBrightnessVal").text(0);
+      brightnesSlider.slider("setValue", 0);
       imageSpaceService.setBrightness(imageSpaceObj.brightness);
 
-      $("#imgContrastVal").text(imageSpaceObj.contrast);
-      contrastSlider.slider("setValue", parseFloat(imageSpaceObj.contrast));
+      $("#imgContrastVal").text(0);
+      contrastSlider.slider("setValue", 0);
       imageSpaceService.setContrast(imageSpaceObj.contrast);
     };
 

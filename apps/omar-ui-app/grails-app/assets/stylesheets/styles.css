@@ -587,6 +587,11 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   font-weight: normal;
 }
 
+.modal-dialog {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 #modal-image-space a {
   text-decoration: none;
 }
@@ -1114,19 +1119,22 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
 
 #brightness-section,
 #contrast-section,
+#gamma-section,
 #imgBrightnessSlider,
 #imgContrastSlider,
 #brightnes-contrast-reset {
   width: 100%;
 }
 
+#imgGammaSlider .slider-selection,
 #imgBrightnessSlider .slider-selection,
 #imgContrastSlider .slider-selection {
   background: #bababa;
 }
 
 #imgBrightnessVal,
-#imgContrastVal {
+#imgContrastVal,
+#gammaVal {
   font-size: 0.8em;
   text-align: center;
 }

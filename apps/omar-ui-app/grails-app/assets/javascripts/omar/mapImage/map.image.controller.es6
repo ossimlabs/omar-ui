@@ -479,7 +479,7 @@
      * End of DRA slider things
      */
 
-    vm.resetBrightnessContrast = function() {
+    vm.resetMainSliders = function() {
       $("#imgBrightnessVal").text(0);
       brightnesSlider.slider("setValue", 0);
       imageSpaceService.setBrightness(imageSpaceObj.brightness);
@@ -495,7 +495,16 @@
       $("#imgSharpnessVal").text(0);
       sharpenSlider.slider("setValue", 0);
       imageSpaceService.setSharpenPercent(0);
-    };
+    }
+
+    vm.resetDynamicSliders = function() {
+      $("#imgDRA-Val").text('0 : 100');
+      dynamicRangeSlider.slider("setValue", [0, 100]);
+      imageSpaceService.setDynaminRangeValues('0,1');
+      set_ratio = .5;
+      DRA_Midpoint_slider.slider("setValue", 50);
+      imageSpaceService.setHistCenterClip( .5 );
+    }
 
     //END - Brightness/Contrast Section
 

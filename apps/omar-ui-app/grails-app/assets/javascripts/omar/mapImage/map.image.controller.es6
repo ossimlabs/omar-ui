@@ -13,6 +13,7 @@
       "$state",
       "$stateParams",
       "toastr",
+      "$uibModal",
       MapImageController
     ]);
 
@@ -26,7 +27,8 @@
     shareService,
     $state,
     $stateParams,
-    toastr
+    toastr,
+    $uibModal
   ) {
     var vm = this;
 
@@ -42,7 +44,11 @@
       brightness,
       brightnesSlider,
       contrast,
-      contrastSlider;
+      gamma,
+      gammaSlider,
+      contrastSlider,
+      DRA_Slider,
+      sharpenSlider;
 
     vm.baseServerUrl = AppO2.APP_CONFIG.serverURL;
 
@@ -103,6 +109,9 @@
 
     loadMapImage();
     bandSelection();
+
+    let DRA_min_delta = 5;
+    let set_ratio = .5;
 
     vm.imageId = $stateParams.imageId;
 
@@ -280,57 +289,212 @@
 
     //END - Band Selection Section
 
+    function getSliderVal(slider_val, normal_val, min, max, precision) {
+      if (slider_val < 0) {
+        return (normal_val - Math.abs(slider_val) * Math.abs((normal_val - min)/100)).toFixed(precision);
+      } else {
+        return (normal_val + Math.abs(slider_val) * Math.abs((normal_val - max)/100)).toFixed(precision);
+      }
+    }
+
     // Start - Brightness/Contrast Section
 
     // Instantiate a slider
     brightnesSlider = $("#imgBrightnessSlider").slider({
-      value: parseFloat(brightness),
-      min: -1.0,
-      max: 1.0,
+      value: 0,
+      min: -100,
+      max: 100,
       precision: 2,
-      step: 0.01,
+      step: 1,
       tooltip: "hide"
     });
 
     contrastSlider = $("#imgContrastSlider").slider({
-      value: parseFloat(contrast),
-      min: 0.01,
-      max: 20.0,
+      value: 0,
+      min: -100,
+      max: 100,
       precision: 2,
-      step: 0.01,
+      step: 1,
       tooltip: "hide"
     });
 
-    $("#imgBrightnessVal").text(brightness);
+    gammaSlider = $("#imgGammaSlider").slider({
+      value: 0,
+      min: -100,
+      max: 100,
+      precision: 2,
+      step: 1,
+      tooltip: "hide"
+    });
+
+    sharpenSlider = $("#imgSharpnessSlider").slider({
+      value: 0,
+      min: 0,
+      max: 100,
+      precision: 2,
+      step: 1,
+      tooltip: "hide"
+    });
+
+    $("#imgBrightnessVal").text(0);
 
     brightnesSlider.on("slide", function(slideEvt) {
       $("#imgBrightnessVal").text(slideEvt.value);
     });
 
     brightnesSlider.on("slideStop", function(slideEvt) {
-      imageSpaceService.setBrightness(slideEvt.value);
+      imageSpaceService.setBrightness(getSliderVal(slideEvt.value, parseFloat(brightness), -1, 1, 2));
       $("#imgBrightnessVal").text(slideEvt.value);
     });
 
-    $("#imgContrastVal").text(parseFloat(contrast));
+    $("#imgContrastVal").text(0);
 
     contrastSlider.on("slide", function(slideEvt) {
       $("#imgContrastVal").text(slideEvt.value);
     });
 
     contrastSlider.on("slideStop", function(slideEvt) {
-      imageSpaceService.setContrast(slideEvt.value);
+      imageSpaceService.setContrast(getSliderVal(slideEvt.value, parseFloat(contrast), 0, 4, 2));
       $("#imgContrastVal").text(slideEvt.value);
     });
 
+    $("#imgGammaVal").text(0);
+
+    gammaSlider.on("slide", function(slideEvt) {
+      $("#imgGammaVal").text(slideEvt.value);
+    });
+
+    gammaSlider.on("slideStop", function(slideEvt) {
+      imageSpaceService.setGamma(getSliderVal(slideEvt.value, 1, 0, 4, 2));
+      $("#imgGammaVal").text(slideEvt.value);
+    });
+
+    $("#imgSharpnessVal").text(0);
+
+    sharpenSlider.on("slide", function(slideEvt) {
+      $("#imgSharpnessVal").text(slideEvt.value);
+    });
+
+    sharpenSlider.on("slideStop", function(slideEvt) {
+      imageSpaceService.setSharpenPercent(getSliderVal(slideEvt.value, 0, 0, 1, 2));
+      $("#imgSharpnessVal").text(slideEvt.value);
+    });
+
+    $("#imgDRA-Val").text('0 : 100');
+
+    imageSpaceService.setSharpenPercent(0);
+
+    /**
+     * DRA slider things
+     */
+
+    let DRA_Midpoint_slider = $('#DRA_Midpoint');
+    DRA_Midpoint_slider.slider({
+      max: 100,
+      min: 0,
+      tooltip: 'hide',
+      value: 50
+    });
+
+    DRA_Midpoint_slider.on( 'slideStop', function( event ) {
+      imageSpaceService.setHistCenterClip( set_ratio.toFixed(2) );
+      imageSpaceService.setDynamicRange('linear');
+    });
+
+    let dynamicRangeSlider = $( '#dynamicRangeSliderInput' );
+    dynamicRangeSlider.slider({
+      range: true,
+      max: 100,
+      min: 0,
+      tooltip: 'hide',
+      value: [ 0,100 ]
+    });
+
+    DRA_Midpoint_slider.on( 'change', function( event ) {
+      let midpoint = DRA_Midpoint_slider.slider("getValue");
+      let min = dynamicRangeSlider.slider("getValue")[0];
+      let max = dynamicRangeSlider.slider("getValue")[1];
+
+      // Prevent max slider from passing midpoint
+      if (max - midpoint < DRA_min_delta) {
+        DRA_Midpoint_slider.slider("setValue", max - DRA_min_delta);
+      }
+
+      // Prevent min slider from passing midpoint
+      if (midpoint - min < DRA_min_delta) {
+        DRA_Midpoint_slider.slider("setValue", min + DRA_min_delta);
+      }
+
+      midpoint = DRA_Midpoint_slider.slider("getValue");
+
+      set_ratio = getRatio(midpoint, min, max);
+    });
+
+    function getRatio(mid, min, max) {
+      return (mid - min) / (max - min);
+    }
+
+    let valid_min;
+    let valid_max;
+    let valid_delta = 50;
+
+    dynamicRangeSlider.on( 'change', function( event ) {
+      let midpoint = DRA_Midpoint_slider.slider("getValue");
+      let min = dynamicRangeSlider.slider("getValue")[0];
+      let max = dynamicRangeSlider.slider("getValue")[1];
+      let test_delta = (max - min) * set_ratio;
+      // Prevent max slider from passing midpoint
+      if ((max - midpoint < DRA_min_delta || midpoint - min < DRA_min_delta) && test_delta <= valid_delta) {
+        dynamicRangeSlider.slider("setValue", [valid_min, valid_max]);
+      } else {
+        valid_min = min;
+        valid_max = max;
+        valid_delta = (max - min) * set_ratio;
+      }
+
+      event.value.newValue[0] = valid_min;
+      event.value.newValue[1] = valid_max;
+
+      min = dynamicRangeSlider.slider("getValue")[0];
+      max = dynamicRangeSlider.slider("getValue")[1];
+
+      let delta = (max - min) * set_ratio;
+
+      DRA_Midpoint_slider.slider("setValue", min + delta);
+
+      $("#imgDRA-Val").text(event.value.newValue[0] + " : " + event.value.newValue[1]);
+    });
+
+    dynamicRangeSlider.on("slide", function(slideEvt) {
+      $("#imgDRA-Val").text(slideEvt.value[0] + " : " + slideEvt.value[1]);
+    });
+
+    dynamicRangeSlider.on("slideStop", function(slideEvt) {
+      imageSpaceService.setDynaminRangeValues((slideEvt.value[0]/100 + "," + slideEvt.value[1]/100).toString());
+      $("#imgDRA-Val").text(slideEvt.value[0] + " : " + slideEvt.value[1]);
+      imageSpaceService.setDynamicRange('linear');
+    });
+
+    /**
+     * End of DRA slider things
+     */
+
     vm.resetBrightnessContrast = function() {
-      $("#imgBrightnessVal").text(imageSpaceObj.brightness);
-      brightnesSlider.slider("setValue", parseFloat(imageSpaceObj.brightness));
+      $("#imgBrightnessVal").text(0);
+      brightnesSlider.slider("setValue", 0);
       imageSpaceService.setBrightness(imageSpaceObj.brightness);
 
-      $("#imgContrastVal").text(imageSpaceObj.contrast);
-      contrastSlider.slider("setValue", parseFloat(imageSpaceObj.contrast));
+      $("#imgContrastVal").text(0);
+      contrastSlider.slider("setValue", 0);
       imageSpaceService.setContrast(imageSpaceObj.contrast);
+
+      $("#imgGammaVal").text(0);
+      gammaSlider.slider("setValue", 0);
+      imageSpaceService.setGamma(1);
+
+      $("#imgSharpnessVal").text(0);
+      sharpenSlider.slider("setValue", 0);
+      imageSpaceService.setSharpenPercent(0);
     };
 
     //END - Brightness/Contrast Section
@@ -388,6 +552,10 @@
       {
         name: "3 STD",
         value: "std-stretch-3"
+      },
+      {
+        name: "Linear",
+        value: "linear"
       }
     ];
 
@@ -512,35 +680,6 @@
       imageSpaceService.setResamplerFilter(value);
     };
 
-    $scope.sharpenModeType = {};
-    $scope.sharpenModeTypes = [
-      {
-        name: "None",
-        value: "none"
-      },
-      {
-        name: "Light",
-        value: "light"
-      },
-      {
-        name: "Heavy",
-        value: "heavy"
-      }
-    ];
-    $scope.sharpenModeType = $scope.sharpenModeTypes[0];
-
-    angular.forEach($scope.sharpenModeTypes, function(value, key) {
-      if (value.value == imageSpaceObj.sharpenMode) {
-        $scope.sharpenModeType = {
-          name: value.name,
-          value: value.value
-        };
-      }
-    });
-
-    $scope.onSharpenModeSelect = function(value) {
-      imageSpaceService.setSharpenMode(value);
-    };
 
     function loadMapImage() {
       brightness = parseFloat($stateParams.brightness);
@@ -550,6 +689,7 @@
         bands: $stateParams.bands,
         brightness: brightness,
         contrast: contrast,
+        gamma: gamma,
         entry: $stateParams.entry_id,
         filename: $stateParams.filename,
         imageId: $stateParams.imageId,
@@ -561,7 +701,7 @@
         numOfBands: $stateParams.numOfBands,
         numResLevels: $stateParams.numResLevels,
         resamplerFilter: $stateParams.resamplerFilter,
-        sharpenMode: $stateParams.sharpenMode,
+        sharpen_percent: $stateParams.sharpen_percent,
         url: $stateParams.url,
         wfsRequestUrl: $stateParams.wfsRequestUrl,
         wmsRequestUrl: $stateParams.wmsRequestUrl

@@ -69,7 +69,7 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Image Map Tools Column -->
-      <div class="col-md-2 imageMapTools">
+      <div class="col-md-3 imageMapTools">
         <!-- Measure Panel -->
         <div class="panel panel-info" ng-show="image.showMeasureInfo">
           <div class="panel-body">
@@ -420,7 +420,7 @@
         </div>
       </div>
       <!-- Map Column -->
-      <div class="col-md-10">
+      <div class="col-md-9">
         <div id="imageMap" class="map imageMap imageMapBorder">
           <div id="progress" class="text-info">
             <i class="fa fa-spinner fa-spin fa-4x"></i>

@@ -324,6 +324,11 @@
                   <span id="imgGammaVal"></span><br>
                   <input id="imgGammaSlider" type="text"/>
                 </div>
+                <div id="sharpness-section">
+                  <small class="text text-info">Sharpness:</small>&nbsp;&nbsp;
+                  <span id="imgSharpnessVal"></span><br>
+                  <input id="imgSharpnessSlider" type="text"/>
+                </div>
               </div>
               <div class="col-sm-3">
                 <div id="brightnes-contrast-reset" class="brightness-slider">
@@ -355,6 +360,15 @@
                 <span ng-bind="val.name"></span>
               </ui-select-choices>
             </ui-select>
+            <div id = "DRA_slider_parent">
+              <small class="text text-info">DRA:</small>&nbsp;&nbsp;
+              <span id="imgDRA-Val"></span><br>
+              <div id = "dynamicRangeSliderInput" type = "text"></div>
+            </div>
+
+            <div id = "DRA_midpoint_parent">
+              <div id = "DRA_Midpoint" type = "text"></div>
+            </div>
           </div>
         </div>
         <!-- Dynamic Range Region Panel -->
@@ -400,24 +414,6 @@
                 <span ng-bind="$select.selected.name"></span>
               </ui-select-match>
               <ui-select-choices repeat="val in resamplerFilterTypes">
-                <span ng-bind="val.name"></span>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
-        <!-- Sharpen Panel -->
-        <div class="panel panel-info">
-          <div class="panel-body">
-            <small class="text text-info">Sharpen Mode</small>
-            <ui-select
-              ng-model="sharpenModeType"
-              on-select="onSharpenModeSelect($select.selected.value)"
-              search-enabled="false"
-              theme="selectize">
-              <ui-select-match>
-                <span ng-bind="$select.selected.name"></span>
-              </ui-select-match>
-              <ui-select-choices repeat="val in sharpenModeTypes">
                 <span ng-bind="val.name"></span>
               </ui-select-choices>
             </ui-select>

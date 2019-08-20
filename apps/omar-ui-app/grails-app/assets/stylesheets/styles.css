@@ -587,6 +587,11 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   font-weight: normal;
 }
 
+.modal-dialog {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 #modal-image-space a {
   text-decoration: none;
 }
@@ -1112,21 +1117,100 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   max-width: 100%;
 }
 
+.o2-undo {
+  margin-top: 4px;
+  float: right;
+  font-size: 10px;
+}
+
+.o2-undo:hover {
+  color: white;
+}
+
+#sharpness-section div.slider-handle {
+  margin-left: -7px;
+}
+
+#sharpness-section div.slider-selection {
+  background: lightskyblue;
+}
+
+#DRA_slider_parent {
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+#DRA_slider_parent div.slider-track {
+  border-radius: 0px;
+}
+
+#DRA_slider_parent div.slider-selection {
+  background: lightskyblue;
+  border-radius: 0px;
+}
+
+#DRA_slider_parent div.slider-handle {
+  margin-left: -7px;
+}
+
+#DRA_midpoint_parent div.slider-selection {
+  background: none;
+  border: none;
+}
+#DRA_midpoint_parent {
+  pointer-events: none;
+}
+
+#DRA_midpoint_parent div.slider-track-low {
+  background: none;
+  border: none;
+}
+
+#DRA_midpoint_parent div.slider-track {
+  pointer-events: none;
+  background: none;
+  border: none;
+  height: 0px;
+}
+
+#DRA_midpoint_parent div.slider-handle {
+  pointer-events: auto !important;
+  background: none;
+  margin-top: -4px;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  border-style: solid;
+  border-width: 0 5px 12px 5px;
+  border-color: transparent transparent white transparent;
+}
+
+#DRA_midpoint_parent div.slider-track-high {
+  background: none;
+  border: none;
+}
+
+#sharpness-section,
 #brightness-section,
 #contrast-section,
+#gamma-section,
 #imgBrightnessSlider,
 #imgContrastSlider,
 #brightnes-contrast-reset {
   width: 100%;
 }
 
+#imgSharpnessSlider .slider-selection,
+#imgGammaSlider .slider-selection,
 #imgBrightnessSlider .slider-selection,
 #imgContrastSlider .slider-selection {
   background: #bababa;
 }
 
+#imgSharpnessVal,
 #imgBrightnessVal,
-#imgContrastVal {
+#imgContrastVal,
+#gammaVal {
   font-size: 0.8em;
   text-align: center;
 }

@@ -29,6 +29,8 @@
       entry,
       format,
       histCenterTile,
+      histLinearNormClip,
+      histCenterClip,
       histOp,
       imageGeometry,
       imageProperties,
@@ -40,7 +42,7 @@
       imgCenter,
       proj,
       resamplerFilter,
-      sharpenMode,
+      sharpen_percent,
       sourceImage,
       sourceTile,
       upAngle,
@@ -50,6 +52,7 @@
       brightness,
       numResLevels,
       contrast,
+      gamma,
       imageRenderType,
       urlString,
       imgID,
@@ -183,9 +186,12 @@
       bands = params.bands || "default";
       brightness = params.brightness || 0;
       contrast = params.contrast || 1;
+      gamma = params.gamma || 1;
       entry = params.entry;
       filename = params.filename;
       histOp = params.histOp || "auto-minmax";
+      histLinearNormClip = params.histLinearNormClip || '0, 1';
+      histCenterClip = params.histCenterClip || .5;
       histCenterTile = params.histCenterTile || "false";
       imgID = params.imageId;
       imageRenderType = params.imageRenderType || "tile";
@@ -194,7 +200,7 @@
       numOfBands = params.numOfBands;
       numResLevels = parseInt(params.numResLevels) || 1;
       resamplerFilter = params.resamplerFilter || "bilinear";
-      sharpenMode = params.sharpenMode || "none";
+      sharpen_percent = params.sharpen_percent || "none";
       transparent = params.transparent || "true";
       wfsRequestUrl = params.wfsRequestUrl;
 
@@ -206,11 +212,14 @@
         bands: bands,
         brightness: brightness,
         contrast: contrast,
+        gamma: gamma,
         histCenterTile: histCenterTile,
+        histLinearNormClip: histLinearNormClip,
+        histCenterClip: histCenterClip,
         histOp: histOp,
         nullPixelFlip: false,
         resamplerFilter: resamplerFilter,
-        sharpenMode: sharpenMode
+        sharpen_percent: sharpen_percent
       };
 
       // Sets header title and grabs the image's metadata.
@@ -522,6 +531,9 @@
           "brightness=" +
           brightness +
           "&" +
+          "gamma=" +
+          gamma +
+          "&" +
           "contrast=" +
           contrast +
           "&" +
@@ -536,6 +548,12 @@
           "&" +
           "histCenterTile=" +
           histCenterTile +
+          "&" +
+          "histLinearNormClip=" +
+          histLinearNormClip +
+          "&" +
+          "histCenterClip=" +
+          histCenterClip +
           "&" +
           "histOp=" +
           histOp +
@@ -552,8 +570,8 @@
           "resamplerFilter=" +
           resamplerFilter +
           "&" +
-          "sharpenMode=" +
-          sharpenMode +
+          "sharpen_percent=" +
+          sharpen_percent +
           "&" +
           "transparent=" +
           transparent +
@@ -595,15 +613,27 @@
         this.updateStyles();
       };
 
+      this.setDynaminRangeValues = function(values) {
+        histLinearNormClip = values;
+        this.stylesParams.histLinearNormClip = values;
+        this.updateStyles();
+      }
+
+      this.setHistCenterClip = function(value) {
+        histCenterClip = value;
+        this.stylesParams.histCenterClip = value;
+        this.updateStyles();
+      }
+
       this.setResamplerFilter = function(value) {
         resamplerFilter = value;
         this.stylesParams.resamplerFilter = value;
         this.updateStyles();
       };
 
-      this.setSharpenMode = function(value) {
-        sharpenMode = value;
-        this.stylesParams.sharpenMode = value;
+      this.setSharpenPercent = function(value) {
+        sharpen_percent = value;
+        this.stylesParams.sharpen_percent = value;
         this.updateStyles();
       };
 
@@ -619,9 +649,19 @@
         this.updateStyles();
       };
 
+      this.setGamma = function(gammaVal) {
+        gamma = gammaVal;
+        this.stylesParams.gamma = gammaVal;
+        this.updateStyles();
+      };
+
       this.resetBrightnessContrast = function() {
         brightness = $stateParams.brightness ? $stateParams.brightness : 0.0;
         contrast = $stateParams.contrast ? $stateParams.contrast : 1.0;
+      };
+
+      this.resetGamma = function() {
+        gamma = $stateParams.gamma ? $stateParams.gamma : 1;
       };
 
       // Hide the default north arrow.

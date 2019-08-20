@@ -309,30 +309,27 @@
         <div class="panel panel-info" id="image-sharpness-contrast">
           <div class="panel-body">
             <div class="row">
-              <div class="col-sm-9">
+              <div class="col-" style="margin-left: 15px; margin-right: 15px;">
                 <div id="brightness-section">
                   <small class="text text-info">Brightness:</small>&nbsp;&nbsp;
-                  <span id="imgBrightnessVal"></span><br>
-                  <input id="imgBrightnessSlider" type="text"/>
+                  <span id="imgBrightnessVal"></span>
+                  <span class = "fa fa-undo o2-undo" ng-click="image.resetMainSliders()"></span>
+                  <br>
+                  <input style="width: 100%;" id="imgBrightnessSlider" type="text"/>
                 </div>
                 <div id="contrast-section">
                   <small class="text text-info">Contrast:</small>&nbsp;&nbsp;<span id="imgContrastVal"></span><br>
-                  <input id="imgContrastSlider" type="text"/>
+                  <input style="width: 100%;" id="imgContrastSlider" type="text"/>
                 </div>
                 <div id="gamma-section">
                   <small class="text text-info">Gamma:</small>&nbsp;&nbsp;
                   <span id="imgGammaVal"></span><br>
-                  <input id="imgGammaSlider" type="text"/>
+                  <input style="width: 100%;" id="imgGammaSlider" type="text"/>
                 </div>
                 <div id="sharpness-section">
                   <small class="text text-info">Sharpness:</small>&nbsp;&nbsp;
                   <span id="imgSharpnessVal"></span><br>
-                  <input id="imgSharpnessSlider" type="text"/>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div id="brightnes-contrast-reset" class="brightness-slider">
-                  <button type="button" class="btn btn-primary" ng-click="image.resetBrightnessContrast()">Reset</button>
+                  <input style="width: 100%;" id="imgSharpnessSlider" type="text"/>
                 </div>
               </div>
             </div>
@@ -362,12 +359,14 @@
             </ui-select>
             <div id = "DRA_slider_parent">
               <small class="text text-info">DRA:</small>&nbsp;&nbsp;
-              <span id="imgDRA-Val"></span><br>
-              <div id = "dynamicRangeSliderInput" type = "text"></div>
+              <span id="imgDRA-Val"></span>
+              <span class = "fa fa-undo o2-undo" style="margin-bottom: 10px;" ng-click="image.resetDynamicSliders()"></span>
+              <br>
+              <div style="width: 100%;" id = "dynamicRangeSliderInput" type = "text"></div>
             </div>
 
             <div id = "DRA_midpoint_parent">
-              <div id = "DRA_Midpoint" type = "text"></div>
+              <div style="width: 100%;" id = "DRA_Midpoint" type = "text"></div>
             </div>
           </div>
         </div>

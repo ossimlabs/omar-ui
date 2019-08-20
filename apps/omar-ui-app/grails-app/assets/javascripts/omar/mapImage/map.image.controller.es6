@@ -365,7 +365,7 @@
     });
 
     gammaSlider.on("slideStop", function(slideEvt) {
-      imageSpaceService.setGamma(getSliderVal(slideEvt.value, 1, 0, 4, 2));
+      imageSpaceService.setGamma(getSliderVal(-slideEvt.value, 1, 0, 4, 2));
       $("#imgGammaVal").text(slideEvt.value);
     });
 

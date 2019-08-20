@@ -376,7 +376,7 @@
         tileLoadFunction: fixY,
         tileGrid: ol.tilegrid.createXYZ({
           extent: imgExtent,
-          tileSize: 512
+          tileSize: 256
         })
       });
 

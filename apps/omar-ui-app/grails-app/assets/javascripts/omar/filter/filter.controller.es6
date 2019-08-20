@@ -486,13 +486,9 @@ function (
             vm.userPreferences.customStartDateTime &&
             vm.userPreferences.duration == "customDateRange"
         ) {
-            vm.startDate = moment(vm.userPreferences.customStartDateTime).format(
-                "YYYY-MM-DD"
-            );
+            vm.startDate = moment(vm.userPreferences.customStartDateTime).toDate();
         } else {
-            vm.startDate = moment()
-                .startOf("day")
-                .format("YYYY-MM-DD");
+            vm.startDate = moment().startOf("day").toDate();
         }
         if (vm.urlParams.startDate) {
             vm.currentTemporalDuration = vm.temporalDurations.find(function(
@@ -500,7 +496,7 @@ function (
             ) {
                 return element.value == "customDateRange";
             });
-            vm.startDate = moment(vm.urlParams.startDate).format("YYYY-MM-DD");
+            vm.startDate = moment(vm.urlParams.startDate).toDate();
         }
     };
     vm.openStartDatePopup = function() {
@@ -512,13 +508,9 @@ function (
             vm.userPreferences.customEndDateTime &&
             vm.userPreferences.duration == "customDateRange"
         ) {
-            vm.endDate = moment(vm.userPreferences.customEndDateTime).format(
-                "YYYY-MM-DD"
-            );
+            vm.endDate = moment(vm.userPreferences.customEndDateTime).toDate();
         } else {
-            vm.endDate = moment()
-                .endOf("day")
-                .format("YYYY-MM-DD");
+            vm.endDate = moment().endOf("day").toDate();
         }
         if (vm.urlParams.endDate) {
             vm.currentTemporalDuration = vm.temporalDurations.find(function(
@@ -526,7 +518,7 @@ function (
             ) {
                 return element.value == "customDateRange";
             });
-            vm.endDate = moment(vm.urlParams.endDate).format("YYYY-MM-DD");
+            vm.endDate = moment(vm.urlParams.endDate).toDate();
         }
     };
     vm.openEndDatePopup = function() {
@@ -774,7 +766,7 @@ function (
         }
 
         filterString = filterArray.join( " AND " );
-      
+
         wfsService.updateAttrFilter( filterString );
     };
 

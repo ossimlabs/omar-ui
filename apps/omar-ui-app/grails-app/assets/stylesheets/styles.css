@@ -587,10 +587,14 @@ to wrap correctly using Bootstrap's default media queries (mobile) */
   font-weight: normal;
 }
 
-.modal-dialog {
-  margin-right: 0;
-  margin-left: 0;
-}
+/*
+Commenting this out for now.  I believe it was added accidently.
+It breaks the map coord modal and the splach modal
+*/
+/*.modal-dialog {*/
+/*  margin-right: 0;*/
+/*  margin-left: 0;*/
+/*}*/
 
 #modal-image-space a {
   text-decoration: none;

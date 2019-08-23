@@ -214,7 +214,7 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
         });
     };
 
-    this.getImageProperties = function(wfsUrl, filename) {
+    this.getImageProperties = function(wfsUrl, filename, entry) {
       // We only want to grab the hostname from the wfsUrl,
       // so that we can put it in the header on the imagespace
       // page.  We are using the following GIST to do this.
@@ -227,7 +227,7 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
         url:
           wfsUrl +
           "?filter=" +
-          encodeURIComponent("filename LIKE '" + filename + "'") +
+          encodeURIComponent("filename='" + filename + "' AND entry_id=" + entry) +
           "&outputFormat=JSON" +
           "&request=GetFeature" +
           "&service=WFS" +

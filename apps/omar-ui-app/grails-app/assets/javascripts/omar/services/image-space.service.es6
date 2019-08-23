@@ -224,7 +224,7 @@
 
       // Sets header title and grabs the image's metadata.
       wfsService
-        .getImageProperties(wfsRequestUrl, filename)
+        .getImageProperties(wfsRequestUrl, filename, entry)
         .then(function(response) {
           imageData = response;
           imageGeometry = imageData.geometry;

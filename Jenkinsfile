@@ -13,47 +13,47 @@ properties([
 
 node("${BUILD_NODE}"){
 
-    stage("Checkout branch $BRANCH_NAME")
-    {
-        checkout(scm)
-    }
-
-    stage("Load Variables")
-    {
-        withCredentials([string(credentialsId: 'o2-artifact-project', variable: 'o2ArtifactProject')]) {
-            step ([$class: "CopyArtifact",
-                projectName: o2ArtifactProject,
-                filter: "common-variables.groovy",
-                flatten: true])
-        }
-
-        load "common-variables.groovy"
-    }
-
-    stage ("Assemble") {
-        sh """
-        gradle assemble \
-            -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
-        """
-        archiveArtifacts "apps/*/build/libs/*.jar"
-    }
-
-    stage ("Publish Docker App")
-    {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                        credentialsId: 'dockerCredentials',
-                        usernameVariable: 'DOCKER_REGISTRY_USERNAME',
-                        passwordVariable: 'DOCKER_REGISTRY_PASSWORD']])
-        {
-            // Run all tasks on the app. This includes pushing to OpenShift and S3.
-            sh """
-            gradle pushDockerImage \
-                -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
-            """
-        }
-    }
-
     try {
+        stage("Checkout branch $BRANCH_NAME")
+        {
+            checkout(scm)
+        }
+
+        stage("Load Variables")
+        {
+            withCredentials([string(credentialsId: 'o2-artifact-project', variable: 'o2ArtifactProject')]) {
+                step ([$class: "CopyArtifact",
+                    projectName: o2ArtifactProject,
+                    filter: "common-variables.groovy",
+                    flatten: true])
+            }
+
+            load "common-variables.groovy"
+        }
+
+        stage ("Assemble") {
+            sh """
+                gradle assemble \
+                    -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
+            """
+            archiveArtifacts "apps/*/build/libs/*.jar"
+        }
+
+        stage ("Publish Docker App")
+        {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                            credentialsId: 'dockerCredentials',
+                            usernameVariable: 'DOCKER_REGISTRY_USERNAME',
+                            passwordVariable: 'DOCKER_REGISTRY_PASSWORD']])
+            {
+                // Run all tasks on the app. This includes pushing to OpenShift and S3.
+                sh """
+                    gradle pushDockerImage \
+                        -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
+                """
+            }
+        }
+
         stage ("OpenShift Tag Image")
         {
             withCredentials([[$class: 'UsernamePasswordMultiBinding',
@@ -69,13 +69,12 @@ node("${BUILD_NODE}"){
                 """
             }
         }
-    } catch (e) {
-        echo e.toString()
-    }
 
-    stage("Clean Workspace")
-    {
-        if ("${CLEAN_WORKSPACE}" == "true")
-            step([$class: 'WsCleanup'])
+    } finally {
+        stage("Clean Workspace")
+        {
+            if ("${CLEAN_WORKSPACE}" == "true")
+                step([$class: 'WsCleanup'])
+        }
     }
 }

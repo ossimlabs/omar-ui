@@ -1,8 +1,8 @@
-//=require webjars/jquery/2.2.0/jquery.min.js
+//=require webjars/jquery/3.4.1/jquery.min.js
 
 //= require omar-openlayers.js
 //= require webjars/bootstrap/3.3.5/js/bootstrap.js
-//= require webjars/angularjs/1.7.5/angular.js
+//= require webjars/angularjs/1.7.8/angular.js
 //= require webjars/angular-ui-router/1.0.20/angular-ui-router.js
 //= require webjars/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js
 //= require webjars/angular-deferred-bootstrap/0.1.5/angular-deferred-bootstrap.js

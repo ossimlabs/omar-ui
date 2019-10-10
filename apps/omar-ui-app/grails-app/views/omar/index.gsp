@@ -89,7 +89,7 @@
             <li class="dropdown mega-dropdown" ng-show="nav.metricsShow" tooltip-placement="bottom"
             uib-tooltip="Display various metrics about the O2 deployment">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                aria-expanded="false"><span class="fa fa-dashboard" aria-hidden="true"></span>
+                aria-expanded="false"><span class="fa fa-tachometer-alt" aria-hidden="true"></span>
                 <span class="caret"></span></a>
               <ul class="dropdown-menu mega-dropdown-menu row" ng-click="$event.stopPropagation();">
                 <li class="col-sm-12">

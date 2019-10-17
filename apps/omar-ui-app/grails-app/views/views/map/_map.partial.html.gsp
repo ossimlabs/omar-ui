@@ -1139,6 +1139,9 @@
                                         <li class="dropdown-header">Applications
                                             <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 100 can be viewed per application"></i>
                                         </li>
+                                        <li role="menuitem" ng-click="list.viewSelectedImagesApp('omar-search')">
+                                            <a href="">Simplified View</a>
+                                        </li>
                                         <li role="menuitem" ng-click="list.viewSelectedImagesApp('tlv')">
                                             <a href="">TLV</a>
                                         </li>
@@ -1405,6 +1408,9 @@
                                         <li class="divider"></li>
                                         <li class="dropdown-header">Applications
                                             <i class="fa fa-info-circle text-info" aria-hidden="true" tooltip-placement="left-bottom" uib-tooltip="A maximum of 100 can be viewed per application"></i>
+                                        </li>
+                                        <li role="menuitem" ng-click="list.viewSelectedImagesApp('omar-search')">
+                                            <a href="">Simplified View</a>
                                         </li>
                                         <li role="menuitem" ng-click="list.viewSelectedImagesApp('tlv')">
                                             <a href="">TLV</a>

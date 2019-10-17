@@ -423,7 +423,12 @@
         }
       }
 
-      $window.open(tlvRequestUrl + "?" + $.param(params), "_blank");
+        if ( app == 'omar-search' ) {
+            $window.open( '/omar-ui-proto?' + $.param(params), "_blank");
+        }
+        else {
+            $window.open(tlvRequestUrl + "?" + $.param(params), "_blank");
+        }
     };
 
     /**

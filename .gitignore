@@ -1,9 +1,8 @@
-.asscache
 Thumbs.db
 .DS_Store
 .gradle
 build/
-bin/
+out/
 .idea
 *.iml
 *.ipr
@@ -11,6 +10,4 @@ bin/
 .project
 .settings
 .classpath
-.vscode
-docker/*.jar
-apps/omar-ui-app/application.yml
+prodDb.mv.db

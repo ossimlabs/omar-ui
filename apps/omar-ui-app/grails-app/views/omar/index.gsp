@@ -14,7 +14,10 @@
   <!-- This is needed for IE -->
   <asset:link rel="icon" href="favicon.ico?v=2" type="image/icon"/>
 
+<!--
   <asset:stylesheet src = "webjars/bootswatch/3.3.5+4/${ clientConfig.userPreferences.pageTheme }/bootstrap.min.css"/>
+-->
+
   <asset:stylesheet src="app.manifest.css"/>
 
     <browser:isMsie>
@@ -178,9 +181,8 @@
       </div>
 
     </div>
-    <asset:script>
-
-      var AppO2 = (function () {
+    <g:javascript>
+       var AppO2 = (function () {
 
         var APP_CONFIG = ${raw( clientConfig.encodeAsJSON() as String )};
         APP_CONFIG.contextPath = "${ request.contextPath }";
@@ -193,11 +195,13 @@
 
       })();
 
+      console.log(AppO2);
+
         // used to share the map canvas between windows
         var mapCanvas;
-    </asset:script>
-    <asset:deferredScripts/>
+    </g:javascript>
     <asset:javascript src="app.manifest.js"/>
+    <asset:deferredScripts/>
 
   </body>
 </html>

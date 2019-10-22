@@ -424,7 +424,8 @@
       }
 
         if ( app == 'omar-search' ) {
-            $window.open( '/omar-ui-proto/search?' + $.param(params), "_blank");
+          let searchParams = new URLSearchParams(params);
+          $window.open( 'http://localhost:8081/omar-ui-proto#/search/' + encodeURI(searchParams), "_blank");
         }
         else {
             $window.open(tlvRequestUrl + "?" + $.param(params), "_blank");

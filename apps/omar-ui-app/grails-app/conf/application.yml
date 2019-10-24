@@ -198,7 +198,6 @@ defaultPreferences:
 requestHeaderUsername: username
 
 ---
----
 # About dropdown settings
 about:
   # Email support

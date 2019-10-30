@@ -278,6 +278,7 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
       );
 
       let wfsFilter;
+
       // We need to use this as the ONLY filter if an imageListFilter is passed in.
       // The attr and spatial filters have already been accounted for.
       if (imageListFilter) {
@@ -300,7 +301,6 @@ function (stateService, $http, $injector, $log, $rootScope, $timeout, $sce) {
           wfsFilter = "";
         }
       }
-
       $log.debug(`wfsFilter: ${wfsFilter}`);
 
       let version = "1.1.0";

@@ -39,6 +39,7 @@ node("${BUILD_NODE}"){
         archiveArtifacts "apps/*/build/libs/*.jar"
     }
 
+    /*
     stage ("Publish Nexus")
     {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
@@ -52,8 +53,9 @@ node("${BUILD_NODE}"){
             """
         }
     }
+    */
 
-    /*
+
     stage ("Publish Docker App")
     {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
@@ -68,7 +70,6 @@ node("${BUILD_NODE}"){
             """
         }
     }
-    */
     
     try {
         stage ("OpenShift Tag Image")

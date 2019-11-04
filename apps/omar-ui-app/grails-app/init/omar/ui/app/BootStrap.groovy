@@ -1,4 +1,4 @@
-package omar.ui
+package omar.ui.app
 
 class BootStrap {
 

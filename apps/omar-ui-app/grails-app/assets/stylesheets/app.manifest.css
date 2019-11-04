@@ -1,5 +1,6 @@
 /*
-*= require webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-csp.css
+*= require webjars/bootswatch/3.3.5+4/slate/bootstrap.min.css
+*= require webjars/angular-ui-bootstrap-bower/2.5.0/ui-bootstrap-csp.css
 *= require webjars/angular-ui-select/0.17.1/select.css
 *= require webjars/angular-ui-select2/0.0.5/docs/styles.css
 *= require webjars/selectize.js/0.12.4/css/selectize.bootstrap2.css

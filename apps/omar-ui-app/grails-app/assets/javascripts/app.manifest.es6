@@ -4,7 +4,7 @@
 //= require webjars/bootstrap/3.3.5/js/bootstrap.js
 //= require webjars/angularjs/1.7.8/angular.js
 //= require webjars/angular-ui-router/1.0.20/angular-ui-router.js
-//= require webjars/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js
+//= require webjars/angular-ui-bootstrap-bower/2.5.0/ui-bootstrap-tpls.js
 //= require webjars/angular-deferred-bootstrap/0.1.5/angular-deferred-bootstrap.js
 //= require webjars/bootstrap-select/2.0.0-beta1/dist/js/bootstrap-select.js
 //= require webjars/devbridge-autocomplete/1.2.21/dist/jquery.autocomplete.js
@@ -13,7 +13,7 @@
 //= require webjars/angular-toastr/1.6.0/dist/angular-toastr.tpls.js
 //= require webjars/angular-strap/2.3.4/angular-strap.js
 //= require webjars/angular-strap/2.3.4/angular-strap.tpl.js
-//= require webjars/momentjs/2.11.0/moment.js
+//= require webjars/momentjs/2.24.0/moment.js
 //= require webjars/angular-clipboard/1.4.2/angular-clipboard.js
 //= require webjars/angular-ui-select/0.17.1/select.js
 //= require webjars/angular-ui-select2/0.0.5/src/select2.js

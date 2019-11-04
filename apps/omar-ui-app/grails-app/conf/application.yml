@@ -115,7 +115,7 @@ environments:
             url: jdbc:postgresql:omardb-test
     production:
         dataSource:
-            dbCreate: none
+            dbCreate: update
             url: jdbc:postgresql:omardb-prod
             properties:
                 jmxEnabled: true

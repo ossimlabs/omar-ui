@@ -101,9 +101,10 @@ dataSource:
     pooled: true
     jmxExport: true
     driverClassName: org.postgresql.Driver
-    username: postgres
-    password: postgres
-
+    username: ${omarDb.username}
+    password: ${omarDb.password}
+    dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    
 environments:
     development:
         dataSource:
@@ -116,7 +117,8 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql:omardb-prod
+#            url: jdbc:postgresql:omardb-prod
+            url: ${omarDb.url}
             properties:
                 jmxEnabled: true
                 initialSize: 5

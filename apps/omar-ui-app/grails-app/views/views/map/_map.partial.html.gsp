@@ -711,6 +711,70 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class = "row">
+                                <div class = "col-md-6">
+                                    GSD
+                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Valid range of 0 to 50"></i>
+                                </div>
+                                <div align = "right" class = "col-md-6">
+                                    <input
+                                            class = "form-check-input"
+                                            type = "checkbox"
+                                            ng-checked = "!filter.imageryCheck ? false : filter.gsdCheckNull"
+                                            ng-disabled = "!filter.gsdCheck || !filter.imageryCheck"
+                                            ng-model = "filter.gsdCheckNull"
+                                            ng-click = "filter.updateFilterString()">
+                                    <label class = "form-check-label range-include-unknown-label" for = "gsdCheckNull">UNK</label>
+                                    <i class = "fa fa-info-circle text-info" tooltip-placement = "bottom" uib-tooltip = "Checking this box will allow results for images with null or unknown values in the GSD metadata field"></i>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div class = "input-group input-group-sm">
+                                        <div class = "input-group-addon">
+                                            <span style = "font-family: monospace;"><small>Min</small></span>
+                                        </div>
+                                        <input focus-input
+                                               style = "text-align: center;"
+                                               type = "number"
+                                               placeholder = "0"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
+                                               ng-model = "filter.gsdMin"
+                                               class = "form-control input-sm"
+%{--                                               value = "{{filter.gsdMin}}"--}%
+                                               value = "0.12345"
+                                               min = "0" max = "49.9999" step = "0.0001"
+                                               ng-change = "filter.gsdCheck = (filter.gsdMin === 0 && filter.gsdMax === 50) ? false: true;"
+                                               ng-enter = "filter.updateFilterString()"
+                                               ng-blur = "filter.updateFilterString()">
+                                        <div class = "input-group-addon">
+                                            <input
+                                                    ng-checked = "!filter.imageryCheck ? false : filter.gsdCheck"
+                                                    ng-click = "filter.updateFilterString()"
+                                                    ng-disabled = "!filter.imageryCheck || filterVideosToggle"
+                                                    ng-model = "filter.gsdCheck"
+                                                    type = "checkbox">
+                                        </div>
+                                        <input focus-input
+                                               style = "text-align: center;"
+                                               type = "number"
+                                               placeholder = "50"
+                                               ng-disabled = "!filter.imageryCheck || filterVideosToggle"
+                                               ng-model = "filter.gsdMax"
+                                               class = "form-control input-sm"
+%{--                                               value = "{{filter.gsdMax}}"--}%
+                                               value = "0.56789"
+                                               min = "0.0001" max = "50" step = "0.0001"
+                                               ng-change = "filter.gsdCheck = (filter.gsdMin === 0 && filter.gsdMax === 50) ? false: true;"
+                                               ng-enter = "filter.updateFilterString()"
+                                               ng-blur = "filter.updateFilterString()">
+                                        <div class = "input-group-addon">
+                                            <span style = "font-family: monospace;"><small>Max</small></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class = "col-md-4">
@@ -1081,8 +1145,11 @@
                                         <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
                                         <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
                                         <li role="separator" class="divider "></li>
-                                        <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                        <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Mission <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Mission <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('gsdy', '+D', 'GSD');"><a>GSD <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('gsdy', '+A', 'GSD');"><a>GSD <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -1350,9 +1417,12 @@
                                         <li role="separator" class="divider"></li>
                                         <li ng-click="list.sortWfs('sensor_id', '+D', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
                                         <li ng-click="list.sortWfs('sensor_id', '+A', 'Sensor');"><a>Sensor <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
-                                        <li role="separator" class="divider "></li>
-                                        <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
-                                        <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Misson <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('mission_id', '+D', 'Mission');"><a>Mission <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('mission_id', '+A', 'Mission');"><a>Mission <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li ng-click="list.sortWfs('gsdy', '+D', 'GSD');"><a>GSD <span class = "glyphicon glyphicon-arrow-down"></span></a></li>
+                                        <li ng-click="list.sortWfs('gsdy', '+A', 'GSD');"><a>GSD <span class = "glyphicon glyphicon-arrow-up"></span></a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">

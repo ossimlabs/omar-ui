@@ -95,6 +95,13 @@ class OmarController {
             paramType = 'query',
             value = 'The image\'s filename.'
         ),
+	@ApiImplicitParam(	
+            dataType = 'string',	
+            defaultValue = '',	
+            name = 'gsd',	
+            paramType = 'query',	
+            value = 'The image\'s ground sample distance.'	
+        ),
         @ApiImplicitParam(
             dataType = 'string',
             defaultValue = '',

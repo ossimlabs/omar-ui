@@ -392,7 +392,8 @@ function (
             { key: "grazeElev", max: 90, min: 0, urlParam: "elevation" },
             { key: "predNiirs", max: 9, min: 0, urlParam: "niirs" },
             { key: "sunAzimuth", max: 360, min: 0, urlParam: "sunAzimuth" },
-            { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" }
+            { key: "sunElevation", max: 90, min: -90, urlParam: "sunElevation" },
+            { key: "gsd", max: 50, min: 0, urlParam: "gsd" }
         ];
         $.each(ranges, function(index, range) {
             vm[range.key + "Check"] =
@@ -407,7 +408,7 @@ function (
             }
             if (reset) {
                 vm[range.key + "Check"] = false;
-                vm[range.key + "Min"] = range.emin;
+                vm[range.key + "Min"] = range.min;
                 vm[range.key + "Max"] = range.max;
             }
         });
@@ -752,6 +753,14 @@ function (
             }
         }
 
+        if ( vm.gsdCheck ) {
+            if( vm.gsdCheckNull ) {
+                pushRangeToArray("gsdy", vm.gsdMin, vm.gsdMax, true);
+            } else {
+                pushRangeToArray("gsdy", vm.gsdMin, vm.gsdMax);
+            }
+        }
+
         if ( vm.cloudCoverCheck ) {
             if ( isNaN( vm.cloudCover ) ) {
                 toastr.error( "Please enter a valid number for the range filter.", "Error", {
@@ -839,7 +848,8 @@ function (
             { key: "grazeElev", max: true, min: true, urlParam: "elevation" },
             { key: "predNiirs", max: true, min: true, urlParam: "niirs" },
             { key: "sunAzimuth", max: true, min: true, urlParam: "sunAzimuth" },
-            { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" }
+            { key: "sunElevation", max: true, min: true, urlParam: "sunElevation" },
+            { key: "gsd", max: true, min: true, urlParam: "gsd" },
         ];
         $.each(ranges, function(index, range) {
             if (vm[range.key + "Check"]) {

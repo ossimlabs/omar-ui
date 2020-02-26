@@ -50,6 +50,8 @@ A number between 0 and 360.
 A number between -90 and 90.
 * **Cloud Cover:**
 A number between 0 and 100.
+* **GSD:**
+A number between 0 and 50.
 
 #### Temporal
 * **Date Type:**

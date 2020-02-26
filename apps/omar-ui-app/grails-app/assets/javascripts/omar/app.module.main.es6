@@ -78,6 +78,7 @@
                 "elevation",
                 "endDate",
                 "filename",
+                "gsd",
                 "imageId",
                 "imagery",
                 "mapCenterX",

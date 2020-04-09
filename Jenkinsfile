@@ -33,7 +33,7 @@ node("${BUILD_NODE}"){
     stage ("Assemble") {
         sh """
         ./gradlew assemble \
-            -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
+            -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
         """
         // archiveArtifacts "plugins/*/build/libs/*.jar"
         archiveArtifacts "apps/*/build/libs/*.jar"
@@ -49,7 +49,7 @@ node("${BUILD_NODE}"){
         {
             sh """
             ./gradlew publish \
-                -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
+                -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
             """
         }
     }
@@ -66,7 +66,7 @@ node("${BUILD_NODE}"){
             // Run all tasks on the app. This includes pushing to OpenShift and S3.
             sh """
             ./gradlew pushDockerImage \
-                -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
+                -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
             """
         }
     }
@@ -82,7 +82,7 @@ node("${BUILD_NODE}"){
                 // Run all tasks on the app. This includes pushing to OpenShift and S3.
                 sh """
                     ./gradlew openshiftTagImage \
-                        -PossimMavenProxy=${OSSIM_MAVEN_PROXY}
+                        -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
 
                 """
             }

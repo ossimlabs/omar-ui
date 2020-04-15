@@ -88,7 +88,6 @@ subprojects { project ->
 
             docker {
                 registryCredentials {
-		DOCKER_REGISTRY_PUBLIC_UPLOAD_URL
                     url = getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' )  
                     username = getConfigurationProperty( 'DOCKER_REGISTRY_USERNAME', 'dockerRegistryUsername' )
                     password = getConfigurationProperty( 'DOCKER_REGISTRY_PASSWORD', 'dockerRegistryPassword' )

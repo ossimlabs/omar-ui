@@ -57,38 +57,21 @@ subprojects { project ->
                 openshiftProjectName =  getConfigurationProperty( 'OPENSHIFT_PROJECT_NAME', 'openshiftProjectName' )
             }
 
-
-            println '*' * 40
-	    println System.env
-            println ( [
-                project: project, 
-                openshiftUrl: openshiftUrl, 
-                openshiftUsername: openshiftUsername, 
-                openshiftPassword: openshiftPassword, 
-                openshiftProjectName: openshiftProjectName, 
-                openshiftServiceName: openshiftServiceName,  
-                dockerRegistryUrl: getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' ), 
-                dockerImageName: dockerImageName, 
-                dockerImageTag: dockerImageTag                
-            ])
-            println '*' * 40
-
-
-            io.ossim.gradleDefaults.Openshift.addOpenshiftTasks(
+           io.ossim.gradleDefaults.Openshift.addOpenshiftTasks(
                 project, 
                 openshiftUrl, 
                 openshiftUsername, 
                 openshiftPassword, 
                 openshiftProjectName, 
                 openshiftServiceName,  
-                getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' ), 
+                dockerRegistryUrl, 
                 dockerImageName, 
                 dockerImageTag
             )
 
             docker {
                 registryCredentials {
-                    url = getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' )  
+                    url = dockerRegistryPrivateUrl 
                     username = getConfigurationProperty( 'DOCKER_REGISTRY_USERNAME', 'dockerRegistryUsername' )
                     password = getConfigurationProperty( 'DOCKER_REGISTRY_PASSWORD', 'dockerRegistryPassword' )
                 }

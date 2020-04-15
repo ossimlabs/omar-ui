@@ -67,7 +67,7 @@ subprojects { project ->
                 openshiftPassword: openshiftPassword, 
                 openshiftProjectName: openshiftProjectName, 
                 openshiftServiceName: openshiftServiceName,  
-                dockerRegistryUrl: 'nexus-docker-private-hosted.ossim.io', 
+                dockerRegistryUrl: getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' ), 
                 dockerImageName: dockerImageName, 
                 dockerImageTag: dockerImageTag                
             ])
@@ -81,14 +81,15 @@ subprojects { project ->
                 openshiftPassword, 
                 openshiftProjectName, 
                 openshiftServiceName,  
-                'nexus-docker-private-hosted.ossim.io', 
+                getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' ), 
                 dockerImageName, 
                 dockerImageTag
             )
 
             docker {
                 registryCredentials {
-                    url = dockerRegistryPrivateUrl 
+		DOCKER_REGISTRY_PUBLIC_UPLOAD_URL
+                    url = getConfigurationProperty( 'DOCKER_REGISTRY_PUBLIC_UPLOAD_URL', 'dockerRegistryPublicUrl' )  
                     username = getConfigurationProperty( 'DOCKER_REGISTRY_USERNAME', 'dockerRegistryUsername' )
                     password = getConfigurationProperty( 'DOCKER_REGISTRY_PASSWORD', 'dockerRegistryPassword' )
                 }

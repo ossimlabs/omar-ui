@@ -64,14 +64,14 @@ subprojects { project ->
                 openshiftPassword, 
                 openshiftProjectName, 
                 openshiftServiceName,  
-                dockerRegistryUrl, 
+                getConfigurationProperty( 'DOCKER_REGISTRY_PRIVATE_UPLOAD_URL', 'dockerRegistryPrivateUrl' ), 
                 dockerImageName, 
                 dockerImageTag
             )
 
             docker {
-                registryCredentials {
-                    url = dockerRegistryPrivateUrl 
+                registryCredentials {		
+		    url = getConfigurationProperty( 'DOCKER_REGISTRY_PRIVATE_UPLOAD_URL', 'dockerRegistryPrivateUrl' )
                     username = getConfigurationProperty( 'DOCKER_REGISTRY_USERNAME', 'dockerRegistryUsername' )
                     password = getConfigurationProperty( 'DOCKER_REGISTRY_PASSWORD', 'dockerRegistryPassword' )
                 }

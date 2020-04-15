@@ -57,6 +57,22 @@ subprojects { project ->
                 openshiftProjectName =  getConfigurationProperty( 'OPENSHIFT_PROJECT_NAME', 'openshiftProjectName' )
             }
 
+
+            println '*' * 40
+            println ( [
+                project: project, 
+                openshiftUrl: openshiftUrl, 
+                openshiftUsername: openshiftUsername, 
+                openshiftPassword: openshiftPassword, 
+                openshiftProjectName: openshiftProjectName, 
+                openshiftServiceName: openshiftServiceName,  
+                dockerRegistryUrl: dockerRegistryUrl, 
+                dockerImageName: dockerImageName, 
+                dockerImageTag: dockerImageTag                
+            ])
+            println '*' * 40
+
+
             io.ossim.gradleDefaults.Openshift.addOpenshiftTasks(
                 project, 
                 openshiftUrl, 

@@ -59,7 +59,7 @@ subprojects { project ->
 
 
             println '*' * 40
-	    println Sysem.env
+	    println System.env
             println ( [
                 project: project, 
                 openshiftUrl: openshiftUrl, 

@@ -259,4 +259,4 @@ After querying for some imagery, one of the many things you can do is download t
 ### User Authentication
 All users are authenticated through PKI using their personal credentials. If you do not use your PKI certificate, you will be taken to a 404 error page. When properly authenticated, you should see your name in the top right hand corner under the classification banner. See proper authenticated user example below.
 
-![](./dropdown.png)
+![](./pki_authentication.png)

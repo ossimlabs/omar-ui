@@ -29,6 +29,9 @@
                 ng-click="image.measure(true, 'Polygon')" tooltip-placement="right"
                 uib-tooltip="Create a polygon, and calculate the area within"><a>Area</a></li>
               <li
+                ng-click="image.localTime()" tooltip-placement="right"
+                uib-tooltip="Measure the local time of a point when data was collected"><a>Local Time</a></li>
+              <li
                 ng-click="image.measureClear()" tooltip-placement="right"
                 uib-tooltip="Clear the measurement and close the panel"><a>Clear</a></li>
               <li role="separator" class="divider"></li>

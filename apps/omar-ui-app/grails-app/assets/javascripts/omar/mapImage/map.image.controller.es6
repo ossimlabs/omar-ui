@@ -848,6 +848,18 @@
         vm.area = "";
       }
     }
+      
+    vm.localTime = function() {
+      vm.pqeClear();
+
+      imageSpaceService.pqeClear();
+      vm.pqeShowInfo = false;
+
+      imageSpaceService.measureActivate('Point');
+
+      vm.showMeasureInfo = true;
+      vm.measureMessage = "Click in the map to begin the measurement";
+    }
 
     vm.measure = function(show, type) {
       vm.pqeClear();

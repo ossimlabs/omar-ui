@@ -855,11 +855,15 @@
       imageSpaceService.pqeClear();
       vm.pqeShowInfo = false;
 
-      imageSpaceService.measureActivate('Point');
+          vm.measureType = "Point";
+          vm.measureShow = false;
+          imageSpaceService.measureActivate('Point');
+          vm.measureLine = false;
+          vm.measurePolygon = false;
 
       vm.showMeasureInfo = true;
       vm.measureMessage = "Click in the map to begin the measurement";
-    }
+    };
 
     vm.measure = function(show, type) {
       vm.pqeClear();

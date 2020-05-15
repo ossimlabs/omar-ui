@@ -718,6 +718,35 @@
 
         var listener;
         draw.on(
+          "drawstart",
+          function(evt) {
+            // Clear any measurements that may be there.
+            $timeout(function() {
+              $rootScope.$broadcast("measure: updated", null);
+            });
+
+            measureSource.clear();
+
+            sketch = evt.feature;
+
+            var tooltipCoord = evt.coordinate;
+
+            listener = sketch.getGeometry().on("change", function(evt) {
+              var geom = evt.target;
+
+              var output;
+              if (geom instanceof ol.geom.Polygon) {
+                tooltipCoord = geom.getInteriorPoint().getCoordinates();
+              } else if (geom instanceof ol.geom.LineString) {
+                tooltipCoord = geom.getLastCoordinate();
+              }
+            });
+          },
+          this
+        );
+
+        var listener;
+        draw.on(
           "drawend",
           function() {
             console.log(sketch.getGeometry().getCoordinates());

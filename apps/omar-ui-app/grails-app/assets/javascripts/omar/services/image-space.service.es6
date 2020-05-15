@@ -716,8 +716,6 @@
           })
         });
 
-        createHelpTooltip();
-
         var listener;
         draw.on(
           "drawend",

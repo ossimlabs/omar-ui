@@ -783,7 +783,7 @@
              * Logic for type of geometry on sketch to set the type
              * of string we need to send to the mensa service.
              */
-            if (sketchGeom !instanceof ol.geom.Point){
+            if (!(sketchGeom instanceof ol.geom.Point)){
               if (sketchGeom instanceof ol.geom.LineString) {
                 var wktArray = "LINESTRING(" + sketchString + ")";
               } else {

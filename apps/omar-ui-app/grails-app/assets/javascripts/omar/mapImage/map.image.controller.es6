@@ -848,20 +848,20 @@
         vm.area = "";
       }
     }
-      
+
     vm.localTime = function() {
       vm.pqeClear();
 
       imageSpaceService.pqeClear();
       vm.pqeShowInfo = false;
 
-          vm.measureType = "Point";
-          vm.measureShow = false;
-          imageSpaceService.measureActivate('Point');
-          vm.measureLine = false;
-          vm.measurePolygon = false;
+      vm.measureType = "Point";
+      vm.measureShow = false;
+      imageSpaceService.measureActivate('Point');
+      vm.measureLine = false;
+      vm.measurePolygon = false;
 
-      vm.showMeasureInfo = true;
+      vm.showMeasureInfo = false;
       vm.measureMessage = "Click in the map to begin the measurement";
     };
 

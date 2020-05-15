@@ -783,38 +783,42 @@
              * Logic for type of geometry on sketch to set the type
              * of string we need to send to the mensa service.
              */
-            if (sketchGeom instanceof ol.geom.LineString) {
-              var wktArray = "LINESTRING(" + sketchString + ")";
+            if (sketchGeom !instanceof ol.geom.Point){
+              if (sketchGeom instanceof ol.geom.LineString) {
+                var wktArray = "LINESTRING(" + sketchString + ")";
+              } else {
+                var wktArray = "POLYGON((" + sketchString + "))";
+              }
+
+              var measureOutput;
+
+              $http({
+                method: "POST",
+                url: encodeURI(mensaRequestUrl + "/imageDistance?"),
+                data: {
+                  filename: filename,
+                  entryId: entry,
+                  pointList: wktArray
+                }
+              }).then(
+                function(response) {
+                  var data;
+                  data = response.data.data;
+
+                  // $timeout needed: http://stackoverflow.com/a/18996042
+                  $timeout(function() {
+                    $rootScope.$broadcast("measure: updated", data);
+                  });
+
+                  ol.Observable.unByKey(listener);
+                },
+                function errorCallback(response) {
+                  console.error("Error: ", response);
+                }
+              );
             } else {
-              var wktArray = "POLYGON((" + sketchString + "))";
+              console.log(sketch.getGeometry().getCoordinates());
             }
-
-            var measureOutput;
-
-            $http({
-              method: "POST",
-              url: encodeURI(mensaRequestUrl + "/imageDistance?"),
-              data: {
-                filename: filename,
-                entryId: entry,
-                pointList: wktArray
-              }
-            }).then(
-              function(response) {
-                var data;
-                data = response.data.data;
-
-                // $timeout needed: http://stackoverflow.com/a/18996042
-                $timeout(function() {
-                  $rootScope.$broadcast("measure: updated", data);
-                });
-
-                ol.Observable.unByKey(listener);
-              },
-              function errorCallback(response) {
-                console.error("Error: ", response);
-              }
-            );
 
             sketch = null;
           },

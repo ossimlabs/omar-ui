@@ -104,7 +104,7 @@ dataSource:
     username: postgres
     password: ${omarDb.password}
     dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
-    
+
 environments:
     development:
         dataSource:
@@ -153,7 +153,7 @@ management:
       sensitive: false
     health:
       enabled: true
-    
+
 grails:
     cors:
         enabled: true

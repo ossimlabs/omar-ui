@@ -12,8 +12,8 @@ buildscript {
         classpath "org.grails.plugins:hibernate5:${hibernate5PluginVersion}"
         classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:${webdriverGradlePluginVersion}"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:${assetPipelineVersion}"
-		classpath "io.ossim:gradleDefaults:${ gradleDefaultsVersion }"
-		classpath "com.bmuschko:gradle-docker-plugin:${gradleDockerPluginVersion}"
+	      classpath "io.ossim:gradleDefaults:${ gradleDefaultsVersion }"
+		    classpath "com.bmuschko:gradle-docker-plugin:${gradleDockerPluginVersion}"
         classpath "net.errbuddy.plugins:babel-asset-pipeline:2.1.1"
     }
 }
@@ -37,7 +37,7 @@ subprojects { project ->
     apply plugin:"eclipse"
     apply plugin:"idea"
 
-    if ( isGrailsProject )    
+    if ( isGrailsProject )
     {
         if ( isGrailsApp )
         {
@@ -46,32 +46,32 @@ subprojects { project ->
             ext {
                 dockerBuildDir = "${ rootProject.projectDir }/docker"
                 jarDestination = "${ project.projectDir }/build/libs/${ project.name }-${ version }.jar"
-                
+
                 dockerImageName = project.name
                 dockerBuildTag = project.dockerImageTag
                 buildArguments = [ "BASE_IMAGE": "${ dockerRegistryUrl }/${ dockerBaseImage }:${ dockerFromTag }" ]
-                
+
                 openshiftUrl = getConfigurationProperty( 'OPENSHIFT_URL', 'openshiftUrl' )
                 openshiftUsername = getConfigurationProperty( 'OPENSHIFT_USERNAME', 'openshiftUsername' )
-                openshiftPassword = getConfigurationProperty( 'OPENSHIFT_PASSWORD', 'openshiftPassword' )                
+                openshiftPassword = getConfigurationProperty( 'OPENSHIFT_PASSWORD', 'openshiftPassword' )
                 openshiftProjectName =  getConfigurationProperty( 'OPENSHIFT_PROJECT_NAME', 'openshiftProjectName' )
             }
 
            io.ossim.gradleDefaults.Openshift.addOpenshiftTasks(
-                project, 
-                openshiftUrl, 
-                openshiftUsername, 
-                openshiftPassword, 
-                openshiftProjectName, 
-                openshiftServiceName,  
-                getConfigurationProperty( 'DOCKER_REGISTRY_PRIVATE_UPLOAD_URL', 'dockerRegistryPrivateUrl' ), 
-                dockerImageName, 
+                project,
+                openshiftUrl,
+                openshiftUsername,
+                openshiftPassword,
+                openshiftProjectName,
+                openshiftServiceName,
+                getConfigurationProperty( 'DOCKER_REGISTRY_PRIVATE_UPLOAD_URL', 'dockerRegistryPrivateUrl' ),
+                dockerImageName,
                 dockerImageTag
             )
 
             docker {
-                registryCredentials {		
-		    url = getConfigurationProperty( 'DOCKER_REGISTRY_PRIVATE_UPLOAD_URL', 'dockerRegistryPrivateUrl' )
+                registryCredentials {
+		                url = getConfigurationProperty( 'DOCKER_REGISTRY_PRIVATE_UPLOAD_URL', 'dockerRegistryPrivateUrl' )
                     username = getConfigurationProperty( 'DOCKER_REGISTRY_USERNAME', 'dockerRegistryUsername' )
                     password = getConfigurationProperty( 'DOCKER_REGISTRY_PASSWORD', 'dockerRegistryPassword' )
                 }
@@ -113,7 +113,7 @@ subprojects { project ->
             apply plugin:"org.grails.grails-web"
             apply plugin:"com.github.erdi.webdriver-binaries"
         }
-        else if ( isGrailsPlugin ) 
+        else if ( isGrailsPlugin )
         {
             apply plugin:"org.grails.grails-plugin"
             apply plugin:"org.grails.grails-plugin-publish"
@@ -191,7 +191,7 @@ subprojects { project ->
                 compile "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
                 compile "net.errbuddy.plugins:babel-asset-pipeline:2.1.1"
             }
-            else if ( isGrailsPlugin ) 
+            else if ( isGrailsPlugin )
             {
                 profile "org.grails.profiles:web-plugin"
                 testCompile "org.grails:grails-plugin-testing"
@@ -200,8 +200,8 @@ subprojects { project ->
 
         bootRun {
             jvmArgs(
-                '-Dspring.output.ansi.enabled=always', 
-                '-noverify', 
+                '-Dspring.output.ansi.enabled=always',
+                '-noverify',
                 '-XX:TieredStopAtLevel=1',
                 '-Xmx1024m')
             sourceResources sourceSets.main
@@ -252,7 +252,7 @@ subprojects { project ->
                 packagePlugin = true
             }
         }
-    }    
+    }
 }
 
 String getConfigurationProperty( String envVar, String sysProp )

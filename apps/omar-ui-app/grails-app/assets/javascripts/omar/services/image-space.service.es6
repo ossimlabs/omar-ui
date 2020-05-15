@@ -697,6 +697,39 @@
         helpTooltipElement.classList.remove("hidden");
       };
 
+      function addLocalTimeInteraction() {
+        draw = new ol.interaction.Draw({
+          source: measureSource,
+          type: "Point",
+          style: new ol.style.Style({
+            fill: new ol.style.Fill({ color: "rgba(255, 255, 255, 0.2)" }),
+            stroke: new ol.style.Stroke({
+              color: "rgba(0,255,255, 1.0)",
+              lineDash: [10, 10],
+              width: 3
+            }),
+            image: new ol.style.Circle({
+              radius: 5,
+              stroke: new ol.style.Stroke({ color: "rgba(0, 0, 0, 0.7)" }),
+              fill: new ol.style.Fill({ color: "rgba(255, 255, 255, 0.2)" })
+            })
+          })
+        });
+
+        createHelpTooltip();
+
+        var listener;
+        draw.on(
+          "drawend",
+          function() {
+            console.log(sketch.getGeometry().getCoordinates());
+            sketch = null;
+          },
+          this
+        );
+
+      }
+
       function addMeasureInteraction(measureType) {
         var type = measureType;
 
@@ -783,7 +816,6 @@
              * Logic for type of geometry on sketch to set the type
              * of string we need to send to the mensa service.
              */
-            if (!(sketchGeom instanceof ol.geom.Point)){
               if (sketchGeom instanceof ol.geom.LineString) {
                 var wktArray = "LINESTRING(" + sketchString + ")";
               } else {
@@ -816,9 +848,6 @@
                   console.error("Error: ", response);
                 }
               );
-            } else {
-              console.log(sketch.getGeometry().getCoordinates());
-            }
 
             sketch = null;
           },
@@ -850,7 +879,11 @@
         map.removeInteraction(draw);
 
         // Set the desired measurement type (Polygon or LineString).
-        addMeasureInteraction(measureType);
+        if(measureType != "Point"){
+          addMeasureInteraction(measureType);
+        } else {
+          addLocalTimeInteraction();
+        }
 
         // Add the draw interaction for aour measurement.
         map.addInteraction(draw);

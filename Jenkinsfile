@@ -20,6 +20,12 @@ podTemplate(
       privileged: true
     ),
     containerTemplate(
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/omar-builder:latest",
+      name: 'builder',
+      command: 'cat',
+      ttyEnabled: true
+    ),
+    containerTemplate(
       image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/alpine/helm:3.2.3",
       name: 'helm',
       command: 'cat',

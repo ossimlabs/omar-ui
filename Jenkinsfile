@@ -23,7 +23,7 @@ podTemplate(
       image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/alpine/helm:3.2.3",
       name: 'helm',
       command: 'cat',
-
+      ttyEnabled: true
     )
   ],
   volumes: [

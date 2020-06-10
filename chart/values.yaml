@@ -1,4 +1,4 @@
-# Default values for omar-wms.
+# Default values for omar-ui.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -8,22 +8,48 @@ appName: omar-ui
 
 global:
   dockerRepository: nexus-docker-private-group.ossim.io
-  imagePullSecret: "registry-creds"
-  ossimDataPvcName: ossim-data-pvc
+  imagePullSecret:
+    registry: null
+    username: null
+    password: null
+  hostname: omar-dev.ossim.io
+
+  createIngress: true
+  useTls: false
+  useTLSClientAuth: false
+  sslCertSecretName: null
+  authSslCertSecretName: null
+
+  createImagePullSecret: true
+  useImagePullSecret: true
+  
+  createHpa: true
+
+  useSpringConfigServer: false
+
+# These variables can be overridden because of the use of the 'pluck' function:
+# - createIngress
+# - useTls
+# - useTlsClientAuth
+# - createImagePullSecret
+# - createHpa
+# - createPVs
+# - useSpringConfigServer
 
 resources:
   limits:
     cpu: 1500m
     memory: 1000Mi
   requests:
-    cpu: 40m
+    cpu: 500m
     memory: 500Mi
     
 image:
   name: omar-ui-app
   tag: dev
-  pull-policy: IfNotPresent
+  pullPolicy: Always
 
+ingressPath: /omar-ui
 internalPort: 8080
 externalPort: 8080
 
@@ -34,13 +60,15 @@ livenessProbe:
   successThreshold: 1
   timeoutSeconds: 3
 
+
 readinessProbe:
-  path: /omar-ui/actuator/health
   failureThreshold: 15
   initialDelaySeconds: 30
   periodSeconds: 15
   successThreshold: 1
   timeoutSeconds: 3
+  path: /omar-ui/actuator/health
+
 
 terminationGracePeriodSeconds: 30
 

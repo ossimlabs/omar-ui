@@ -14,3 +14,5 @@ prodDb.mv.db
 packaged-chart
 .lock
 charts/*.tgz
+/apps/omar-ui-app/bin/
+/apps/omar-ui-app/application.yml

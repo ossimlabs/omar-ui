@@ -1457,5 +1457,11 @@
     $(window).resize(function() {
       vm.mapResize();
     });
+
+    vm.mapUpdateSize = function() {
+      $("#map").ready(function() {
+        map.updateSize();
+      });
+    };
   }
 })();

@@ -195,8 +195,6 @@
 
       })();
 
-      console.log(AppO2);
-
         // used to share the map canvas between windows
         var mapCanvas;
     </g:javascript>

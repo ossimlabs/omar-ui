@@ -39,7 +39,7 @@
                     </li>
                     <%-- Handle the mapsearch tab --%>
                     <li class = "active" role = "presentation">
-                        <a data-toggle = "tab" onclick = "javascript: $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
+                        <a data-toggle = "tab" onclick = "javascript: $( '#mapControllerContainer' ).scope().mapUpdateSize(); $( '#filterSearch' ).hide(); $( '#reachbackSearch' ).hide(); $( '#mapSearch' ).show()">Map</a>
                     </li>
                     <%-- Handle the reachback tab --%>
                     <li ng-controller = "ReachbackController as reachback" ng-show="reachback.reachbackEnabled" role = "presentation">
@@ -898,7 +898,7 @@
                 <div role = "tabpanel" class = "tab-pane active" id = "mapSearch">
                     <!-- Just activating the search controller -->
                     <div ng-controller = "SearchController as search" style = "display: none;"></div>
-                    <div ng-controller = "MapController as map">
+                    <div id="mapControllerContainer" ng-controller = "MapController as map">
                         <div id = "map" class = "map" params = "map.mapParams" map>
                             <div id = "legend" style = "background-color: white; border: 1px solid white; border-radius: 5px; color: black;">
                                 <div class = "text-center"><b>{{map.legendTitle}}</b></div>

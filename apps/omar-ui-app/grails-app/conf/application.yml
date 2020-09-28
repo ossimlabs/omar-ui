@@ -179,14 +179,6 @@ eureka:
   instance:
     preferIpAddress: true
 ---
-userInfo:
-  # Configurable request header name parameter
-  requestHeaderUserName: username
-  # Configurable default name for the request header user (Default: Anonymous).
-  # Used if no name is found in PKI cert.
-  requestHeaderUserNameDefault: Anonymous
-
-
 securityClassification:
     backgroundColor: green
     classification: Unclassified

@@ -25,6 +25,13 @@ podTemplate(
       command: 'cat',
       ttyEnabled: true
     ),
+      containerTemplate(
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/kubectl-aws-helm:latest",
+      name: 'kubectl-aws-helm',
+      command: 'cat',
+      ttyEnabled: true,
+      alwaysPullImage: true
+    ),
     containerTemplate(
       image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/alpine/helm:3.2.3",
       name: 'helm',
@@ -138,6 +145,31 @@ podTemplate(
           }
         }
       }
+    }
+      
+      stage('New Deploy'){
+        container('kubectl-aws-helm') {
+            withAWS(
+            credentials: 'Jenkins IAM User',
+            region: 'us-east-1'){
+                if (BRANCH_NAME == 'master'){
+                    //insert future instructions here
+                }
+                else if (BRANCH_NAME == 'dev') {
+                    sh "aws eks --region us-east-1 update-kubeconfig --name gsp-dev-v2 --alias dev"
+                    sh "kubectl config set-context dev --namespace=omar-dev"
+                    sh "kubectl rollout restart deployment/omar-ui"   
+                }
+                else if (BRANCH_NAME == 'ContinuousDeployment') {
+                    sh "aws eks --region us-east-1 update-kubeconfig --name gsp-dev-v2 --alias dev"
+                    sh "kubectl config set-context dev --namespace=omar-dev"
+                    sh "kubectl rollout restart deployment/omar-ui"   
+                }
+                else {
+                    sh "echo Not deploying ${BRANCH_NAME} branch"
+                }
+            }
+        }
     }
     
     stage("Clean Workspace"){

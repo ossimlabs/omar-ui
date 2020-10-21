@@ -45,7 +45,7 @@ resources:
     memory: 500Mi
     
 image:
-  name: omar-ui-app
+  name: omar-ui
   tag: dev
   pullPolicy: Always
 

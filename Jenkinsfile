@@ -52,7 +52,7 @@ podTemplate(
       stage("Checkout branch")
       {
           scmVars = checkout(scm)
-      
+
         GIT_BRANCH_NAME = scmVars.GIT_BRANCH
         BRANCH_NAME = """${sh(returnStdout: true, script: "echo ${GIT_BRANCH_NAME} | awk -F'/' '{print \$2}'").trim()}"""
         sh """
@@ -83,7 +83,7 @@ podTemplate(
             flatten: true])
           }
           load "common-variables.groovy"
-          
+
                switch (BRANCH_NAME) {
         case "master":
           TAG_NAME = VERSION
@@ -99,9 +99,23 @@ podTemplate(
       }
 
     DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/omar-ui"
-    
+
     }
-      
+
+    stage('SonarQube Analysis') {
+    nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
+        def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
+
+        withSonarQubeEnv('sonarqube'){
+            sh """
+              ${scannerHome}/bin/sonar-scanner \
+              -Dsonar.projectKey=omar-ui \
+              -Dsonar.login=${SONARQUBE_TOKEN}
+            """
+        }
+    }
+}
+
       stage('Build') {
         container('builder') {
           sh """
@@ -148,7 +162,7 @@ podTemplate(
             }
             else {
                 sh """
-                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a           
+                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a
                 """
             }
           }
@@ -169,8 +183,8 @@ podTemplate(
           }
         }
       }
-    
-      
+
+
       stage('New Deploy'){
         container('kubectl-aws-helm') {
             withAWS(
@@ -182,7 +196,7 @@ podTemplate(
                 else if (BRANCH_NAME == 'dev') {
                     sh "aws eks --region us-east-1 update-kubeconfig --name gsp-dev-v2 --alias dev"
                     sh "kubectl config set-context dev --namespace=omar-dev"
-                    sh "kubectl rollout restart deployment/omar-ui"   
+                    sh "kubectl rollout restart deployment/omar-ui"
                 }
                 else {
                     sh "echo Not deploying ${BRANCH_NAME} branch"
@@ -190,7 +204,7 @@ podTemplate(
             }
         }
     }
-    
+
     stage("Clean Workspace"){
       if ("${CLEAN_WORKSPACE}" == "true")
         step([$class: 'WsCleanup'])

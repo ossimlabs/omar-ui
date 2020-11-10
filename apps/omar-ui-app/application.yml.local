@@ -1,12 +1,17 @@
 ---
-serverProtocol: http
-serverName: localhost
+serverProtocol: https
+serverName: localhost:8080
+baseUrl: https://omar-dev.ossim.io
 
 defaultPreferences:
     defaultUsername: Anonymous
 
 grails:
   serverURL: http://${serverName}/omar-ui
+
+omarDb:
+  url: jdbc:postgresql:omardb-prod
+  name:  omardb-prod
 
 endpoints:
   enabled: true
@@ -42,21 +47,19 @@ omar:
           description: OMAR Local Server (Unclassified)
         url:
           # Base URL for the federated site
-          base: http://localhost
+          base: http://omar.ossim.io
 
   openlayers:
     baseMaps:
-      # nasaBmng:
-      #   layerType: tilewms
-      #   title: NASA BMNG
-      #   url: http://localhost/cgi-bin/mapserv?map=/data/omar/bmng.map&
-      #   params:
-      #     layers: Reference
-      #     format: image/jpeg
-      #   options:
-      #     visible: true
-    # Uncomment the example below, and modify to add
-    # a custom overlay layer
+      o2-basemap-basic:
+        layerType: tilewms
+        options:
+          visible: true
+        params:
+          layers: o2-basemap-basic
+          format: image/jpeg
+        title: OSM Basic
+        url: ${baseUrl}/omar-mapproxy/service
     overlayLayers:
 #     autoMosaic:
 #        layerType: "tilewms"
@@ -86,49 +89,3 @@ securityClassification:
     backgroundColor: green
     classification: Unclassified
     color: white
-
----
-grails:
-    plugin:
-        springsecurity:
-            userLookup:
-                userDomainClassName: 'omar.security.SecUser'
-                authorityJoinClassName: 'omar.security.SecUserSecRole'
-            authority:
-                className: 'omar.security.SecRole'
-            controllerAnnotations:
-                staticRules:
-                    - pattern: '/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/error'
-                      access: [ 'permitAll' ]
-                    - pattern: '/index'
-                      access: [ 'permitAll' ]
-                    - pattern: '/index.gsp'
-                      access: [ 'permitAll' ]
-                    - pattern: '/shutdown'
-                      access: [ 'permitAll' ]
-                    - pattern: '/assets/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/js/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/css/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/images/**'
-                      access: [ 'permitAll' ]
-                    - pattern: '/**/favicon.ico'
-                      access: [ 'permitAll' ]
-            filterChain:
-                chainMap:
-                    - pattern: '/assets/**'
-                      filters: 'none'
-                    - pattern: '/**/js/**'
-                      filters: 'none'
-                    - pattern: '/**/css/**'
-                      filters: 'none'
-                    - pattern: '/**/images/**'
-                      filters: 'none'
-                    - pattern: '/**/favicon.ico'
-                      filters: 'none'
-                    - pattern: '/**'
-                      filters: 'JOINED_FILTERS'

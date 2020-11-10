@@ -75,6 +75,10 @@
       $log.debug(`vm.legendUrl: ${vm.legendUrl}`);
     });
 
+    $scope.mapUpdateSize = function() {
+      mapService.mapUpdateSize();
+    }
+
     mapService.mapResize();
   }
 })();

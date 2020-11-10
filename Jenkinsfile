@@ -25,6 +25,13 @@ podTemplate(
       command: 'cat',
       ttyEnabled: true
     ),
+      containerTemplate(
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/kubectl-aws-helm:latest",
+      name: 'kubectl-aws-helm',
+      command: 'cat',
+      ttyEnabled: true,
+      alwaysPullImage: true
+    ),
     containerTemplate(
       image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/alpine/helm:3.2.3",
       name: 'helm',
@@ -45,7 +52,7 @@ podTemplate(
       stage("Checkout branch")
       {
           scmVars = checkout(scm)
-      
+
         GIT_BRANCH_NAME = scmVars.GIT_BRANCH
         BRANCH_NAME = """${sh(returnStdout: true, script: "echo ${GIT_BRANCH_NAME} | awk -F'/' '{print \$2}'").trim()}"""
         sh """
@@ -76,7 +83,7 @@ podTemplate(
             flatten: true])
           }
           load "common-variables.groovy"
-          
+
                switch (BRANCH_NAME) {
         case "master":
           TAG_NAME = VERSION
@@ -92,9 +99,23 @@ podTemplate(
       }
 
     DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/omar-ui"
-    
+
     }
-      
+
+    stage('SonarQube Analysis') {
+    nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
+        def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
+
+        withSonarQubeEnv('sonarqube'){
+            sh """
+              ${scannerHome}/bin/sonar-scanner \
+              -Dsonar.projectKey=omar-ui \
+              -Dsonar.login=${SONARQUBE_TOKEN}
+            """
+        }
+    }
+}
+
       stage('Build') {
         container('builder') {
           sh """
@@ -109,17 +130,41 @@ podTemplate(
     stage('Docker build') {
       container('docker') {
         withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_DOWNLOAD_URL}") {  //TODO
-          sh """
-            docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui-app:"${VERSION}" ./docker 
-            """
+          if (BRANCH_NAME == 'master'){
+                sh """
+                    docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}" ./docker
+                """
+          }
+          else {
+                sh """
+                    docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a ./docker
+                """
+          }
         }
       }
-      stage('Docker push'){
+    }
+
+    stage('Docker push'){
         container('docker') {
           withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}") {
-          sh """
-              docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui-app:"${VERSION}"
-          """
+
+            if (BRANCH_NAME == 'master'){
+                sh """
+                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}"
+                """
+            }
+            else if (BRANCH_NAME == 'dev') {
+                sh """
+                    docker tag "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:dev
+                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a
+                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:dev
+                """
+            }
+            else {
+                sh """
+                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a
+                """
+            }
           }
         }
       }
@@ -138,8 +183,28 @@ podTemplate(
           }
         }
       }
+
+
+      stage('New Deploy'){
+        container('kubectl-aws-helm') {
+            withAWS(
+            credentials: 'Jenkins-AWS-IAM',
+            region: 'us-east-1'){
+                if (BRANCH_NAME == 'master'){
+                    //insert future instructions here
+                }
+                else if (BRANCH_NAME == 'dev') {
+                    sh "aws eks --region us-east-1 update-kubeconfig --name gsp-dev-v2 --alias dev"
+                    sh "kubectl config set-context dev --namespace=omar-dev"
+                    sh "kubectl rollout restart deployment/omar-ui"
+                }
+                else {
+                    sh "echo Not deploying ${BRANCH_NAME} branch"
+                }
+            }
+        }
     }
-    
+
     stage("Clean Workspace"){
       if ("${CLEAN_WORKSPACE}" == "true")
         step([$class: 'WsCleanup'])

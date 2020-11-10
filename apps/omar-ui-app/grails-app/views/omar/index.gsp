@@ -14,15 +14,12 @@
   <!-- This is needed for IE -->
   <asset:link rel="icon" href="favicon.ico?v=2" type="image/icon"/>
 
-<!--
-  <asset:stylesheet src = "webjars/bootswatch/3.3.5+4/${ clientConfig.userPreferences.pageTheme }/bootstrap.min.css"/>
--->
-
   <asset:stylesheet src="app.manifest.css"/>
+  <asset:stylesheet src = "webjars/bootswatch/3.3.5+4/${ clientConfig.userPreferences.pageTheme }/bootstrap.min.css"/>
 
-    <browser:isMsie>
-        <asset:stylesheet src="element.visibility.css"/>
-    </browser:isMsie>
+  <browser:isMsie>
+      <asset:stylesheet src="element.visibility.css"/>
+  </browser:isMsie>
 
 </head>
   <body>
@@ -194,8 +191,6 @@
         }
 
       })();
-
-      console.log(AppO2);
 
         // used to share the map canvas between windows
         var mapCanvas;

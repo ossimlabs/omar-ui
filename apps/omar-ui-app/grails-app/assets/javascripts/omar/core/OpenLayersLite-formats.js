@@ -7593,9 +7593,12 @@ OpenLayers.Geometry.LineString = OpenLayers.Class(OpenLayers.Geometry.Curve, {
                     }
                 }
             }
+            // JMP 11/16 - check to verify that vert2 is not null
             if(mutual && sourceParts.length > 0 && points.length > 0) {
-                points.push(vert2.clone());
-                sourceParts.push(new OpenLayers.Geometry.LineString(points));
+                if(vert2 !== 'undefined') {
+                    points.push(vert2.clone());
+                    sourceParts.push(new OpenLayers.Geometry.LineString(points));
+                }
             }
         } else {
             results = target.splitWith(this, options);
@@ -13076,9 +13079,13 @@ OpenLayers.Format.Text = OpenLayers.Class(OpenLayers.Format, {
                                 set = true;
                             } else if (columns[valIndex] == 'title')
                                 attributes['title'] = vals[valIndex];
-                            else if (columns[valIndex] == 'image' ||
-                                     columns[valIndex] == 'icon' && style) {
-                                style['externalGraphic'] = vals[valIndex];
+
+                            // JMP - 11/16 - Desperate check to see if style attr exists
+                            else if (columns[valIndex] === 'image' ||
+                                     columns[valIndex] === 'icon' && style) {
+                                if(style['externalGraphic'].exists()) {
+                                    style['externalGraphic'] = vals[valIndex];
+                                }
                             } else if (columns[valIndex] == 'iconSize' && style) {
                                 var size = vals[valIndex].split(',');
                                 style['graphicWidth'] = parseFloat(size[0]);
@@ -17185,7 +17192,8 @@ OpenLayers.Format.GeoJSON = OpenLayers.Class(OpenLayers.Format.JSON, {
             geojson.features = new Array(numFeatures);
             for(var i=0; i<numFeatures; ++i) {
                 var element = obj[i];
-                if(!element instanceof OpenLayers.Feature.Vector) {
+                // JMP 11/16 - added another set of () to make the statement compliant per Sonar's request.
+                if(!(element instanceof OpenLayers.Feature.Vector)) {
                     var msg = "FeatureCollection only supports collections " +
                               "of features: " + element;
                     throw msg;

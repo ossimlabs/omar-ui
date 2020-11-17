@@ -13080,12 +13080,10 @@ OpenLayers.Format.Text = OpenLayers.Class(OpenLayers.Format, {
                             } else if (columns[valIndex] == 'title')
                                 attributes['title'] = vals[valIndex];
 
-                            // JMP - 11/16 - Desperate check to see if style attr exists
+                            // JMP - 11/17 - Weird bug, style doesnt trigger bugs anywhere else
                             else if (columns[valIndex] === 'image' ||
                                      columns[valIndex] === 'icon' && style) {
-                                if(style !== undefined || style !== null) {
                                     style['externalGraphic'] = vals[valIndex];
-                                }
                             } else if (columns[valIndex] == 'iconSize' && style) {
                                 var size = vals[valIndex].split(',');
                                 style['graphicWidth'] = parseFloat(size[0]);

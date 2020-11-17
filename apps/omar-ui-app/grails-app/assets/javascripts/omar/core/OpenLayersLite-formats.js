@@ -13083,7 +13083,7 @@ OpenLayers.Format.Text = OpenLayers.Class(OpenLayers.Format, {
 
                             // JMP - 11/17 - Weird bug, style doesnt trigger bugs anywhere else
 
-                                
+
                             else if (columns[valIndex] === 'image' ||
                                      columns[valIndex] === 'icon' && style) {
                                     style['externalGraphic'] = vals[valIndex];

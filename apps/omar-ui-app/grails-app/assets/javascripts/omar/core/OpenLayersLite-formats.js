@@ -7595,7 +7595,7 @@ OpenLayers.Geometry.LineString = OpenLayers.Class(OpenLayers.Geometry.Curve, {
             }
             // JMP 11/16 - check to verify that vert2 is not null
             if(mutual && sourceParts.length > 0 && points.length > 0) {
-                if(vert2 !== 'undefined') {
+                if(vert2 !== undefined) {
                     points.push(vert2.clone());
                     sourceParts.push(new OpenLayers.Geometry.LineString(points));
                 }
@@ -13083,7 +13083,7 @@ OpenLayers.Format.Text = OpenLayers.Class(OpenLayers.Format, {
                             // JMP - 11/16 - Desperate check to see if style attr exists
                             else if (columns[valIndex] === 'image' ||
                                      columns[valIndex] === 'icon' && style) {
-                                if(style !== undefined) {
+                                if(style !== undefined || style !== null) {
                                     style['externalGraphic'] = vals[valIndex];
                                 }
                             } else if (columns[valIndex] == 'iconSize' && style) {

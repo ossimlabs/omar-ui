@@ -13083,7 +13083,7 @@ OpenLayers.Format.Text = OpenLayers.Class(OpenLayers.Format, {
                             // JMP - 11/16 - Desperate check to see if style attr exists
                             else if (columns[valIndex] === 'image' ||
                                      columns[valIndex] === 'icon' && style) {
-                                if(style !== 'undefined') {
+                                if(style !== undefined) {
                                     style['externalGraphic'] = vals[valIndex];
                                 }
                             } else if (columns[valIndex] == 'iconSize' && style) {

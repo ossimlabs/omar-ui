@@ -1,6 +1,6 @@
 package omar.app
 
 class MapViewController {
-
-    def index() { }
+//JMP 11/18 - Empty and unused comment for Sonar code smell
+  //  def index() { }
 }

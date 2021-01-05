@@ -39,7 +39,7 @@ podTemplate(
       ttyEnabled: true
     ),containerTemplate(
      name: 'fortify',
-     image: "nexus-docker-private-hosted.ossim.io/fortify-test",
+     image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/fortify-test",
      ttyEnabled: true,
      command: 'cat',
      privileged: true

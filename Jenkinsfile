@@ -37,7 +37,13 @@ podTemplate(
       name: 'helm',
       command: 'cat',
       ttyEnabled: true
-    )
+    ),containerTemplate(
+     name: 'fortify',
+     image: "nexus-docker-private-hosted.ossim.io/fortify-test",
+     ttyEnabled: true,
+     command: 'cat',
+     privileged: true
+    ),
   ],
   volumes: [
     hostPathVolume(
@@ -74,17 +80,17 @@ podTemplate(
         }
       }
 
-      stage("Load Variables")
-      {
-        withCredentials([string(credentialsId: 'o2-artifact-project', variable: 'o2ArtifactProject')]) {
-          step ([$class: "CopyArtifact",
-            projectName: o2ArtifactProject,
-            filter: "common-variables.groovy",
-            flatten: true])
-          }
-          load "common-variables.groovy"
+     stage("Load Variables")
+     {
+       withCredentials([string(credentialsId: 'o2-artifact-project', variable: 'o2ArtifactProject')]) {
+         step ([$class: "CopyArtifact",
+           projectName: o2ArtifactProject,
+           filter: "common-variables.groovy",
+           flatten: true])
+         }
+         load "common-variables.groovy"
 
-               switch (BRANCH_NAME) {
+      switch (BRANCH_NAME) {
         case "master":
           TAG_NAME = VERSION
           break
@@ -98,23 +104,37 @@ podTemplate(
           break
       }
 
-    DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/omar-ui"
+      DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/omar-ui"
 
     }
 
     stage('SonarQube Analysis') {
-    nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
-        def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
+       nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
+          def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
 
-        withSonarQubeEnv('sonarqube'){
+          withSonarQubeEnv('sonarqube'){
             sh """
               ${scannerHome}/bin/sonar-scanner \
               -Dsonar.projectKey=omar-ui \
               -Dsonar.login=${SONARQUBE_TOKEN}
             """
-        }
+          }
+      }
     }
-}
+    
+    stage('Fortify Scan') {
+     container('fortify') {
+           echo "Running Fortify analysis and scan"
+           sh """
+                 /opt/Fortify/Fortify_SCA_and_Apps_20.1.0/bin/sourceanalyzer -Xmx1G -b "${params.GIT_SERVICE_NAME}" "${WORKSPACE}"/**/*.java
+                 /opt/Fortify/Fortify_SCA_and_Apps_20.1.0/bin/sourceanalyzer -Xmx1G -b "${params.GIT_SERVICE_NAME}" -scan -f "${WORKSPACE}"/"${params.GIT_SERVICE_NAME}".fpr
+                 /opt/Fortify/Fortify_SCA_and_Apps_20.1.0/bin/ReportGenerator -format pdf -f "${WORKSPACE}"/"${params.GIT_SERVICE_NAME}".pdf -source "${WORKSPACE}"/"${params.GIT_SERVICE_NAME}".fpr -template DeveloperWorkbook.xml
+           """
+
+           archiveArtifacts "*.fpr"
+           archiveArtifacts "*.pdf"
+     }
+    }
 
       stage('Build') {
         container('builder') {

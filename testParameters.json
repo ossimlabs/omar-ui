@@ -12,14 +12,7 @@
     }
   },
   "tests": {
-    "minIndexTest": {
-      "method": "get",
-      "endpoint": "/omar/index",
-      "in": "query",
-      "expected": "good",
-      "parameters": {
-      }
-    },
+
     "mapImageTest1": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -319,8 +312,160 @@
         "showModalSplash": false
       }
     },
-
-    "maxIndexTest2": {
+    "mapImageTest11": {
+      "method": "get",
+      "endpoint": "/omar/#!/mapImage",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "filename": "%2Fdata%2Fharvey%2F2017-01-29%2F1040010027A1B700%2F3002132.tif",
+        "entry_id": "0",
+        "width": "19584",
+        "numResLevels": "13",
+        "height": "19584",
+        "bands": "default",
+        "numOfBands": "3",
+        "imageId": "182",
+        "brightness": "0",
+        "contrast": "1",
+        "histOp":"auto-minmax",
+        "histCenterTile": false,
+        "resamplerFilter": "bilinear",
+        "sharpenMode": "none",
+        "imageRenderType": "tile",
+        "imageSpaceRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-oms",
+        "uiRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-ui",
+        "mensaRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-mensa",
+        "wfsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wfs%2Fwfs",
+        "wmsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wms",
+        "showModalSplash": false
+      }
+    },
+    "mapImageTest12": {
+      "method": "get",
+      "endpoint": "/omar/#!/mapImage",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "filename": "%2Fdata%2Fharvey%2F2017-01-29%2F1040010027A1B700%2F3002122.tif",
+        "entry_id": "0",
+        "width": "19584",
+        "numResLevels": "13",
+        "height": "19584",
+        "bands": "default",
+        "numOfBands": "3",
+        "imageId": "183",
+        "brightness": "0",
+        "contrast": "1",
+        "histOp": "auto-inmax",
+        "histCenterTile": false,
+        "resamplerFilter": "bilinear",
+        "sharpenMode": "none",
+        "imageRenderType": "tile",
+        "imageSpaceRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-oms",
+        "uiRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-ui",
+        "mensaRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-mensa",
+        "wfsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wfs%2Fwfs",
+        "wmsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wms",
+        "showModalSplash": false
+      }
+    },
+    "mapImageTest13": {
+      "method": "get",
+      "endpoint": "/omar/#!/mapImage",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "filename": "%2Fdata%2Fharvey%2F2017-01-29%2F1040010027A1B700%2F3002123.tif",
+        "entry_id": "0",
+        "width": "19584",
+        "numResLevels": "13",
+        "height": "19584",
+        "bands": "default",
+        "numOfBands": "3",
+        "imageId": "184",
+        "brightness": "0",
+        "contrast": "1",
+        "histOp":"auto-inmax",
+        "histCenterTile": false,
+        "resamplerFilter": "bilinear",
+        "sharpenMode": "none",
+        "imageRenderType": "tile",
+        "imageSpaceRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-oms",
+        "uiRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-ui",
+        "mensaRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-mensa",
+        "wfsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wfs%2Fwfs",
+        "wmsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wms",
+        "showModalSplash": false
+      }
+    },
+    "mapImageTest14": {
+      "method": "get",
+      "endpoint": "/omar/#!/mapImage",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "filename": "%2Fdata%2Fharvey%2F2017-01-29%2F1040010027A1B700%2F3002130.tif",
+        "entry_id": "0",
+        "width": "19584",
+        "numResLevels": "13",
+        "height": "19584",
+        "bands": "default",
+        "numOfBands": "3",
+        "imageId": "185",
+        "brightness": "0",
+        "contrast": "1",
+        "histOp":"auto-minmax",
+        "histCenterTile": false,
+        "resamplerFilter": "bilinear",
+        "sharpenMode": "none",
+        "imageRenderType": "tile",
+        "imageSpaceRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-oms",
+        "uiRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-ui",
+        "mensaRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-mensa",
+        "wfsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wfs%2Fwfs",
+        "wmsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wms",
+        "showModalSplash": false
+      }
+    },
+    "mapImageTest15": {
+      "method": "get",
+      "endpoint": "/omar/#!/mapImage",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "filename": "%2Fdata%2Fharvey%2F2017-01-29%2F1040010027A1B700%2F3002300.tif",
+        "entry_id": "0",
+        "width": "19584",
+        "numResLevels": "13",
+        "height": "19584",
+        "bands": "default",
+        "numOfBands": "3",
+        "imageId": "186",
+        "brightness": "0",
+        "contrast": "1",
+        "histOp":"auto-minmax",
+        "histCenterTile": false,
+        "resamplerFilter": "bilinear",
+        "sharpenMode": "none",
+        "imageRenderType": "tile",
+        "imageSpaceRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-oms",
+        "uiRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-ui",
+        "mensaRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-mensa",
+        "wfsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wfs%2Fwfs",
+        "wmsRequestUrl": "https:%2F%2Fomar-dev.ossim.io%2Fomar-wms",
+        "showModalSplash": false
+      }
+    },
+    "minIndexTest": {
+      "method": "get",
+      "endpoint": "/omar/index#!/map",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+      }
+    },
+    "maxIndexTest1": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
       "in": "query",
@@ -355,7 +500,16 @@
         "wac": "0427"
       }
     },
-    "maxIndexTest3": {
+    "minIndexTest1": {
+      "method": "get",
+      "endpoint": "/omar/index#!/map",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "countries": "IZ"
+      }
+    },
+    "maxIndexTest2": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
       "in": "query",
@@ -390,7 +544,16 @@
         "wac": ""
       }
     },
-    "maxIndexTest4": {
+    "minIndexTest2": {
+      "method": "get",
+      "endpoint": "/omar/index#!/map",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "countries": "SY"
+      }
+    },
+    "maxIndexTest3": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
       "in": "query",
@@ -425,7 +588,7 @@
         "wac": ""
       }
     },
-    "maxIndexTest5": {
+    "minIndexTest3": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
       "in": "query",
@@ -434,40 +597,49 @@
         "countries": "SY"
       }
     },
-    "maxIndexTest6": {
+    "maxIndexTest4": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
       "in": "query",
       "expected": "good",
       "parameters": {
-        "azimuth": "",
+        "azimuth": "359.97",
         "be": "",
-        "cloudCover": "",
-        "countries": "RU",
-        "dataType": "",
+        "cloudCover": "0",
+        "countries": "US",
+        "dataType": "acquisition_date",
         "duration": "",
         "elevation":"",
-        "endDate": "",
-        "filename": "",
-        "gsd": "",
-        "imageId": "",
-        "mapCenterX": "",
-        "mapCenterY": "",
+        "endDate": "2017-08-30",
+        "filename": "/data/LongBeach/17AUG30185536-P1BS-057097507010_01_P001.NTF",
+        "gsd": "0.5029",
+        "imageId": "30AUG17WV021300017AUG30185536-P1BS-057097507010_01_P001",
+        "mapCenterX": "-80",
+        "mapCenterY": "28",
         "mapRotation": "",
         "mapSearch": "",
-        "mapZoom": "",
-        "mapVisibility": "",
-        "missions": "",
-        "niirs": "",
-        "products": "",
-        "sensors": "",
+        "mapZoom": "7",
+        "mapVisibility": true,
+        "missions": "WV02",
+        "niirs": "5.0",
+        "products": "P1700D5600",
+        "sensors": "AA",
         "spacial": "",
-        "startDate": "",
-        "sunAzimuth": "",
-        "sunElevation": "",
+        "startDate": "2017-08-30",
+        "sunAzimuth": "148.5",
+        "sunElevation": "61.6",
         "target": "",
         "wac": ""
       }
+    },
+    "minIndexTest4": {
+      "method": "get",
+      "endpoint": "/omar/index#!/map",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "countries": "US"
+        }
+      }
     }
   }
-}

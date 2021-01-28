@@ -42,15 +42,7 @@
         "showModalSplash": false
       }
     },
-    "badMapImageTest1": {
-      "method": "get",
-      "endpoint": "/omar/#!/mapImage",
-      "in": "query",
-      "expected": "good",
-      "parameters": {
 
-      }
-    },
     "mapImageTest2": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -80,6 +72,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest3": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -109,6 +102,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest4": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -138,6 +132,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest5": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -167,6 +162,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest6": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -196,6 +192,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest7": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -225,6 +222,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest8": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -254,6 +252,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest9": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -283,6 +282,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest10": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -312,6 +312,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest11": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -341,6 +342,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest12": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -370,6 +372,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest13": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -399,6 +402,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest14": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -428,6 +432,7 @@
         "showModalSplash": false
       }
     },
+
     "mapImageTest15": {
       "method": "get",
       "endpoint": "/omar/#!/mapImage",
@@ -457,6 +462,7 @@
         "showModalSplash": false
       }
     },
+
     "minIndexTest": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -465,6 +471,7 @@
       "parameters": {
       }
     },
+
     "maxIndexTest1": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -500,6 +507,7 @@
         "wac": "0427"
       }
     },
+
     "minIndexTest1": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -509,6 +517,7 @@
         "countries": "IZ"
       }
     },
+
     "maxIndexTest2": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -544,6 +553,7 @@
         "wac": ""
       }
     },
+
     "minIndexTest2": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -553,6 +563,7 @@
         "countries": "SY"
       }
     },
+
     "maxIndexTest3": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -588,6 +599,7 @@
         "wac": ""
       }
     },
+
     "minIndexTest3": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -597,6 +609,7 @@
         "countries": "SY"
       }
     },
+
     "maxIndexTest4": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -632,6 +645,7 @@
         "wac": ""
       }
     },
+
     "minIndexTest4": {
       "method": "get",
       "endpoint": "/omar/index#!/map",
@@ -640,6 +654,43 @@
       "parameters": {
         "countries": "US"
         }
+      },
+
+    "maxIndexTest5": {
+      "method": "get",
+      "endpoint": "/omar/index#!/map",
+      "in": "query",
+      "expected": "good",
+      "parameters": {
+        "azimuth": "0.01",
+        "be": "",
+        "cloudCover": "1.0",
+        "countries": "SO",
+        "dataType": "acquisition_date",
+        "duration": "",
+        "elevation":"",
+        "endDate": "2018-04-29",
+        "filename": "/data/s3/adhoc/18APR29072458-M1BS-058130308010_01_P011.NTF",
+        "gsd": "2.27838",
+        "imageId": "29APR18WV020600018APR29072458-M1BS-058130308010_01_P011",
+        "mapCenterX": "44",
+        "mapCenterY": "2",
+        "mapRotation": "",
+        "mapSearch": "",
+        "mapZoom": "7",
+        "mapVisibility": true,
+        "missions": "WV02",
+        "niirs": "2.8",
+        "products": "M17C909A00",
+        "sensors": "GA",
+        "spacial": "",
+        "startDate": "2018-04-29",
+        "sunAzimuth": "59.4",
+        "sunElevation": "64.2",
+        "target": "",
+        "wac": ""
+
       }
     }
   }
+}

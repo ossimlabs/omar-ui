@@ -37,6 +37,13 @@ podTemplate(
       name: 'helm',
       command: 'cat',
       ttyEnabled: true
+    ),
+    containerTemplate(
+        name: 'cypress',
+        image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/cypress/included:4.9.0",
+        ttyEnabled: true,
+        command: 'cat',
+        privileged: true
     )
   ],
   volumes: [
@@ -101,6 +108,24 @@ podTemplate(
     DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/omar-ui"
 
     }
+
+    stage ("Run Cypress Test") {
+        container('cypress') {
+            try {
+                sh """
+                cypress run --headless
+                """
+            } catch (err) {}
+            sh """
+                npm i -g xunit-viewer
+                xunit-viewer -r results -o results/omar-ui-test-results.html
+                """
+                junit 'results/*.xml'
+                archiveArtifacts "results/*.xml"
+                archiveArtifacts "results/*.html"
+                s3Upload(file:'results/omar-ui-test-results.html', bucket:'ossimlabs', path:'cypressTests/')
+            }
+        }
 
     stage('SonarQube Analysis') {
     nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {

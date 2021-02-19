@@ -243,7 +243,7 @@
         </li>
         </div>
 
-        <div id="be" role="tabpanel" class="tab-pane" ng-click="vm.loadBeData()" index="2">
+        <div id="be" role="tabpanel" class="tab-pane" index="2">
           <div>
             <br>
             <table class="table table-striped the-table">

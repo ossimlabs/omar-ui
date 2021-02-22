@@ -58,6 +58,13 @@
                         ng-model="filterVideosToggle"
                         ng-change="filter.getVideos(); filter.handleNonVideoFilters(); filter.clearFilters()"
                     > Videos Only
+
+                </div>
+                <div class="thumbnail-checkbox col-md-2">
+                    <input
+                      type="checkbox"
+                      ng-model="thumbnailToggle"
+                    > Show Thumbnail
                 </div>
 
                 <ul class = "nav navbar-nav navbar-right col-md-4">
@@ -1570,11 +1577,12 @@
                                  ng-mouseenter="list.displayFootprint(image);"
                                  ng-mouseleave="list.removeFootprint();">
                                 <div class="media">
-                                    <div class="media-left" style="position: relative">
+                                    <div class="media-left" ng-hide="thumbnailToggle" style="position: relative">
                                         <a
                                                 href="{{list.o2baseUrl}}/#!/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
                                                 target="_blank">
                                             <img
+                                                    
                                                     class="media-object thumbnail-background"
                                                     tooltip-placement="right"
                                                     uib-tooltip="Click the thumbnail or the image ID to view the raw image"

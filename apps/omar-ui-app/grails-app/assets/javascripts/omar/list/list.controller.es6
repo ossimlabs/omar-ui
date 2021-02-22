@@ -186,9 +186,12 @@
 
           // Resets the thumbnails URL for the view
           vm.thumbPath = thumbnailsRequestUrl;
+          console.log(vm.thumbPath)
         });
       });
     });
+    
+    $scope.testValue = "false"; 
 
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename

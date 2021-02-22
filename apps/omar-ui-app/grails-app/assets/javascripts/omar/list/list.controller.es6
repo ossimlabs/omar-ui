@@ -190,8 +190,8 @@
         });
       });
     });
-    
-    $scope.testValue = "false"; 
+
+     
 
     vm.thumbPath = thumbnailsRequestUrl;
     vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename

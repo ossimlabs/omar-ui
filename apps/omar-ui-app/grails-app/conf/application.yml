@@ -208,7 +208,7 @@ banner:
   text: BETA
   textColor: white
 
-baseUrl: https://omar-3pa-dev.ossim.io
+baseUrl: https://omar-dev.ossim.io
 
 logging:
   config: classpath:logback.groovy
@@ -336,6 +336,17 @@ omar:
         url:
           # Base URL for the federated site
           base: ${baseUrl}
+          # Optional context paths for the apps, e.g.
+          # uiContextPath: /omar-ui
+      3pa:
+        info:
+          # Short name for the omar site
+          name: OMAR - 3pa
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: OMAR 3pa Server
+        url:
+          # Base URL for the federated site
+          base: https://omar-3pa-dev.ossim.io
           # Optional context paths for the apps, e.g.
           # uiContextPath: /omar-ui
     twofishes:

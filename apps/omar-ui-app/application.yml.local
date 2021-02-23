@@ -1,7 +1,7 @@
 ---
 serverProtocol: https
 serverName: localhost:8080
-baseUrl: https://omar-dev.ossim.io
+baseUrl: https://omar-3pa-dev.ossim.io
 
 defaultPreferences:
     defaultUsername: Anonymous

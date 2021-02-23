@@ -208,7 +208,7 @@ banner:
   text: BETA
   textColor: white
 
-baseUrl: https://omar-dev.ossim.io
+baseUrl: https://omar-3pa-dev.ossim.io
 
 logging:
   config: classpath:logback.groovy
@@ -242,6 +242,9 @@ omar:
       enabled: true
     # Base settings for the O2 UI general configuration
     misc:
+      # types are WMS or OMS 
+      # TODO: add better discription
+      thumbnailType: "WMS"
       # Enable BE number lookups in the search field.
       beLookupEnabled: false
       icons:
@@ -284,7 +287,7 @@ omar:
       splashModal:
         delay: 1000
         # Used to enable/disable the splash modal from displaying
-        enabled: true
+        enabled: false
         # Splash modal header text
         header: O2 Notice
         # Splash modal message body text

@@ -339,17 +339,6 @@ omar:
           base: ${baseUrl}
           # Optional context paths for the apps, e.g.
           # uiContextPath: /omar-ui
-      3pa:
-        info:
-          # Short name for the omar site
-          name: OMAR - 3pa
-          # Long name/description of the site.  This is displayed in the dropdown in the UI
-          description: OMAR 3pa Server
-        url:
-          # Base URL for the federated site
-          base: https://omar-3pa-dev.ossim.io
-          # Optional context paths for the apps, e.g.
-          # uiContextPath: /omar-ui
     twofishes:
       # URL of Twofishes search service.
       # Used for geocoding place names

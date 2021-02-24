@@ -35,19 +35,35 @@ endpoints:
 omar:
   app:
     misc:
+      # This will enable thumbnails to be provided by oms or wms. The types are "wms" or "oms".
+      # "oms" requires that omar-oms is deployed "wms" requires 
+      # either omar-wms or omar-wms-lite to be deployed
+      thumbnailType: "WMS"
       splashModal:
         enabled: false
     sites:
-      o2-local:
+      o2:
         info:
           # Short name for the omar site
-          name: OMAR-LOCAL
-
+          name: OMAR - Default
           # Long name/description of the site.  This is displayed in the dropdown in the UI
-          description: OMAR Local Server (Unclassified)
+          description: OMAR Default Server
         url:
           # Base URL for the federated site
-          base: http://omar.ossim.io
+          base: https://omar-dev.ossim.io 
+          # Optional context paths for the apps, e.g.
+          # uiContextPath: /omar-ui
+      3pa:
+        info:
+          # Short name for the omar site
+          name: OMAR - 3pa
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: OMAR 3pa Server
+        url:
+          # Base URL for the federated site
+          base: ${baseUrl}
+          # Optional context paths for the apps, e.g.
+          # uiContextPath: /omar-ui//omar.ossim.io
 
   openlayers:
     baseMaps:

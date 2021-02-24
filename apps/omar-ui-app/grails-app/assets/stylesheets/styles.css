@@ -1334,6 +1334,10 @@ It breaks the map coord modal and the splach modal
   margin-top: 1em !important;
 }
 
+.thumbnail-checkbox {
+  margin-top: 1em !important;
+}
+
 .meta-data-box {
   padding: 8px;
   border: black 1px solid;

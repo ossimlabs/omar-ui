@@ -45,11 +45,12 @@
     //console.log('AppO2.APP_CONFIG in ListController: ', AppO2.APP_CONFIG);
 
     /* jshint validthis: true */
-
     var vm = this;
 
     vm.userPreferences = AppO2.APP_CONFIG.userPreferences.o2SearchPreference;
     var thumbnailsBaseUrl, thumbnailsContextPath, thumbnailsRequestUrl;
+    var thumbnailsBaseUrlWms, thumbnailsContextPathWms, thumbnailsRequestUrlWms;
+    vm.thumbnailType = AppO2.APP_CONFIG.params.misc.thumbnailType;
     var wfsBaseUrl, wfsContextPath, wfsRequestUrl;
     var wmsBaseUrl, wmsContextPath, wmsRequestUrl;
     var tlvBaseUrl, tlvContextPath, tlvRequestUrl;
@@ -186,22 +187,57 @@
 
           // Resets the thumbnails URL for the view
           vm.thumbPath = thumbnailsRequestUrl;
+       
+        });
+      });
+    
+      $scope.$on("wfs: updated", function (event, features) {
+        $scope.$apply(function () {
+          thumbnailsBaseUrlWms = stateService.omarSitesState.url.base;
+          thumbnailsContextPathWms = stateService.omarSitesState.url.wmsContextPath;
+          thumbnailsRequestUrlWms =
+            thumbnailsBaseUrlWms +
+            thumbnailsContextPathWms;
+
+          // Resets the thumbnails URL for the view
+          vm.thumbPathWms = thumbnailsRequestUrlWms;
+       
         });
       });
     });
 
-    vm.thumbPath = thumbnailsRequestUrl;
-    vm.thumbFilename = "&filename="; // Parameter provided by image.properties.filename
-    vm.thumbId = "&id="; // Parameter provided by image.properties.id
-    vm.thumbEntry = "&entry="; // Parameter provided by image.properties.entry_id
-    vm.thumbSize = "114";
-    vm.thumbFormat = "png";
-    vm.thumbTransparent = "true";
-    vm.padThumbnail = "false";
+
+    let bbox, bboxString, url;
+    vm.getThumbnail = function getWmsThumbnail(image) {
+
+      switch (vm.thumbnailType.toLowerCase()) {
+        case "wms":
+          bbox = new ol.geom.MultiPolygon(
+            image.geometry.coordinates
+          ).getExtent();
+    
+          bboxString = bbox.toString() 
+          
+          url = `${vm.thumbPathWms}/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=true&FILTER=in(${image.properties.id})&LAYERS=omar:raster_entry&STYLES={"bands":"default","brightness":0,"contrast":1,"histCenterTile":"false","histLinearNormClip":"0,1","histOp":"auto-minmax","nullPixelFlip":"true","resampler_filter":"bilinear","sharpen_percent":0,"gamma":"1.000","histCenterClip":0.5}&SRS=EPSG:4326&WIDTH=112&HEIGHT=112&BBOX=${bboxString}`
+          break;
+        case "oms":          
+          url = `${vm.thumbPath}?&filename=${image.properties.filename}&id=${image.properties.id}&entry=${image.properties.entry_id}&size=114&outputFormat=png&transparent=true&padThumbnail=false`
+          break;
+
+        default:
+          url = ""
+          break;
+      }
+
+      let urlEncoded = encodeURI(url)
+
+      return urlEncoded;
+    };
 
     vm.getImageSpaceUrl = function(image) {
       var defaults = imageSpaceDefaults;
       var properties = image.properties;
+      
       var params = {
         bands: defaults.bands,
         brightness: defaults.brightness,
@@ -223,6 +259,8 @@
         wfsRequestUrl: wfsRequestUrl,
         width: properties.width
       };
+
+     
 
       return AppO2.APP_CONFIG.serverURL + "/omar/#/mapImage?" + $.param(params);
     };
@@ -257,6 +295,7 @@
 
     //used in _map.partial.html.gsp
     vm.imageSpaceDefaults = imageSpaceDefaults;
+
 
     vm.displayFootprint = function(obj) {
       //mapService.mapShowImageFootprint(obj);
@@ -854,7 +893,7 @@
     if (vm.kmlSuperOverlayAppEnabled) {
       vm.kmlRequestUrl = kmlRequestUrl;
     }
-
+   
     var imageSpaceObj = {};
 
     if (imageObj) {
@@ -984,8 +1023,9 @@
       var bbox = new ol.geom.MultiPolygon(
         vm.selectedImage.geometry.coordinates
       ).getExtent();
+      
       var res = (bbox[2] - bbox[0]) / vm.selectedImage.properties.width;
-
+      
       return res;
     };
 

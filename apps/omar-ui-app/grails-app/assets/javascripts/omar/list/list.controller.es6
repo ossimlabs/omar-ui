@@ -635,7 +635,7 @@
 
     vm.openTab = tab => {
       setTimeout(function() {
-        //$(`[data-target="#${tab}"]`).tab("show");
+        $(`[data-target="#${tab}"]`).tab("show");
       }, 250);
     };
 

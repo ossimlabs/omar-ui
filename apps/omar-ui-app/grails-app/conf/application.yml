@@ -242,8 +242,9 @@ omar:
       enabled: true
     # Base settings for the O2 UI general configuration
     misc:
-      # types are WMS or OMS 
-      # TODO: add better discription
+      # This will enable thumbnails to be provided by oms or wms. The types are "wms" or "oms".
+      # "oms" requires that omar-oms is deployed "wms" requires 
+      # either omar-wms or omar-wms-lite to be deployed
       thumbnailType: "WMS"
       # Enable BE number lookups in the search field.
       beLookupEnabled: false
@@ -287,7 +288,7 @@ omar:
       splashModal:
         delay: 1000
         # Used to enable/disable the splash modal from displaying
-        enabled: false
+        enabled: true
         # Splash modal header text
         header: O2 Notice
         # Splash modal message body text

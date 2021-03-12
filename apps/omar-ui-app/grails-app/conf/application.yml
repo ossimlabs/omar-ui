@@ -342,7 +342,7 @@ omar:
     twofishes:
       # URL of Twofishes search service.
       # Used for geocoding place names
-      baseUrl: ${baseUrl}/twofishes
+      baseUrl: ${baseUrl}/omar-twofishes
     uploadApp:
       enabled: true
     userGuide:

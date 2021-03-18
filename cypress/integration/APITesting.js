@@ -1,4 +1,4 @@
-let json = require('../../testParameters.json');
+let json = require('../fixtures/testParameters.json');
 let tests = Object.keys(json.tests);
 let innerJson, method, endpoint, inValue, good, parameters, request, keys;
 

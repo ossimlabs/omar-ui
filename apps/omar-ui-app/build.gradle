@@ -10,11 +10,21 @@ grails {
     }
 }
 dependencies {
+    components {
+        all { ComponentMetadataDetails details ->
+            def version = details.id.version
+            if (version.contains("SNAPSHOT")) {
+                details.status = "milestone" // default in Gradle
+            } else if (version.contains("RELEASE")) {
+                details.status = "release"
+            }
+        }
+    }
     if ( ! System.getenv('O2_INLINE_BUILD') ) {
-        compile "io.ossim.omar.plugins:omar-core-plugin:${omarCorePluginVersion}"
-        compile "io.ossim.omar.plugins:omar-hibernate-spatial-plugin:${omarHibernateSpatialPluginVersion}"
-        compile "io.ossim.omar.plugins:omar-openlayers-plugin:${omarOpenlayersPluginVersion}"
-        compile "io.ossim.omar.plugins:omar-security-plugin:${omarSecurityPluginVersion}"
+        compile "io.ossim.omar.plugins:omar-core-plugin:latest.release"
+        compile "io.ossim.omar.plugins:omar-hibernate-spatial-plugin:latest.release"
+        compile "io.ossim.omar.plugins:omar-openlayers-plugin:latest.release"
+        compile "io.ossim.omar.plugins:omar-security-plugin:latest.release"
     }
 
     compile "org.grails.plugins:browser-detection:3.3.0"

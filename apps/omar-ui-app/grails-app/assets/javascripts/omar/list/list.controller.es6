@@ -1062,7 +1062,7 @@
 
     vm.shareWmsGetMap = imageId => {
       let bBox;
-      let url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs={proj}&width={width}&height={height}&transparent=true&format=image/png&bbox={bbox}`;
+      let url = `${wmsRequestUrl}/wms/getMap?service=WMS&version=1.1.1&request=GetMap&layers=omar:raster_entry.${imageId}&srs={proj}&width={width}&height={height}&transparent=true&format=image/png&bbox=`;
 
       if (vm.bBoxCheck) {
         wfsService.getImagesExtent(imageId).then(function(response) {

@@ -1,15 +1,16 @@
 properties([
-    parameters ([
-        booleanParam(name: 'CLEAN_WORKSPACE', defaultValue: true, description: 'Clean the workspace at the end of the run'),
+    parameters([
+        string(name: 'PROJECT_URL', defaultValue: 'https://github.com/ossimlabs/omar-ui', description: 'The project github URL'),
         string(name: 'DOCKER_REGISTRY_DOWNLOAD_URL', defaultValue: 'nexus-docker-private-group.ossim.io', description: 'Repository of docker images')
     ]),
     pipelineTriggers([
-            [$class: "GitHubPushTrigger"]
+        [$class: "GitHubPushTrigger"]
     ]),
-    [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/ossimlabs/omar-ui'],
+    [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: '${PROJECT_URL}'],
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '20')),
     disableConcurrentBuilds()
-])
+    ])
+
 podTemplate(
   containers: [
     containerTemplate(
@@ -39,6 +40,15 @@ podTemplate(
       ttyEnabled: true
     ),
     containerTemplate(
+    name: 'git',
+    image: 'alpine/git:latest',
+    ttyEnabled: true,
+    command: 'cat',
+    envVars: [
+        envVar(key: 'HOME', value: '/root')
+        ]
+    ),
+    containerTemplate(
         name: 'cypress',
         image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/cypress/included:4.9.0",
         ttyEnabled: true,
@@ -53,61 +63,43 @@ podTemplate(
     ),
   ]
 )
+
 {
-  node(POD_LABEL){
-
-      stage("Checkout branch")
-      {
-          scmVars = checkout(scm)
-
+node(POD_LABEL){
+    stage("Checkout branch") {
+        APP_NAME = PROJECT_URL.tokenize('/').last()
+        scmVars = checkout(scm)
+        Date date = new Date()
+        String currentDate = date.format("YYYY-MM-dd-HH-mm-ss")
+        MASTER = "master"
+        DEV = "dev"
         GIT_BRANCH_NAME = scmVars.GIT_BRANCH
         BRANCH_NAME = """${sh(returnStdout: true, script: "echo ${GIT_BRANCH_NAME} | awk -F'/' '{print \$2}'").trim()}"""
-        sh """
-        touch buildVersion.txt
-        grep buildVersion gradle.properties | cut -d "=" -f2 > "buildVersion.txt"
-        """
-        preVERSION = readFile "buildVersion.txt"
-        VERSION = preVERSION.substring(0, preVERSION.indexOf('\n'))
-
-        GIT_TAG_NAME = "omar-ui" + "-" + VERSION
+        VERSION = """${sh(returnStdout: true, script: "cat chart/Chart.yaml | grep version: | awk -F'version:' '{print \$2}'").trim()}"""
+        GIT_TAG_NAME = APP_NAME + "-" + VERSION
         ARTIFACT_NAME = "ArtifactName"
 
-        script {
-          if (BRANCH_NAME != 'master') {
-            buildName "${VERSION} - ${BRANCH_NAME}-SNAPSHOT"
-          } else {
-            buildName "${VERSION} - ${BRANCH_NAME}"
-          }
+            if (BRANCH_NAME == "${MASTER}") {
+                buildName "${VERSION}"
+                TAG_NAME = "${VERSION}"
+            }
+            else {
+                buildName "${BRANCH_NAME}-${currentDate}"
+                TAG_NAME = "${BRANCH_NAME}-${currentDate}"
         }
-      }
-
-      stage("Load Variables")
-      {
-        withCredentials([string(credentialsId: 'o2-artifact-project', variable: 'o2ArtifactProject')]) {
-          step ([$class: "CopyArtifact",
-            projectName: o2ArtifactProject,
-            filter: "common-variables.groovy",
-            flatten: true])
-          }
-          load "common-variables.groovy"
-
-               switch (BRANCH_NAME) {
-        case "master":
-          TAG_NAME = VERSION
-          break
-
-        case "dev":
-          TAG_NAME = "latest"
-          break
-
-        default:
-          TAG_NAME = BRANCH_NAME
-          break
-      }
-
-    DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/omar-ui"
-
     }
+
+    stage("Load Variables") {
+        withCredentials([string(credentialsId: 'o2-artifact-project', variable: 'o2ArtifactProject')]) {
+            step ([$class: "CopyArtifact",
+                projectName: o2ArtifactProject,
+                filter: "common-variables.groovy",
+                flatten: true])
+        }
+        load "common-variables.groovy"
+        DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/${APP_NAME}"
+    }
+
 
     stage ("Run Cypress Test") {
         container('cypress') {
@@ -128,111 +120,86 @@ podTemplate(
         }
 
     stage('SonarQube Analysis') {
-    nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
-        def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
+        nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
+            def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
 
-        withSonarQubeEnv('sonarqube'){
+                withSonarQubeEnv('sonarqube'){
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=${APP_NAME}
+                    """
+            }
+        }
+    }
+
+    stage('Build') {
+        container('builder') {
             sh """
-              ${scannerHome}/bin/sonar-scanner \
-              -Dsonar.projectKey=omar-ui \
-              -Dsonar.login=${SONARQUBE_TOKEN}
+                ./gradlew assemble -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
+                ./gradlew copyJarToDockerDir -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
             """
+        archiveArtifacts "apps/*/build/libs/*.jar"
         }
     }
-}
 
-      stage('Build') {
-        container('builder') {
-          sh """
-          ./gradlew assemble \
-              -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
-          ./gradlew copyJarToDockerDir \
-              -PossimMavenProxy=${MAVEN_DOWNLOAD_URL}
-          """
-          archiveArtifacts "apps/*/build/libs/*.jar"
-        }
-      }
-    stage('Docker build') {
-      container('docker') {
-        withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_DOWNLOAD_URL}") {  //TODO
-          if (BRANCH_NAME == 'master'){
-                sh """
-                    docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}" ./docker
-                """
-          }
-          else {
-                sh """
-                    docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a ./docker
-                """
-          }
-        }
-      }
-    }
-
-    stage('Docker push'){
+    stage('Docker Build') {
         container('docker') {
-          withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}") {
-
-            if (BRANCH_NAME == 'master'){
+            withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_DOWNLOAD_URL}") {
                 sh """
-                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}"
+                    docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}/${APP_NAME}:${TAG_NAME}" ./docker
                 """
-            }
-            else if (BRANCH_NAME == 'dev') {
-                sh """
-                    docker tag "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:dev
-                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a
-                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:dev
-                """
-            }
-            else {
-                sh """
-                    docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-ui:"${VERSION}".a
-                """
-            }
-          }
-        }
-      }
-      stage('Package chart'){
-      container('helm') {
-        sh """
-            mkdir packaged-chart
-            helm package -d packaged-chart chart
-          """
-      }
-    }
-      stage('Upload chart'){
-        container('builder') {
-          withCredentials([usernameColonPassword(credentialsId: 'helmCredentials', variable: 'HELM_CREDENTIALS')]) {
-            sh "curl -u ${HELM_CREDENTIALS} ${HELM_UPLOAD_URL} --upload-file packaged-chart/*.tgz -v"
-          }
-        }
-      }
-
-
-      stage('New Deploy'){
-        container('kubectl-aws-helm') {
-            withAWS(
-            credentials: 'Jenkins-AWS-IAM',
-            region: 'us-east-1'){
-                if (BRANCH_NAME == 'master'){
-                    //insert future instructions here
-                }
-                else if (BRANCH_NAME == 'dev') {
-                    sh "aws eks --region us-east-1 update-kubeconfig --name gsp-dev-v2 --alias dev"
-                    sh "kubectl config set-context dev --namespace=omar-dev"
-                    sh "kubectl rollout restart deployment/omar-ui"
-                }
-                else {
-                    sh "echo Not deploying ${BRANCH_NAME} branch"
-                }
             }
         }
     }
 
-    stage("Clean Workspace"){
-      if ("${CLEAN_WORKSPACE}" == "true")
-        step([$class: 'WsCleanup'])
+    stage('Docker Push') {
+        container('docker') {
+            withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}") {
+            sh """
+                docker tag "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}/${APP_NAME}:${TAG_NAME}" "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}/${APP_NAME}:${TAG_NAME}"
+                docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}/${APP_NAME}:${TAG_NAME}"
+            """
+            }
+        }
     }
-  }
+
+    stage('Package & Upload Chart'){
+        container('helm') {
+            sh """
+                mkdir packaged-chart
+                helm package -d packaged-chart chart
+            """
+        withCredentials([usernameColonPassword(credentialsId: 'helmCredentials', variable: 'HELM_CREDENTIALS')]) {
+            sh """
+                apk add curl
+                curl -u ${HELM_CREDENTIALS} ${HELM_UPLOAD_URL} --upload-file packaged-chart/*.tgz -v
+            """
+            }
+        }
+    }
+
+    stage('Tag Repo') {
+        when (BRANCH_NAME == MASTER) {
+            container('git') {
+                withCredentials([sshUserPrivateKey(
+                      credentialsId: env.GIT_SSH_CREDENTIALS_ID,
+                      keyFileVariable: 'SSH_KEY_FILE',
+                      passphraseVariable: '',
+                      usernameVariable: 'SSH_USERNAME')]) {
+                          sh """
+                              mkdir ~/.ssh
+                              echo -e "StrictHostKeyChecking=no\nIdentityFile ${SSH_KEY_FILE}" >> ~/.ssh/config
+                              git config user.email "radiantcibot@gmail.com"
+                              git config user.name "Jenkins"
+                              git tag -a "${GIT_TAG_NAME}" \
+                              -m "Generated by: ${env.JENKINS_URL}" \
+                              -m "Job: ${env.JOB_NAME}" \
+                              -m "Build: ${env.BUILD_NUMBER}"
+                              git push -v origin "${GIT_TAG_NAME}"
+                          """
+                    }
+                }
+            }
+        }
+    }
 }

@@ -11,22 +11,23 @@ metadata:
     nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
     {{- end }}
 spec:
+  {{- $hostnames := ternary ( list .Values.global.hostname ) .Values.hostnames ( empty .Values.hostnames ) }}
   tls:
   - hosts:
     {{- range $hostname := $hostnames }}
-    - {{ .Values.global.hostname }}
+    - {{ $hostname }}
     {{- end }}
     {{- if (pluck "useTls" .Values .Values.global | first) }}
     secretName: {{ .Values.global.sslCertSecretName }}
     {{- end }}
   rules:
   {{- range $hostname := $hostnames }}
-  - host: {{ .Values.global.hostname }}
+  - host: {{ $hostname }}
     http:
       paths:
-      - path: {{ .Values.ingressPath }}
+      - path: {{ $.Values.ingressPath }}
         backend:
-          serviceName: {{ .Values.appName }}-app
-          servicePort: {{ .Values.internalPort }}
+          serviceName: {{ $.Values.appName }}-app
+          servicePort: {{ $.Values.internalPort }}
   {{- end }}
 {{- end }}

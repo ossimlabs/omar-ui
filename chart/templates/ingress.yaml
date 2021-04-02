@@ -13,11 +13,14 @@ metadata:
 spec:
   tls:
   - hosts:
+    {{- range $hostname := $hostnames }}
     - {{ .Values.global.hostname }}
+    {{- end }}
     {{- if (pluck "useTls" .Values .Values.global | first) }}
     secretName: {{ .Values.global.sslCertSecretName }}
     {{- end }}
   rules:
+  {{- range $hostname := $hostnames }}
   - host: {{ .Values.global.hostname }}
     http:
       paths:
@@ -25,4 +28,5 @@ spec:
         backend:
           serviceName: {{ .Values.appName }}-app
           servicePort: {{ .Values.internalPort }}
+  {{- end }}
 {{- end }}

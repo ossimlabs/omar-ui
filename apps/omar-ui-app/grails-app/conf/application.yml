@@ -242,6 +242,10 @@ omar:
       enabled: true
     # Base settings for the O2 UI general configuration
     misc:
+      # This will enable thumbnails to be provided by oms or wms. The types are "wms" or "oms".
+      # "oms" requires that omar-oms is deployed "wms" requires 
+      # either omar-wms or omar-wms-lite to be deployed
+      thumbnailType: "WMS"
       # Enable BE number lookups in the search field.
       beLookupEnabled: false
       icons:
@@ -338,7 +342,7 @@ omar:
     twofishes:
       # URL of Twofishes search service.
       # Used for geocoding place names
-      baseUrl: ${baseUrl}/twofishes
+      baseUrl: ${baseUrl}/omar-twofishes
     uploadApp:
       enabled: true
     userGuide:

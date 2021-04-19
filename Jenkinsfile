@@ -12,49 +12,56 @@ properties([
     ])
 
 podTemplate(
-    containers: [
-        containerTemplate(
-            name: 'docker',
-            image: 'docker:19.03.11',
-            ttyEnabled: true,
-            command: 'cat',
-            privileged: true
-        ),
-        containerTemplate(
-            image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/omar-builder:jdk11",
-            name: 'builder',
-            command: 'cat',
-            ttyEnabled: true
-        ),
-        containerTemplate(
-            image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/alpine/helm:3.2.3",
-            name: 'helm',
-            command: 'cat',
-            ttyEnabled: true
-        ),
-        containerTemplate(
-            name: 'git',
-            image: 'alpine/git:latest',
-            ttyEnabled: true,
-            command: 'cat',
-            envVars: [
-                envVar(key: 'HOME', value: '/root')
-                ]
-        ),
-        containerTemplate(
-            name: 'cypress',
-            image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/cypress/included:4.9.0",
-            ttyEnabled: true,
-            command: 'cat',
-            privileged: true
-        )
-      ],
-    volumes: [
-        hostPathVolume(
-            hostPath: '/var/run/docker.sock',
-            mountPath: '/var/run/docker.sock'
-        ),
-    ]
+  containers: [
+    containerTemplate(
+      name: 'docker',
+      image: 'docker:19.03.11',
+      ttyEnabled: true,
+      command: 'cat',
+      privileged: true
+    ),
+    containerTemplate(
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/omar-builder:jdk11",
+      name: 'builder',
+      command: 'cat',
+      ttyEnabled: true
+    ),
+      containerTemplate(
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/kubectl-aws-helm:latest",
+      name: 'kubectl-aws-helm',
+      command: 'cat',
+      ttyEnabled: true,
+      alwaysPullImage: true
+    ),
+    containerTemplate(
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/alpine/helm:3.2.3",
+      name: 'helm',
+      command: 'cat',
+      ttyEnabled: true
+    ),
+    containerTemplate(
+    name: 'git',
+    image: 'alpine/git:latest',
+    ttyEnabled: true,
+    command: 'cat',
+    envVars: [
+        envVar(key: 'HOME', value: '/root')
+        ]
+    ),
+    containerTemplate(
+        name: 'cypress',
+        image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/cypress/included:4.9.0",
+        ttyEnabled: true,
+        command: 'cat',
+        privileged: true
+    )
+  ],
+  volumes: [
+    hostPathVolume(
+      hostPath: '/var/run/docker.sock',
+      mountPath: '/var/run/docker.sock'
+    ),
+  ]
 )
 
 {
@@ -93,31 +100,24 @@ node(POD_LABEL){
         DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/${APP_NAME}"
     }
 
-//     CYPRESS TESTS COMING SOON
-//     stage ("Run Cypress Test") {
-//         container('cypress') {
-//             try {
-//                 sh """
-//                     cypress run --headless
-//                 """
-//             }
-//             catch (err) {
-//
-//             }
-//                 sh """
-//                     npm i -g xunit-viewer
-//                     xunit-viewer -r results -o results/${APP_NAME}-test-results.html
-//                     """
-//                     junit 'results/*.xml'
-//                     archiveArtifacts "results/*.xml"
-//                     archiveArtifacts "results/*.html"
-//                     s3Upload(file:'results/${APP_NAME}-test-results.html', bucket:'ossimlabs', path:'cypressTests/')
-//                 }
-//             }
 
-//     stage('Fortify Scans') {
-//         COMING SOON
-//     }
+    stage ("Run Cypress Test") {
+        container('cypress') {
+            try {
+                sh """
+                cypress run --headless
+                """
+            } catch (err) {}
+            sh """
+                npm i -g xunit-viewer
+                xunit-viewer -r results -o results/omar-ui-test-results.html
+                """
+                junit 'results/*.xml'
+                archiveArtifacts "results/*.xml"
+                archiveArtifacts "results/*.html"
+                s3Upload(file:'results/omar-ui-test-results.html', bucket:'ossimlabs', path:'cypressTests/')
+            }
+        }
 
     stage('SonarQube Analysis') {
         nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
@@ -126,8 +126,7 @@ node(POD_LABEL){
                 withSonarQubeEnv('sonarqube'){
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=${APP_NAME} \
-                        -Dsonar.login=${SONARQUBE_TOKEN}
+                        -Dsonar.projectKey=${APP_NAME}
                     """
             }
         }

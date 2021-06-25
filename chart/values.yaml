@@ -14,7 +14,7 @@ global:
     password: null
   hostname: omar-dev.ossim.io
 
-  createIngress: true
+  createIngress: false
   useTls: false
   useTLSClientAuth: false
   sslCertSecretName: null
@@ -46,10 +46,10 @@ resources:
     
 image:
   name: omar-ui
-  tag: dev
+  tag: 2.13
   pullPolicy: Always
 
-ingressPath: /omar-ui
+path: /omar-ui
 internalPort: 8080
 externalPort: 8080
 

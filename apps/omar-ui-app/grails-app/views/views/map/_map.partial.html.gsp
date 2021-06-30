@@ -58,8 +58,8 @@
                         ng-model="filterVideosToggle"
                         ng-change="filter.getVideos(); filter.handleNonVideoFilters(); filter.clearFilters()"
                     > Videos Only
-                </div>
 
+                </div>
                 <ul class = "nav navbar-nav navbar-right col-md-4">
                     <li class = "dropdown pull-right" ng-controller = "ListController as list" ng-show = "list.showSitesSelect">
                         <a class = "dropdown-toggle" data-toggle = "dropdown">
@@ -1570,20 +1570,20 @@
                                  ng-mouseenter="list.displayFootprint(image);"
                                  ng-mouseleave="list.removeFootprint();">
                                 <div class="media">
-                                    <div class="media-left" style="position: relative">
-                                        <a
-                                                href="{{list.o2baseUrl}}/#!/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
-                                                target="_blank">
+                                    <div class="media-left"  style="position: relative">
+                                         <a
+                                            href="{{list.o2baseUrl}}/#!/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&numResLevels={{image.properties.number_of_res_levels}}&height={{image.properties.height}}&bands={{list.imageSpaceDefaults.bands}}&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}&brightness={{list.imageSpaceDefaults.brightness}}&contrast={{list.imageSpaceDefaults.contrast}}&histOp={{list.imageSpaceDefaults.histOp}}&histCenterTile={{list.imageSpaceDefaults.histCenterTile}}&resamplerFilter={{list.imageSpaceDefaults.resamplerFilter}}&sharpenMode={{list.imageSpaceDefaults.sharpenMode}}&imageRenderType={{list.imageSpaceDefaults.imageRenderType}}&imageSpaceRequestUrl={{list.imageSpaceRequestUrl}}&uiRequestUrl={{list.uiRequestUrl}}&mensaRequestUrl={{list.mensaRequestUrl}}&wfsRequestUrl={{list.wfsRequestUrl}}&wmsRequestUrl={{list.wmsRequestUrl}}&showModalSplash=false"
+                                            target="_blank">
                                             <img
-                                                    class="media-object thumbnail-background"
-                                                    tooltip-placement="right"
-                                                    uib-tooltip="Click the thumbnail or the image ID to view the raw image"
-                                                    height="114"
-                                                    width="114"
-                                                    style="border:1px solid black"
-                                                    ng-src="{{list.thumbPath}}?{{list.thumbFilename}}{{image.properties.filename}}{{list.thumbId}}{{image.properties.id}}{{list.thumbEntry}}{{image.properties.entry_id}}&size={{list.thumbSize}}&outputFormat={{list.thumbFormat}}&transparent={{list.thumbTransparent}}&padThumbnail={{list.padThumbnail}}">
+                                                class="media-object thumbnail-background"
+                                                tooltip-placement="right"
+                                                uib-tooltip="Click the thumbnail or the image ID to view the raw image"
+                                                height="114"
+                                                width="114"
+                                                style="border:1px solid black"
+                                                ng-src="{{list.getThumbnail(image)}}">
                                         </a>
-                                        <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">
+                                    <div class="well text-center jpip-loading-overlay" ng-show="list.showProcessInfo[$index]">
                                             <span style="font-size: .8em">{{list.processType}}</span><i class="fa fa-cog fa-spin text-info"></i>
                                         </div>&nbsp;
                                     </div>

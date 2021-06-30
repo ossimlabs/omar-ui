@@ -74,7 +74,7 @@
 
             <!-- BE -->
             <uib-tab index="3" heading="BE" disable="true">
-                <div id="be" role="tabpanel" class="tab-pane" ng-click="vm.loadBeData()" index="2">
+                <div id="be" role="tabpanel" class="tab-pane"index="2">
                     <div>
                         <br>
                         <table class="table table-striped the-table">

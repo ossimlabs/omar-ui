@@ -40,12 +40,6 @@
 {{- define "omar-ui.volumeMounts" -}}
 {{- include "omar-ui.volumeMounts.configmaps" . -}}
 {{- include "omar-ui.volumeMounts.pvcs" . -}}
-{{- if .Values.global.extraVolumeMounts }}
-{{ toYaml .Values.global.extraVolumeMounts }}
-{{- end }}
-{{- if .Values.extraVolumeMounts }}
-{{ toYaml .Values.extraVolumeMounts }}
-{{- end }}
 {{- end -}}
 
 
@@ -74,10 +68,4 @@
 {{- define "omar-ui.volumes" -}}
 {{- include "omar-ui.volumes.configmaps" . -}}
 {{- include "omar-ui.volumes.pvcs" . -}}
-{{- if .Values.global.extraVolumes }}
-{{ toYaml .Values.global.extraVolumes }}
-{{- end }}
-{{- if .Values.extraVolumes }}
-{{ toYaml .Values.extraVolumes }}
-{{- end }}
 {{- end -}}

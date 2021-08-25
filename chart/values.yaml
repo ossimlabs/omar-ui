@@ -22,7 +22,7 @@ global:
 
   createImagePullSecret: true
   useImagePullSecret: true
-  
+
   createHpa: true
 
   useSpringConfigServer: false
@@ -43,7 +43,7 @@ resources:
   requests:
     cpu: 500m
     memory: 500Mi
-    
+
 image:
   name: omar-ui
   tag: 2.13
@@ -76,10 +76,6 @@ envVars:
   SPRING_CLOUD_CONFIG_LABEL: master
   SPRING_CLOUD_DISCOVERY_ENABLED: false
 configmaps: {}
-
-extraVolumes: []
-
-extraVolumeMounts: []
 
 extraInitContainers: []
 

@@ -98,6 +98,7 @@ hibernate:
         use_second_level_cache: false
         use_query_cache: false
     dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    
 dataSource:
     pooled: true
     jmxExport: true

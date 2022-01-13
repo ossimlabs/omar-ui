@@ -1,12 +1,11 @@
 properties([
     parameters([
-        string(name: 'PROJECT_URL', defaultValue: 'https://github.com/ossimlabs/omar-ui', description: 'The project github URL'),
         string(name: 'DOCKER_REGISTRY_DOWNLOAD_URL', defaultValue: 'nexus-docker-private-group.ossim.io', description: 'Repository of docker images')
     ]),
     pipelineTriggers([
         [$class: "GitHubPushTrigger"]
     ]),
-    [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: '${PROJECT_URL}'],
+    [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/ossimlabs/omar-ui'],
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '20')),
     disableConcurrentBuilds()
     ])
@@ -67,7 +66,7 @@ podTemplate(
 {
 node(POD_LABEL){
     stage("Checkout branch") {
-        APP_NAME = PROJECT_URL.tokenize('/').last()
+        APP_NAME = "omar-ui"
         scmVars = checkout(scm)
         Date date = new Date()
         String currentDate = date.format("YYYY-MM-dd-HH-mm-ss")
@@ -100,38 +99,6 @@ node(POD_LABEL){
         DOCKER_IMAGE_PATH = "${DOCKER_REGISTRY_PRIVATE_UPLOAD_URL}/${APP_NAME}"
     }
 
-
-    stage ("Run Cypress Test") {
-        container('cypress') {
-            try {
-                sh """
-                cypress run --headless
-                """
-            } catch (err) {}
-            sh """
-                npm i -g xunit-viewer
-                xunit-viewer -r results -o results/omar-ui-test-results.html
-                """
-                junit 'results/*.xml'
-                archiveArtifacts "results/*.xml"
-                archiveArtifacts "results/*.html"
-                s3Upload(file:'results/omar-ui-test-results.html', bucket:'ossimlabs', path:'cypressTests/')
-            }
-        }
-
-    stage('SonarQube Analysis') {
-        nodejs(nodeJSInstallationName: "${NODEJS_VERSION}") {
-            def scannerHome = tool "${SONARQUBE_SCANNER_VERSION}"
-
-                withSonarQubeEnv('sonarqube'){
-                    sh """
-                        ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=${APP_NAME}
-                    """
-            }
-        }
-    }
-
     stage('Build') {
         container('builder') {
             sh """
@@ -142,12 +109,11 @@ node(POD_LABEL){
         }
     }
 
-
     stage('Docker Build') {
         container('docker') {
             withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_DOWNLOAD_URL}") {
                 sh """
-                    docker build --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}/${APP_NAME}:${TAG_NAME}" ./docker
+                    docker build --build-arg BASE_IMAGE=${JDK11_BASE_IMAGE} --network=host -t "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}/${APP_NAME}:${TAG_NAME}" ./docker
                 """
             }
         }

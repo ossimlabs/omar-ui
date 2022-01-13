@@ -211,9 +211,6 @@ banner:
 
 baseUrl: https://omar-dev.ossim.io
 
-logging:
-  config: classpath:logback.groovy
-
 omar:
   app:
     # If true, the reachback tab and panel will be displayed and accessible.

@@ -51,7 +51,7 @@ resources:
 image:
   name: omar-ui
   tag: 2.13
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 ingress:
   enabled:

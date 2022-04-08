@@ -29,7 +29,7 @@ spec:
       - name:  {{ .Values.appName }}
         env:
         {{- include "omar-ui.envVars" . | nindent 8 }}
-        image: "{{ .Values.global.dockerRepository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        image: {{ include "helm-base.image" . | quote }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
@@ -72,4 +72,4 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       volumes:
       {{- include "omar-ui.volumes" . | indent 6 }}
-  
+

@@ -19,7 +19,7 @@ Determine the serviceAccount class name
 */}}
 {{- define "omar-ui.serviceAccount.name" -}}
 {{-   if eq (include "omar-ui.serviceAccount.enabled" $) "true" }}
-{{-     pluck "name" .Values.serviceAccount .Values.global.serviceAccount | first | default $.Values.appName -}}
+{{-     pluck "name" .Values.serviceAccount .Values.global.serviceAccount | first | default $.Values.fullnameOverride -}}
 {{-   else }}
 {{-     pluck "name" .Values.serviceAccount .Values.global.serviceAccount | first | default "" -}}
 {{-   end }}

@@ -28,11 +28,21 @@ spring:
                 - '**/*.gsp'
                 - '*.gson'
                 - '**/*.gson'
-                - 'logback.xml'
+                - 'logback.groovy'
                 - '*.properties'
-management:
-    endpoints:
-        enabled-by-default: false
+environments:
+    development:
+        management:
+            endpoints:
+                enabled-by-default: true
+                web:
+                    base-path: '/actuator'
+                    exposure:
+                        include: '*'
+    production:
+        management:
+            endpoints:
+                enabled-by-default: false
 
 ---
 grails:
@@ -86,10 +96,6 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
-management:
-    endpoints:
-        jmx:
-            unique-names: true
 
 ---
 hibernate:
@@ -98,7 +104,7 @@ hibernate:
         use_second_level_cache: false
         use_query_cache: false
     dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
-    
+
 dataSource:
     pooled: true
     jmxExport: true
@@ -137,6 +143,7 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+---
 ---
 server:
     servlet:
@@ -410,3 +417,4 @@ userInfo:
   # Configurable default name for the request header user (Default: Anonymous).
   # Used if no name is found in PKI cert.
   requestHeaderUserNameDefault: Anonymous
+

@@ -57,8 +57,8 @@ dependencies {
 }
 
 assets {
-    // minifyJs = true
-    // minifyCss = true
+  minifyJs = true
+  minifyCss = true
 
   excludes = [
     // "**/application.js",

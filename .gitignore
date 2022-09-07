@@ -16,3 +16,4 @@ packaged-chart
 charts/*.tgz
 /apps/omar-ui-app/bin/
 /apps/omar-ui-app/application.yml
+*.tgz

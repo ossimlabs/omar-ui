@@ -24,7 +24,7 @@ global:
   sslCertSecretName: null
   authSslCertSecretName: null
 
-  useImagePullSecret: true
+  
 
   createHpa: true
 

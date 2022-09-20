@@ -7,7 +7,6 @@ replicas: 1
 fullnameOverride: omar-ui
 
 global:
-
   imagePullSecret:
     registry: null
     username: null
@@ -18,6 +17,11 @@ global:
     registry: ""
     pullPolicy: ""
     pullSecrets: []
+
+  busybox:
+    image:
+      repository: busybox
+      tag: "1.28"
 
   ingress:
     class: nginx
@@ -68,6 +72,11 @@ image:
   name: omar-ui
   tag: null
   pullPolicy: IfNotPresent
+
+busybox:
+  image: {}
+    # repository:
+    # tag:
 
 ingress:
   enabled:

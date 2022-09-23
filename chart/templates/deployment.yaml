@@ -40,7 +40,7 @@ spec:
           {{- tpl (toYaml .) $ | nindent 10 }}
           {{- end }}
         image: {{ include "omar-ui.image" . | quote }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        imagePullPolicy: {{ include "omar-ui.pullPolicy" . }}
         livenessProbe:
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}

@@ -7,12 +7,22 @@ replicas: 1
 fullnameOverride: omar-ui
 
 global:
-  dockerRepository: nexus-docker-private-group.ossim.io
   imagePullSecret:
     registry: null
     username: null
     password: null
+
   hostname: omar-dev.ossim.io
+
+  image:
+    registry: ""
+    pullPolicy: ""
+    pullSecrets: []
+
+  busybox:
+    image:
+      repository: busybox
+      tag: "1.28"
 
   ingress:
     class: nginx
@@ -23,9 +33,6 @@ global:
   useTLSClientAuth: false
   sslCertSecretName: null
   authSslCertSecretName: null
-
-  createImagePullSecret: true
-  useImagePullSecret: true
 
   createHpa: true
 
@@ -40,6 +47,10 @@ global:
     # name:
 
   envVars: {}
+  envFrom: []
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
 
 # These variables can be overridden because of the use of the 'pluck' function:
 # - createIngress
@@ -61,7 +72,12 @@ resources:
 image:
   name: omar-ui
   tag: null
-  pullPolicy: IfNotPresent
+  pullPolicy: ""
+
+busybox:
+  image: {}
+    # repository:
+    # tag:
 
 ingress:
   enabled:
@@ -104,6 +120,11 @@ sideCars: []
 
 deployment:
   annotations: {}
+
+envFrom: []
+nodeSelector: {}
+affinity: {}
+tolerations: []
 
 serviceAccount:
   # Specifies whether a service account should be created

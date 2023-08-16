@@ -1,7 +1,7 @@
 /**
  * Created by sbortman on 9/28/15.
  */
-//= require webjars/jquery/3.4.1/jquery.min.js
+//= require jquery-3.5.1.js
 //= require OpenLayersLite-formats.js
 //= require_self
 

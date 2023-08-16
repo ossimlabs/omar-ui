@@ -2,6 +2,7 @@ Thumbs.db
 .DS_Store
 .gradle
 build/
+target/
 out/
 .idea
 *.iml
@@ -10,10 +11,7 @@ out/
 .project
 .settings
 .classpath
+.factorypath
+values-dev.yaml
 prodDb.mv.db
-packaged-chart
-.lock
-charts/*.tgz
-/apps/omar-ui-app/bin/
-/apps/omar-ui-app/application.yml
-*.tgz
+bin

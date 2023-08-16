@@ -1,5 +1,5 @@
 //= require omar-openlayers.js
-//= require webjars/jquery/3.4.1/jquery.min.js
+//= require jquery-3.5.1.js
 // require ES6Test.es6
 //= require_self
 

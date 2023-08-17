@@ -6,4 +6,5 @@ dependencies {
     implementation("com.bertramlabs.plugins:asset-pipeline-gradle:4.3.0")
     implementation("org.grails:grails-gradle-plugin:6.0.0")
     implementation("org.grails.plugins:hibernate5:8.0.0")
+    implementation "net.errbuddy.plugins:babel-asset-pipeline:2.1.1"
 }

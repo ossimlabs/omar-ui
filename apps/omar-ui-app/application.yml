@@ -1,7 +1,7 @@
 ---
 serverProtocol: http
 serverName: localhost
-baseUrl: https://evwhs-gcs.ossim.io
+baseUrl: https://omar.3pa.maxar.com
 
 defaultPreferences:
     defaultUsername: Anonymous

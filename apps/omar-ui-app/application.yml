@@ -1,0 +1,107 @@
+---
+serverProtocol: http
+serverName: localhost
+baseUrl: https://omar.3pa.maxar.com
+
+defaultPreferences:
+    defaultUsername: Anonymous
+
+grails:
+  serverURL: http://${serverName}/omar-ui
+
+omarDb:
+  url: jdbc:postgresql:omardb-prod
+  name:  omardb-prod
+
+endpoints:
+  enabled: true
+  health:
+    enabled: true
+  actuator:
+    sensitive: false
+  beans:
+    sensitive: false
+  metrics:
+    sensitive: false
+  configprops:
+    sensitive: false
+  trace:
+    sensitive: false
+  mappings:
+    sensitive: false
+  env:
+    sensitive: false
+---
+omar:
+  app:
+    misc:
+      # This will enable thumbnails to be provided by oms or wms. The types are "wms" or "oms".
+      # "oms" requires that omar-oms is deployed "wms" requires 
+      # either omar-wms or omar-wms-lite to be deployed
+      thumbnailType: "WMS"
+      splashModal:
+        enabled: false
+    sites:
+      o2:
+        info:
+          # Short name for the omar site
+          name: OMAR - Default
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: OMAR Local Server
+        url:
+          # Base URL for the federated site
+          base: ${serverProtocol}://${serverName}
+          # Optional context paths for the apps, e.g.
+          # uiContextPath: /omar-ui
+      3pa:
+        info:
+          # Short name for the omar site
+          name: OMAR - 3pa
+          # Long name/description of the site.  This is displayed in the dropdown in the UI
+          description: OMAR 3pa Server
+        url:
+          # Base URL for the federated site
+          base: ${baseUrl}
+          # Optional context paths for the apps, e.g.
+          # uiContextPath: /omar-ui//omar.ossim.io
+
+  openlayers:
+    baseMaps:
+      o2-basemap-basic:
+        layerType: tilewms
+        options:
+          visible: true
+        params:
+          layers: o2-basemap-basic
+          format: image/jpeg
+        title: OSM Basic
+        url: ${baseUrl}/omar-mapproxy/service
+    overlayLayers:
+#     autoMosaic:
+#        layerType: "tilewms"
+#        title: "Auto Mosaic"
+#        url: "http://localhost/omar-wms/mosaic"
+#        params:
+#          filter: ""
+#          version: "1.3.0"
+#          layers: ""
+#          styles: ""
+#          format: "image/png"
+#        options:
+#          visible: false
+---
+spring:
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: ${spring.cloud.discovery.enabled}
+
+---
+defaultUsername: Anonymous
+
+requestHeaderUsername: username
+
+securityClassification:
+    backgroundColor: green
+    classification: Unclassified
+    color: white
